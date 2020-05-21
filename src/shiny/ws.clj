@@ -55,7 +55,7 @@
 (defn send-all!
   [data]
   (let [uids (:any @connected-uids)]
-    (debugf "Broadcasting %s to %s users." (first data) (count uids))
+    (debugf "Broadcasting %s to %s clients" (first data) (count uids))
     (doseq [uid uids]
       (chsk-send! uid data))))
 

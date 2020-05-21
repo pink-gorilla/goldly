@@ -27,10 +27,15 @@
           :id id)))
 
 (reg-event-db
- :shiny/systems
+ :shiny/systems-store
  (fn [db [_ data]]
    (info "rcvd shiny systems: " data)
    (assoc db :systems data)))
+
+(reg-event-db
+ :shiny/system-store
+ (fn [db [_ system]]
+   (assoc db :system system)))
 
 (reg-event-fx
  :shiny/send
@@ -39,7 +44,9 @@
    (try
      (chsk-send! [event-name data]
                  5000
-                 (fn [s] (info "system data:" s)))
+                 (fn [s] 
+                   (info "system data:" s)
+                   (dispatch [:shiny/system-store s])))
      (catch js/Error e (error "send event to server ex: " e)))
    nil))
 
@@ -58,7 +65,7 @@
    (let [_ (debugf "rcvd :shiny/event: %s %s" event-type data)]
      (case event-type
        :shiny/heartbeat (tracef "shiny Heartbeat: %s" data)
-       :shiny/systems (dispatch [:shiny/systems data])
+       :shiny/systems (dispatch [:shiny/systems-store data])
        :chsk/ws-ping (trace "shiny ping rcvd")
        (infof "shiny Unhandled server event %s %s" event-type data))
      db)))

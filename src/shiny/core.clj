@@ -16,7 +16,7 @@
 (def systems (atom {}))
 
 (defn systems-response []
-  (let [_ (println "systems: " @systems)
+  (let [;_ (println "systems: " @systems)
         ids (keys @systems)
         ids (into [] (map name ids))]
     [:shiny/systems ids]))
@@ -53,10 +53,12 @@
 (defmethod -event-msg-handler :shiny/system
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (let [session (:session ring-req)
-        uid (:uid session)]
-    (infof "system event: %s %s" id event)
+        uid (:uid session)
+        [event-name system-id] event
+        ]
+    (infof "system event: %s %s" event-name system-id)
     (when ?reply-fn
-      (?reply-fn (system-response id)))))
+      (?reply-fn (system-response system-id)))))
 
 
 (defn on-event [[id name & args]]
@@ -86,7 +88,7 @@
   "setup a loop to broadcast an event to all connected users every second"
   []
   (go-loop [i 0]
-    (<! (async/timeout 5000))
+    (<! (async/timeout 10000))
     (when @broadcast-enabled?_ (send-all! (systems-response)))
     (recur (inc i))))
 
