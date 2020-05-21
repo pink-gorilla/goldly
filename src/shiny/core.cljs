@@ -2,17 +2,14 @@
   (:require
    [clojure.string :as str]   
    [clojure.walk :as walk]
-   [repl-tooling.eval :as eval]
-   [reagent.core :as r]
-   [repl-tooling.editor-helpers :as helpers]
-
-   [repl-tooling.eval :as eval]
    [cljs.tools.reader :as reader]
-   [repl-tooling.editor-integration.renderer.protocols :as proto]
+   [reagent.core :as r]
+   [reagent.dom]
+  ; [repl-tooling.eval :as eval]
+  ; [repl-tooling.editor-helpers :as helpers]
+  ; [repl-tooling.editor-integration.renderer.protocols :as proto]
 
    [pinkgorilla.ui.default-setup]
-   [pinkgorilla.ui.json]
-   [pinkgorilla.ui.highchart]
    [pinkgorilla.ui.pinkie :as pinkie]
    [sci.core :as sci]))
 
@@ -40,7 +37,7 @@
 (defn- run-evt-fun! [e fun state repl additional-args]
   (.preventDefault e)
   (.stopPropagation e)
-  (.. (eval/eval repl
+  #_(.. (eval/eval repl
                  (str "(" fun " '"
                       (pr-str (norm-evt (.-target e)))
                       " '" (pr-str @state)
@@ -74,7 +71,7 @@
     (reagent.dom/render hiccup d)
     hiccup))
 
-(defn- render-interactive [{:keys [state html fns] :as edn} repl]
+(defn render-interactive [{:keys [state html fns] :as edn} repl]
   (let [state (r/atom state)
         html (fn [state]
                (try
@@ -90,7 +87,7 @@
                    [:div.error "Can't render this code - " (pr-str e)])))]
     [html state]))
 
-(defrecord Interactive [edn repl editor-state]
+#_(defrecord Interactive [edn repl editor-state]
   proto/Renderable
   (as-html [_ ratom _]
     (render-interactive edn repl)))

@@ -1,6 +1,7 @@
 (ns shiny.demo1
   (:require 
-    [shiny.core :as shiny])
+    [shiny.core :as shiny]
+    [shiny.web :as shinyweb])
   (:gen-class))
 
 
@@ -14,7 +15,7 @@
   ))
 
 (defn -main []
-  (shiny/server-start! {:port 9000})
+  (shinyweb/server-start! {:port 9000})
   (shiny/system-start! "/demo1" s))
 
 

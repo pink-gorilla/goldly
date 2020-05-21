@@ -1,0 +1,53 @@
+{; :lein   {:profile "+demo"}
+ ;:lein   true
+
+ :source-paths ["src"]
+
+ :resource-paths  ["resources"
+                   "node_modules/leaflet/dist"
+                   "node_modules/mathjax/es5"
+                   "node_modules/ag-grid-community"]
+
+ ; TODO: dependencies are also in project.clj
+ :dependencies [[reagent "0.10.0"]
+                [thi.ng/strf "0.2.2"]
+                ;[com.taoensso/timbre "4.10.0"]             ; clojurescript logging
+                [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ;; awb99: in encoding, and clj/cljs proof
+                [org.pinkgorilla/gorilla-ui "0.1.35"]
+
+                [check "0.1.0-SNAPSHOT"]
+                [funcool/promesa "4.0.2"]
+                [paprika "0.1.3-SNAPSHOT"]
+                [borkdude/sci "0.0.13-alpha.17"]
+                [compliment "0.4.0-SNAPSHOT"]
+                [rewrite-cljs "0.4.4"]
+                [reagent "0.10.0"]
+                [devcards "0.2.5"]
+                [org.rksm/suitable "0.3.2"]
+                [cider/orchard "0.5.8"]
+                [etaoin "0.3.6"]
+                ]
+
+ ; shadow dev http server settings
+ :dev-http {8000 ["target"
+                  ;"classpath:public" 
+                  ;"resources/public" 
+                  "classpath:resources"
+                  "classpath:resources/public"
+                  "resources/public"
+                  "node_modules"
+                  "node_modules/leaflet/dist"
+                  "node_modules/mathjax/es5"
+                  "node_modules/ag-grid-community"]}
+
+ :builds {:web {:target :browser
+                :output-dir "target"
+                :asset-path "/"
+                :modules {:main {:entries [shiny.web]}}
+                :devtools {:before-load shiny.web/stop
+                           :after-load shiny.web/start}}
+
+          :ci {:target :karma
+               :output-to  "target/ci.js"
+               :ns-regexp "-test$"}}}
+

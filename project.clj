@@ -40,7 +40,8 @@
                                        merge-meta          [[:inner 0]]
                                        try-if-let          [[:block 1]]}}}}
 
-  :plugins [[lein-ancient "0.6.15"]
+  :plugins [[lein-shell "0.5.0"]
+            [lein-ancient "0.6.15"]
             [min-java-version "0.1.0"]
             ]
 
@@ -50,5 +51,8 @@
             "lint" ^{:doc "Runs code linter"}
             ["clj-kondo" "--lint" "src"]
 
+             "shadow-compile"  ^{:doc "compiles UI"}
+            ["shell" "shadow-cljs" "compile" "web"]
+            
             "demo" ^{:doc "Runs demo"}
             [ "run" "-m" "shiny.demo1"]})
