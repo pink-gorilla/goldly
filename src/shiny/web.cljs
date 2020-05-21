@@ -16,7 +16,7 @@
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
    ; add dependencies of this project to bundle
    ;[pinkgorilla.ui.default-renderer]
-   [shiny.core]
+   [shiny.core :refer [render-interactive]]
    [shiny.ws :refer [send! start-router!]]
    [shiny.events] ; add reframe event handlers
    [shiny.subs]))
@@ -65,12 +65,32 @@
      (for [id @ids]
        ^{:key id} [:a {:href (str "#/system/" id)} id])]))
 
+
+(defn error-boundary [_ #_comp]
+  (let [error (r/atom nil)
+        info (r/atom nil)]
+    (r/create-class
+     {:component-did-catch (fn [_ #_this _ #_e i]
+                             (reset! info i))
+      :get-derived-state-from-error (fn [e]
+                                      (reset! error e)
+                                      #js {})
+      :reagent-render (fn [comp]
+                        (if @error
+                          [:div "Something went wrong."
+                           [:p (str @error)]]
+                          comp))})))
+
 (defn system [id]
   (let [system (subscribe [:system])]
     (fn [id]
-      [:<>
-       [:h1 "system: " id]
-       [:p (pr-str @system)]])))
+      (let [system @system]
+        [:<>
+         [:h1 "system: " id]
+         [:p (pr-str system)]
+         (when system
+           [error-boundary
+            [render-interactive (:cljs system)]])]))))
 
 
 (defn nav []

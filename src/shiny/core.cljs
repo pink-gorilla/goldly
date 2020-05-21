@@ -71,20 +71,30 @@
     (reagent.dom/render hiccup d)
     hiccup))
 
+(defn tap [x]
+  (println "tap:" x)
+  x
+  )
+
+
 (defn render-interactive [{:keys [state html fns] :as edn} repl]
   (let [state (r/atom state)
         html (fn [state]
                (try
                  (-> html
+                     tap
                      pr-str
+                     tap
                      (sci/eval-string  {:bindings (bindings-for state fns repl)
                                         :preset {:termination-safe true}
                                         :namespaces {'walk walk-ns}})
                      pinkie/tag-inject
-                     treat-error)
+                     #_treat-error)
                  (catch :default e
                    (.log js/console e)
-                   [:div.error "Can't render this code - " (pr-str e)])))]
+                   [:div.error "Can't render this code - " (pr-str e)])))
+        _ (println "html: " html)
+        ]
     [html state]))
 
 #_(defrecord Interactive [edn repl editor-state]
