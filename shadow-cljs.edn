@@ -26,7 +26,7 @@
                 [com.taoensso/timbre "4.10.0"]             ; clojurescript logging
                 [com.taoensso/encore "2.119.0"]
                 [com.taoensso/sente "1.15.0"] ; pinkie websocket
-                [secretary "1.2.3"]   ; client side routing - TODO: Should likely be replaced by jux/bidi
+                [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: Should likely be replaced by jux/bidi
                 [org.pinkgorilla/gorilla-ui "0.1.35"]]
 
  ; shadow dev http server settings

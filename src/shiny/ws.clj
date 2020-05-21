@@ -114,11 +114,11 @@
   "setup a loop to broadcast an event to all connected users every second"
   []
   (go-loop [i 0]
-    (<! (async/timeout 20000))
+    (<! (async/timeout 30000))
     (when @broadcast-enabled?_ (send-all! [:shiny/heartbeat {:i i}]))
     (recur (inc i))))
 
-(start-heartbeats!)
+;(start-heartbeats!)
 
 (comment
   (println "clients: " @connected-uids)

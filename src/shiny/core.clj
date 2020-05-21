@@ -21,11 +21,13 @@
         ids (into [] (map name ids))]
     [:shiny/systems ids]))
 
-(defn send-system-list []
-  (send-all! (systems-response)))
+(defn system-response [id]
+  (let [id (keyword id)
+        s (id @systems)]
+    (if s (dissoc s :clj) {})))
 
 (defn send-event [system-id event-name & args]
-  (let [message  {:system system-id :type type :args args}]
+  (let [message  {:system system-id :type event-name :args args}]
     (send-all! [:shiny/event message])))
 
 
@@ -52,9 +54,9 @@
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (let [session (:session ring-req)
         uid (:uid session)]
-    (tracef "system event: %s" event)
+    (infof "system event: %s %s" id event)
     (when ?reply-fn
-      (?reply-fn {:shiny/system {:a 2}}))))
+      (?reply-fn (system-response id)))))
 
 
 (defn on-event [[id name & args]]

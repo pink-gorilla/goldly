@@ -36,7 +36,7 @@
 
 (defonce history (hook-browser-navigation!))
 
-(defn   nav!
+(defn nav!
   "navigates the browser to the url. 
    Triggers secretary route events"
   [url]
@@ -52,11 +52,10 @@
   (defroute "/info" []
     (println "nav: /info")
     (dispatch [:shiny/nav :info]))
-  (defroute "/system" [id]
+  (defroute "/system/:id" [id query-params]
     (println "nav: /system " id)
     (dispatch [:shiny/nav :system id])
-    (dispatch [:shiny/send :shiny/system id])
-))
+    (dispatch [:shiny/send :shiny/system id])))
 
 (defn infos []
   (let [ids (subscribe [:systems])
@@ -64,10 +63,14 @@
     [:<>
      [:h1 "running system info: " (count @ids)]
      (for [id @ids]
-       [:a {:href (str "#/system?id=" id)} id])]))
+       ^{:key id} [:a {:href (str "#/system/" id)} id])]))
 
 (defn system [id]
-  [:h1 "system: " id])
+  (let [system (subscribe [:system])]
+    (fn [id]
+      [:<>
+       [:h1 "system: " id]
+       [:p (pr-str @system)]])))
 
 
 (defn nav []
@@ -78,9 +81,7 @@
     [:div#navbar.collapse.navbar-collapse
      [:ul.nav.navbar-nav
       [:li
-       [:a {:href "#/info"} "Info"]]
-      [:li
-       [:a {:href "#/system"} "system"]]]]]])
+       [:a {:href "#/info"} "Info"]]]]]])
 
 (defn app []
   (let [main (subscribe [:main])

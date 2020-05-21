@@ -2,8 +2,8 @@
   "process-instructions from shiny clj server"
   (:require
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch-sync dispatch]]
-   [taoensso.timbre :as timbre :refer-macros (tracef trace debugf info infof warnf errorf debug)]
-   [shiny.ws :refer [send! start-router! -event-msg-handler]]
+   [taoensso.timbre :as timbre :refer-macros (tracef trace debugf info infof warnf errorf error debug)]
+   [shiny.ws :refer [chsk-send! send! start-router! -event-msg-handler]]
    #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
 
 (def initial-db
@@ -34,9 +34,14 @@
 
 (reg-event-fx
  :shiny/send
- (fn [cofx [_ [event-name data]]]
-   (debugf "shiny/send %s %s" event-name data)
-   (send! [event-name data])))
+ (fn [cofx [_ event-name data]]
+   (infof "shiny/send %s %s" event-name data)
+   (try
+     (chsk-send! [event-name data]
+                 5000
+                 (fn [s] (info "system data:" s)))
+     (catch js/Error e (error "send event to server ex: " e)))
+   nil))
 
 
 
@@ -50,7 +55,7 @@
 (reg-event-db
  :shiny/event
  (fn [db [_ event-type data]]
-   (let [_ (debugf ":shiny/event: %s %s" event-type data)]
+   (let [_ (debugf "rcvd :shiny/event: %s %s" event-type data)]
      (case event-type
        :shiny/heartbeat (tracef "shiny Heartbeat: %s" data)
        :shiny/systems (dispatch [:shiny/systems data])

@@ -105,7 +105,7 @@
   "setup a loop to broadcast an event to all connected users every second"
   []
   (go-loop [i 0]
-    (<! (async/timeout 20000))
+    (<! (async/timeout 30000))
     (when @broadcast-enabled?_ (send! [:shiny/systems {:i i}]))
     (recur (inc i))))
 
