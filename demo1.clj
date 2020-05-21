@@ -3,17 +3,18 @@
     [shiny]))
 
 
+(def s (shiny/system 
+  {:cljs {:state 0
+          :html  [:div "Clicked " 
+                   [:button {:on-click ?incr} ?state] 
+                      " times"] 
+          :fns {:incr (fn [_ s] (inc s))}}
+   :clj {:fns {:incr10  (fn [_ s] (+ s 10)) }}}
+  ))
 
-(shiny/start! 
-  {:state 0
-   :html 
-     [:div "Clicked " 
-       [:button {:on-click ?incr} ?state] 
-       " times"] 
-   :fns {:incr (fn [_ s] (inc s))}}
-  {:port 9000})
 
-
+(shiny/server-start! {:port 9000})
+(shiny/system-start! s)
 
 
 
