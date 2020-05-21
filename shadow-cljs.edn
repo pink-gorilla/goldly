@@ -26,6 +26,10 @@
                 [org.rksm/suitable "0.3.2"]
                 [cider/orchard "0.5.8"]
                 [etaoin "0.3.6"]
+                [re-frame "0.10.9"]
+                [com.taoensso/timbre "4.10.0"]             ; clojurescript logging
+
+                [secretary "1.2.3"]   ; client side routing - TODO: Should likely be replaced by jux/bidi
                 ]
 
  ; shadow dev http server settings
