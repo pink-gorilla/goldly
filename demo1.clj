@@ -14,7 +14,7 @@
 
 
 (shiny/server-start! {:port 9000})
-(shiny/system-start! s)
+(shiny/system-start! "/demo1" s)
 
 
 
