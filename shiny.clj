@@ -14,11 +14,13 @@
   (println "sending system to cljs"))
 
 
-(def-macro system [system]
-
-)
+(defmacro system [ [system-cljs system-clj] ]
+  (let [id# (gensym "custom-eval")]
+    {:id id#
+     :cljs (pr-str `system-cljs)
+     :clj system-clj}))
 
 (defn system-start!
   [system]
-  (system->cñj system) 
+  (system->clj system) 
   )
