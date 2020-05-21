@@ -2,18 +2,44 @@
   "process-instructions from shiny clj server"
   (:require
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch-sync dispatch]]
-   [taoensso.timbre :as timbre :refer-macros (tracef debugf info infof warnf errorf debug)]
+   [taoensso.timbre :as timbre :refer-macros (tracef trace debugf info infof warnf errorf debug)]
+   [shiny.ws :refer [send! start-router! -event-msg-handler]]
    #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
 
 (def initial-db
-  {:main :notebook
-   :systems [1 2 3]})
+  {:main :info
+   :systems []
+   :id nil
+   :system nil})
 
 (reg-event-db
  :db-init
  (fn [_ _]
    (info "initializing app-db ..")
    initial-db))
+
+(reg-event-db
+ :shiny/nav
+ (fn [db [_ data id]]
+   (infof "nav: %s %s" data id)
+   (assoc db
+          :main data
+          :id id)))
+
+(reg-event-db
+ :shiny/systems
+ (fn [db [_ data]]
+   (info "rcvd shiny systems: " data)
+   (assoc db :systems data)))
+
+(reg-event-fx
+ :shiny/send
+ (fn [cofx [_ [event-name data]]]
+   (debugf "shiny/send %s %s" event-name data)
+   (send! [event-name data])))
+
+
+
 
 (reg-event-fx
  :ws-open
@@ -22,9 +48,17 @@
 
 
 (reg-event-db
- :notebook-add-code
-; [standard-interceptors]
- (fn [db [_ {:keys [id code]}]]
-   (let [_ (debugf "code-add id: %s code: %s" id code)]
-     db ; (assoc-in db [:worksheet] worksheet-new)
-     )))
+ :shiny/event
+ (fn [db [_ event-type data]]
+   (let [_ (debugf ":shiny/event: %s %s" event-type data)]
+     (case event-type
+       :shiny/heartbeat (tracef "shiny Heartbeat: %s" data)
+       :shiny/systems (dispatch [:shiny/systems data])
+       :chsk/ws-ping (trace "shiny ping rcvd")
+       (infof "shiny Unhandled server event %s %s" event-type data))
+     db)))
+
+(defmethod -event-msg-handler :shiny/systems
+  [{:keys [?data] :as ev-msg}]
+  ;(let [[?uid ?csrf-token ?handshake-data] ?data]
+  (debugf "systems received: %s" ev-msg)) ; ?data)))

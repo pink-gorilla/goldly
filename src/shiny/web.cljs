@@ -12,14 +12,14 @@
    [secretary.core :as secretary]
    [reagent.core :as r]
    [reagent.dom]
-   [re-frame.core :refer [dispatch clear-subscription-cache!]]
+   [re-frame.core :refer [dispatch clear-subscription-cache! subscribe]]
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
    ; add dependencies of this project to bundle
    ;[pinkgorilla.ui.default-renderer]
    [shiny.core]
    [shiny.ws :refer [send! start-router!]]
    [shiny.events] ; add reframe event handlers
-   ))
+   [shiny.subs]))
 
 (enable-console-print!)
 
@@ -43,9 +43,6 @@
   (.setToken history url))
 
 
-(defonce current
-  (r/atom {:page :info
-           :system nil}))
 
 (defn app-routes
   [& [{:keys [hook-navigation]
@@ -53,15 +50,21 @@
   (info "Hook navigation" hook-navigation)
   (secretary/set-config! :prefix "#")
   (defroute "/info" []
-    (println "/info")
-    (swap! current assoc :page :info))
+    (println "nav: /info")
+    (dispatch [:shiny/nav :info]))
   (defroute "/system" [id]
-    (println "/system")
-    (swap! current assoc :page :system
-           :system id)))
+    (println "nav: /system " id)
+    (dispatch [:shiny/nav :system id])
+    (dispatch [:shiny/send :shiny/system id])
+))
 
 (defn infos []
-  [:h1 "infos"])
+  (let [ids (subscribe [:systems])
+        _ (println "info: systems: " @ids)]
+    [:<>
+     [:h1 "running system info: " (count @ids)]
+     (for [id @ids]
+       [:a {:href (str "#/system?id=" id)} id])]))
 
 (defn system [id]
   [:h1 "system: " id])
@@ -77,19 +80,17 @@
       [:li
        [:a {:href "#/info"} "Info"]]
       [:li
-       [:a {:href "#/system"} "system"]]
-      ]]]]
-  )
+       [:a {:href "#/system"} "system"]]]]]])
 
 (defn app []
-  (let [c @current
-        id (:system c)]
+  (let [main (subscribe [:main])
+        id (subscribe [:system-id])]
     [:div.container
      [nav]
-     (case (:page c)
+     (case @main
        :info [infos]
-       :system [system id]
-       :default [infos])]))
+       :system [system @id]
+       [infos])]))
 
 (defn mount-app []
   (reagent.dom/render [app]

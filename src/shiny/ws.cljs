@@ -72,13 +72,8 @@
 (defmethod -event-msg-handler :chsk/recv
   [{:as ev-msg :keys [?data]}]
   (let [[id msg] ?data]
-    (case id
-      :pinkie/heartbeat (log (str "Pinkie Heartbeat: " msg))
-      ;:pinkie/heartbeat (debugf "Pinkie Heartbeat: %s" msg)
-      :pinkie/code-add (dispatch [:notebook-add-code msg])
-      :pinkie/result-set (dispatch [:notebook-set-result msg])
-      :chsk/ws-ping (trace "pinkie ping rcvd")
-      (debugf "Pinkie Unhandled server event: %s" ?data))))
+    (dispatch [:shiny/event id msg])
+    ))
 
 
 ;;;; Sente event router (our `event-msg-handler` loop)
@@ -102,3 +97,16 @@
                 (debugf "Callback reply: %s" cb-reply))))
 
 
+;; Heartbeat sender
+
+(def broadcast-enabled?_ (atom true))
+
+(defn start-heartbeats!
+  "setup a loop to broadcast an event to all connected users every second"
+  []
+  (go-loop [i 0]
+    (<! (async/timeout 20000))
+    (when @broadcast-enabled?_ (send! [:shiny/systems {:i i}]))
+    (recur (inc i))))
+
+(start-heartbeats!)

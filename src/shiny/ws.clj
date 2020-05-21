@@ -86,7 +86,7 @@
 
 (defmulti -event-msg-handler :id)
 
-(defn event-msg-handler [{:as ev-msg :keys [id ?data event]}]
+(defn event-msg-handler [{:keys [id ?data event] :as ev-msg}]
   (tracef "Event: %s" event)
   (-event-msg-handler ev-msg))
 
@@ -100,6 +100,7 @@
 
 (defonce router_ (atom nil))
 (defn stop-router! [] (when-let [stop-fn @router_] (stop-fn)))
+
 (defn start-router! []
   (stop-router!)
   (reset! router_
@@ -114,7 +115,7 @@
   []
   (go-loop [i 0]
     (<! (async/timeout 20000))
-    (when @broadcast-enabled?_ (send-all! [:pinkie/heartbeat {:i i}]))
+    (when @broadcast-enabled?_ (send-all! [:shiny/heartbeat {:i i}]))
     (recur (inc i))))
 
 (start-heartbeats!)
