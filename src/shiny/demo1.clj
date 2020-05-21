@@ -15,7 +15,7 @@
   ))
 
 (defn -main []
-  (shinyweb/server-start! {:port 9000})
+  (shinyweb/server-start! {:port 8000})
   (shiny/system-start! "/demo1" s))
 
 

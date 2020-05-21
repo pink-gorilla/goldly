@@ -18,11 +18,15 @@
                   ["vcs" "push"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 ] 
+                 [org.clojure/tools.logging "0.4.0"]
+                 [ring/ring-core "1.6.3"]
+                 [ring/ring-jetty-adapter "1.6.3"]
+                 [compojure "1.4.0"]
+                 [hiccup "1.0.4"]]
   :source-paths ["src"]
   :resource-paths ["resources"]
-  
-  
+
+
   ;:repl-options {:init-ns ta.model.single}
   :profiles {:dev
              {:dependencies [[clj-kondo "2019.11.23"]]
@@ -42,8 +46,7 @@
 
   :plugins [[lein-shell "0.5.0"]
             [lein-ancient "0.6.15"]
-            [min-java-version "0.1.0"]
-            ]
+            [min-java-version "0.1.0"]]
 
   :aliases {"bump-version"
             ["change" "version" "leiningen.release/bump-version"]
@@ -51,8 +54,8 @@
             "lint" ^{:doc "Runs code linter"}
             ["clj-kondo" "--lint" "src"]
 
-             "shadow-compile"  ^{:doc "compiles UI"}
+            "shadow-compile"  ^{:doc "compiles UI"}
             ["shell" "shadow-cljs" "compile" "web"]
-            
+
             "demo" ^{:doc "Runs demo"}
-            [ "run" "-m" "shiny.demo1"]})
+            ["run" "-m" "shiny.demo1"]})

@@ -8,6 +8,12 @@
    [pinkgorilla.ui.default-renderer]
    [shiny.core]))
 
+
+(defn routes []
+  {:status "running system stats"
+   :systems "id or route-name parameter displays system"})
+
+
 (defn app []
   [:h1 "shiny"]
   )
