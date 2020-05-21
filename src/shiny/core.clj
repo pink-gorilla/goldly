@@ -1,6 +1,7 @@
 (ns shiny.core
   (:require
-   [clojure.string]))
+   [clojure.string]
+   [shiny.ws :refer [send-all!]]))
 
 (defn unique-id
   "Get a unique id."
@@ -9,6 +10,18 @@
 
 
 ;; system
+
+(def systems (atom {}))
+
+(defn send-system-list []
+  (let [systems (map :id @systems)]
+    (send-all! [:shiny/systems systems])))
+
+(defn send-event [system-id event-name & args]
+  (let [message  {:system system-id :type type :args args}]
+    (send-all! [:shiny/event message])))
+
+
 
 (defn system->cljs [system]
   (let [system-cljs (dissoc system :clj)]
@@ -20,7 +33,7 @@
    :cljs (pr-str system-cljs)
    :clj system-clj})
 
-(def systems (atom {}))
+
 
 (defn on-event [[id name & args]]
   (println "rcvd event for system " id " " name)
@@ -32,10 +45,9 @@
         (apply f args)
         (f)))))
 
-(defn dispatch [id name & args]
-  (println "dispatching " id name)
-  ; send to frontend
-  )
+(defn dispatch [system-id event-name & args]
+  (println "dispatching " system-id event-name)
+  (send-event system-id event-name args))
 
 (defn system-start!
   [route system]

@@ -9,12 +9,8 @@
                    "node_modules/ag-grid-community"]
 
  ; TODO: dependencies are also in project.clj
- :dependencies [[reagent "0.10.0"]
-                [thi.ng/strf "0.2.2"]
-                ;[com.taoensso/timbre "4.10.0"]             ; clojurescript logging
+ :dependencies [[thi.ng/strf "0.2.2"]
                 [com.lucasbradstreet/cljs-uuid-utils "1.0.2"] ;; awb99: in encoding, and clj/cljs proof
-                [org.pinkgorilla/gorilla-ui "0.1.35"]
-
                 [check "0.1.0-SNAPSHOT"]
                 [funcool/promesa "4.0.2"]
                 [paprika "0.1.3-SNAPSHOT"]
@@ -22,15 +18,16 @@
                 [compliment "0.4.0-SNAPSHOT"]
                 [rewrite-cljs "0.4.4"]
                 [reagent "0.10.0"]
-                [devcards "0.2.5"]
+                ;[devcards "0.2.5"]
                 [org.rksm/suitable "0.3.2"]
                 [cider/orchard "0.5.8"]
                 [etaoin "0.3.6"]
                 [re-frame "0.10.9"]
                 [com.taoensso/timbre "4.10.0"]             ; clojurescript logging
-
+                [com.taoensso/encore "2.119.0"]
+                [com.taoensso/sente "1.15.0"] ; pinkie websocket
                 [secretary "1.2.3"]   ; client side routing - TODO: Should likely be replaced by jux/bidi
-                ]
+                [org.pinkgorilla/gorilla-ui "0.1.35"]]
 
  ; shadow dev http server settings
  :dev-http {8000 ["target"
@@ -49,7 +46,16 @@
                 :asset-path "/"
                 :modules {:main {:entries [shiny.web]}}
                 :devtools {:before-load shiny.web/stop
-                           :after-load shiny.web/start}}
+                           :after-load shiny.web/start}
+                :js-options       {:minimize-require false ; module requires full name instead of index
+                                                        ;:js-package-dirs ["packages/babel-worker/node_modules"]
+                                                        ;:js-provider :require
+                                   }
+                :compiler-options {;; preferrably implicit by shadow-cljs compile/watch/release
+                                                        ;; Beware: releasing :none not supported by shadow
+                                                        ;; :optimizations   :none
+                                   :optimizations   :simple} ; self-hosted cljs
+                }
 
           :ci {:target :karma
                :output-to  "target/ci.js"

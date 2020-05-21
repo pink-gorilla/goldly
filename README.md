@@ -21,6 +21,13 @@
      sent from cljs, but eventhandler defined in clj -> send from cljs -> clj
      sent from clj, but eventhandler not defined in clj -> sent from clj -> cljs
 
+# Demo
+
+```
+  npm install
+  lein shadow-compile
+  lein demo
+```
 
      
      

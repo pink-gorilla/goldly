@@ -6,30 +6,32 @@
    )
   (:require
    [cljs.pprint]
-   [reagent.core :as r]
-   [reagent.dom]
    [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
-   [secretary.core :as secretary]
    [goog.events :as events]
    [goog.history.EventType :as EventType]
-
-   [pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
+   [secretary.core :as secretary]
+   [reagent.core :as r]
+   [reagent.dom]
+   [re-frame.core :refer [dispatch clear-subscription-cache!]]
+   ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
    ; add dependencies of this project to bundle
-   [pinkgorilla.ui.default-renderer]
-   [shiny.core]))
+   ;[pinkgorilla.ui.default-renderer]
+   [shiny.core]
+   [shiny.ws :refer [send! start-router!]]
+   [shiny.events] ; add reframe event handlers
+   ))
 
 (enable-console-print!)
 
-(timbre/set-level! :debug)
+(timbre/set-level! :trace)
+;(timbre/set-level! :debug)
 ;(timbre/set-level! :info)
 
 (defn hook-browser-navigation!
   []
   (doto (History.)
-    (events/listen
-     EventType/NAVIGATE
-     (fn [event]
-       (secretary/dispatch! (.-token event))))
+    (events/listen EventType/NAVIGATE (fn [event]
+                                        (secretary/dispatch! (.-token event))))
     (.setEnabled true)))
 
 (defonce history (hook-browser-navigation!))
@@ -41,8 +43,9 @@
   (.setToken history url))
 
 
-(defonce current (reagent.core/atom {:page :info
-                                     :system nil}))
+(defonce current
+  (r/atom {:page :info
+           :system nil}))
 
 (defn app-routes
   [& [{:keys [hook-navigation]
@@ -64,34 +67,59 @@
   [:h1 "system: " id])
 
 
-(defn app []
-  (fn []
-    (let [current @current
-          id (:system current)]
-      [:<>
-       [:h1 "shining.."]
-       (case (:type current)
-         :info [infos]
-         :system [system id])])))
-
-(defn stop []
-  (js/console.log "Stopping..."))
-
-(defn start []
-  (js/console.log "Starting...")
-  ;(js/console.log (print-registered-tags))
-  (app-routes)
-  (nav! "/info")
-  (println "B")
-  (reagent.dom/render [app] ; (tag-inject app)
-                      (.getElementById js/document "app"))
-  (println "C")
-  ;(if (not route)
-
-   ; (secretary/dispatch! route))
+(defn nav []
+  [:nav.navbar.navbar-inverse.navbar-fixed-top
+   [:div.container
+    [:div.navbar-header
+     [:a.navbar-brand "Shiny clj"]]
+    [:div#navbar.collapse.navbar-collapse
+     [:ul.nav.navbar-nav
+      [:li
+       [:a {:href "#/info"} "Info"]]
+      [:li
+       [:a {:href "#/system"} "system"]]
+      ]]]]
   )
 
+(defn app []
+  (let [c @current
+        id (:system c)]
+    [:div.container
+     [nav]
+     (case (:page c)
+       :info [infos]
+       :system [system id]
+       :default [infos])]))
+
+(defn mount-app []
+  (reagent.dom/render [app]
+                      (.getElementById js/document "app")))
+
+ ; (secretary/dispatch! route))
+; 
 
 
-(defn ^:export init []
-  (start))
+;; before-reload is a good place to stop application stuff before we reload.
+(defn ^:dev/before-load before-reload []
+  (println "shadow-cljs reload: before")
+  (info "shadow-cljs reload: before"))
+
+(defn ^:dev/after-load after-reload []
+  (enable-console-print!)
+  (timbre/set-level! :debug)
+  (println "shadow-cljs reload: after")
+  (info "shadow-cljs reload: after")
+
+  (println "clearing reframe subscription cache..")
+  (clear-subscription-cache!)
+
+  (println "re-loading configuration from server..")
+  ;(dispatch [:load-config])
+
+  (app-routes)
+  (start-router!)
+  (println "mounting notebook-app ..")
+  (mount-app))
+
+
+(after-reload)
