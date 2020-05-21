@@ -1,18 +1,20 @@
-(ns repl-tooling.editor-integration.interactive
-  (:require [clojure.walk :as walk]
-            [repl-tooling.eval :as eval]
-            [reagent.core :as r]
-            [repl-tooling.editor-helpers :as helpers]
-            [clojure.string :as str]
-            [repl-tooling.eval :as eval]
-            [cljs.tools.reader :as reader]
-            [repl-tooling.editor-integration.renderer.protocols :as proto]
+(ns shiny.core
+  (:require
+   [clojure.string :as str]   
+   [clojure.walk :as walk]
+   [repl-tooling.eval :as eval]
+   [reagent.core :as r]
+   [repl-tooling.editor-helpers :as helpers]
 
-            [pinkgorilla.ui.default-setup]
-            [pinkgorilla.ui.json]
-            [pinkgorilla.ui.highchart]
-            [pinkgorilla.ui.pinkie :as pinkie]
-            [sci.core :as sci]))
+   [repl-tooling.eval :as eval]
+   [cljs.tools.reader :as reader]
+   [repl-tooling.editor-integration.renderer.protocols :as proto]
+
+   [pinkgorilla.ui.default-setup]
+   [pinkgorilla.ui.json]
+   [pinkgorilla.ui.highchart]
+   [pinkgorilla.ui.pinkie :as pinkie]
+   [sci.core :as sci]))
 
 (defn- edn? [obj]
   (or (number? obj)
@@ -42,13 +44,13 @@
                  (str "(" fun " '"
                       (pr-str (norm-evt (.-target e)))
                       " '" (pr-str @state)
-                      " " (->> additional-args (map #(str "'"(pr-str %))) (str/join " "))
+                      " " (->> additional-args (map #(str "'" (pr-str %))) (str/join " "))
                       ")")
                  {:ignore true})
       (then #(reset! state (:result %)))))
 
 (defn- prepare-fn [fun state repl]
-  (fn [ & args]
+  (fn [& args]
     (if (-> args first edn?)
       (fn [e] (run-evt-fun! e fun state repl args))
       (run-evt-fun! (first args) fun state repl []))))
