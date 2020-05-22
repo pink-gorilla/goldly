@@ -59,7 +59,7 @@
   [{:as ev-msg :keys [?data]}]
   (let [[old-state-map new-state-map] (have vector? ?data)]
     (if (:first-open? new-state-map)
-      (dispatch [:ws-open ?data])
+      (dispatch [:shiny/ws-open new-state-map])
       (debugf "Channel socket state change: %s" ?data))))
 
 (defmethod -event-msg-handler :chsk/handshake

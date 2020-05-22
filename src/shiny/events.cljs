@@ -50,13 +50,10 @@
      (catch js/Error e (error "send event to server ex: " e)))
    nil))
 
-
-
-
 (reg-event-fx
- :ws-open
- (fn [cofx [_ ?data]]
-   (debugf "Channel socket successfully established!: %s" ?data)))
+ :shiny/ws-open
+ (fn [cofx [_ new-state-map]]
+   (debugf "websocket successfully established!: %s" new-state-map)))
 
 
 (reg-event-db

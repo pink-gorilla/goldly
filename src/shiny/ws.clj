@@ -60,25 +60,14 @@
       (chsk-send! uid data))))
 
 
-(add-watch connected-uids :connected-uids
-           (fn [_ _ old new]
-             (when (not= old new)
-               (infof "Connected uids change: %s" new))))
-
-(defn connected-uids? []
-  @connected-uids)
-
-(defroutes pinkie-routes
- 
+(defroutes ws-handler
   (GET "/token" req (json/generate-string {:csrf-token *anti-forgery-token*}))
-
   (GET  "/chsk" req
     (debugf "/chsk got: %s" req)
     (let [r (ring-ajax-get-or-ws-handshake req)]
       (println "ws init: " r)
       (println "ws csrf: " (get-in req [:session :ring.middleware.anti-forgery/anti-forgery-token]))
       r))
-
   (POST "/chsk" req (ring-ajax-post req)))
 
 

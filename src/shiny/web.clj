@@ -4,13 +4,14 @@
    [clojure.tools.logging :as log]
    [ring.util.response :as response]
    [ring.middleware.cors :refer [wrap-cors]]
+   [ring.middleware.cljsjs :refer [wrap-cljsjs]]
    [ring.middleware.gzip :refer [wrap-gzip]]
    [ring.middleware.keyword-params :refer [wrap-keyword-params]]
    [ring.middleware.params :refer [wrap-params]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
    [ring.middleware.session :refer [wrap-session]]
    [ring.middleware.format :refer [wrap-restful-format]]
-   [ring.middleware.anti-forgery :refer (*anti-forgery-token*)]
+   [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [ring.middleware.json :refer [wrap-json-response]]
    [compojure.core :as compojure :refer [defroutes routes context GET POST]]
    [compojure.route :refer [files resources not-found] :as compojure-route]
@@ -18,7 +19,7 @@
    [org.httpkit.server :as httpkit]
    [hiccup.page :as page]
    [shiny.core]
-   [shiny.ws :refer [start-router! pinkie-routes]]))
+   [shiny.ws :refer [start-router! ws-handler]]))
 
 (defn unique-id
   "Get a unique id."
@@ -54,43 +55,45 @@
      "text/html")))
 
 
-(defroutes resource-handlers
+(defroutes resource-handler
   (resources "/")  ;; Needed during development
   (resources "/" {:root "gorilla-repl-client"})
   (files "/" {:root "./target"})
-  (GET "/" req (app req))
   (not-found "Bummer, not found"))
 
+
+(defroutes app-handler
+  (GET "/" req (app req))
+  ws-handler)
 
 ;; DEFAULT HANDLER
 
 (defn wrap-api-handler
-  "a wrapper for JSON API calls"
+  "a wrapper for JSON API calls
+   from pinkgorilla notebook
+   "
   [handler]
   (-> handler
       (wrap-defaults api-defaults)
       (wrap-restful-format :formats [:json :transit-json :edn])))
 
 
-(defroutes default-routes
-  #_(-> app-routes
-        (wrap-api-handler)
-        (wrap-cors-handler))
-  (-> pinkie-routes
-      (wrap-defaults
+(defroutes default-handler
+  (-> app-handler
+      (wrap-defaults site-defaults)
+      #_(wrap-defaults
        (-> site-defaults
            (assoc-in [:security :anti-forgery] true)))
-      (wrap-keyword-params)
-      (wrap-params)
+      ;(wrap-keyword-params)
+      ;(wrap-params)
       ;(wrap-api-handler)
-      ;(wrap-cljsjs)
-      (wrap-session)
-      (wrap-json-response)
-      (wrap-gzip))
-  resource-handlers)
+      ;(wrap-cors-handler)
+      (wrap-cljsjs) ; oz
+      ;(wrap-session)
+      ;(wrap-json-response)
+      (wrap-gzip)) ;oz
+  resource-handler)
 
-(def default-handler
-  (wrap-session default-routes))
 
 ;; webserver
 

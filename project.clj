@@ -26,14 +26,14 @@
                  ;; [ring.middleware.logger "0.5.0"]
                  [ring-middleware-format "0.7.4"]
                  [ring/ring-json "0.5.0"]
+                 [ring-cljsjs "0.1.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [http-kit "2.3.0"]
                  [compojure "1.4.0"]
                  [hiccup "1.0.4"]
                  [com.taoensso/encore "2.119.0"]
                  [com.taoensso/sente "1.15.0"] ; websocket
-                 [org.clojure/data.json "1.0.0"]
-                 ]
+                 [org.clojure/data.json "1.0.0"]]
   :source-paths ["src"]
   :resource-paths ["resources"]
 

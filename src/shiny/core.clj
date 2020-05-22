@@ -2,8 +2,8 @@
   (:require
    [clojure.string]
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
-   [taoensso.timbre :as log :refer (tracef debugf infof warnf errorf)]
-   [shiny.ws :refer [send-all! -event-msg-handler]]))
+   [taoensso.timbre :as log :refer (tracef debugf info infof warnf errorf)]
+   [shiny.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]))
 
 (defn unique-id
   "Get a unique id."
@@ -41,16 +41,14 @@
 (defmacro system [{:keys [state html fns] :as system-cljs} system-clj]
   (let [fns (zipmap (keys fns)
                     (map #(pr-str %) (vals fns)))]
-  {:id (unique-id)
-   :cljs {:state state
-          :html (pr-str html)
-          :fns (pr-str fns)}
-   :clj system-clj}))
+    {:id (unique-id)
+     :cljs {:state state
+            :html (pr-str html)
+            :fns (pr-str fns)}
+     :clj system-clj}))
 
 (comment
-  (macroexpand (system {:html [:h1] :fns {:a 6 :b 8 :c "g"} :state 9} 2))
-  
-  )
+  (macroexpand (system {:html [:h1] :fns {:a 6 :b 8 :c "g"} :state 9} 2)))
 
 
 (defmethod -event-msg-handler :shiny/systems
@@ -65,8 +63,7 @@
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (let [session (:session ring-req)
         uid (:uid session)
-        [event-name system-id] event
-        ]
+        [event-name system-id] event]
     (infof "system event: %s %s" event-name system-id)
     (when ?reply-fn
       (?reply-fn (system-response system-id)))))
@@ -86,6 +83,20 @@
   (println "dispatching " system-id event-name)
   (send-event system-id event-name args))
 
+
+
+(add-watch connected-uids :connected-uids
+           (fn [_ _ old new]
+             (when (not= old new)
+               (infof "Connected uids change: %s" new)
+               (let [uids (:any new)]
+                 (info "uids: " uids)
+                 (doseq [uid uids]
+                   (info "sending systems info to: " uid)
+                   (chsk-send! uid (systems-response)))))))
+
+
+
 (defn system-start!
   [route system]
   (println "starting system " (:id system) " at " route)
@@ -99,7 +110,7 @@
   "setup a loop to broadcast an event to all connected users every second"
   []
   (go-loop [i 0]
-    (<! (async/timeout 10000))
+    (<! (async/timeout 60000))
     (when @broadcast-enabled?_ (send-all! (systems-response)))
     (recur (inc i))))
 
