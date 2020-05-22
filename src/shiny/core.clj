@@ -37,10 +37,21 @@
     (println "sending system to cljs: " system-cljs)))
 
 
-(defmacro system [system-cljs system-clj]
+
+(defmacro system [{:keys [state html fns] :as system-cljs} system-clj]
+  (let [fns (zipmap (keys fns)
+                    (map #(pr-str %) (vals fns)))]
   {:id (unique-id)
-   :cljs (pr-str system-cljs)
-   :clj system-clj})
+   :cljs {:state state
+          :html (pr-str html)
+          :fns (pr-str fns)}
+   :clj system-clj}))
+
+(comment
+  (macroexpand (system {:html [:h1] :fns {:a 6 :b 8 :c "g"} :state 9} 2))
+  
+  )
+
 
 (defmethod -event-msg-handler :shiny/systems
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
