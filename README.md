@@ -21,6 +21,9 @@
      sent from cljs, but eventhandler defined in clj -> send from cljs -> clj
      sent from clj, but eventhandler not defined in clj -> sent from clj -> cljs
 
+- server is essentially providing a rest api via websocket, in the context of
+  the running system
+
 # Demo
 
 ```
