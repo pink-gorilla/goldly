@@ -37,6 +37,9 @@
     (println "sending system to cljs: " system-cljs)))
 
 
+(defn into-mapper
+  [f m]
+  (into (empty m) (for [[k v] m] [k (f v)])))
 
 (defmacro system [{:keys [state html fns] :as system-cljs} system-clj]
   (let [fns (zipmap (keys fns)
@@ -44,7 +47,7 @@
     {:id (unique-id)
      :cljs {:state state
             :html (pr-str html)
-            :fns (pr-str fns)}
+            :fns (into-mapper pr-str fns)}
      :clj system-clj}))
 
 (comment

@@ -1,17 +1,30 @@
 (ns shiny.core
   (:require
-   [clojure.string :as str]   
+   [clojure.string :as str]
    [clojure.walk :as walk]
+   [sci.core :as sci]
    [cljs.tools.reader :as reader]
    [reagent.core :as r]
    [reagent.dom]
-  ; [repl-tooling.eval :as eval]
-  ; [repl-tooling.editor-helpers :as helpers]
-  ; [repl-tooling.editor-integration.renderer.protocols :as proto]
-
    [pinkgorilla.ui.default-setup]
-   [pinkgorilla.ui.pinkie :as pinkie]
-   [sci.core :as sci]))
+   [pinkgorilla.ui.pinkie :as pinkie]))
+
+;; cljs compile
+
+(def ^:private walk-ns {'postwalk walk/postwalk
+                        'prewalk walk/prewalk
+                        'keywordize-keys walk/keywordize-keys
+                        'walk walk/walk
+                        'postwalk-replace walk/postwalk-replace
+                        'prewalk-replace walk/prewalk-replace
+                        'stringify-keys walk/stringify-keys})
+
+(defn compile [code bindings]
+  (sci/eval-string code {:bindings bindings
+                         :preset {:termination-safe true}
+                         :namespaces {'walk walk-ns}}))
+
+;; compile system
 
 (defn- edn? [obj]
   (or (number? obj)
@@ -34,70 +47,75 @@
        (filter (comp edn? second))
        (into {})))
 
-(defn- run-evt-fun! [e fun state repl additional-args]
-  (.preventDefault e)
-  (.stopPropagation e)
-  #_(.. (eval/eval repl
-                 (str "(" fun " '"
-                      (pr-str (norm-evt (.-target e)))
-                      " '" (pr-str @state)
-                      " " (->> additional-args (map #(str "'" (pr-str %))) (str/join " "))
-                      ")")
-                 {:ignore true})
-      (then #(reset! state (:result %)))))
+(defn- eventhandler-fn [state fun]
+  (fn [e & args]
+    (try
+      (println "running eventhandler with state: " @state)
+      (println "eventhandler fn: " fun)
+      (println "eventhandler e: " e)
+      (.preventDefault e)
+      (.stopPropagation e)
+      (let [e-norm (norm-evt (.-target e))
+            _   (println "eventhandler e-norm: " e-norm)
+            _ (println "args: " args)
+            fun-args [e-norm @state]
+            fun-args (if (nil? args)
+                        fun-args
+                        (into [] (concat fun-args args)))
+            _ (println "fun-args: " fun-args)
+            ]
+        (->> (apply fun fun-args)
+             (reset! state))
+        (println "new state: " @state)
+        )
+      (catch :default e
+        (.log js/console "eventhandler-fn exception: " e)))))
 
-(defn- prepare-fn [fun state repl]
-  (fn [& args]
-    (if (-> args first edn?)
-      (fn [e] (run-evt-fun! e fun state repl args))
-      (run-evt-fun! (first args) fun state repl []))))
+(defn no-op-fun [f-name]
+  (fn [state e-norm]
+    (println "running function " f-name " (no-fun) ..")))
 
-(defn- bindings-for [state fns repl]
-  (->> fns
-       (map (fn [[f-name f-body]] [(->> f-name name (str "?") symbol)
-                                   (prepare-fn f-body state repl)]))
-       (into {'?state @state})))
+(defn compile-fn
+  "compiles a system/fns. 
+   On compile error returns no-op-fun"
+  [bindings f-name f-body]
+  (let [_ (println "compile-fn " f-name " bindings: " (keys bindings) " code: " f-body)
+        f-body (cljs.reader/read-string f-body)
+        _ (println "fbody: " f-body)
+        fun (compile f-body bindings)
+        _ (println "fun: " fun)
+        fun (if fun
+              fun
+              (do (println "compile error in system/fn " f-name)
+                  (no-op-fun f-name)))]
+    fun))
 
-(def ^:private walk-ns {'postwalk walk/postwalk
-                        'prewalk walk/prewalk
-                        'keywordize-keys walk/keywordize-keys
-                        'walk walk/walk
-                        'postwalk-replace walk/postwalk-replace
-                        'prewalk-replace walk/prewalk-replace
-                        'stringify-keys walk/stringify-keys})
 
-(defn- treat-error [hiccup]
-  (let [d (. js/document createElement "div")]
-    (reagent.dom/render hiccup d)
-    hiccup))
+(defn- ->bindings [state fns]
+  (let [bindings {'?state @state}]
+    (->> fns
+         (map (fn [[f-name f-body]]
+                [(->> f-name name (str "?") symbol)
+                 (->> (compile-fn bindings f-name f-body)
+                     (eventhandler-fn state))]))
+         (into bindings))))
 
 (defn tap [x]
   (println "tap:" x)
-  x
-  )
+  x)
 
-
-(defn render-interactive [{:keys [state html fns] :as edn} repl]
-  (let [state (r/atom state)
+(defn render-interactive [{:keys [state html fns] :as system}]
+  (let [state-a (r/atom state)
+        _ (println "compiling binding-fns for render-interactive..")
+        bindings (->bindings state-a fns)
+        _ (println "compiling binding-fns for render-interactive.. success!")
+        _ (println "bindings: " (keys bindings))
         html (fn [state]
                (try
-                 (-> html
-                     tap
-                     pr-str
-                     tap
-                     (sci/eval-string  {:bindings (bindings-for state fns repl)
-                                        :preset {:termination-safe true}
-                                        :namespaces {'walk walk-ns}})
-                     pinkie/tag-inject
-                     #_treat-error)
+                 (-> (compile html bindings)
+                     pinkie/tag-inject)
                  (catch :default e
                    (.log js/console e)
-                   [:div.error "Can't render this code - " (pr-str e)])))
-        _ (println "html: " html)
-        ]
+                   [:div.error "Error compiling system/htm: " (pr-str e)])))
+        _ (println "html: " html)]
     [html state]))
-
-#_(defrecord Interactive [edn repl editor-state]
-  proto/Renderable
-  (as-html [_ ratom _]
-    (render-interactive edn repl)))
