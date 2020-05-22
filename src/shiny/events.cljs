@@ -37,23 +37,29 @@
  (fn [db [_ system]]
    (assoc db :system system)))
 
+(defn request-systems []
+  (try
+    (chsk-send! [:shiny/systems]
+                5000
+                (fn [[event-type data]]
+                  (info "systems data:" data)
+                  (dispatch [:shiny/systems-store data])))
+    (catch js/Error e (error "send event to server ex: " e))))
+
+
 (reg-event-fx
  :shiny/send
  (fn [cofx [_ event-name data]]
    (infof "shiny/send %s %s" event-name data)
-   (try
-     (chsk-send! [event-name data]
-                 5000
-                 (fn [s] 
-                   (info "system data:" s)
-                   (dispatch [:shiny/system-store s])))
-     (catch js/Error e (error "send event to server ex: " e)))
+   (chsk-send! [event-name data])
    nil))
 
 (reg-event-fx
  :shiny/ws-open
  (fn [cofx [_ new-state-map]]
-   (debugf "websocket successfully established!: %s" new-state-map)))
+   (debugf "websocket successfully established!: %s" new-state-map)
+   (request-systems)
+   nil))
 
 
 (reg-event-db
@@ -61,9 +67,9 @@
  (fn [db [_ event-type data]]
    (let [_ (debugf "rcvd :shiny/event: %s %s" event-type data)]
      (case event-type
-       :shiny/heartbeat (tracef "shiny Heartbeat: %s" data)
-       :shiny/systems (dispatch [:shiny/systems-store data])
        :chsk/ws-ping (trace "shiny ping rcvd")
+       :shiny/system (dispatch [:shiny/system-store data])
+       :shiny/systems (dispatch [:shiny/systems-store data])
        (infof "shiny Unhandled server event %s %s" event-type data))
      db)))
 

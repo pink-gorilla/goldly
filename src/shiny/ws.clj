@@ -57,7 +57,8 @@
   (let [uids (:any @connected-uids)]
     (debugf "Broadcasting %s to %s clients" (first data) (count uids))
     (doseq [uid uids]
-      (chsk-send! uid data))))
+      (when-not (= uid :sente/nil-uid)
+        (chsk-send! uid data)))))
 
 
 (defroutes ws-handler

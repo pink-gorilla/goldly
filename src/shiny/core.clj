@@ -65,8 +65,9 @@
         uid (:uid session)
         [event-name system-id] event]
     (infof "system event: %s %s" event-name system-id)
-    (when ?reply-fn
-      (?reply-fn (system-response system-id)))))
+    (if ?reply-fn
+      (?reply-fn (system-response system-id))
+      (chsk-send! uid [:shiny/system (system-response system-id)]))))
 
 
 (defn on-event [[id name & args]]
