@@ -16,7 +16,7 @@
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
    ; add dependencies of this project to bundle
    ;[pinkgorilla.ui.default-renderer]
-   [shiny.core :refer [render-interactive]]
+   [shiny.core :refer [render-system]]
    [shiny.ws :refer [send! start-router!]]
    [shiny.events] ; add reframe event handlers
    [shiny.subs]))
@@ -90,7 +90,7 @@
          [:p (pr-str system)]
          (when system
            [error-boundary
-            [render-interactive (:cljs system)]])]))))
+            [render-system (:cljs system)]])]))))
 
 
 (defn nav []

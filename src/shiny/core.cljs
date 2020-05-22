@@ -60,14 +60,12 @@
             _ (println "args: " args)
             fun-args [e-norm @state]
             fun-args (if (nil? args)
-                        fun-args
-                        (into [] (concat fun-args args)))
-            _ (println "fun-args: " fun-args)
-            ]
+                       fun-args
+                       (into [] (concat fun-args args)))
+            _ (println "fun-args: " fun-args)]
         (->> (apply fun fun-args)
              (reset! state))
-        (println "new state: " @state)
-        )
+        (println "new state: " @state))
       (catch :default e
         (.log js/console "eventhandler-fn exception: " e)))))
 
@@ -92,30 +90,36 @@
 
 
 (defn- ->bindings [state fns]
-  (let [bindings {'?state @state}]
+  (let [bindings {'state state}]
     (->> fns
          (map (fn [[f-name f-body]]
                 [(->> f-name name (str "?") symbol)
                  (->> (compile-fn bindings f-name f-body)
-                     (eventhandler-fn state))]))
+                      (eventhandler-fn state))]))
          (into bindings))))
 
 (defn tap [x]
   (println "tap:" x)
   x)
 
-(defn render-interactive [{:keys [state html fns] :as system}]
-  (let [state-a (r/atom state)
-        _ (println "compiling binding-fns for render-interactive..")
+(defn compile-system [state-a html fns]
+  (let [_ (println "compiling system/binding-fns ..")
         bindings (->bindings state-a fns)
-        _ (println "compiling binding-fns for render-interactive.. success!")
+        _ (println "compiling system/binding-fns success!")
         _ (println "bindings: " (keys bindings))
-        html (fn [state]
+        system (fn [state]
                (try
                  (-> (compile html bindings)
                      pinkie/tag-inject)
                  (catch :default e
                    (.log js/console e)
                    [:div.error "Error compiling system/htm: " (pr-str e)])))
-        _ (println "html: " html)]
-    [html state]))
+        _ (println "system: " system)]
+    system))
+
+
+(defn render-system [{:keys [state html fns]}]
+  (let [state-a (r/atom state)
+        system (compile-system state-a html fns)]
+    (fn []
+      [system state-a])))
