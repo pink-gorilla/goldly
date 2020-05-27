@@ -13,7 +13,9 @@
                 [org.rksm/suitable "0.3.2"  :exclusions [org.clojure/clojurescript]]
                 [cider/orchard "0.5.8"]
                 [etaoin "0.3.6"]
-                [reagent "0.10.0"]
+                [reagent "0.10.0" :exclusions [org.clojure/tools.reader
+                                               cljsjs/react
+                                               cljsjs/react-dom]]
                 [re-frame "0.12.0"]
                 [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                 [com.taoensso/encore "2.119.0"]
