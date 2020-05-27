@@ -1,3 +1,6 @@
+(ns demo.demo2)
+
+
 {:state {:in "" :msg "Type Something..."} 
  :html 
    [:div.rows 

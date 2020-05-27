@@ -45,9 +45,7 @@
       (page/html5
        [:head
         [:title "Shiny"]
-        #_[:link {:type "text/css"
-                  :href "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
-                  :rel "stylesheet"}]]
+        [:link {:rel "stylesheet" :href "tailwindcss/dist/tailwind.css" :type "text/css"}]]
        [:body
         [:div#sente-csrf-token {:data-csrf-token csrf-token}]
         [:div#app]
@@ -59,6 +57,7 @@
   (resources "/")  ;; Needed during development
   (resources "/" {:root "gorilla-repl-client"})
   (files "/" {:root "./target"})
+  (files "/" {:root "./node_modules"}) ; access css and bundles in npm dependencies  
   (not-found "Bummer, not found"))
 
 

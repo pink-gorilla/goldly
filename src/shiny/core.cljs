@@ -6,8 +6,10 @@
    [cljs.tools.reader :as reader]
    [reagent.core :as r]
    [reagent.dom]
+   [pinkgorilla.ui.pinkie :as pinkie]
    [pinkgorilla.ui.default-setup]
-   [pinkgorilla.ui.pinkie :as pinkie]))
+   [pinkgorilla.ui.default-renderer] ; add ui renderer definitions 
+   ))
 
 ;; cljs compile
 

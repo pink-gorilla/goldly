@@ -39,8 +39,34 @@
 
 
   ;:repl-options {:init-ns ta.model.single}
-  :profiles {:dev
-             {:dependencies [[clj-kondo "2019.11.23"]]
+  :profiles {:cljs {:dependencies [[org.clojure/clojurescript "1.10.773"]
+                                   [thheller/shadow-cljs "2.8.94"] ; 106
+                                   [thi.ng/strf "0.2.2"]
+                                   [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
+                                   [check "0.1.0-SNAPSHOT"]
+                                   [funcool/promesa "4.0.2"]
+                                   [paprika "0.1.3-SNAPSHOT"]
+                                   [borkdude/sci "0.0.13-alpha.17"]
+                                   [compliment "0.4.0-SNAPSHOT"]
+                                   [rewrite-cljs "0.4.4"]
+                                   [org.rksm/suitable "0.3.2"  :exclusions [org.clojure/clojurescript]]
+                                   [cider/orchard "0.5.8"]
+                                   [etaoin "0.3.6"]
+                                   [reagent "0.10.0"]
+                                   [re-frame "0.12.0"]
+                                   [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
+                                   [com.taoensso/encore "2.119.0"]
+                                   [com.taoensso/sente "1.15.0"] ;  websocket
+                                   [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: Should likely be replaced by jux/bidi
+                                   [org.pinkgorilla/gorilla-ui "0.1.42"]]}
+
+
+             :demo
+             {:source-paths ["profiles/demo/src"]}
+
+
+             :dev
+             {:dependencies [[clj-kondo "2020.05.09"]]
               :plugins      [[lein-cljfmt "0.6.6"]
                              [lein-cloverage "1.1.2"]]
               :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
@@ -69,4 +95,7 @@
             ["shell" "shadow-cljs" "compile" "web"]
 
             "demo" ^{:doc "Runs demo"}
-            ["run" "-m" "shiny.demo1"]})
+            ["with-profile" "+demo" "run" "-m" "demo.demo1"]
+
+            "outdated" ^{:doc "Runs ancient"}
+            ["with-profile" "+cljs" "ancient"]})
