@@ -31,7 +31,6 @@
   [req]
   (get-in req [:session :uid]))
 
-
 (defn app [req]
   (let [csrf-token (force *anti-forgery-token*) ;(:anti-forgery-token ring-req)] ; Also an option
         session (if (session-uid req)
@@ -49,9 +48,8 @@
        [:body
         [:div#sente-csrf-token {:data-csrf-token csrf-token}]
         [:div#app]
-        [:script {:src "main.js" :type "text/javascript"}]])} 
+        [:script {:src "main.js" :type "text/javascript"}]])}
      "text/html")))
-
 
 (defroutes resource-handler
   (resources "/")  ;; Needed during development
@@ -59,7 +57,6 @@
   (files "/" {:root "./target"})
   (files "/" {:root "./node_modules"}) ; access css and bundles in npm dependencies  
   (not-found "Bummer, not found"))
-
 
 (defroutes app-handler
   (GET "/" req (app req))
@@ -76,13 +73,12 @@
       (wrap-defaults api-defaults)
       (wrap-restful-format :formats [:json :transit-json :edn])))
 
-
 (defroutes default-handler
   (-> app-handler
       (wrap-defaults site-defaults)
       #_(wrap-defaults
-       (-> site-defaults
-           (assoc-in [:security :anti-forgery] true)))
+         (-> site-defaults
+             (assoc-in [:security :anti-forgery] true)))
       ;(wrap-keyword-params)
       ;(wrap-params)
       ;(wrap-api-handler)
@@ -95,6 +91,7 @@
 
 
 ;; webserver
+
 
 (def server (atom nil))
 

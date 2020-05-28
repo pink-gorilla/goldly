@@ -5,7 +5,7 @@
                                      :username :env/release_username
                                      :password :env/release_password
                                      :sign-releases false}]]
-  :min-lein-version "2.9.1"
+  :min-lein-version "2.9.3"
   :min-java-version "1.11"
 
   :release-tasks [["vcs" "assert-committed"]
@@ -18,6 +18,8 @@
                   ["vcs" "push"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
+                 [thheller/shadow-cljs "2.8.94"]
+                 [thheller/shadow-cljsjs "0.0.21"]
                  [org.clojure/tools.logging "0.4.0"]
                  [ring/ring-core "1.6.3"]
                  [ring-cors "0.1.13"]
@@ -30,17 +32,21 @@
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [http-kit "2.3.0"]
                  [compojure "1.4.0"]
-                 [hiccup "1.0.4"]
+                 [hiccup "1.0.5"]
+                 [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.119.0"]
-                 [com.taoensso/sente "1.15.0"] ; websocket
-                 [org.clojure/data.json "1.0.0"]]
+                 [com.taoensso/sente "1.15.0"
+                  :exclusions [aleph
+                               org.clojure/core.async
+                               org.immutant
+                               info.sunng/ring-jetty9-adapter]] ;  websocket
+                 [org.clojure/data.json "1.0.0"]
+                 ; @awb99 you need to have shadow-cljs installed in your project. both
+                 ]
   :source-paths ["src"]
   :resource-paths ["resources"]
 
-
-  ;:repl-options {:init-ns ta.model.single}
   :profiles {:cljs {:dependencies [[org.clojure/clojurescript "1.10.773"]
-                                   [thheller/shadow-cljs "2.8.94"] ; 106
                                    [thi.ng/strf "0.2.2"]
                                    [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
                                    [check "0.1.0-SNAPSHOT"]
@@ -54,32 +60,25 @@
                                    [etaoin "0.3.6"]
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
-                                   [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
-                                   [com.taoensso/encore "2.119.0"]
-                                   [com.taoensso/sente "1.15.0"] ;  websocket
                                    [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: Should likely be replaced by jux/bidi
-                                   [org.pinkgorilla/gorilla-ui "0.1.42"]]}
+                                   [org.pinkgorilla/gorilla-ui "0.1.48"]]}
 
+             :demo {:source-paths ["profiles/demo/src"]}
 
-             :demo
-             {:source-paths ["profiles/demo/src"]}
-
-
-             :dev
-             {:dependencies [[clj-kondo "2020.05.09"]]
-              :plugins      [[lein-cljfmt "0.6.6"]
-                             [lein-cloverage "1.1.2"]]
-              :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
-              :cloverage    {:codecov? true
+             :dev {:dependencies [[clj-kondo "2020.05.09"]]
+                   :plugins      [[lein-cljfmt "0.6.6"]
+                                  [lein-cloverage "1.1.2"]]
+                   :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
+                   :cloverage    {:codecov? true
                                   ;; In case we want to exclude stuff
                                   ;; :ns-exclude-regex [#".*util.instrument"]
                                   ;; :test-ns-regex [#"^((?!debug-integration-test).)*$$"]
-                             }
+                                  }
                    ;; TODO : Make cljfmt really nice : https://devhub.io/repos/bbatsov-cljfmt
-              :cljfmt       {:indents {as->                [[:inner 0]]
-                                       with-debug-bindings [[:inner 0]]
-                                       merge-meta          [[:inner 0]]
-                                       try-if-let          [[:block 1]]}}}}
+                   :cljfmt       {:indents {as->                [[:inner 0]]
+                                            with-debug-bindings [[:inner 0]]
+                                            merge-meta          [[:inner 0]]
+                                            try-if-let          [[:block 1]]}}}}
 
   :plugins [[lein-shell "0.5.0"]
             [lein-ancient "0.6.15"]
@@ -92,10 +91,12 @@
             ["clj-kondo" "--lint" "src"]
 
             "shadow-compile"  ^{:doc "compiles UI"}
-            ["shell" "shadow-cljs" "compile" "web"]
+            ;["shell" "shadow-cljs" "compile" "web"]
+            ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
 
             "demo" ^{:doc "Runs demo"}
             ["with-profile" "+demo" "run" "-m" "demo.demo1"]
 
             "outdated" ^{:doc "Runs ancient"}
             ["with-profile" "+cljs" "ancient"]})
+

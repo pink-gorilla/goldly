@@ -42,8 +42,6 @@
   [url]
   (.setToken history url))
 
-
-
 (defn app-routes
   [& [{:keys [hook-navigation]
        :or   {hook-navigation false}}]]
@@ -64,7 +62,6 @@
      [:h1 "running system info: " (count @ids)]
      (for [id @ids]
        ^{:key id} [:a {:href (str "#/system/" id)} id])]))
-
 
 (defn error-boundary [_ #_comp]
   (let [error (r/atom nil)
@@ -91,7 +88,6 @@
          (when system
            [error-boundary
             [render-system (:cljs system)]])]))))
-
 
 (defn nav []
   [:nav.navbar.navbar-inverse.navbar-fixed-top
@@ -142,6 +138,5 @@
   (start-router!)
   (println "mounting notebook-app ..")
   (mount-app))
-
 
 (after-reload)

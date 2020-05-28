@@ -13,6 +13,7 @@
 
 ;; system
 
+
 (def systems (atom {}))
 
 (defn systems-response []
@@ -30,12 +31,9 @@
   (let [message  {:system system-id :type event-name :args args}]
     (send-all! [:shiny/event message])))
 
-
-
 (defn system->cljs [system]
   (let [system-cljs (dissoc system :clj)]
     (println "sending system to cljs: " system-cljs)))
-
 
 (defn into-mapper
   [f m]
@@ -52,7 +50,6 @@
 
 (comment
   (macroexpand (system {:html [:h1] :fns {:a 6 :b 8 :c "g"} :state 9} 2)))
-
 
 (defmethod -event-msg-handler :shiny/systems
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
@@ -72,7 +69,6 @@
       (?reply-fn (system-response system-id))
       (chsk-send! uid [:shiny/system (system-response system-id)]))))
 
-
 (defn on-event [[id name & args]]
   (println "rcvd event for system " id " " name)
   (let [system ((keyword id) @systems)
@@ -87,8 +83,6 @@
   (println "dispatching " system-id event-name)
   (send-event system-id event-name args))
 
-
-
 (add-watch connected-uids :connected-uids
            (fn [_ _ old new]
              (when (not= old new)
@@ -99,14 +93,11 @@
                    (info "sending systems info to: " uid)
                    (chsk-send! uid (systems-response)))))))
 
-
-
 (defn system-start!
   [route system]
   (println "starting system " (:id system) " at " route)
   (swap! systems assoc (keyword (:id system)) system)
   (system->cljs system))
-
 
 (def broadcast-enabled?_ (atom true))
 

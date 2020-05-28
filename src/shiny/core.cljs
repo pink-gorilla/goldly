@@ -90,7 +90,6 @@
                   (no-op-fun f-name)))]
     fun))
 
-
 (defn- ->bindings [state fns]
   (let [bindings {'state state}]
     (->> fns
@@ -110,15 +109,14 @@
         _ (println "compiling system/binding-fns success!")
         _ (println "bindings: " (keys bindings))
         system (fn [state]
-               (try
-                 (-> (compile html bindings)
-                     pinkie/tag-inject)
-                 (catch :default e
-                   (.log js/console e)
-                   [:div.error "Error compiling system/htm: " (pr-str e)])))
+                 (try
+                   (-> (compile html bindings)
+                       pinkie/tag-inject)
+                   (catch :default e
+                     (.log js/console e)
+                     [:div.error "Error compiling system/htm: " (pr-str e)])))
         _ (println "system: " system)]
     system))
-
 
 (defn render-system [{:keys [state html fns]}]
   (let [state-a (r/atom state)

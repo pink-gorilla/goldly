@@ -3,6 +3,7 @@
     "name": "shiny-clj",
     "version": "0.37.0",
     "dependencies": {
+        "@popperjs/core": "2.4.0",
         "ag-grid-community": "22.1.1",
         "ag-grid-react": "22.1.1",
         "create-react-class": "15.6.3",
@@ -15,6 +16,8 @@
         "react-leaflet": "2.7.0",
         "react-player": "1.15.3",
         "react-sparklines": "1.7.0",
+        "shadow-cljs": "^2.9.10",
+        "tails-ui": "0.5.5",
         "tailwindcss": "1.4.6",
         "vega": "5.12.3",
         "vega-embed": "6.8.0",

@@ -46,7 +46,6 @@
                   (dispatch [:shiny/systems-store data])))
     (catch js/Error e (error "send event to server ex: " e))))
 
-
 (reg-event-fx
  :shiny/send
  (fn [cofx [_ event-name data]]
@@ -60,7 +59,6 @@
    (debugf "websocket successfully established!: %s" new-state-map)
    (request-systems)
    nil))
-
 
 (reg-event-db
  :shiny/event

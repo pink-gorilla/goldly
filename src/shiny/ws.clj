@@ -32,6 +32,8 @@
 ;(log/set-level! :info)
 ;; (log/set-level! :debug)
 ;(taoensso.timbre/set-level! :trace) ; Uncomment for more logging
+
+
 (taoensso.timbre/set-level! :debug)
 
 (reset! sente/debug-mode?_ true) ; Uncomment for extra debug info
@@ -60,7 +62,6 @@
       (when-not (= uid :sente/nil-uid)
         (chsk-send! uid data)))))
 
-
 (defroutes ws-handler
   (GET "/token" req (json/generate-string {:csrf-token *anti-forgery-token*}))
   (GET  "/chsk" req
@@ -73,6 +74,7 @@
 
 
 ;; Router
+
 
 (defmulti -event-msg-handler :id)
 

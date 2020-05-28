@@ -14,6 +14,7 @@
 
 ;; CSRF check
 
+
 (def ?csrf-token
   (when-let [el (.getElementById js/document "sente-csrf-token")]
     (.getAttribute el "data-csrf-token")))
@@ -24,7 +25,6 @@
   (if ?csrf-token
     (println "CSRF token detected in HTML, great!")
     (println "CSRF token NOT detected in HTML, default Sente config will reject requests")))
-
 
 (defn- log [a-thing]
   (.log js/console a-thing))
@@ -72,11 +72,11 @@
 (defmethod -event-msg-handler :chsk/recv
   [{:as ev-msg :keys [?data]}]
   (let [[id msg] ?data]
-    (dispatch [:shiny/event id msg])
-    ))
+    (dispatch [:shiny/event id msg])))
 
 
 ;;;; Sente event router (our `event-msg-handler` loop)
+
 
 (defonce router_ (atom nil))
 (defn  stop-router! [] (when-let [stop-f @router_] (stop-f)))
@@ -90,7 +90,6 @@
 
 (debugf "testing 123...")
 
-
 (defn send! [data]
   (chsk-send! data 5000
               (fn [cb-reply]
@@ -98,6 +97,7 @@
 
 
 ;; Heartbeat sender
+
 
 (def broadcast-enabled?_ (atom true))
 
