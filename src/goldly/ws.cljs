@@ -1,4 +1,4 @@
-(ns shiny.ws
+(ns goldly.ws
   (:require
    [clojure.string :as str]
    [cljs.core.async :as async  :refer (<! >! put! chan)]
@@ -59,7 +59,7 @@
   [{:as ev-msg :keys [?data]}]
   (let [[old-state-map new-state-map] (have vector? ?data)]
     (if (:first-open? new-state-map)
-      (dispatch [:shiny/ws-open new-state-map])
+      (dispatch [:goldly/ws-open new-state-map])
       (debugf "Channel socket state change: %s" ?data))))
 
 (defmethod -event-msg-handler :chsk/handshake
@@ -72,7 +72,7 @@
 (defmethod -event-msg-handler :chsk/recv
   [{:as ev-msg :keys [?data]}]
   (let [[id msg] ?data]
-    (dispatch [:shiny/event id msg])))
+    (dispatch [:goldly/event id msg])))
 
 
 ;;;; Sente event router (our `event-msg-handler` loop)
@@ -88,7 +88,6 @@
           (sente/start-client-chsk-router!
            ch-chsk event-msg-handler)))
 
-(debugf "testing 123...")
 
 (defn send! [data]
   (chsk-send! data 5000
@@ -106,7 +105,7 @@
   []
   (go-loop [i 0]
     (<! (async/timeout 30000))
-    (when @broadcast-enabled?_ (send! [:shiny/systems {:i i}]))
+    (when @broadcast-enabled?_ (send! [:goldly/systems {:i i}]))
     (recur (inc i))))
 
 (start-heartbeats!)

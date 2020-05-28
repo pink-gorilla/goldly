@@ -1,11 +1,13 @@
-(ns shiny.core
+(ns goldly.core
   (:require
    [clojure.string :as str]
    [clojure.walk :as walk]
    [sci.core :as sci]
    [cljs.tools.reader :as reader]
+   [cljs.reader]
    [reagent.core :as r]
    [reagent.dom]
+   [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
    [pinkgorilla.ui.pinkie :as pinkie]
    [pinkgorilla.ui.default-setup]
    [pinkgorilla.ui.default-renderer] ; add ui renderer definitions 
@@ -52,9 +54,8 @@
 (defn- eventhandler-fn [state fun]
   (fn [e & args]
     (try
-      (println "running eventhandler with state: " @state)
-      (println "eventhandler fn: " fun)
-      (println "eventhandler e: " e)
+      (println "running eventhandler fn: " fun "e:" e " args: " args)
+      ;(println "running eventhandler with state: " @state)
       (.preventDefault e)
       (.stopPropagation e)
       (let [e-norm (norm-evt (.-target e))
@@ -90,36 +91,72 @@
                   (no-op-fun f-name)))]
     fun))
 
-(defn- ->bindings [state fns]
-  (let [bindings {'state state}]
-    (->> fns
-         (map (fn [[f-name f-body]]
-                [(->> f-name name (str "?") symbol)
-                 (->> (compile-fn bindings f-name f-body)
-                      (eventhandler-fn state))]))
-         (into bindings))))
+(defn clj-fun [fn-clj]
+  (fn []
+    (println "calling clj function: " fn-clj)
+    (dispatch [:goldly/send fn-clj])
+    ))
+
+
+(defn binding-symbol [f-name]
+  (->> f-name name (str "?") symbol))
+
+(defn- ->bindings-clj [fns-clj]
+  (let [fns-clj (or fns-clj [])
+        fns-keys (map binding-symbol fns-clj)
+        bindings-clj  (zipmap fns-keys (map clj-fun fns-clj))]
+    (println "bindings-clj: " bindings-clj)
+    bindings-clj))
+
+(defn- ->bindings-cljs [state fns]
+  (let [bindings {'state state}
+        bindings-cljs (->> fns
+                           (map (fn [[f-name f-body]]
+                                  [(binding-symbol f-name)
+                                   (->> (compile-fn bindings f-name f-body)
+                                        (eventhandler-fn state))]))
+                           (into bindings))]
+    (println "bindings-cljs: " bindings-cljs)
+    bindings-cljs))
 
 (defn tap [x]
   (println "tap:" x)
   x)
 
-(defn compile-system [state-a html fns]
-  (let [_ (println "compiling system/binding-fns ..")
-        bindings (->bindings state-a fns)
-        _ (println "compiling system/binding-fns success!")
-        _ (println "bindings: " (keys bindings))
+(defn compile-error [s b e]
+  [:div.border.border-red-500.m-5.p-3
+   [:h3.text-purple-700-w-full.bg-pink-300.mb-5 "Error compiling system"]
+   [:h1.text-blue-300 "system"]
+   [:p (pr-str s)]
+   [:h1.text-blue-300 "bindings"]
+   [:p (pr-str b)]
+   [:h1.text-blue-300 "Error"]
+   [:p (pr-str e)]])
+
+
+(defn compile-system [state-a html fns fns-clj]
+  (let [_ (println "compile-system ..")
+        bindings-cljs (->bindings-cljs state-a fns)
+        bindings-clj  (->bindings-clj fns-clj)
+        bindings (merge bindings-clj bindings-cljs)
+        _ (println "bindings-system: " bindings)
         system (fn [state]
                  (try
                    (-> (compile html bindings)
                        pinkie/tag-inject)
                    (catch :default e
                      (.log js/console e)
-                     [:div.error "Error compiling system/htm: " (pr-str e)])))
+                     [compile-error{:state @state-a 
+                                    :html html 
+                                    :fns fns
+                                    :fns-clj fns-clj} bindings e])))
         _ (println "system: " system)]
     system))
 
-(defn render-system [{:keys [state html fns]}]
-  (let [state-a (r/atom state)
-        system (compile-system state-a html fns)]
-    (fn []
-      [system state-a])))
+(defn render-system [{:keys [state html fns fns-clj]}]
+  (if (nil? html)
+    [:h1 "Error: system html is nil!"]
+    (let [state-a (r/atom state)
+          system (compile-system state-a html fns fns-clj)]
+      (fn []
+        [system state-a]))))

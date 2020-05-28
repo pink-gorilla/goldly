@@ -1,4 +1,4 @@
-# shiny-clj
+# goldly
 
 ##Overview
 
@@ -35,7 +35,7 @@
 
 data <- attach(readRDS("data.rds"))
     for (prefix in names(resources)) {
-        shiny::addResourcePath(prefix, resources[[prefix]])
+        goldly::addResourcePath(prefix, resources[[prefix]])
     }
      
 

@@ -1,4 +1,4 @@
-(ns shiny.web
+(ns goldly.web
   (:require
    [clojure.string]
    [clojure.tools.logging :as log]
@@ -18,8 +18,8 @@
    [compojure.handler :as handler]
    [org.httpkit.server :as httpkit]
    [hiccup.page :as page]
-   [shiny.core]
-   [shiny.ws :refer [start-router! ws-handler]]))
+   [goldly.core]
+   [goldly.ws :refer [start-router! ws-handler]]))
 
 (defn unique-id
   "Get a unique id."
@@ -43,7 +43,7 @@
       :body
       (page/html5
        [:head
-        [:title "Shiny"]
+        [:title "goldly"]
         [:link {:rel "stylesheet" :href "tailwindcss/dist/tailwind.css" :type "text/css"}]]
        [:body
         [:div#sente-csrf-token {:data-csrf-token csrf-token}]

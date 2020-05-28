@@ -18,9 +18,9 @@
  :builds {:web {:target :browser
                 :output-dir "target"
                 :asset-path "/"
-                :modules {:main {:entries [shiny.web]}}
-                :devtools {:before-load shiny.web/stop
-                           :after-load shiny.web/start}
+                :modules {:main {:entries [goldly.web]}}
+                :devtools {:before-load goldly.web/stop
+                           :after-load goldly.web/start}
                 :js-options       {:minimize-require false ; module requires full name instead of index
                                                         ;:js-package-dirs ["packages/babel-worker/node_modules"]
                                                         ;:js-provider :require

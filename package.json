@@ -1,6 +1,6 @@
 {
     "//": "hint: npm outdated is the new lein ancient",
-    "name": "shiny-clj",
+    "name": "goldly-clj",
     "version": "0.37.0",
     "dependencies": {
         "@popperjs/core": "2.4.0",

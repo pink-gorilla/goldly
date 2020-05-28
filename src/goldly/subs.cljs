@@ -1,4 +1,4 @@
-(ns shiny.subs
+(ns goldly.subs
   (:require-macros
    [reagent.ratom])
   (:require

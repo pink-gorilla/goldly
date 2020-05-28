@@ -1,4 +1,4 @@
-(ns shiny.web
+(ns goldly.web
   (:require-macros [secretary.core :refer [defroute]])
   (:import
    [goog History]
@@ -12,14 +12,14 @@
    [secretary.core :as secretary]
    [reagent.core :as r]
    [reagent.dom]
-   [re-frame.core :refer [dispatch clear-subscription-cache! subscribe]]
+   [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
    ; add dependencies of this project to bundle
    ;[pinkgorilla.ui.default-renderer]
-   [shiny.core :refer [render-system]]
-   [shiny.ws :refer [send! start-router!]]
-   [shiny.events] ; add reframe event handlers
-   [shiny.subs]))
+   [goldly.core :refer [render-system]]
+   [goldly.ws :refer [send! start-router!]]
+   [goldly.events] ; add reframe event handlers
+   [goldly.subs]))
 
 (enable-console-print!)
 
@@ -49,19 +49,22 @@
   (secretary/set-config! :prefix "#")
   (defroute "/info" []
     (println "nav: /info")
-    (dispatch [:shiny/nav :info]))
+    (dispatch [:goldly/nav :info]))
   (defroute "/system/:id" [id query-params]
     (println "nav: /system " id)
-    (dispatch [:shiny/nav :system id])
-    (dispatch [:shiny/send :shiny/system id])))
+    (dispatch [:goldly/nav :system id])))
 
 (defn infos []
-  (let [ids (subscribe [:systems])
-        _ (println "info: systems: " @ids)]
+  (let [systems (subscribe [:systems])
+        _ (println "info: systems: " @systems)]
     [:<>
-     [:h1 "running system info: " (count @ids)]
-     (for [id @ids]
-       ^{:key id} [:a {:href (str "#/system/" id)} id])]))
+     [:h1 "running systems: " (count @systems)]
+     [:ul
+      (for [{:keys [id name]} @systems]
+        ^{:key id}
+        [:li.m-3
+         [:a {:class "m-3 bg-yellow-300"
+              :href (str "#/system/" id)} name]])]]))
 
 (defn error-boundary [_ #_comp]
   (let [error (r/atom nil)
@@ -78,32 +81,32 @@
                            [:p (str @error)]]
                           comp))})))
 
-(defn system [id]
+(defn system 
+  "requests system with id from server
+   and displays it."
+  [id]
+  (info "showing system: " id)
+  (dispatch-sync [:goldly/system-store id nil])
+  (dispatch [:goldly/send :goldly/system id])
   (let [system (subscribe [:system])]
-    (fn [id]
-      (let [system @system]
+    (fn []
         [:<>
-         [:h1 "system: " id]
-         [:p (pr-str system)]
-         (when system
-           [error-boundary
-            [render-system (:cljs system)]])]))))
+         [:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
+              :href "#/info"} "Systems"]
+         (if (nil? @system)
+           [:h1 "loading .."]
+           [:<>
+            ;[:p (pr-str @system)]
+            [:h1.bg-orange-300 (str (:name @system) " " id)]
+            [error-boundary
+             [render-system (merge (:cljs @system) {:fns-clj (:fns-clj @system)})]]]
+           )])))
 
-(defn nav []
-  [:nav.navbar.navbar-inverse.navbar-fixed-top
-   [:div.container
-    [:div.navbar-header
-     [:a.navbar-brand "Shiny clj"]]
-    [:div#navbar.collapse.navbar-collapse
-     [:ul.nav.navbar-nav
-      [:li
-       [:a {:href "#/info"} "Info"]]]]]])
 
 (defn app []
   (let [main (subscribe [:main])
         id (subscribe [:system-id])]
     [:div.container
-     [nav]
      (case @main
        :info [infos]
        :system [system @id]

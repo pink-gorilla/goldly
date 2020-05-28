@@ -1,4 +1,4 @@
-(ns shiny.ws
+(ns goldly.ws
   (:require
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
    [clojure.java.io :as io]
@@ -86,12 +86,14 @@
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (let [session (:session ring-req)
         uid (:uid session)]
-    (tracef "Unhandled event: %s" event)
+    (errorf "Unhandled event: %s" event)
     (when ?reply-fn
       (?reply-fn {:umatched-event-as-echoed-from-from-server event}))))
 
 (defonce router_ (atom nil))
-(defn stop-router! [] (when-let [stop-fn @router_] (stop-fn)))
+
+(defn stop-router! []
+  (when-let [stop-fn @router_] (stop-fn)))
 
 (defn start-router! []
   (stop-router!)
@@ -107,7 +109,7 @@
   []
   (go-loop [i 0]
     (<! (async/timeout 30000))
-    (when @broadcast-enabled?_ (send-all! [:shiny/heartbeat {:i i}]))
+    (when @broadcast-enabled?_ (send-all! [:goldly/heartbeat {:i i}]))
     (recur (inc i))))
 
 ;(start-heartbeats!)
