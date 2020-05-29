@@ -48,11 +48,19 @@
     (catch js/Error e (error "send event to server ex: " e))))
 
 (reg-event-fx
- :goldly/send
- (fn [cofx [_ event-name data]]
-   (infof "goldly/send %s %s" event-name data)
-   (chsk-send! [event-name data])
-   nil))
+ :goldly/send ; send data to clj. used by get-system + clj fn dispatch
+ (fn [cofx [_ & data]] ; strip off :goldly/send from args vector
+   ; example for data: 
+   ; [:goldly/send :goldly/dispatch id fun-name arg1 arg2]
+   ; [:goldly/send :goldly/system id]
+   (let [data-v (into [] data)]
+     (infof "goldly/send %s " data-v)
+     (try
+       (chsk-send! data-v)
+       (catch :default e
+         (error "exception sending to clj: " e)))
+     (info "goldly/send done.")
+     nil)))
 
 (reg-event-fx
  :goldly/ws-open
@@ -67,8 +75,9 @@
    (let [_ (debugf "rcvd :goldly/event: %s %s" event-type data)]
      (case event-type
        :chsk/ws-ping (trace "goldly ping rcvd")
-       :goldly/system (dispatch [:goldly/system-store data])
        :goldly/systems (dispatch [:goldly/systems-store data])
+       :goldly/system (dispatch [:goldly/system-store data])
+       :goldly/dispatch (info "rcvd clj dispatch: " data)
        (infof "goldly Unhandled server event %s %s" event-type data))
      db)))
 

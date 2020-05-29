@@ -12,7 +12,7 @@
    [ring.util.response :as response]
    [compojure.core :as comp :refer (defroutes GET POST)]
    [taoensso.encore :as encore :refer (have have?)]
-   [taoensso.timbre :as log :refer (tracef debugf infof warnf errorf)]
+   [taoensso.timbre :as log :refer (tracef debugf info infof warnf errorf)]
    [taoensso.sente  :as sente]
    [taoensso.sente.server-adapters.http-kit :refer (get-sch-adapter)]
    [taoensso.sente.packers.transit :as sente-transit]
@@ -89,6 +89,24 @@
     (errorf "Unhandled event: %s" event)
     (when ?reply-fn
       (?reply-fn {:umatched-event-as-echoed-from-from-server event}))))
+
+(defmethod -event-msg-handler :chsk/uidport-open
+  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
+  (let [;session (:session ring-req)
+        ;uid (:uid session)
+        ]
+    (info ":chsk/uidport-open: %s" ev-msg)
+    #_(when ?reply-fn
+        (?reply-fn (systems-response)))))
+
+(defmethod -event-msg-handler :chsk/uidport-close
+  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
+  (let [;session (:session ring-req)
+        ;uid (:uid session)
+        ]
+    (info ":chsk/uidport-close: %s" ev-msg)
+    #_(when ?reply-fn
+        (?reply-fn (systems-response)))))
 
 (defonce router_ (atom nil))
 

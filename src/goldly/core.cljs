@@ -1,6 +1,7 @@
 (ns goldly.core
   (:require
    [clojure.string :as str]
+   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
    [clojure.walk :as walk]
    [sci.core :as sci]
    [cljs.tools.reader :as reader]
@@ -91,20 +92,19 @@
                   (no-op-fun f-name)))]
     fun))
 
-(defn clj-fun [fn-clj]
+(defn clj-fun [id fn-clj]
   (fn []
-    (println "calling clj function: " fn-clj)
-    (dispatch [:goldly/send fn-clj])
-    ))
-
+    (infof "system %s calling fn-clj %s" id fn-clj)
+    (dispatch [:goldly/send :goldly/dispatch [id fn-clj]])
+    nil))
 
 (defn binding-symbol [f-name]
   (->> f-name name (str "?") symbol))
 
-(defn- ->bindings-clj [fns-clj]
+(defn- ->bindings-clj [id fns-clj]
   (let [fns-clj (or fns-clj [])
         fns-keys (map binding-symbol fns-clj)
-        bindings-clj  (zipmap fns-keys (map clj-fun fns-clj))]
+        bindings-clj  (zipmap fns-keys (map (partial clj-fun id) fns-clj))]
     (println "bindings-clj: " bindings-clj)
     bindings-clj))
 
@@ -133,11 +133,10 @@
    [:h1.text-blue-300 "Error"]
    [:p (pr-str e)]])
 
-
-(defn compile-system [state-a html fns fns-clj]
+(defn compile-system [{:keys [id state-a html fns fns-clj] :as system}]
   (let [_ (println "compile-system ..")
         bindings-cljs (->bindings-cljs state-a fns)
-        bindings-clj  (->bindings-clj fns-clj)
+        bindings-clj  (->bindings-clj id fns-clj)
         bindings (merge bindings-clj bindings-cljs)
         _ (println "bindings-system: " bindings)
         system (fn [state]
@@ -146,17 +145,17 @@
                        pinkie/tag-inject)
                    (catch :default e
                      (.log js/console e)
-                     [compile-error{:state @state-a 
-                                    :html html 
-                                    :fns fns
-                                    :fns-clj fns-clj} bindings e])))
+                     [compile-error {:state @state-a
+                                     :html html
+                                     :fns fns
+                                     :fns-clj fns-clj} bindings e])))
         _ (println "system: " system)]
     system))
 
-(defn render-system [{:keys [state html fns fns-clj]}]
+(defn render-system [{:keys [state html fns fns-clj] :as system}]
   (if (nil? html)
     [:h1 "Error: system html is nil!"]
     (let [state-a (r/atom state)
-          system (compile-system state-a html fns fns-clj)]
+          system (compile-system (merge system {:state-a state-a}))]
       (fn []
         [system state-a]))))

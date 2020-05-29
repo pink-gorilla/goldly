@@ -11,9 +11,7 @@
   (:require-macros
    [cljs.core.async.macros :as asyncm :refer (go go-loop)]))
 
-
 ;; CSRF check
-
 
 (def ?csrf-token
   (when-let [el (.getElementById js/document "sente-csrf-token")]
@@ -74,9 +72,7 @@
   (let [[id msg] ?data]
     (dispatch [:goldly/event id msg])))
 
-
 ;;;; Sente event router (our `event-msg-handler` loop)
-
 
 (defonce router_ (atom nil))
 (defn  stop-router! [] (when-let [stop-f @router_] (stop-f)))
@@ -87,7 +83,6 @@
   (reset! router_
           (sente/start-client-chsk-router!
            ch-chsk event-msg-handler)))
-
 
 (defn send! [data]
   (chsk-send! data 5000

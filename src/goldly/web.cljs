@@ -81,7 +81,7 @@
                            [:p (str @error)]]
                           comp))})))
 
-(defn system 
+(defn system
   "requests system with id from server
    and displays it."
   [id]
@@ -90,18 +90,18 @@
   (dispatch [:goldly/send :goldly/system id])
   (let [system (subscribe [:system])]
     (fn []
-        [:<>
-         [:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
-              :href "#/info"} "Systems"]
-         (if (nil? @system)
-           [:h1 "loading .."]
-           [:<>
+      [:<>
+       [:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
+            :href "#/info"} "Systems"]
+       (if (nil? @system)
+         [:h1 "loading .."]
+         [:<>
             ;[:p (pr-str @system)]
-            [:h1.bg-orange-300 (str (:name @system) " " id)]
-            [error-boundary
-             [render-system (merge (:cljs @system) {:fns-clj (:fns-clj @system)})]]]
-           )])))
-
+          [:h1.bg-orange-300 (str (:name @system) " " id)]
+          [error-boundary
+           [render-system (merge {:id (:id @system)}
+                                 (:cljs @system)
+                                 {:fns-clj (:fns-clj @system)})]]])])))
 
 (defn app []
   (let [main (subscribe [:main])

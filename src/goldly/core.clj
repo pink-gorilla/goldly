@@ -2,7 +2,7 @@
   (:require
    [clojure.string]
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
-   [taoensso.timbre :as log :refer (tracef debugf info infof warnf errorf)]
+   [taoensso.timbre :as log :refer (tracef debugf info infof warnf error errorf)]
    [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]))
 
 (defn unique-id
@@ -18,9 +18,8 @@
   (let [;_ (println "systems-response: " @systems)
         summary (into []
                       (map (fn [[k v]]
-                       {:id (name k)
-                        :name (or (:name v) "")}
-                       ) @systems ))
+                             {:id (name k)
+                              :name (or (:name v) "")}) @systems))
         ;ids (keys @systems)
         ;ids (into [] (map name ids))
         ]
@@ -37,7 +36,6 @@
     (println "system-cljs: " system-cljs)
     system-cljs))
 
-
 (defn system-response
   "gets system to be sent to clj"
   [id]
@@ -49,9 +47,9 @@
   (let [message  {:system system-id :type event-name :args args}]
     (send-all! [:goldly/event message])))
 
-
-
 (defn into-mapper
+  "applies function f on all values of a map.
+   returns a map with the same keys"
   [f m]
   (into (empty m) (for [[k v] m] [k (f v)])))
 
@@ -68,27 +66,6 @@
 (comment
   (macroexpand (system {:html [:h1] :fns {:a 6 :b 8 :c "g"} :state 9} 2)))
 
-
-(defmethod -event-msg-handler :chsk/uidport-open
-  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (let [;session (:session ring-req)
-        ;uid (:uid session)
-        ]
-    (info ":chsk/uidport-open: %s" ev-msg)
-    #_(when ?reply-fn
-        (?reply-fn (systems-response)))))
-
-(defmethod -event-msg-handler :chsk/uidport-close
-  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (let [;session (:session ring-req)
-        ;uid (:uid session)
-        ]
-    (info ":chsk/uidport-close: %s" ev-msg)
-    #_(when ?reply-fn
-      (?reply-fn (systems-response)))))
-
-
-
 (defmethod -event-msg-handler :goldly/systems
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (let [session (:session ring-req)
@@ -102,20 +79,37 @@
   (let [session (:session ring-req)
         uid (:uid session)
         [event-name system-id] event]
-    (infof "system event: %s %s" event-name system-id)
+    (infof "rcvd  %s %s" event-name system-id)
     (if ?reply-fn
       (?reply-fn (system-response system-id))
       (chsk-send! uid [:goldly/system (system-response system-id)]))))
 
-(defn on-event [[id name & args]]
-  (println "rcvd event for system " id " " name)
-  (let [system ((keyword id) @systems)
-        f (when system ((keyword name) system))]
-    (when f
-      (println "executing " id name)
-      (if args
-        (apply f args)
-        (f)))))
+(defn run-system-fn-clj [id fun-kw & args]
+  (infof "run-system-fn-clj system %s fun: %s" id fun-kw)
+  (let [system ((keyword id) @systems)]
+    (if system
+      (let [fun (get-in system [:clj :fns fun-kw])]
+        (if fun
+          (do (infof "system %s executing fun: %s args: %s" id fun-kw args)
+              (if args
+                (apply fun args)
+                (fun)))
+          (do (errorf "system %s : fn not found: %s" id fun-kw)
+              (error "system: " system)
+              {:error (str "function not found: " fun-kw)})))
+      (do (infof "system %s : system not found. fn: %s" id fun-kw)
+
+          {:error (str "system " id "not found, cannot execute function: " fun-kw)}))))
+
+(defmethod -event-msg-handler :goldly/dispatch
+  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
+  (let [session (:session ring-req)
+        uid (:uid session)
+        [event-name [system-id fun & args]] event]
+    (infof "rcvd %s system: %s fun: %s args: %s" event-name system-id fun args)
+    (if ?reply-fn
+      (?reply-fn (run-system-fn-clj system-id fun args))
+      (chsk-send! uid [:goldly/dispatch (run-system-fn-clj system-id fun args)]))))
 
 (defn dispatch [system-id event-name & args]
   (println "dispatching " system-id event-name)

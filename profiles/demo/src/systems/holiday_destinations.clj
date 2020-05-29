@@ -16,13 +16,13 @@
     :state :london
     :html [:<>
            [:p/pselect [:london :panama :atlantis] state]
-           [:button {:class "border-solid border-blue-900"
+           [:button {:class "border m-2 p-3 border-green-500"
                      :on-click ?getdestination } "get data"]
            [:p/leaflet
             [{:type :view :center [51.49, -0.08] :zoom 12 :height 600 :width 700}
              {:type :rectangle :bounds [[51.49, -0.08] [51.5, -0.06]]}]]]
     :fns {:incr (fn [_ s] (inc s))}}
-   {:fns {:getdestination  (fn [_ s] (+ s 10))}}))
+   {:fns {:getdestination  (fn [place] (:panama places))}}))
 
 
 
