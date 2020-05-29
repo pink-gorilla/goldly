@@ -17,7 +17,7 @@
     :html [:<>
            [:p/pselect [:london :panama :atlantis] state]
            [:button {:class "border m-2 p-3 border-green-500"
-                     :on-click (fn [_ & _] (?getdestination :panama)) } "get data"]
+                     :on-click (fn [_ & _] (?getdestination @state)) } "get data"]
            [:p/leaflet
             [{:type :view :center [51.49, -0.08] :zoom 12 :height 600 :width 700}
              {:type :rectangle :bounds [[51.49, -0.08] [51.5, -0.06]]}]]]
