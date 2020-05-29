@@ -12,4 +12,5 @@
                       :on-click ?incr} @state]
             " times"]
     :fns {:incr (fn [_ s] (inc s))}}
-   {:fns {:incr10  (fn [_ s] (+ s 10))}}))
+   {:fns {}}
+   ))

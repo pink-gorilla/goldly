@@ -2,7 +2,7 @@
   (:require
    [goldly.core :as goldly]
    [goldly.web :as shinyweb]
-   ; systems:
+   ; systems
    [systems.click-counter :refer [click-counter]]
    [systems.greeter :refer [greeter]]
    [systems.controls :refer [controls]]

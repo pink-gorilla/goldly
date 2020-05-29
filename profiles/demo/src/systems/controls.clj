@@ -5,7 +5,7 @@
 (def controls
   (goldly/system
    {:name "controls"
-    :state "CommonLisp"
+    :state {:language "CommonLisp"}
     :html  [:div
             [:p "Favorite Language: " (:language @state)]
             [:p/pselect ["Clojure" "Clojurescript" "Schema" "CommonLisp" "Elixir"] state]

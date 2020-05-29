@@ -24,6 +24,9 @@
                         'prewalk-replace walk/prewalk-replace
                         'stringify-keys walk/stringify-keys})
 
+;(def bindings-default {'println println})
+
+
 (defn compile [code bindings]
   (sci/eval-string code {:bindings bindings
                          :preset {:termination-safe true}
@@ -55,7 +58,7 @@
 (defn- eventhandler-fn [state fun]
   (fn [e & args]
     (try
-      (println "running eventhandler fn: " fun "e:" e " args: " args)
+      (info "running eventhandler fn: " fun "e:" e " args: " args)
       ;(println "running eventhandler with state: " @state)
       (.preventDefault e)
       (.stopPropagation e)
@@ -93,10 +96,12 @@
     fun))
 
 (defn clj-fun [id fn-clj]
-  (fn []
+  (fn [& args]
     (infof "system %s calling fn-clj %s" id fn-clj)
-    (dispatch [:goldly/send :goldly/dispatch [id fn-clj]])
-    nil))
+    (let [fn-vec [id fn-clj]
+          fn-vec (if args (into fn-vec args) fn-vec)]
+    (dispatch [:goldly/send :goldly/dispatch fn-vec])
+    nil)))
 
 (defn binding-symbol [f-name]
   (->> f-name name (str "?") symbol))

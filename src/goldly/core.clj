@@ -92,7 +92,7 @@
         (if fun
           (do (infof "system %s executing fun: %s args: %s" id fun-kw args)
               (if args
-                (apply fun args)
+                (apply fun (first args))
                 (fun)))
           (do (errorf "system %s : fn not found: %s" id fun-kw)
               (error "system: " system)
