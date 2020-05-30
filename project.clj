@@ -41,8 +41,7 @@
                                org.immutant
                                info.sunng/ring-jetty9-adapter]] ;  websocket
                  [org.clojure/data.json "1.0.0"]
-                 ; @awb99 you need to have shadow-cljs installed in your project. both
-                 ]
+                 [com.rpl/specter "1.1.3"]]
   :source-paths ["src"]
   :resource-paths ["resources"]
 

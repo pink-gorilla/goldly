@@ -1,7 +1,7 @@
 (ns goldly.core
   (:require
    [clojure.string :as str]
-   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
+   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf error info)]
    [clojure.walk :as walk]
    [sci.core :as sci]
    [cljs.tools.reader :as reader]
@@ -10,6 +10,7 @@
    [reagent.dom]
    [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
    [cljs-uuid-utils.core :as uuid]
+   [com.rpl.specter :refer [transform setval]]
    [pinkgorilla.ui.pinkie :as pinkie]
    [pinkgorilla.ui.default-setup]
    [pinkgorilla.ui.default-renderer] ; add ui renderer definitions 
@@ -166,8 +167,14 @@
                                                         :fns-clj fns-clj} bindings e]))))]
       component)))
 
-(defn update-state-from-clj-result [state result]
-  (info "updating state from clj result" result))
+(defn update-state-from-clj-result [state result where]
+  (info "updating state from clj result:" result "where:" where)
+  (try 
+   ;(com.rpl.specter/setval [:a] 1 m) set key a to 1 in m
+   (reset! state (setval where result @state))
+     (catch :default e
+       (error "exception in updating state afterclj result call:" e)
+    )))
 
 
 (defn render-system-impl [run-id]

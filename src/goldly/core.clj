@@ -88,12 +88,15 @@
   (infof "run-system-fn-clj system %s fun: %s" id fun-kw)
   (let [system ((keyword id) @systems)]
     (if system
-      (let [fun (get-in system [:clj :fns fun-kw])]
-        (if fun
-          (do (infof "system %s executing fun: %s args: %s" id fun-kw args)
+      (let [fun-vec (get-in system [:clj :fns fun-kw])]
+        (if fun-vec
+          (let [[fun where] fun-vec] 
+           (infof "system %s executing fun: %s args: %s" id fun-kw args)
               {:result (if args
                          (apply fun args)
-                         (fun))})
+                         (fun))
+               :where where
+               })
           (do (errorf "system %s : fn not found: %s" id fun-kw)
               (error "system: " system)
               {:error (str "function not found: " fun-kw)})))
