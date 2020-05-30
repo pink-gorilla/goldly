@@ -9,10 +9,12 @@
    [reagent.core :as r]
    [reagent.dom]
    [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
+   [cljs-uuid-utils.core :as uuid]
    [pinkgorilla.ui.pinkie :as pinkie]
    [pinkgorilla.ui.default-setup]
    [pinkgorilla.ui.default-renderer] ; add ui renderer definitions 
    ))
+
 
 ;; cljs compile
 
@@ -95,21 +97,21 @@
                   (no-op-fun f-name)))]
     fun))
 
-(defn clj-fun [id fn-clj]
+(defn clj-fun [run-id system-id fn-clj]
   (fn [& args]
-    (infof "system %s calling fn-clj %s" id fn-clj)
-    (let [fn-vec [id fn-clj]
+    (infof "runner %s : system %s calling fn-clj %s" run-id system-id fn-clj)
+    (let [fn-vec [run-id system-id fn-clj]
           fn-vec (if args (into fn-vec args) fn-vec)]
-    (dispatch [:goldly/send :goldly/dispatch fn-vec])
-    nil)))
+      (dispatch [:goldly/send :goldly/dispatch fn-vec])
+      nil)))
 
 (defn binding-symbol [f-name]
   (->> f-name name (str "?") symbol))
 
-(defn- ->bindings-clj [id fns-clj]
+(defn- ->bindings-clj [run-id system-id fns-clj]
   (let [fns-clj (or fns-clj [])
         fns-keys (map binding-symbol fns-clj)
-        bindings-clj  (zipmap fns-keys (map (partial clj-fun id) fns-clj))]
+        bindings-clj  (zipmap fns-keys (map (partial clj-fun run-id system-id) fns-clj))]
     (println "bindings-clj: " bindings-clj)
     bindings-clj))
 
@@ -138,29 +140,65 @@
    [:h1.text-blue-300 "Error"]
    [:p (pr-str e)]])
 
-(defn compile-system [{:keys [id state-a html fns fns-clj] :as system}]
-  (let [_ (println "compile-system ..")
-        bindings-cljs (->bindings-cljs state-a fns)
-        bindings-clj  (->bindings-clj id fns-clj)
-        bindings (merge bindings-clj bindings-cljs)
-        _ (println "bindings-system: " bindings)
-        system (fn [state]
-                 (try
-                   (-> (compile html bindings)
-                       pinkie/tag-inject)
-                   (catch :default e
-                     (.log js/console e)
-                     [compile-error {:state @state-a
-                                     :html html
-                                     :fns fns
-                                     :fns-clj fns-clj} bindings e])))
-        _ (println "system: " system)]
-    system))
+(defn compile-system
+  "compiles a system and creates a reagent component that displays the system;
+   or that displays a compile error
+   returns: component
+            component expects system state as parameter as atom"
+  [run-id state-a {:keys [id state html fns fns-clj] :as system}]
+  (info "compiling system: " system)
+  (if (nil? html)
+    (fn [_] [:h1 "Error: system html is nil!"])
+    (let [_ (println "compile-system ..")
+          bindings-cljs (->bindings-cljs state-a fns)
+          bindings-clj  (->bindings-clj run-id id fns-clj)
+          bindings (merge bindings-clj bindings-cljs)
+          _ (println "bindings-system: " bindings)
+          component (fn [state-a]
+                      (try
+                        (-> (compile html bindings)
+                            pinkie/tag-inject)
+                        (catch :default e
+                          (.log js/console e)
+                          (fn [state-a] [compile-error {:state @state-a
+                                                        :html html
+                                                        :fns fns
+                                                        :fns-clj fns-clj} bindings e]))))]
+      component)))
+
+(defn update-state-from-clj-result [state result]
+  (info "updating state from clj result" result))
+
+
+(defn render-system-impl [run-id]
+  (fn [{:keys [state html fns fns-clj] :as system}]
+    (if (nil? html)
+      [:h1 "Error: system html is nil!"]
+      (let [state-a (r/atom state)
+            component (compile-system run-id state-a system)
+            update-state (partial update-state-from-clj-result state-a)]
+        (dispatch [:goldly/add-running-system run-id (merge system {:update-state update-state})])
+        (fn []
+          [component state-a])))))
+
 
 (defn render-system [{:keys [state html fns fns-clj] :as system}]
-  (if (nil? html)
-    [:h1 "Error: system html is nil!"]
-    (let [state-a (r/atom state)
-          system (compile-system (merge system {:state-a state-a}))]
-      (fn []
-        [system state-a]))))
+  (let [id (uuid/uuid-string (uuid/make-random-uuid))]
+    (r/create-class
+     {:display-name          "render-system"
+      :reagent-render        (render-system-impl id)
+      :component-did-mount   (fn [this] ; alled right after the component is added to the DOM.
+                               (info "c did mount"))
+      :component-did-update  (fn [this old-argv old-state snapshot]
+                               (let [args (r/argv this)
+                                     [_ system] args]
+                                 (info "c did update args: " args)
+                                 #_(reset! data (compile-system system))))
+      :component-will-update  (fn [this [_ {:keys [f data]}]]
+                                (info "c will update"))
+      :component-will-unmount (fn [this] ;  just before the component is unmounted from the DOM.
+                                (info "c will unmount")
+                                (dispatch [:goldly/remove-running-system id]))})))
+
+
+

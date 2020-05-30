@@ -6,9 +6,9 @@
 (def click-counter
   (goldly/system
    {:name "click counter"
-    :state 0
+    :state 42
     :html  [:div "Clicked "
-            [:button {:class "border m-2 p-3 border-green-500"
+            [:button {:class "border m-2 p-3 border-pink-500"
                       :on-click ?incr} @state]
             " times"]
     :fns {:incr (fn [_ s] (inc s))}}

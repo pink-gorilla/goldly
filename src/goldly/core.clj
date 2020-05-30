@@ -84,16 +84,16 @@
       (?reply-fn (system-response system-id))
       (chsk-send! uid [:goldly/system (system-response system-id)]))))
 
-(defn run-system-fn-clj [id fun-kw & args]
+(defn run-system-fn-clj [id fun-kw args]
   (infof "run-system-fn-clj system %s fun: %s" id fun-kw)
   (let [system ((keyword id) @systems)]
     (if system
       (let [fun (get-in system [:clj :fns fun-kw])]
         (if fun
           (do (infof "system %s executing fun: %s args: %s" id fun-kw args)
-              (if args
-                (apply fun (first args))
-                (fun)))
+              {:result (if args
+                         (apply fun args)
+                         (fun))})
           (do (errorf "system %s : fn not found: %s" id fun-kw)
               (error "system: " system)
               {:error (str "function not found: " fun-kw)})))
@@ -101,15 +101,22 @@
 
           {:error (str "system " id "not found, cannot execute function: " fun-kw)}))))
 
+
+(defn create-clj-run-response [run-id id fun-kw args]
+  (let [result (run-system-fn-clj id fun-kw args)]
+    (merge {:run-id run-id
+            :system-id id
+            :fun fun-kw} result)))
+
 (defmethod -event-msg-handler :goldly/dispatch
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (let [session (:session ring-req)
         uid (:uid session)
-        [event-name [system-id fun & args]] event]
-    (infof "rcvd %s system: %s fun: %s args: %s" event-name system-id fun args)
+        [event-name [run-id system-id fun & args]] event]
+    (infof "rcvd %s runner: %s system: %s fun: %s args: %s" event-name run-id system-id fun args)
     (if ?reply-fn
-      (?reply-fn (run-system-fn-clj system-id fun args))
-      (chsk-send! uid [:goldly/dispatch (run-system-fn-clj system-id fun args)]))))
+      (?reply-fn (create-clj-run-response run-id system-id fun args))
+      (chsk-send! uid [:goldly/dispatch (create-clj-run-response run-id system-id fun args)]))))
 
 (defn dispatch [system-id event-name & args]
   (println "dispatching " system-id event-name)

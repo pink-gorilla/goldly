@@ -80,7 +80,8 @@
 
 (defn event-msg-handler [{:keys [id ?data event] :as ev-msg}]
   (tracef "Event: %s" event)
-  (-event-msg-handler ev-msg))
+  (if ev-msg
+    (-event-msg-handler ev-msg)))
 
 (defmethod -event-msg-handler :default
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]

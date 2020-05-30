@@ -7,10 +7,13 @@
    #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
 
 (def initial-db
-  {:main :info
+  {; system explorer
+   :main :info
    :systems []
    :id nil
-   :system nil})
+   :system nil
+   ; system ui
+   :running-systems {}})
 
 (reg-event-db
  :db-init
@@ -77,7 +80,7 @@
        :chsk/ws-ping (trace "goldly ping rcvd")
        :goldly/systems (dispatch [:goldly/systems-store data])
        :goldly/system (dispatch [:goldly/system-store data])
-       :goldly/dispatch (info "rcvd clj dispatch: " data)
+       :goldly/dispatch (dispatch [:goldly/clj-result data])
        (infof "goldly Unhandled server event %s %s" event-type data))
      db)))
 
@@ -85,3 +88,27 @@
   [{:keys [?data] :as ev-msg}]
   ;(let [[?uid ?csrf-token ?handshake-data] ?data]
   (debugf "systems received: %s" ev-msg)) ; ?data)))
+
+
+(reg-event-db
+ :goldly/add-running-system
+ (fn [db [_ id system]]
+   (info "adding running goldly system: " id)
+   (assoc-in db [:running-systems id] system)))
+
+(reg-event-db
+ :goldly/remove-running-system
+ (fn [db [_ id]]
+   (info "removing running goldly system: " id)
+   (update-in db [:running-systems] dissoc id)))
+
+
+(reg-event-db
+ :goldly/clj-result
+ (fn [db [_ {:keys [run-id system-id fun result error] :as data}]]
+   (let [system (get-in db [:running-systems run-id])
+         update-state (:update-state system)]
+     (info "rcvd clj result: " data " for system: " system)
+     (when (and result update-state)
+       (update-state result))
+     db)))
