@@ -60,7 +60,7 @@
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
                                    [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: Should likely be replaced by jux/bidi
-                                   [org.pinkgorilla/gorilla-ui "0.1.50"]]}
+                                   [org.pinkgorilla/gorilla-ui "0.1.52"]]}
 
              :demo {:source-paths ["profiles/demo/src"]}
 

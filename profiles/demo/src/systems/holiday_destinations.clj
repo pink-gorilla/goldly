@@ -13,18 +13,18 @@
 (def holiday-destinations
   (goldly/system
    {:name "holiday destinations"
-    :state {:place :london}
+    :state {:place :london
+            :map [{:type :view :center [51.49, -0.08] :zoom 12 :height 600 :width 700}
+                  {:type :rectangle :bounds [[51.49, -0.08] [51.5, -0.06]]}]}
     :html [:<>
-           [:p/pselect [:london :panama :atlantis] state]
+           [:p/pselectm [:london :panama :atlantis] state :place]
            [:button {:class "border m-2 p-3 border-green-500"
                      :on-click (fn [_ & _] (?getdestination (:place @state)))} "get data"]
-           [:p (str "api result: " (:a @state))]
-           [:p/leaflet
-            [{:type :view :center [51.49, -0.08] :zoom 12 :height 600 :width 700}
-             {:type :rectangle :bounds [[51.49, -0.08] [51.5, -0.06]]}]]]
+           [:p (str "map data: " (:map @state))]
+           [:p/leaflet (:map @state)]]
     :fns {:incr (fn [_ s] (inc s))}}
    {:fns {:getdestination [(fn [place] (place places))
-                           [:a]]}}))
+                           [:map]]}}))
 
 
 

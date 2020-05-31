@@ -194,15 +194,6 @@
     (r/create-class
      {:display-name          "render-system"
       :reagent-render        (render-system-impl id)
-      :component-did-mount   (fn [this] ; alled right after the component is added to the DOM.
-                               (info "c did mount"))
-      :component-did-update  (fn [this old-argv old-state snapshot]
-                               (let [args (r/argv this)
-                                     [_ system] args]
-                                 (info "c did update args: " args)
-                                 #_(reset! data (compile-system system))))
-      :component-will-update  (fn [this [_ {:keys [f data]}]]
-                                (info "c will update"))
       :component-will-unmount (fn [this] ;  just before the component is unmounted from the DOM.
                                 (info "c will unmount")
                                 (dispatch [:goldly/remove-running-system id]))})))

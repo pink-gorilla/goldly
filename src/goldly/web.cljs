@@ -96,7 +96,6 @@
        (if (nil? @system)
          [:h1 "loading .."]
          [:<>
-            ;[:p (pr-str @system)]
           [:h1.bg-orange-300 (str (:name @system) " " id)]
           [error-boundary
            [render-system (merge {:id (:id @system)}
