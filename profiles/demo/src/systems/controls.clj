@@ -31,4 +31,4 @@
                       :tabIndex 0}
               [:h4 "Bananas are a great potassium source!"]]]]
     :fns {:incr (fn [_ s] (inc s))}}
-   {:fns {:incr10  (fn [_ s] (+ s 10))}}))
+   {:fns {}}))

@@ -102,7 +102,6 @@
    (info "removing running goldly system: " id)
    (update-in db [:running-systems] dissoc id)))
 
-
 (reg-event-db
  :goldly/clj-result
  (fn [db [_ {:keys [run-id system-id fun result error where] :as data}]]

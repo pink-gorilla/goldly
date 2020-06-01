@@ -19,6 +19,7 @@
 
 ;; cljs compile
 
+
 (def ^:private walk-ns {'postwalk walk/postwalk
                         'prewalk walk/prewalk
                         'keywordize-keys walk/keywordize-keys
@@ -169,13 +170,11 @@
 
 (defn update-state-from-clj-result [state result where]
   (info "updating state from clj result:" result "where:" where)
-  (try 
+  (try
    ;(com.rpl.specter/setval [:a] 1 m) set key a to 1 in m
-   (reset! state (setval where result @state))
-     (catch :default e
-       (error "exception in updating state afterclj result call:" e)
-    )))
-
+    (reset! state (setval where result @state))
+    (catch :default e
+      (error "exception in updating state afterclj result call:" e))))
 
 (defn render-system-impl [run-id]
   (fn [{:keys [state html fns fns-clj] :as system}]
@@ -187,7 +186,6 @@
         (dispatch [:goldly/add-running-system run-id (merge system {:update-state update-state})])
         (fn []
           [component state-a])))))
-
 
 (defn render-system [{:keys [state html fns fns-clj] :as system}]
   (let [id (uuid/uuid-string (uuid/make-random-uuid))]

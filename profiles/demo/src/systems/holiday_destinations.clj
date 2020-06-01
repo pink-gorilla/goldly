@@ -17,14 +17,21 @@
             :map [{:type :view :center [51.49, -0.08] :zoom 12 :height 600 :width 700}
                   {:type :rectangle :bounds [[51.49, -0.08] [51.5, -0.06]]}]}
     :html [:<>
-           [:p/pselectm [:london :panama :atlantis] state :place]
-           [:button {:class "border m-2 p-3 border-green-500"
-                     :on-click (fn [_ & _] (?getdestination (:place @state)))} "get data"]
+           [:div {:class "flex flex-row content-between"}
+            [:p/pselectm
+             {:on-change ?getdestination}
+             [:london :panama :atlantis] state :place]
+            [:p/button {:on-click ?lucky} "Feeling Lucky!"]]
            [:p (str "map data: " (:map @state))]
            [:p/leaflet (:map @state)]]
     :fns {:incr (fn [_ s] (inc s))}}
    {:fns {:getdestination [(fn [place] (place places))
-                           [:map]]}}))
+                           [:map]]
+          :lucky [(fn [] (let [ks (into [] (keys places))
+                               i (rand-int (count ks))
+                               place (get ks i)]
+                           (place places)))
+                  [:map]]}}))
 
 
 

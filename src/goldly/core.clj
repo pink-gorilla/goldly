@@ -90,13 +90,12 @@
     (if system
       (let [fun-vec (get-in system [:clj :fns fun-kw])]
         (if fun-vec
-          (let [[fun where] fun-vec] 
-           (infof "system %s executing fun: %s args: %s" id fun-kw args)
-              {:result (if args
-                         (apply fun args)
-                         (fun))
-               :where where
-               })
+          (let [[fun where] fun-vec]
+            (infof "system %s executing fun: %s args: %s" id fun-kw args)
+            {:result (if args
+                       (apply fun args)
+                       (fun))
+             :where where})
           (do (errorf "system %s : fn not found: %s" id fun-kw)
               (error "system: " system)
               {:error (str "function not found: " fun-kw)})))
@@ -104,9 +103,12 @@
 
           {:error (str "system " id "not found, cannot execute function: " fun-kw)}))))
 
-
 (defn create-clj-run-response [run-id id fun-kw args]
-  (let [result (run-system-fn-clj id fun-kw args)]
+  (let [result (try (run-system-fn-clj id fun-kw args)
+                    (catch clojure.lang.ExceptionInfo e
+                      {:error (str "Exception: " (pr-str e))})
+                    (catch Exception e
+                      {:error (str "Exception: " (pr-str e))}))]
     (merge {:run-id run-id
             :system-id id
             :fun fun-kw} result)))
@@ -117,9 +119,11 @@
         uid (:uid session)
         [event-name [run-id system-id fun & args]] event]
     (infof "rcvd %s runner: %s system: %s fun: %s args: %s" event-name run-id system-id fun args)
-    (if ?reply-fn
-      (?reply-fn (create-clj-run-response run-id system-id fun args))
-      (chsk-send! uid [:goldly/dispatch (create-clj-run-response run-id system-id fun args)]))))
+    (let [response (create-clj-run-response run-id system-id fun args)
+          _ (info "response: " response)]
+      (if ?reply-fn
+        (?reply-fn response)
+        (chsk-send! uid [:goldly/dispatch response])))))
 
 (defn dispatch [system-id event-name & args]
   (println "dispatching " system-id event-name)

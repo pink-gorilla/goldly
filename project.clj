@@ -48,19 +48,19 @@
   :profiles {:cljs {:dependencies [[org.clojure/clojurescript "1.10.773"]
                                    [thi.ng/strf "0.2.2"]
                                    [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
-                                   [check "0.1.0-SNAPSHOT"]
+                                   ; [check "0.1.0-SNAPSHOT"] ;mauricio test helper
                                    [funcool/promesa "4.0.2"]
-                                   [paprika "0.1.3-SNAPSHOT"]
+                                   [paprika "0.1.3"] ; mauricio helper functions 
                                    [borkdude/sci "0.0.13-alpha.17"]
-                                   [compliment "0.4.0-SNAPSHOT"]
+                                   ; [compliment "0.4.0-SNAPSHOT"] ; code completions
                                    [rewrite-cljs "0.4.4"]
                                    [org.rksm/suitable "0.3.2"  :exclusions [org.clojure/clojurescript]]
                                    [cider/orchard "0.5.8"]
                                    [etaoin "0.3.6"]
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
-                                   [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: Should likely be replaced by jux/bidi
-                                   [org.pinkgorilla/gorilla-ui "0.1.52"]]}
+                                   [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
+                                   [org.pinkgorilla/gorilla-ui "0.1.54"]]}
 
              :demo {:source-paths ["profiles/demo/src"]}
 
