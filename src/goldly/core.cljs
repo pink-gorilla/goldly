@@ -12,6 +12,8 @@
    [cljs-uuid-utils.core :as uuid]
    [com.rpl.specter :refer [transform setval]]
    [pinkgorilla.ui.pinkie :as pinkie]
+   [goldly.pinkie]
+
    [pinkgorilla.ui.default-setup]
    [pinkgorilla.ui.default-renderer] ; add ui renderer definitions 
    ))
@@ -118,7 +120,9 @@
     bindings-clj))
 
 (defn- ->bindings-cljs [state fns]
-  (let [bindings {'state state}
+  (let [bindings {'state state
+                  ;'pinkie-render pinkie-render ; done via pinkie/register-tag
+                  }
         bindings-cljs (->> fns
                            (map (fn [[f-name f-body]]
                                   [(binding-symbol f-name)

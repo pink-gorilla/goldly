@@ -17,6 +17,13 @@
                   ["vcs" "commit" "Begin %s"]
                   ["vcs" "push"]]
 
+  :managed-dependencies [ [org.clojure/core.async "1.1.587"]
+                         [org.clojure/tools.logging "1.0.0"]
+                         [org.clojure/core.memoize "0.8.2"]
+                         ; libpythonclj fixes
+                         [net.java.dev.jna/jna "5.2.0"]
+                         [org.ow2.asm/asm "7.0"]]
+
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [thheller/shadow-cljs "2.8.94"]
                  [thheller/shadow-cljsjs "0.0.21"]
@@ -41,7 +48,9 @@
                                org.immutant
                                info.sunng/ring-jetty9-adapter]] ;  websocket
                  [org.clojure/data.json "1.0.0"]
-                 [com.rpl/specter "1.1.3"]]
+                 [com.rpl/specter "1.1.3"]
+                 ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
+                 ]
   :source-paths ["src"]
   :resource-paths ["resources"]
 
@@ -60,9 +69,12 @@
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
                                    [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
-                                   [org.pinkgorilla/gorilla-ui "0.1.54"]]}
+                                   [org.pinkgorilla/gorilla-ui "0.1.56"]]}
 
-             :demo {:source-paths ["profiles/demo/src"]}
+             :demo {:source-paths ["profiles/demo/src"]
+                    :dependencies [[org.clojure/tools.logging "1.0.0"] ; needed by clojisr
+                                   [org.pinkgorilla/gorilla-plot "0.9.3"]
+                                   [org.pinkgorilla/clojisr-gorilla "0.0.2"]]}
 
              :dev {:dependencies [[clj-kondo "2020.05.09"]]
                    :plugins      [[lein-cljfmt "0.6.6"]

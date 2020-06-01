@@ -6,7 +6,9 @@
    [systems.click-counter :refer [click-counter]]
    [systems.greeter :refer [greeter]]
    [systems.controls :refer [controls]]
-   [systems.holiday-destinations :refer [holiday-destinations]])
+   [systems.holiday-destinations :refer [holiday-destinations]]
+   [systems.r-telephone :refer [r-telephone]]
+   )
   (:gen-class))
 
 
@@ -17,6 +19,7 @@
   (goldly/system-start! greeter)
   (goldly/system-start! controls)
   (goldly/system-start! holiday-destinations)
+  (goldly/system-start! r-telephone)
   
   (println "running systems: " (goldly/systems-response))
  ; 
