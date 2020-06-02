@@ -107,7 +107,7 @@
  (fn [db [_ {:keys [run-id system-id fun result error where] :as data}]]
    (let [system (get-in db [:running-systems run-id])
          update-state (:update-state system)]
-     (info "rcvd clj result: " data " for system: " system)
+     (info "rcvd clj result: " data) ; " for system: " system
      (when (and result where update-state)
        (update-state result where))
      db)))

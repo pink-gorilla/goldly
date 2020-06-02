@@ -1,11 +1,14 @@
 (ns systems.r-telephone
   (:require
+   [taoensso.timbre :as log :refer (tracef debugf info infof warnf error errorf)]
    [goldly.core :as goldly]
    [pinkgorilla.ui.gorilla-renderable :refer [Renderable render]]
    [tech.ml.dataset :as dataset]
    [clojisr.v1.r :as r :refer [r r->clj clj->r r+ colon bra bra<- rdiv r** r- r* ->code]]
    [clojisr.v1.require :refer [require-r]]
-   [pinkgorilla.clojisr.repl :refer [->svg r-doc pdf-off]]))
+   [pinkgorilla.clojisr.repl :refer [->svg r-doc pdf-off]]
+   [clojisr.v1.applications.plotting :refer
+    [plot->svg plot->file plot->buffered-image]]))
 
 ; ported from:
 ; https://shiny.rstudio.com/gallery/telephones-by-region.html
@@ -17,17 +20,67 @@
        ~@(for [[sym init] (partition 2 bindings)]
            `(def ~sym ~init))))
 
-
 (println "configuring clojisr ..")
 (require-r '[base :as base :refer [$ <- $<-]]
            '[utils :as u]
            '[stats :as stats]
-           '[graphics :as g]
-           '[datasets :refer :all])
+           '[graphics :as g :refer [plot hist]]
+           '[datasets :refer :all]
+           '[ggplot2 :refer [ggplot aes geom_point xlab ylab labs]])
+
 (base/options :width 120 :digits 7)
 (base/set-seed 11228899)
 (pdf-off)
 (println "clojisr configuring finished!")
+
+(defn cum-plot []
+  (->svg {:width 350 :height 400}
+         (->> rand
+              (repeatedly 30)
+              (reductions +)
+              (plot :xlab "t"
+                    :ylab "y"
+                    :type "l"))))
+
+(defn dataset-plot []
+  (->svg {:width 350 :height 400}
+         (let [x (repeatedly 99 rand)
+               y (map + x (repeatedly 99 rand))]
+           (-> {:x x
+                :y y}
+               dataset/name-values-seq->dataset
+               (ggplot (aes :x x
+                            :y y
+                            :color '(+ x y)
+                            :size '(/ x y)))
+               (r+ (geom_point) (xlab "x") (ylab "y"))))))
+
+(defn hist-plot []
+  (let [svg (->svg {:width 350 :height 400}
+                   (fn []
+                     (hist [1 1 1 1 2 3 4 5]
+                           :main "Histogram"
+                           :xlab "data: [1 1 1 1 2 3 4 5]")))]
+    (info "svg: " svg)
+    svg))
+
+(def target-path "./")
+
+(defn hist-plot-file []
+  (println
+   "r plot saved: "
+   (r->clj
+    (plot->file
+     (str target-path "histogram.jpg")
+     (fn []
+       (hist [1 1 1 1 2 3 4 5]
+             :main "Histogram"
+             :xlab "data: [1 1 1 1 2 3 4 5]"))
+     :width 800
+     :height 400
+     :quality 50))))
+
+(hist-plot-file)
 
 
 (def r-telephone
@@ -54,15 +107,29 @@
       :html  [:div "show: "
               [:button {:on-click (fn [_ & _] (?x3))} "x3"]
               [:p/pinkie (:x3 @state)]
-              [:span "Supersize me?"
-               [:p/checkbox state :big]]
-              [:button {:on-click (fn [_ & _]
-                                    (if (:big @state)
-                                      (?plot1 450 500)
-                                      (?plot1 250 300)))} "plot1"]
-              (:plot1 @state)]
+              [:div.grid.grid-cols-3.gap-4.w-full.h-full  ; show charts in a grid with 3 columns
+               [:div
+                [:span "Supersize me?"
+                 [:p/checkbox state :big]]
+                [:button {:on-click (fn [_ & _]
+                                      (if (:big @state)
+                                        (?plot1 450 500)
+                                        (?plot1 250 300)))} "plot1"]
+                (:plot1 @state)]
+               [:div
+                [:button {:on-click (fn [_ & _] (?cum-plot))} "cum-plot"]
+                (:cum-plot @state)]
+               [:div
+                [:button {:on-click (fn [_ & _] (?dataset-plot))} "dataset-plot"]
+                (:dataset-plot @state)]
+               [:div
+                [:button {:on-click (fn [_ & _] (?hist-plot))} "histogram-plot"]
+                (:hist-plot @state)]]]
       :fns {:incr (fn [s] (inc s))}}
-     {:fns {:x3    [(fn []
+     {:fns {:cum-plot [cum-plot [:cum-plot]]
+            :dataset-plot [dataset-plot [:dataset-plot]]
+            :hist-plot [cum-plot [:hist-plot]]
+            :x3    [(fn []
                       (render x3))
                     [:x3]]
             :plot1 [(fn [width height]

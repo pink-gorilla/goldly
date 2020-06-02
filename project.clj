@@ -7,6 +7,7 @@
                                      :sign-releases false}]]
   :min-lein-version "2.9.3"
   :min-java-version "1.11"
+  :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/jul-factory"]
 
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
@@ -17,7 +18,7 @@
                   ["vcs" "commit" "Begin %s"]
                   ["vcs" "push"]]
 
-  :managed-dependencies [ [org.clojure/core.async "1.1.587"]
+  :managed-dependencies [[org.clojure/core.async "1.1.587"]
                          [org.clojure/tools.logging "1.0.0"]
                          [org.clojure/core.memoize "0.8.2"]
                          ; libpythonclj fixes
