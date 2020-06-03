@@ -1,6 +1,6 @@
 # goldly
 
-##Overview
+## Overview
 
 - state is kept in cljs / reagent atom
   initial state is defined at system creation time from clj
@@ -24,7 +24,7 @@
 - server is essentially providing a rest api via websocket, in the context of
   the running system
 
-# Demo
+## Demo
 
 ```
   npm install

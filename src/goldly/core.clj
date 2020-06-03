@@ -62,8 +62,9 @@
   "gets system to be sent to clj"
   [id]
   (let [id (keyword id)
-        system (or (id @systems) {})]
-    (system->cljs system)))
+        system (id @systems)]
+    (when system
+      (system->cljs system))))
 
 (defn send-event [system-id event-name & args]
   (let [message  {:system system-id :type event-name :args args}]
@@ -102,9 +103,12 @@
         uid (:uid session)
         [event-name system-id] event]
     (infof "rcvd  %s %s" event-name system-id)
-    (if ?reply-fn
-      (?reply-fn (system-response system-id))
-      (chsk-send! uid [:goldly/system (system-response system-id)]))))
+    (let [response (system-response system-id)]
+      (if response
+        (if ?reply-fn
+          (?reply-fn response)
+          (chsk-send! uid [:goldly/system response]))
+        (info ":goldly/system request for unknown system: " system-id)))))
 
 (defn run-system-fn-clj [id fun-kw args]
   (infof "run-system-fn-clj system %s fun: %s" id fun-kw)

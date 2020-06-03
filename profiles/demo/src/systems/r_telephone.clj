@@ -11,7 +11,18 @@
     [plot->svg plot->file plot->buffered-image]]))
 
 ; ported from:
+; https://scicloj.github.io/clojisr/doc/clojisr/v1/tutorial-test/#data-visualization
 ; https://shiny.rstudio.com/gallery/telephones-by-region.html
+
+
+; k means clustering
+; https://shiny.rstudio.com/gallery/radiant.html
+
+
+; nice dashboard - golf 
+; https://shiny.rstudio.com/gallery/masters.html
+; https://github.com/cjteeter/ShinyTeeter/blob/master/3_MastersGolf/app.R
+
 
 #_(defmacro defs
     [& bindings]
@@ -34,16 +45,17 @@
 (println "clojisr configuring finished!")
 
 (defn cum-plot []
-  (->svg {:width 350 :height 400}
+  (->svg {:width 7 :height 5}
+         (fn []
          (->> rand
               (repeatedly 30)
               (reductions +)
               (plot :xlab "t"
                     :ylab "y"
-                    :type "l"))))
+                    :type "l")))))
 
 (defn dataset-plot []
-  (->svg {:width 350 :height 400}
+  (->svg {:width 7 :height 5}
          (let [x (repeatedly 99 rand)
                y (map + x (repeatedly 99 rand))]
            (-> {:x x
@@ -56,7 +68,7 @@
                (r+ (geom_point) (xlab "x") (ylab "y"))))))
 
 (defn hist-plot []
-  (let [svg (->svg {:width 350 :height 400}
+  (let [svg (->svg {:width 7 :height 5}
                    (fn []
                      (hist [1 1 1 1 2 3 4 5]
                            :main "Histogram"
@@ -80,7 +92,7 @@
      :height 400
      :quality 50))))
 
-(hist-plot-file)
+;(hist-plot-file)
 
 
 (def r-telephone
@@ -113,8 +125,8 @@
                  [:p/checkbox state :big]]
                 [:button {:on-click (fn [_ & _]
                                       (if (:big @state)
-                                        (?plot1 450 500)
-                                        (?plot1 250 300)))} "plot1"]
+                                        (?plot1 7 6)
+                                        (?plot1 7 5)))} "plot1"]
                 (:plot1 @state)]
                [:div
                 [:button {:on-click (fn [_ & _] (?cum-plot))} "cum-plot"]
@@ -128,7 +140,7 @@
       :fns {:incr (fn [s] (inc s))}}
      {:fns {:cum-plot [cum-plot [:cum-plot]]
             :dataset-plot [dataset-plot [:dataset-plot]]
-            :hist-plot [cum-plot [:hist-plot]]
+            :hist-plot [hist-plot [:hist-plot]]
             :x3    [(fn []
                       (render x3))
                     [:x3]]

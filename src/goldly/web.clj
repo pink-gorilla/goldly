@@ -1,6 +1,7 @@
 (ns goldly.web
   (:require
    [clojure.string]
+   [clojure.java.io :as io]
    [clojure.tools.logging :as log]
    [ring.util.response :as response]
    [ring.middleware.cors :refer [wrap-cors]]
@@ -31,6 +32,17 @@
   [req]
   (get-in req [:session :uid]))
 
+(defn check-resource  [name]
+  (let [;resource (io/file name)
+        resource (io/resource name)]
+    (if resource
+      true
+      false)))
+
+(if (check-resource "images/marker-icon.png")
+  (println "Great - gorilla-ui resources are working!")
+  (println "FUCK - gorila-ui resources not working!"))
+
 (defn app [req]
   (let [csrf-token (force *anti-forgery-token*) ;(:anti-forgery-token ring-req)] ; Also an option
         session (if (session-uid req)
@@ -52,10 +64,9 @@
      "text/html")))
 
 (defroutes resource-handler
-  (resources "/")  ;; Needed during development
-  (resources "/" {:root "gorilla-repl-client"})
-  (files "/" {:root "./target"})
-  (files "/" {:root "./node_modules"}) ; access css and bundles in npm dependencies  
+  (resources "/"  {:root ""}) ; serve resources from jars (:root defaults to "public")
+  (files "/" {:root "./target"}) ; compiled cljs
+  (files "/" {:root "./node_modules"}) ; access css and bundles in npm dependencies
   (not-found "Bummer, not found"))
 
 (defroutes app-handler
