@@ -1,9 +1,9 @@
 {:lein   {:profile "+cljs"}
  :source-paths ["src"]
  :resource-paths  ["resources"
-                   "node_modules/leaflet/dist"
-                   "node_modules/mathjax/es5"
-                   "node_modules/ag-grid-community"]
+                   #_"node_modules/leaflet/dist"
+                   #_"node_modules/mathjax/es5"
+                   #_"node_modules/ag-grid-community"]
  ; shadow dev http server settings
  :dev-http {8000 ["target"
                   ;"classpath:public" 
@@ -16,8 +16,8 @@
                   #_"node_modules/mathjax/es5"
                   #_"node_modules/ag-grid-community"]}
  :builds {:web {:target :browser
-                :output-dir "target"
-                :asset-path "/"
+                :output-dir "target/goldly"
+                :asset-path "/goldly"
                 :modules {:main {:entries [goldly.web]}}
                 :devtools {:before-load goldly.web/stop
                            :after-load goldly.web/start}
@@ -31,6 +31,6 @@
                                    ;:optimizations   :simple
                                    :optimizations  :none}}
           :ci  {:target :karma
-                :output-to  "target/ci.js"
+                :output-to  "target/ci/ci.js"
                 :ns-regexp "-test$"}}}
 
