@@ -73,7 +73,12 @@
             [:p/button {:on-click #(?load-quakes (:min @state) (:max @state))} "Load!"]
             ; filter_slider ("mag", "Magnitude", sd, column= ~mag, step=0.1, width=250)
             [:div.flex.w-full.h-20
-             [:p/sparklinebar {:limit 100
+             [:p/sparklinebar {:limit 300
+                               :svgWidth 1200 
+                               :svgHeight 20 
+                               :width 1500 
+                               :height 20
+                               :margin 1
                                :data (map :mag (:quakes @state))}]]
             ; :width 100 :height 20 :svgWidth 300 :svgHeight 20 :margin 5
             [:div.flex.flex-column.w-full.h-full
