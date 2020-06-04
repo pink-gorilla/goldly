@@ -173,7 +173,7 @@
       component)))
 
 (defn update-state-from-clj-result [state result where]
-  (info "updating state from clj result:" result "where:" where)
+  (debugf "updating state from clj result: %s where: %s" result where)
   (try
    ;(com.rpl.specter/setval [:a] 1 m) set key a to 1 in m
     (reset! state (setval where result @state))

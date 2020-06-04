@@ -21,11 +21,12 @@
    [goldly.events] ; add reframe event handlers
    [goldly.subs]))
 
-(enable-console-print!)
-
-(timbre/set-level! :trace)
+(defn print-log-init! []
+  (enable-console-print!)
+;(timbre/set-level! :trace) ; Uncomment for more logging
 ;(timbre/set-level! :debug)
-;(timbre/set-level! :info)
+  (timbre/set-level! :info))
+
 
 (defn hook-browser-navigation!
   []
@@ -125,8 +126,7 @@
   (info "shadow-cljs reload: before"))
 
 (defn ^:dev/after-load after-reload []
-  (enable-console-print!)
-  (timbre/set-level! :debug)
+  (print-log-init!)
   (println "shadow-cljs reload: after")
   (info "shadow-cljs reload: after")
 

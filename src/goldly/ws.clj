@@ -29,12 +29,7 @@
   (get-in req [:session :uid]))
 
 
-;(log/set-level! :info)
-;; (log/set-level! :debug)
-;(taoensso.timbre/set-level! :trace) ; Uncomment for more logging
 
-
-(taoensso.timbre/set-level! :debug)
 
 (reset! sente/debug-mode?_ true) ; Uncomment for extra debug info
 

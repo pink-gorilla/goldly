@@ -2,7 +2,7 @@
   (:require
    [clojure.string]
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
-   [taoensso.timbre :as log :refer (tracef debugf info infof warnf error errorf)]
+   [taoensso.timbre :as log :refer (tracef debug debugf info infof warnf error errorf)]
    [cemerick.pomegranate :as pg]
    [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]))
 
@@ -146,7 +146,7 @@
         [event-name [run-id system-id fun & args]] event]
     (infof "rcvd %s runner: %s system: %s fun: %s args: %s" event-name run-id system-id fun args)
     (let [response (create-clj-run-response run-id system-id fun args)
-          _ (info "response: " response)]
+          _ (debug "response: " response)]
       (if ?reply-fn
         (?reply-fn response)
         (chsk-send! uid [:goldly/dispatch response])))))
