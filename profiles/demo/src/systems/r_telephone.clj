@@ -23,14 +23,6 @@
 ; https://shiny.rstudio.com/gallery/masters.html
 ; https://github.com/cjteeter/ShinyTeeter/blob/master/3_MastersGolf/app.R
 
-
-#_(defmacro defs
-    [& bindings]
-    {:pre [(even? (count bindings))]}
-    `(do
-       ~@(for [[sym init] (partition 2 bindings)]
-           `(def ~sym ~init))))
-
 (println "configuring clojisr ..")
 (require-r '[base :as base :refer [$ <- $<-]]
            '[utils :as u]

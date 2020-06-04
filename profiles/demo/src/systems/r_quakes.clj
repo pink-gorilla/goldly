@@ -7,6 +7,13 @@
    [clojisr.v1.r :as r :refer [r r->clj clj->r r+ colon bra bra<- rdiv r** r- r* ->code]]
    [clojisr.v1.require :refer [require-r]]))
 
+(defmacro defs
+    [& bindings]
+    {:pre [(even? (count bindings))]}
+    `(do
+       ~@(for [[sym init] (partition 2 bindings)]
+           `(def ~sym ~init))))
+
 ; ported from:
 ; https://rstudio.github.io/crosstalk/
 
@@ -28,6 +35,13 @@
 ;; Load dataset
 (r '(data quakes))
 ; https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/quakes
+
+(defs 
+  quakes-ds (r/r->clj quakes)
+  quakes-clj (ds/->flyweight quakes-ds))
+
+(println "quakes all:" (count quakes-clj))
+
 (println "quake data loaded!")
 
 ;; todo: ad start / stop events
@@ -51,10 +65,7 @@
   ; quake is a tech.ml dataset; clojisr converts R dataframes hat way.
   ; (println quakes)
   ;(println (ds/descriptive-stats quakes))
-  (let [quakes-ds (r/r->clj quakes)
-        quakes-clj (ds/->flyweight quakes-ds)
-        _ (println "quakes all:" (count quakes-clj))
-        quakes-filtered (into [] (filter (p-mag rmin rmax) quakes-clj))]
+  (let [quakes-filtered (into [] (filter (p-mag rmin rmax) quakes-clj))]
     (println "quakes all:" (count quakes-clj)
              "filtered:" (count quakes-filtered))
     quakes-filtered))
