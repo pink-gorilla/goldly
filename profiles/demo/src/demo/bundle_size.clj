@@ -9,4 +9,4 @@
 (defn -main []
   (shadow.cljs.build-report/generate :web
                                      {:print-table true
-                                      :report-file "report.html"}))
+                                      :report-file "target/bundlesizereport.html"}))

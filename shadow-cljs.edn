@@ -28,8 +28,9 @@
                 :compiler-options {;; preferrably implicit by shadow-cljs compile/watch/release
                                                         ;; Beware: releasing :none not supported by shadow
                                                         ;; :optimizations   :none
-                                   ;:optimizations   :simple
-                                   :optimizations  :none}}
+                                   :optimizations   :simple
+                                   ;:optimizations  :none
+                                   }}
           :ci  {:target :karma
                 :output-to  "target/ci/ci.js"
                 :ns-regexp "-test$"}}}
