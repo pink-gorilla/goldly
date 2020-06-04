@@ -68,19 +68,33 @@
             :min 5.6
             :max 5.8}
     :html  [:div.rows
-            [:h1 "Earthquakes in fiji"]
+            [:h1.text-green-700 "Earthquakes in Fiji"]
+            [:p/slideriona {:min 4.0 :max 5.7 :step 0.1} state :min :max]
             [:p/button {:on-click #(?load-quakes (:min @state) (:max @state))} "Load!"]
             ; filter_slider ("mag", "Magnitude", sd, column= ~mag, step=0.1, width=250)
-            [:div.flex.flex-column
+            [:div.flex.w-full.h-20
+             [:p/sparklinebar {:limit 100
+                               :data (map :mag (:quakes @state))}]]
+            ; :width 100 :height 20 :svgWidth 300 :svgHeight 20 :margin 5
+            [:div.flex.flex-column.w-full.h-full
              [:p/leaflet
               (into [{:type :view :center [-16, 170.5] :zoom 4 :height 600 :width 700}]
                     (for [{:keys [lat long]} (:quakes @state)]
                       {:type :marker :position [lat long]}))]
-             [:div
-              [:h1 "data"]
-              [:div (pr-str @state)]]]
-            ;datatable (sd, extensions= "Scroller", style= "bootstrap", class= "compact", width= "100%"
-            ;               options=list (deferRender=TRUE, scrollY=300, scroller=TRUE)) 
-            ]
+             [:div.h-100.w-full.ml-5
+              ;[:h1 "data"]
+              ;[:div (pr-str @state)]
+              [:div {:className "ag-theme-balham"
+                     :style {:height "100%" ;"400px" ; either both pixels, or both percentage.
+                             :width "100%" ; "600px"
+                             :color "blue"}}
+               [:p/aggrid {:columnDefs  [{:headerName "R" :field "mag" :width 60 :sortable true}
+                                         {:headerName "m" :field "depth" :width 70 :sortable true}
+                                         {:headerName "#" :field "stations" :width 60 :sortable true}
+                                         {:headerName "lat" :field "lat" :width 100 :sortable true}
+                                         {:headerName "lng" :field "long" :width 100 :sortable true}]
+                           :rowData (:quakes @state)
+                           :pagination true
+                           :paginationAutoPageSize true}]]]]]
     :fns   {}}
    {:fns {:load-quakes [load-quakes-clj [:quakes]]}}))

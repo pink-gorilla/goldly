@@ -51,7 +51,7 @@
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
-                 [org.pinkgorilla/gorilla-ui "0.1.56"] ; needs to be in clj also, so that its resources can be served.
+                 [org.pinkgorilla/gorilla-ui "0.1.60"] ; needs to be in clj also, so that its resources can be served.
                  ]
   :source-paths ["src"]
   :resource-paths ["resources"]
@@ -107,6 +107,9 @@
             ;["shell" "shadow-cljs" "compile" "web"]
             ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
 
+            "bundle-size"  ^{:doc "creates a js bundle report"}
+            ["with-profile" "+demo,+cljs" "run" "-m" "demo.bundle-size"]
+            
             "demo" ^{:doc "Runs demo"}
             ["with-profile" "+demo" "run" "-m" "demo.demo1"]
 
