@@ -30,6 +30,10 @@
   (pr-str
    (clojure.walk/prewalk goldly-def->val f)))
 
+(defn escape-html2 [f]
+  (pr-str
+   (clojure.walk/prewalk goldly-def->val f))
+  )
 
 (comment
   (def no "so-bad")
@@ -65,18 +69,19 @@
     {:id (unique-id)
      :name name
      :cljs {:state state
-            :html (pr-str html)
+            :html (escape-html2 html) ;(pr-str html)
             :fns (into-mapper pr-str fns)}
      :clj system-clj}))
 
 (comment
 
   (def y (defn add [a b] (+ a b)))
-  (macroexpand (system {:html [:h1]
-                        :fns {:a 6
-                              :b y
-                              :c "g"}
-                        :state 9} 2))
+  (def-ui y [:p "wow"])
+  (macroexpand (system {:html [:h1 [y] ]
+                               :fns {:a 6
+                                     :b y
+                                     :c "g"}
+                               :state 9} 2))
   ;
   )
 
