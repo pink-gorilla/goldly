@@ -19,6 +19,12 @@
    ))
 
 
+(defn xxx [state]
+  [:p/leaflet
+   (into [{:type :view :center [-16, 170.5] :zoom 4 :height 600 :width 700}]
+         (for [{:keys [lat long]} (:quakes @state)]
+           {:type :marker :position [lat long]}))])
+
 ;; cljs compile
 
 

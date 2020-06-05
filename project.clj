@@ -53,6 +53,7 @@
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                  [org.pinkgorilla/gorilla-ui "0.1.60"] ; needs to be in clj also, so that its resources can be served.
                  ]
+  
   :source-paths ["src"]
   :resource-paths ["resources"]
 
@@ -78,7 +79,8 @@
                                    [org.pinkgorilla/gorilla-plot "0.9.9"]
                                    [org.pinkgorilla/clojisr-gorilla "0.0.5"]]}
 
-             :dev {:dependencies [[clj-kondo "2020.05.09"]]
+             :dev {:source-paths ["src" "test"]
+                   :dependencies [[clj-kondo "2020.05.09"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]]
                    :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}

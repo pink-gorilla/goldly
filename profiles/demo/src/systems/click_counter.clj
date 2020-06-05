@@ -2,7 +2,6 @@
   (:require
    [goldly.core :as goldly]))
 
-
 (def click-counter
   (goldly/system
    {:name "click counter"
@@ -11,5 +10,11 @@
             [:p/button {:on-click ?incr} @state]
             " times"]
     :fns {:incr (fn [s] (inc s))}}
-   {:fns {}}
-   ))
+   {:fns {}}))
+
+
+(comment
+
+  (println click-counter)
+  ;
+  )

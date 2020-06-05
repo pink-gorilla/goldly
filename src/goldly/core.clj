@@ -3,7 +3,7 @@
    [clojure.string]
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
    [taoensso.timbre :as log :refer (tracef debug debugf info infof warnf error errorf)]
-   [cemerick.pomegranate :as pg]
+   ;[cemerick.pomegranate :as pg]
    [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]))
 
 (defn unique-id
@@ -11,24 +11,24 @@
   []
   (str (java.util.UUID/randomUUID)))
 
-(defn add-dependencies
-  "Use Pomegranate to add dependencies 
+#_(defn add-dependencies
+    "Use Pomegranate to add dependencies 
    with Maven Central and Clojars as default repositories.
    Same Syntax as clojupyter
    stolen from: https://github.com/clojupyter/clojupyter/blob/40c6d47ec9c9e4634c8e28fca3209b5c3ac8430c/src/clojupyter/misc/helper.clj
 
    "
-  [dependencies & {:keys [repositories]
-                   :or {repositories {"central" "https://repo1.maven.org/maven2/"
-                                      "clojars" "https://clojars.org/repo"}}}]
-  (let [first-item (first dependencies)]
-    (if (vector? first-item)
+    [dependencies & {:keys [repositories]
+                     :or {repositories {"central" "https://repo1.maven.org/maven2/"
+                                        "clojars" "https://clojars.org/repo"}}}]
+    (let [first-item (first dependencies)]
+      (if (vector? first-item)
       ; [ [dep1] [dep2]]
-      (pg/add-dependencies :coordinates `~dependencies
-                           :repositories repositories)
+        (pg/add-dependencies :coordinates `~dependencies
+                             :repositories repositories)
       ; [dep1]
-      (pg/add-dependencies :coordinates `[~dependencies]
-                           :repositories repositories))))
+        (pg/add-dependencies :coordinates `[~dependencies]
+                             :repositories repositories))))
 
 
 ;; system
@@ -87,7 +87,19 @@
      :clj system-clj}))
 
 (comment
-  (macroexpand (system {:html [:h1] :fns {:a 6 :b 8 :c "g"} :state 9} 2)))
+
+  (def y (defn add [a b] (+ a b)))
+  (macroexpand (system {:html [:h1]
+                        :fns {:a 6
+                              :b y
+                              :c "g"}
+                        :state 9} 2))
+  ;
+  )
+
+
+
+
 
 (defmethod -event-msg-handler :goldly/systems
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
