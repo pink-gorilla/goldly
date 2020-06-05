@@ -1,6 +1,6 @@
 (ns systems.holiday-destinations
   (:require
-   [goldly.core :as goldly]))
+   [goldly.system :as goldly]))
 
 (def places
   {:london [{:type :view :center [51.49, -0.08] :zoom 12 :height 600 :width 700}

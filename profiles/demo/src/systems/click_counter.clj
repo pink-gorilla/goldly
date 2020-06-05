@@ -1,15 +1,16 @@
 (ns systems.click-counter
   (:require
-   [goldly.core :as goldly]))
+   [goldly.system :as goldly]))
 
 (def click-counter
   (goldly/system
    {:name "click counter"
     :state 42
     :html  [:div "Clicked "
-            [:p/button {:on-click ?incr} @state]
+             [:button {:class "border m-2 p-3 border-pink-500"
+                       :on-click ?incr} @state]
             " times"]
-    :fns {:incr (fn [s] (inc s))}}
+    :fns {:incr (fn [_ s] (inc s))}}
    {:fns {}}))
 
 

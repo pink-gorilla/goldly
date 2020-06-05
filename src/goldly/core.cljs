@@ -25,6 +25,8 @@
          (for [{:keys [lat long]} (:quakes @state)]
            {:type :marker :position [lat long]}))])
 
+(pinkie/register-tag :p/xxx xxx)
+
 ;; cljs compile
 
 

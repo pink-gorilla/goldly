@@ -1,6 +1,6 @@
 (ns systems.r-quakes
   (:require
-   [goldly.core :as goldly]
+   [goldly.system :as goldly]
    [pinkgorilla.ui.macros] ; force loading of gorilla-ui
    [pinkgorilla.ui.gorilla-renderable :refer [Renderable render]]
    [tech.ml.dataset :as ds]
@@ -93,8 +93,8 @@
                                :data (map :mag (:quakes @state))}]]
             ; :width 100 :height 20 :svgWidth 300 :svgHeight 20 :margin 5
             [:div.flex.flex-column.w-full.h-full
-             [goldly/xxx state]
-             #_[:p/leaflet
+             #_[:p/xxx state]
+             [:p/leaflet
               (into [{:type :view :center [-16, 170.5] :zoom 4 :height 600 :width 700}]
                     (for [{:keys [lat long]} (:quakes @state)]
                       {:type :marker :position [lat long]}))]

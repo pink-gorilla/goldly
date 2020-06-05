@@ -6,10 +6,6 @@
    ;[cemerick.pomegranate :as pg]
    [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]))
 
-(defn unique-id
-  "Get a unique id."
-  []
-  (str (java.util.UUID/randomUUID)))
 
 #_(defn add-dependencies
     "Use Pomegranate to add dependencies 
@@ -69,36 +65,6 @@
 (defn send-event [system-id event-name & args]
   (let [message  {:system system-id :type event-name :args args}]
     (send-all! [:goldly/event message])))
-
-(defn into-mapper
-  "applies function f on all values of a map.
-   returns a map with the same keys"
-  [f m]
-  (into (empty m) (for [[k v] m] [k (f v)])))
-
-(defmacro system [{:keys [name state html fns] :as system-cljs} system-clj]
-  (let [fns (zipmap (keys fns)
-                    (map #(pr-str %) (vals fns)))]
-    {:id (unique-id)
-     :name name
-     :cljs {:state state
-            :html (pr-str html)
-            :fns (into-mapper pr-str fns)}
-     :clj system-clj}))
-
-(comment
-
-  (def y (defn add [a b] (+ a b)))
-  (macroexpand (system {:html [:h1]
-                        :fns {:a 6
-                              :b y
-                              :c "g"}
-                        :state 9} 2))
-  ;
-  )
-
-
-
 
 
 (defmethod -event-msg-handler :goldly/systems

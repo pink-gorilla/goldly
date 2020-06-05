@@ -1,6 +1,6 @@
 (ns systems.greeter
   (:require
-   [goldly.core :as goldly]))
+   [goldly.system :as goldly]))
 
 
 (def greeter

@@ -1,6 +1,6 @@
 (ns systems.controls
   (:require
-   [goldly.core :as goldly]))
+   [goldly.system :as goldly]))
 
 (def controls
   (goldly/system

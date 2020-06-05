@@ -1,7 +1,7 @@
 (ns systems.r-telephone
   (:require
    [taoensso.timbre :as log :refer (tracef debugf info infof warnf error errorf)]
-   [goldly.core :as goldly]
+   [goldly.system :as goldly]
    [pinkgorilla.ui.gorilla-renderable :refer [Renderable render]]
    [tech.ml.dataset :as dataset]
    [clojisr.v1.r :as r :refer [r r->clj clj->r r+ colon bra bra<- rdiv r** r- r* ->code]]
@@ -39,12 +39,12 @@
 (defn cum-plot []
   (->svg {:width 7 :height 5}
          (fn []
-         (->> rand
-              (repeatedly 30)
-              (reductions +)
-              (plot :xlab "t"
-                    :ylab "y"
-                    :type "l")))))
+           (->> rand
+                (repeatedly 30)
+                (reductions +)
+                (plot :xlab "t"
+                      :ylab "y"
+                      :type "l")))))
 
 (defn dataset-plot []
   (->svg {:width 7 :height 5}

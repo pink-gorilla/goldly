@@ -112,7 +112,7 @@
             "bundle-size"  ^{:doc "creates a js bundle report"}
             ["with-profile" "+demo,+cljs" "run" "-m" "demo.bundle-size"]
             
-            "demo" ^{:doc "Runs demo"}
+            "goldly" ^{:doc "Runs goldly demo"}
             ["with-profile" "+demo" "run" "-m" "demo.demo1"]
 
             "outdated" ^{:doc "Runs ancient"}
