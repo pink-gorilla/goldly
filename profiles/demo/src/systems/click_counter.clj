@@ -1,6 +1,9 @@
 (ns systems.click-counter
   (:require
-   [goldly.core :as goldly]))
+   [goldly.system :as goldly :refer [def-ui]]))
+
+(def-ui panther
+  [:p "Pink panther is here!"])
 
 
 (def click-counter
@@ -8,8 +11,16 @@
    {:name "click counter"
     :state 42
     :html  [:div "Clicked "
-            [:p/button {:on-click ?incr} @state]
+             panther
+             [:button {:class "border m-2 p-3 border-pink-500"
+                       :on-click ?incr} @state]
             " times"]
-    :fns {:incr (fn [s] (inc s))}}
-   {:fns {}}
-   ))
+    :fns {:incr (fn [_ s] (inc s))}}
+   {:fns {}}))
+
+
+(comment
+
+  (println click-counter)
+  ;
+  )

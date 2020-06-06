@@ -1,6 +1,6 @@
 (ns systems.controls
   (:require
-   [goldly.core :as goldly]))
+   [goldly.system :as goldly]))
 
 (def controls
   (goldly/system
@@ -8,7 +8,7 @@
     :state {:language "CommonLisp"}
     :html  [:div
             [:p "Favorite Language: " (:language @state)]
-            [:p/pselect ["Clojure" "Clojurescript" "Schema" "CommonLisp" "Elixir"] state]
+            [:p/pselectm ["Clojure" "Clojurescript" "Schema" "CommonLisp" "Elixir"] state :language]
 
             [:h2 "popover"]
             [:p/popover {:color "green"

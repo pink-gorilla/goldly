@@ -51,8 +51,11 @@
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
-                 [org.pinkgorilla/gorilla-ui "0.1.60"] ; needs to be in clj also, so that its resources can be served.
-                 ]
+                 ;ui dependencies (clj must serve resources):
+                 [org.pinkgorilla/gorilla-ui "0.1.61"]
+                 [org.pinkgorilla/gorilla-renderable-ui "0.1.35"]
+                 [org.pinkgorilla/gorilla-plot "0.9.11"]]
+
   :source-paths ["src"]
   :resource-paths ["resources"]
 
@@ -78,7 +81,8 @@
                                    [org.pinkgorilla/gorilla-plot "0.9.9"]
                                    [org.pinkgorilla/clojisr-gorilla "0.0.5"]]}
 
-             :dev {:dependencies [[clj-kondo "2020.05.09"]]
+             :dev {:source-paths ["src" "test"]
+                   :dependencies [[clj-kondo "2020.05.09"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]]
                    :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
@@ -109,8 +113,8 @@
 
             "bundle-size"  ^{:doc "creates a js bundle report"}
             ["with-profile" "+demo,+cljs" "run" "-m" "demo.bundle-size"]
-            
-            "demo" ^{:doc "Runs demo"}
+
+            "goldly" ^{:doc "Runs goldly demo"}
             ["with-profile" "+demo" "run" "-m" "demo.demo1"]
 
             "outdated" ^{:doc "Runs ancient"}

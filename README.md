@@ -29,7 +29,7 @@
 ```
   npm install
   lein shadow-compile
-  lein demo
+  lein goldly
 ```
 
 

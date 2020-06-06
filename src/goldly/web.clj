@@ -68,6 +68,7 @@
   (files "/goldly/" {:root "./target/goldly"}) ; compiled cljs
   (files "/cljs-runtime/" {:root "./target/cljs-runtime"}) ; compiled cljs
   (files "/" {:root "./node_modules"}) ; access css and bundles in npm dependencies
+  (files "/" {:root "./profiles/demo/src/systems"}) ; resources of systems
   (not-found "Bummer, not found"))
 
 (defroutes app-handler

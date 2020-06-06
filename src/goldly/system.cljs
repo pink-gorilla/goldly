@@ -1,4 +1,5 @@
-(ns goldly.core
+(ns goldly.system
+  "defines reagent-component render-system, that displays a fully defined system"
   (:require
    [clojure.string :as str]
    [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf error info)]
@@ -12,12 +13,7 @@
    [cljs-uuid-utils.core :as uuid]
    [com.rpl.specter :refer [transform setval]]
    [pinkgorilla.ui.pinkie :as pinkie]
-   [goldly.pinkie]
-
-   [pinkgorilla.ui.default-setup]
-   [pinkgorilla.ui.default-renderer] ; add ui renderer definitions 
-   ))
-
+   [goldly.plot :refer [sin]]))
 
 ;; cljs compile
 
@@ -121,6 +117,7 @@
 
 (defn- ->bindings-cljs [state fns]
   (let [bindings {'state state
+                  'sin sin
                   ;'pinkie-render pinkie-render ; done via pinkie/register-tag
                   }
         bindings-cljs (->> fns
@@ -191,13 +188,17 @@
         (fn []
           [component state-a])))))
 
+; note that splitting render-system and render-system-impl has the reason
+; to not recompile the code at each rerender of the data that the system
+; is displaying. 
+
 (defn render-system [{:keys [state html fns fns-clj] :as system}]
   (let [id (uuid/uuid-string (uuid/make-random-uuid))]
     (r/create-class
-     {:display-name          "render-system"
+     {:display-name          "goldly-render-system"
       :reagent-render        (render-system-impl id)
       :component-will-unmount (fn [this] ;  just before the component is unmounted from the DOM.
-                                (info "c will unmount")
+                                (info "render-system will unmount")
                                 (dispatch [:goldly/remove-running-system id]))})))
 
 
