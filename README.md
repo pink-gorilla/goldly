@@ -32,6 +32,7 @@
   lein goldly
 ```
 
+## Forget this:
 
 data <- attach(readRDS("data.rds"))
     for (prefix in names(resources)) {
