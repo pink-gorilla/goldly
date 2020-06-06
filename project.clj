@@ -1,4 +1,4 @@
-(defproject org.pinkgorilla/goldly "0.0.2"
+(defproject org.pinkgorilla/goldly "0.0.3-SNAPSHOT"
   :description "reactive html ui with clj-cljs interop"
   :license {:name "MIT"}
   :deploy-repositories [["releases" {:url "https://clojars.org/repo"
