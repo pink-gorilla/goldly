@@ -1,5 +1,30 @@
 # goldly
 
+## What can goldly do for you?
+
+- goldly allows you to quickly create data driven web applications 
+  (dashboards, data-analysis)
+- goldly takes care of running web server, client-server communication,
+  and compiling your web app. 
+- it is somehow similar to R shiny and python dash.
+- via gorilla-ui it brings many ready-made components that you can use.
+
+## try it yourself
+
+```
+  git clone https://github.com/pink-gorilla/goldly.git
+  cd goldly
+  lein goldly
+```
+
+## use it in your project
+
+Add [org.pinkgorilla/goldly "0.0.1"] to your project as a plugin
+
+```
+  lein goldly app.clj
+```
+
 ## Overview
 
 - state is kept in cljs / reagent atom
@@ -24,7 +49,8 @@
 - server is essentially providing a rest api via websocket, in the context of
   the running system
 
-## Demo
+
+## developer workflow:
 
 ```
   npm install
@@ -32,12 +58,7 @@
   lein goldly
 ```
 
-## Forget this:
 
-data <- attach(readRDS("data.rds"))
-    for (prefix in names(resources)) {
-        goldly::addResourcePath(prefix, resources[[prefix]])
-    }
      
 
 

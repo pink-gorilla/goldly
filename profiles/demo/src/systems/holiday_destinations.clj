@@ -1,6 +1,9 @@
 (ns systems.holiday-destinations
   (:require
+   [goldly.runner :refer [system-start!]]
    [goldly.system :as goldly]))
+
+(println "loading demo.holiday-destinations..")
 
 (def places
   {:london [{:type :view :center [51.49, -0.08] :zoom 12 :height 600 :width 700}
@@ -10,7 +13,7 @@
             #_{:type :rectangle :bounds [[51.49, -0.08]
                                          [51.5, -0.06]]}]})
 
-(def holiday-destinations
+(system-start! 
   (goldly/system
    {:name "holiday destinations"
     :state {:place :london

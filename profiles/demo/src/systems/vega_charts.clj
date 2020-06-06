@@ -1,6 +1,9 @@
 (ns systems.vega-charts
   (:require
+   [goldly.runner :refer [system-start!]]
    [goldly.system :as goldly :refer [def-ui]]))
+
+(println "loading demo.vega-charts ..")
 
 (def-ui bar
   {:$schema "https://vega.github.io/schema/vega-lite/v4.json"
@@ -66,7 +69,7 @@
                :color {:field "symbol", :type "nominal"}}})
 
 
-(def vega-charts
+(system-start! 
   (goldly/system
    {:name "vega charts"
     :state {}

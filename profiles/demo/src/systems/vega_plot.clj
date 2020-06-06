@@ -1,6 +1,9 @@
 (ns systems.vega-plot
   (:require
+   [goldly.runner :refer [system-start!]]
    [goldly.system :as goldly :refer [def-ui]]))
+
+(println "loading demo.vega-plot ..")
 
 (def-ui d [1 3 5 7 9 5 4 6 9 8 3 5 6])
 
@@ -19,7 +22,7 @@
    (list-plot (map #(vector % (rand %)) (range 0 10 0.01)) :opacity 0.3 :symbol-size 50)
    (plot (fn [x] (* x (Math/pow (Math/sin x) 2))) [0 10]))
 
-(def vega-plot
+(system-start! 
   (goldly/system
    {:name "vega plot"
     :state {}

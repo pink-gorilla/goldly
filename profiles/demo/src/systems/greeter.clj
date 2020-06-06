@@ -1,9 +1,11 @@
 (ns systems.greeter
   (:require
+   [goldly.runner :refer [system-start!]]
    [goldly.system :as goldly]))
 
+(println "loading demo.greeter ..")
 
-(def greeter
+(system-start! 
   (goldly/system
    {:name "greeter"
     :state {:in ""

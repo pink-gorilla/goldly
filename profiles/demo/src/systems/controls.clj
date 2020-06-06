@@ -1,8 +1,11 @@
 (ns systems.controls
   (:require
+   [goldly.runner :refer [system-start!]]
    [goldly.system :as goldly]))
 
-(def controls
+(println "loading demo.controls ..")
+
+(system-start! 
   (goldly/system
    {:name "controls"
     :state {:language "CommonLisp"}

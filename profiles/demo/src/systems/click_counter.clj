@@ -1,12 +1,14 @@
 (ns systems.click-counter
   (:require
-   [goldly.system :as goldly :refer [def-ui]]))
+   [goldly.runner :refer [system-start!]]
+[goldly.system :as goldly :refer [def-ui]]))
+
+(println "loading demo.click-counter ..")
 
 (def-ui panther
   [:p "Pink panther is here!"])
 
-
-(def click-counter
+(system-start! 
   (goldly/system
    {:name "click counter"
     :state 42
