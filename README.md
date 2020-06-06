@@ -1,5 +1,7 @@
 # goldly
 
+ [![GitHub Actions status |pink-gorilla/goldly](https://github.com/pink-gorilla/goldly/workflows/CI/badge.svg)](https://github.com/pink-gorilla/goldly/actions?workflow=CI)[![Codecov Project](https://codecov.io/gh/pink-gorilla/goldly/branch/master/graph/badge.svg)](https://codecov.io/gh/pink-gorilla/goldly)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly.svg)](https://clojars.org/org.pinkgorilla/goldly)
+
 ## What can goldly do for you?
 
 - goldly allows you to quickly create data driven web applications 
@@ -14,15 +16,16 @@
 ```
   git clone https://github.com/pink-gorilla/goldly.git
   cd goldly
-  lein goldly
+  lein goldly ; only run app with default systems
+  lein demo   ; run demo systems
 ```
 
 ## use it in your project
 
-Add [org.pinkgorilla/goldly "0.0.1"] to your project as a plugin
+Add [org.pinkgorilla/goldly "0.0.3"] to your project as a plugin
 
 ```
-  lein goldly app.clj
+  lein goldly ./my-systems/
 ```
 
 ## Overview

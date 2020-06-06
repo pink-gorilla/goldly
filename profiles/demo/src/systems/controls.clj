@@ -3,8 +3,6 @@
    [goldly.runner :refer [system-start!]]
    [goldly.system :as goldly]))
 
-(println "loading demo.controls ..")
-
 (system-start! 
   (goldly/system
    {:name "controls"

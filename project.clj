@@ -97,6 +97,7 @@
                                             merge-meta          [[:inner 0]]
                                             try-if-let          [[:block 1]]}}}}
 
+  
   :plugins [[lein-shell "0.5.0"]
             [lein-ancient "0.6.15"]
             [min-java-version "0.1.0"]]
@@ -114,10 +115,10 @@
             "bundle-size"  ^{:doc "creates a js bundle report"}
             ["with-profile" "+demo,+cljs" "run" "-m" "demo.bundle-size"]
 
-            "goldly" ^{:doc "Runs goldly app"}
+            "goldly" ^{:doc "Runs goldly app (with only default system components)"}
             ["run" "-m" "goldly.app"]
             
-            "demo" ^{:doc "Runs goldly demo"}
+            "demo" ^{:doc "Runs goldly app (with demo components)"}
             ["with-profile" "+demo" "run" "-m" "goldly.app" "./profiles/demo/src/systems/"]
 
             "outdated" ^{:doc "Runs ancient"}

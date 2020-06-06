@@ -11,8 +11,6 @@
    [clojisr.v1.applications.plotting :refer
     [plot->svg plot->file plot->buffered-image]]))
 
-(println "loading demo.r-telephone ..")
-
 ; ported from:
 ; https://scicloj.github.io/clojisr/doc/clojisr/v1/tutorial-test/#data-visualization
 ; https://shiny.rstudio.com/gallery/telephones-by-region.html

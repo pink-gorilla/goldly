@@ -8,8 +8,6 @@
    [clojisr.v1.r :as r :refer [r r->clj clj->r r+ colon bra bra<- rdiv r** r- r* ->code]]
    [clojisr.v1.require :refer [require-r]]))
 
-(println "loading demo.r-quakes ..")
-
 (defmacro defs
   [& bindings]
   {:pre [(even? (count bindings))]}
