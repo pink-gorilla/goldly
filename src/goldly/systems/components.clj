@@ -2,7 +2,6 @@
   (:require
    [goldly.system :as goldly :refer [def-ui]]))
 
-
 (def components
   (goldly/system
    {:name "components"
@@ -11,4 +10,3 @@
     :fns {}}
    {:fns {}}))
 
- 

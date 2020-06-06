@@ -30,7 +30,6 @@
 ;(timbre/set-level! :debug)
   (timbre/set-level! :info))
 
-
 (defn hook-browser-navigation!
   []
   (doto (History.)

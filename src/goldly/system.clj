@@ -54,8 +54,6 @@
   ;  
   )
 
-
-
 (defn into-mapper
   "applies function f on all values of a map.
    returns a map with the same keys"
@@ -84,7 +82,6 @@
   ;
   )
 
-
 (defn system->cljs
   "converts a system from clj to cljs"
   [system]
@@ -94,13 +91,6 @@
                         (assoc :fns-clj (into [] (keys clj))))]
     (println "system-cljs: " system-cljs)
     system-cljs))
-
-
-
-
-
-
-
 
 (defn function?
   "Returns true if argument is a function or a symbol that resolves to
@@ -129,9 +119,6 @@
   (if (symbol? form)
     `(pr-fn ~(str form) ~form)
     (pr-str form)))
-
-
-
 
 (comment
   ;(def-ui x 42)

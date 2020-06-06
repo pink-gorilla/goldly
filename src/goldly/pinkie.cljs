@@ -3,8 +3,7 @@
    [cljs.pprint]
    [pinkgorilla.ui.error :refer [error-boundary]]
    [pinkgorilla.ui.pinkie :refer [tag-inject convert-style-as-strings-to-map convert-render-as register-tag renderer-list]]
-   [pinkgorilla.ui.text :refer [text]]
-   ))
+   [pinkgorilla.ui.text :refer [text]]))
 
 (defn reagent-inject [{:keys [map-keywords]} component]
   (let [;_ (info "map-keywords: " map-keywords "widget: " widget " reagent component: " component)
@@ -29,9 +28,8 @@
 
 (register-tag :p/pinkie pinkie-render)
 
-
 (defn components []
   [pinkgorilla.ui.text/text (with-out-str
-          (cljs.pprint/print-table (renderer-list)))])
+                              (cljs.pprint/print-table (renderer-list)))])
 
 (register-tag :p/components components)

@@ -8,7 +8,6 @@
    [goldly.system :refer [system->cljs]]
    [goldly.systems.components :refer [components]]))
 
-
 #_(defn add-dependencies
     "Use Pomegranate to add dependencies 
    with Maven Central and Clojars as default repositories.
@@ -45,8 +44,6 @@
         ]
     [:goldly/systems #_ids summary]))
 
-
-
 (defn system-response
   "gets system to be sent to clj"
   [id]
@@ -58,7 +55,6 @@
 (defn send-event [system-id event-name & args]
   (let [message  {:system system-id :type event-name :args args}]
     (send-all! [:goldly/event message])))
-
 
 (defmethod -event-msg-handler :goldly/systems
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]

@@ -1,5 +1,5 @@
 (ns goldly.system
-  "defines reagent-component render-system, that displays a fully defined system"  
+  "defines reagent-component render-system, that displays a fully defined system"
   (:require
    [clojure.string :as str]
    [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf error info)]
@@ -13,10 +13,10 @@
    [cljs-uuid-utils.core :as uuid]
    [com.rpl.specter :refer [transform setval]]
    [pinkgorilla.ui.pinkie :as pinkie]
-   [goldly.plot :refer [sin]]
-   ))
+   [goldly.plot :refer [sin]]))
 
 ;; cljs compile
+
 
 (def ^:private walk-ns {'postwalk walk/postwalk
                         'prewalk walk/prewalk

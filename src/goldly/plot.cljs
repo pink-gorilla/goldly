@@ -52,7 +52,6 @@
 (defn sin [x]
   (.sin js/Math x))
 
-
 (println "registering vega dsl plots .. ")
 (register-tag :p/listplot listplot)
 (register-tag :p/barchart barchart)

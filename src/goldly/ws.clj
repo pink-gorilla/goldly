@@ -28,9 +28,6 @@
   [req]
   (get-in req [:session :uid]))
 
-
-
-
 (reset! sente/debug-mode?_ true) ; Uncomment for extra debug info
 
 ; packer :edn
