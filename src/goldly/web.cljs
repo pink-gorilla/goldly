@@ -13,13 +13,16 @@
    [reagent.core :as r]
    [reagent.dom]
    [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
-   ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
-   ; add dependencies of this project to bundle
-   ;[pinkgorilla.ui.default-renderer]
-   [goldly.core :refer [render-system]]
+   [goldly.system :refer [render-system]]
    [goldly.ws :refer [send! start-router!]]
    [goldly.events] ; add reframe event handlers
-   [goldly.subs]))
+   [goldly.subs]
+   ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
+   ; the following just adds dependencies to bundle
+   [pinkgorilla.ui.default-setup]
+   [pinkgorilla.ui.default-renderer] ; add ui renderer definitions 
+   [goldly.pinkie]
+   [goldly.plot]))
 
 (defn print-log-init! []
   (enable-console-print!)
@@ -106,7 +109,7 @@
 (defn app []
   (let [main (subscribe [:main])
         id (subscribe [:system-id])]
-    [:div.container
+    [:div ;.w.container
      (case @main
        :info [infos]
        :system [system @id]

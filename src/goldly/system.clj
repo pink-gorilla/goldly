@@ -15,11 +15,11 @@
   (contains? (meta s) :goldly.ui))
 
 (defn goldly-def->val [s]
-  (println "rep:" s)
+  ;(println "rep:" s)
   (if (symbol? s) ; s is (possibly) an UNRESOLVED symbol.
     (if-let [r (resolve s)] ; checks if variable is has been defined
       (let [v @r]
-        (println "........... esc: symbol: " s  " resolve: " r  "val: " v)
+        ;(println "........... esc: symbol: " s  " resolve: " r  "val: " v)
         (if (goldly? v) ;(fn? v)
           v
           s ;(name i)
@@ -32,8 +32,7 @@
 
 (defn escape-html2 [f]
   (pr-str
-   (clojure.walk/prewalk goldly-def->val f))
-  )
+   (clojure.walk/prewalk goldly-def->val f)))
 
 (comment
   (def no "so-bad")
@@ -77,17 +76,24 @@
 
   (def y (defn add [a b] (+ a b)))
   (def-ui y [:p "wow"])
-  (macroexpand (system {:html [:h1 [y] ]
-                               :fns {:a 6
-                                     :b y
-                                     :c "g"}
-                               :state 9} 2))
+  (macroexpand (system {:html [:h1 [y]]
+                        :fns {:a 6
+                              :b y
+                              :c "g"}
+                        :state 9} 2))
   ;
   )
 
 
-
-
+(defn system->cljs
+  "converts a system from clj to cljs"
+  [system]
+  (let [clj (or (get-in system [:clj :fns]) {})
+        system-cljs (-> system
+                        (dissoc :clj)
+                        (assoc :fns-clj (into [] (keys clj))))]
+    (println "system-cljs: " system-cljs)
+    system-cljs))
 
 
 

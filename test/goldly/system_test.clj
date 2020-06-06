@@ -6,7 +6,7 @@
 (def-ui y [:p 67])
 
 (deftest system-escape-test
-  (testing "1 geometry, no options"
+  (testing "html symbol escaping"
     (let [s (escape-symbols
              {:html [:p/button {:on-click ?incr} @state "s"]
               :fns {:y y

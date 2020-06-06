@@ -4,7 +4,9 @@
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
    [taoensso.timbre :as log :refer (tracef debug debugf info infof warnf error errorf)]
    ;[cemerick.pomegranate :as pg]
-   [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]))
+   [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]
+   [goldly.system :refer [system->cljs]]
+   [goldly.systems.components :refer [components]]))
 
 
 #_(defn add-dependencies
@@ -43,16 +45,7 @@
         ]
     [:goldly/systems #_ids summary]))
 
-(defn system->cljs
-  "converts a system from clj to cljs"
-  [system]
-  (let [clj (or (get-in system [:clj :fns]) {})
-        system-cljs (-> system
-                        (dissoc :clj)
-                        (assoc :fns-clj (into [] (keys clj))))]
 
-    (println "system-cljs: " system-cljs)
-    system-cljs))
 
 (defn system-response
   "gets system to be sent to clj"
@@ -160,4 +153,7 @@
     (recur (inc i))))
 
 ;(start-heartbeats!)
+;
+
+(system-start! components)
 
