@@ -5,7 +5,6 @@
    [shadow.cljs.build-report])
   (:gen-class))
 
-
 (defn -main []
   (shadow.cljs.build-report/generate :web
                                      {:print-table true

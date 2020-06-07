@@ -88,10 +88,10 @@
 (defn goldly-run!
   "This starts goldly (web server, user defined systems,...)"
   [{:keys [port
-                           app-systems-dir
-                           user-systems-dir]
-                    :or {port 8000
-                         app-systems-dir "./src/systems/"}}]
+           app-systems-dir
+           user-systems-dir]
+    :or {port 8000
+         app-systems-dir "./src/systems/"}}]
   ;(system-start! components)
   (when app-systems-dir
     (println "loading app systems from: " app-systems-dir)
