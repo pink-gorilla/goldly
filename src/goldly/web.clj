@@ -2,7 +2,7 @@
   (:require
    [clojure.string]
    [clojure.java.io :as io]
-   [clojure.tools.logging :as log]
+   ;[clojure.tools.logging :as log]
    [ring.util.response :as response]
    [ring.middleware.cors :refer [wrap-cors]]
    [ring.middleware.cljsjs :refer [wrap-cljsjs]]

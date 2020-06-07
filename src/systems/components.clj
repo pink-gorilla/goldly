@@ -9,6 +9,6 @@
  (goldly/system
   {:name "components"
    :state 42
-   :html  [:p/components]
+   :html  [:p/componentsui]
    :fns {}}
   {:fns {}}))
