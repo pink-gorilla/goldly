@@ -19,10 +19,10 @@
    [goldly.subs]
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
    ; the following just adds dependencies to bundle
-   [pinkgorilla.ui.default-setup]
-   [pinkgorilla.ui.default-renderer] ; add ui renderer definitions 
-   [goldly.pinkie]
-   [goldly.plot]))
+   [pinkgorilla.ui.default-setup] ; renderable-ui
+   [pinkgorilla.ui.default-renderer] ; gorilla-ui 
+   [pinkgorilla.ui.gorilla-plot.pinkie] ; gorilla-plot
+   ))
 
 (defn print-log-init! []
   (enable-console-print!)

@@ -52,9 +52,9 @@
                  [com.rpl/specter "1.1.3"]
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                  ;ui dependencies (clj must serve resources):
-                 [org.pinkgorilla/gorilla-ui "0.1.61"]
-                 [org.pinkgorilla/gorilla-renderable-ui "0.1.35"]
-                 [org.pinkgorilla/gorilla-plot "0.9.11"]]
+                 [org.pinkgorilla/gorilla-renderable-ui "0.1.36"]
+                 [org.pinkgorilla/gorilla-ui "0.1.67"]
+                 [org.pinkgorilla/gorilla-plot "0.9.12"]]
 
   :source-paths ["src"]
   :resource-paths ["resources"]

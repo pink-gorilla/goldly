@@ -2,6 +2,8 @@
 
  [![GitHub Actions status |pink-gorilla/goldly](https://github.com/pink-gorilla/goldly/workflows/CI/badge.svg)](https://github.com/pink-gorilla/goldly/actions?workflow=CI)[![Codecov Project](https://codecov.io/gh/pink-gorilla/goldly/branch/master/graph/badge.svg)](https://codecov.io/gh/pink-gorilla/goldly)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly.svg)](https://clojars.org/org.pinkgorilla/goldly)
 
+[![cljdoc badge](https://cljdoc.org/badge/org.pinkgorilla/goldly)](https://cljdoc.org/d/org.pinkgorilla/goldly/CURRENT)
+
 ## What can goldly do for you?
 
 - goldly allows you to quickly create data driven web applications 
@@ -54,6 +56,8 @@ Add [org.pinkgorilla/goldly "0.0.3"] to your project as a plugin
 
 
 ## developer workflow:
+
+Documentation: [![cljdoc badge](https://cljdoc.org/badge/org.pinkgorilla/goldly)](https://cljdoc.org/d/org.pinkgorilla/goldly/CURRENT)
 
 ```
   npm install

@@ -13,7 +13,7 @@
    [cljs-uuid-utils.core :as uuid]
    [com.rpl.specter :refer [transform setval]]
    [pinkgorilla.ui.pinkie :as pinkie]
-   [goldly.plot :refer [sin]]))
+   [pinkgorilla.ui.gorilla-plot.pinkie :refer [sin]]))
 
 ;; cljs compile
 
@@ -117,9 +117,7 @@
 
 (defn- ->bindings-cljs [state fns]
   (let [bindings {'state state
-                  'sin sin
-                  ;'pinkie-render pinkie-render ; done via pinkie/register-tag
-                  }
+                  'sin sin}
         bindings-cljs (->> fns
                            (map (fn [[f-name f-body]]
                                   [(binding-symbol f-name)
