@@ -18,28 +18,27 @@
                   ["vcs" "commit" "Begin %s"]
                   ["vcs" "push"]]
 
-  :managed-dependencies [[org.clojure/core.async "1.1.587"]
-                         [org.clojure/tools.logging "1.0.0"]
-                         [org.clojure/core.memoize "0.8.2"]
+  :managed-dependencies [[org.clojure/core.async "1.2.603"]
+                         [org.clojure/tools.logging "1.1.0"]
+                         [org.clojure/core.memoize "1.0.236"]
                          ; libpythonclj fixes
-                         [net.java.dev.jna/jna "5.2.0"]
-                         [org.ow2.asm/asm "7.0"]]
+                         [net.java.dev.jna/jna "5.5.0"]
+                         [org.ow2.asm/asm "8.0.1"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 [thheller/shadow-cljs "2.8.94"]
+                 [thheller/shadow-cljs "2.10.4"]
                  [thheller/shadow-cljsjs "0.0.21"]
-                 [org.clojure/tools.logging "0.4.0"]
-                 [ring/ring-core "1.6.3"]
+                 [ring/ring-core "1.8.1"]
                  [ring-cors "0.1.13"]
                  [ring/ring-defaults "0.3.2"
                   :exclusions [javax.servlet/servlet-api]]
                  ;; [ring.middleware.logger "0.5.0"]
                  [ring-middleware-format "0.7.4"]
                  [ring/ring-json "0.5.0"]
-                 [ring-cljsjs "0.1.0"]
+                 [ring-cljsjs "0.2.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [http-kit "2.3.0"]
-                 [compojure "1.4.0"]
+                 [compojure "1.6.1"]
                  [hiccup "1.0.5"]
                  [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.119.0"]
@@ -53,8 +52,10 @@
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                  ;ui dependencies (clj must serve resources):
                  [org.pinkgorilla/gorilla-renderable-ui "0.1.36"]
-                 [org.pinkgorilla/gorilla-ui "0.1.67"]
-                 [org.pinkgorilla/gorilla-plot "0.9.12"]]
+                 [org.pinkgorilla/gorilla-ui "0.1.67"
+                  :exclusions [org.clojure/clojurescript]]
+                 [org.pinkgorilla/gorilla-plot "0.9.12"
+                  :exclusions [org.clojure/clojurescript]]]
 
   :source-paths ["src"]
   :resource-paths ["resources"]
@@ -76,16 +77,36 @@
                                    [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
                                    ]}
 
-             :demo {:source-paths ["profiles/demo/src"]
-                    :dependencies [[org.clojure/tools.logging "1.0.0"] ; needed by clojisr
-                                   [org.pinkgorilla/gorilla-plot "0.9.9"]
-                                   [org.pinkgorilla/clojisr-gorilla "0.0.5"]]}
-
-             :dev {:source-paths ["src" "test"]
+             :dev {:source-paths ["profiles/dev/src" "test"]
                    :dependencies [[clj-kondo "2020.05.09"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
-                                  [lein-cloverage "1.1.2"]]
-                   :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
+                                  [lein-cloverage "1.1.2"]
+                                  [lein-codox "0.10.7"]
+                                  [lein-shell "0.5.0"]
+                                  [lein-ancient "0.6.15"]
+                                  [min-java-version "0.1.0"]]
+                   :aliases      {"clj-kondo"
+                                  ["run" "-m" "clj-kondo.main"]
+
+                                  "lint" ^{:doc "Runs code linter"}
+                                  ["clj-kondo" "--lint" "src"]
+
+                                  "bundle-size"  ^{:doc "creates a js bundle report"}
+                                  ["with-profile" "+cljs" "run" "-m" "dev.bundle-size"]
+
+                                  "outdated" ^{:doc "Runs ancient"}
+                                  ["with-profile" "+cljs" "ancient"]
+
+                                  "tree" ^{:doc "Runs deps tree with correct profile"}
+                                  ["with-profile" "+cljs" "deps" ":tree"]
+
+                                  "bump-version"
+                                  ["change" "version" "leiningen.release/bump-version"]
+
+                                  "shadow-compile"  ^{:doc "compiles UI"}
+                                 ;["shell" "shadow-cljs" "compile" "web"]
+                                  ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]}
+
                    :cloverage    {:codecov? true
                                   ;; In case we want to exclude stuff
                                   ;; :ns-exclude-regex [#".*util.instrument"]
@@ -95,32 +116,16 @@
                    :cljfmt       {:indents {as->                [[:inner 0]]
                                             with-debug-bindings [[:inner 0]]
                                             merge-meta          [[:inner 0]]
-                                            try-if-let          [[:block 1]]}}}}
+                                            try-if-let          [[:block 1]]}}}
 
-  
-  :plugins [[lein-shell "0.5.0"]
-            [lein-ancient "0.6.15"]
-            [min-java-version "0.1.0"]]
+             :demo {:source-paths ["profiles/demo/src"]
+                    :dependencies [[org.clojure/tools.logging "1.1.0"] ; needed by clojisr
+                                   [org.pinkgorilla/clojisr-gorilla "0.0.6"]]}}
 
-  :aliases {"bump-version"
-            ["change" "version" "leiningen.release/bump-version"]
 
-            "lint" ^{:doc "Runs code linter"}
-            ["clj-kondo" "--lint" "src"]
-
-            "shadow-compile"  ^{:doc "compiles UI"}
-            ;["shell" "shadow-cljs" "compile" "web"]
-            ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
-
-            "bundle-size"  ^{:doc "creates a js bundle report"}
-            ["with-profile" "+demo,+cljs" "run" "-m" "demo.bundle-size"]
-
-            "goldly" ^{:doc "Runs goldly app (with only default system components)"}
+  :aliases {"goldly" ^{:doc "Runs goldly app (with only default system components)"}
             ["run" "-m" "goldly.app"]
-            
-            "demo" ^{:doc "Runs goldly app (with demo components)"}
-            ["with-profile" "+demo" "run" "-m" "goldly.app" "./profiles/demo/src/systems/"]
 
-            "outdated" ^{:doc "Runs ancient"}
-            ["with-profile" "+cljs" "ancient"]})
+            "demo" ^{:doc "Runs goldly app (with demo components)"}
+            ["with-profile" "+demo" "run" "-m" "goldly.app" "./profiles/demo/src/systems/"]})
 

@@ -1,4 +1,4 @@
-(ns demo.bundle-size
+(ns dev.bundle-size
   (:require
    [clojure.string]
    [clojure.java.io :as io]

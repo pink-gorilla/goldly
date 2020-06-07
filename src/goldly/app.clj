@@ -39,21 +39,21 @@
   [file]
   (ends-with (.getName file) ".clj"))
 
-(defn file-name [file]
+(defn- file-name [file]
   (let [tokens {}
         filename (.getPath file)
         filename-canonical (.getPath (.getCanonicalFile file))]
     ; filename-canonical
     filename))
 
-(defn file-seq-for-dir
+(defn- file-seq-for-dir
   [file]
   (tree-seq
    (fn [f] (.isDirectory f))
    (fn [f] (.listFiles f))
    file))
 
-(defn files-in-directory
+(defn- files-in-directory
   "get all pink-gorilla filenames in a directory.
    Works recursively, so sub-directories are included."
   [directory]
@@ -65,19 +65,19 @@
          (map #(subs % c))
          (map #(subs % 0 (- (count %) 4))))))
 
-(defn ns-for-file [f]
+(defn- ns-for-file [f]
   (str "systems." f))
 
-(defn requires-for-directory [directory]
+(defn- requires-for-directory [directory]
   (let [files (files-in-directory directory)]
     (map ns-for-file files)))
 
-(defn component-symbols [directory]
+(defn- component-symbols [directory]
   (let [namespaces (requires-for-directory directory)
         symbols (map symbol namespaces)]
     symbols))
 
-(defn require-components [directory]
+(defn- require-components [directory]
   (let [namespaces (requires-for-directory directory)
         symbols (map symbol namespaces)]
     (doall (for [s symbols]
@@ -85,7 +85,9 @@
                  (require  s))))
     symbols))
 
-(defn goldly-run! [{:keys [port
+(defn goldly-run!
+  "This starts goldly (web server, user defined systems,...)"
+  [{:keys [port
                            app-systems-dir
                            user-systems-dir]
                     :or {port 8000
