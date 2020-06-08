@@ -60,14 +60,14 @@
        [:body
         [:div#sente-csrf-token {:data-csrf-token csrf-token}]
         [:div#app]
-        [:script {:src "goldly/main.js" :type "text/javascript"}]])}
+        [:script {:src "main.js" :type "text/javascript"}]])}
      "text/html")))
 
 (defroutes resource-handler
   (resources "/"  {:root ""}) ; serve resources from jars (:root defaults to "public")
-  (files "/goldly/" {:root "./target/goldly"}) ; compiled cljs
-  (files "/cljs-runtime/" {:root "./target/cljs-runtime"}) ; compiled cljs
-  (files "/" {:root "./node_modules"}) ; access css and bundles in npm dependencies
+  ;(files "/goldly/" {:root "./target/goldly"}) ; compiled cljs
+  ;(files "/cljs-runtime/" {:root "./target/cljs-runtime"}) ; compiled cljs
+  ;(files "/" {:root "./node_modules"}) ; access css and bundles in npm dependencies
   (files "/" {:root "./profiles/demo/src/systems"}) ; resources of systems
   (not-found "Bummer, not found"))
 

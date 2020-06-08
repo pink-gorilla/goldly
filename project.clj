@@ -9,6 +9,14 @@
   :min-java-version "1.11"
   :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/jul-factory"]
 
+  :prep-tasks [;"javac"
+               "compile"
+               "resource"
+               ;"ls"
+               ;"shadowcompile2"
+               ]
+
+
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
                   ["vcs" "commit" "Release %s"]
@@ -58,7 +66,31 @@
                   :exclusions [org.clojure/clojurescript]]]
 
   :source-paths ["src"]
-  :resource-paths ["resources"]
+  
+  :resource-paths ["resources"
+                   "target/goldly" ; js bundle
+                   "target/node_modules"] ; css png resources from npm modules
+  
+  :resource {:silent false
+             :resource-paths [["node_modules/tailwindcss/dist"
+                               {:includes [#".*"] 
+                                :target-path "target/node_modules/public/tailwindcss/dist" 
+                                }]
+                              ["node_modules/leaflet/dist"
+                               {:includes [#".*\.css" #".*\.png"]  
+                                :target-path "target/node_modules/public/leaflet" 
+                                }]
+                              ["node_modules/ag-grid-community/dist/styles"
+                               {:includes [#".*\.css"]
+                                :target-path "target/node_modules/public/ag-grid-community"}]
+                              
+                              
+                              ]}
+
+  :target-path  "target/jar"
+  :clean-targets ^{:protect false} [:target-path
+                                    [:goldly :builds :app :compiler :output-dir]
+                                    [:goldly :builds :app :compiler :output-to]]
 
   :profiles {:cljs {:dependencies [[org.clojure/clojurescript "1.10.773"]
                                    [thi.ng/strf "0.2.2"]
@@ -84,7 +116,10 @@
                                   [lein-codox "0.10.7"]
                                   [lein-shell "0.5.0"]
                                   [lein-ancient "0.6.15"]
-                                  [min-java-version "0.1.0"]]
+                                  [min-java-version "0.1.0"]
+                                  [lein-resource "17.06.1"]
+                                  ;[lein-environ "1.1.0"] ;; TODO Will likely be axed soon
+                                  ]
                    :aliases      {"clj-kondo"
                                   ["run" "-m" "clj-kondo.main"]
 
@@ -97,16 +132,18 @@
                                   "outdated" ^{:doc "Runs ancient"}
                                   ["with-profile" "+cljs" "ancient"]
 
-                                  "tree" ^{:doc "Runs deps tree with correct profile"}
-                                  ["with-profile" "+cljs" "deps" ":tree"]
+
 
                                   "bump-version"
                                   ["change" "version" "leiningen.release/bump-version"]
 
-                                  "shadow-compile"  ^{:doc "compiles UI"}
-                                 ;["shell" "shadow-cljs" "compile" "web"]
-                                  ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]}
+                                  "goldly" ^{:doc "Runs goldly app (with only default system components)"}
+                                  ["run" "-m" "goldly.app"]
 
+                                  "demo" ^{:doc "Runs goldly app (with demo components)"}
+                                  ["with-profile" "+demo" "run" "-m" "goldly.app" "./profiles/demo/src/systems/"]}
+
+                   :aot []
                    :cloverage    {:codecov? true
                                   ;; In case we want to exclude stuff
                                   ;; :ns-exclude-regex [#".*util.instrument"]
@@ -123,9 +160,17 @@
                                    [org.pinkgorilla/clojisr-gorilla "0.0.6"]]}}
 
 
-  :aliases {"goldly" ^{:doc "Runs goldly app (with only default system components)"}
-            ["run" "-m" "goldly.app"]
+  :aliases {"ls"
+            ["shell" "ls"]
 
-            "demo" ^{:doc "Runs goldly app (with demo components)"}
-            ["with-profile" "+demo" "run" "-m" "goldly.app" "./profiles/demo/src/systems/"]})
+            "tree" ^{:doc "Runs deps tree with correct profile"}
+            ["with-profile" "+cljs" "deps" ":tree"]
+
+            "shadowcompile2"
+            ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
+
+            "l"
+            ["do" ["compile"] ["shadowcompile2"] "install"]
+  ;["shell" "shadow-cljs" "compile" "web"]
+            })
 
