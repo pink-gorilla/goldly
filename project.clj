@@ -78,11 +78,11 @@
                                 }]
                               ["node_modules/leaflet/dist"
                                {:includes [#".*\.css" #".*\.png"]  
-                                :target-path "target/node_modules/public/leaflet" 
+                                :target-path "target/node_modules/public/leaflet/dist" 
                                 }]
                               ["node_modules/ag-grid-community/dist/styles"
                                {:includes [#".*\.css"]
-                                :target-path "target/node_modules/public/ag-grid-community"}]
+                                :target-path "target/node_modules/public/ag-grid-community/dist"}]
                               
                               
                               ]}
