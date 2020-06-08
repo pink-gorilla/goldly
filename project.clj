@@ -166,11 +166,11 @@
             "tree" ^{:doc "Runs deps tree with correct profile"}
             ["with-profile" "+cljs" "deps" ":tree"]
 
-            "shadowcompile2"
+            "shadow-compile"
             ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
 
             "l"
-            ["do" ["compile"] ["shadowcompile2"] "install"]
+            ["do" ["compile"] ["shadow-compile"] "install"]
   ;["shell" "shadow-cljs" "compile" "web"]
             })
 
