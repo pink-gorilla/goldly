@@ -10,6 +10,12 @@
    [goldly.nrepl.snippets :as snippets])
   (:import nrepl.transport.Transport))
 
+; nrepl docs:
+; https://nrepl.org/nrepl/ops.html#_add_middleware
+
+; a clean nrepl middleware is found in:
+; https://github.com/RickMoynihan/nrebl.middleware/blob/master/src/nrebl/middleware.clj
+
 ;; Stolen from:
 ;; https://github.com/clojure/tools.nrepl/blob/master/src/main/clojure/clojure/tools/nrepl/middleware/pr_values.clj
 ;; and as a result the structure of this follows that code rather closely

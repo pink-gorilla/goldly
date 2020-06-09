@@ -12,13 +12,13 @@
         (str "\r\n" (pr-str msg))
         :append true))
 
-(defn cut-namespaces-val [val]
+#_(defn cut-namespaces-val [val]
   (if (get-in val [:namespace-definitions])
     "ns-defs"
     val))
 
 (defn render-value [value]
-  (let [r (->pinkie value)] ; (str "XX:" value)];
+  (let [r (->pinkie value)]
     r))
 
 (defn on-nrepl-eval [{:keys [op code cause via trace symbol] :as msg} {:keys [id session ns status value out ns-list completions] :as resp}]

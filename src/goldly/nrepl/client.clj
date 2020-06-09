@@ -29,27 +29,21 @@
     (println "cannot send nrepl msg. not connected!")))
 
 (defn start! []
-  (reset! conn (nrepl/connect :port (port-from-file)))
+  (let [port (port-from-file)]
+    (reset! conn (nrepl/connect :port port))
   ;(send! {:op "describe"})
-  (send! {:op "eval" :code "(require '[goldly.nrepl.middleware])"})
-  (send! {:op "eval" :code "(require '[pinkgorilla.ui.hiccup_renderer])"})
-  (send! {:op "add-middleware"
-          :middleware ['goldly.nrepl.middleware/render-values
+    (send! {:op "eval" :code "(require '[goldly.nrepl.middleware])"})
+    (send! {:op "eval" :code "(require '[pinkgorilla.ui.hiccup_renderer])"})
+    (send! {:op "add-middleware"
+            :middleware ['goldly.nrepl.middleware/render-values
                        ;'goldly.nrepl.middleware/wrap-pinkie
-                       ]})
-  (send! {:op "eval" :code "\"pinkie render loaded!\""}))
+                         ]})
+    (send! {:op "eval" :code "\"pinkie render loaded!\""})
+    (println "goldly snippets connected successfully to nrepl port " port)
+    (println "evals will be displayed at http://localhost:8000/#/snippets")
+    ))
 
 (comment
-
-  (start!)
-  (+ 7 17)
-  (println "hello, world!")
-  (do (println "a") 2)
-  {:a 1}
-  ^:R [:p (+ 8 8)]
-  ^:R [:p/vega (+ 8 8)]
-  (pinkie.converter/R [:p/vega (+ 8 8)])
-                      
   (send! {:op "eval" :code "(+ 8 8)"})
   (send! {:op "eval" :code "^:R [:p/vega (+ 8 8)]"})
   (send! {:op "eval" :code "(time (reduce + (range 1e6)))"})
