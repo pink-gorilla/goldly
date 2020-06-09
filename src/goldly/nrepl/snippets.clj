@@ -1,7 +1,9 @@
 (ns goldly.nrepl.snippets
   (:require
    [clojure.string :as str]
-   [pinkgorilla.ui.gorilla-renderable :refer [#_render render-renderable-meta]]))
+   [pinkie.converter :refer [->pinkie]]
+   [pinkie.clj-types] ; side effects! 
+   ))
 
 (def notebooks (atom {}))
 
@@ -16,7 +18,7 @@
     val))
 
 (defn render-value [value]
-  (let [r (render-renderable-meta value)] ; (str "XX:" value)];
+  (let [r (->pinkie value)] ; (str "XX:" value)];
     r))
 
 (defn on-nrepl-eval [{:keys [op code cause via trace symbol] :as msg} {:keys [id session ns status value out ns-list completions] :as resp}]

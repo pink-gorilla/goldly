@@ -1,9 +1,7 @@
 (ns goldy.nrepl.client
   (:require
    [clojure.pprint :refer [pprint]]
-   [clojure.java.io :as io]
    [nrepl.core :as nrepl]
-   [pinkgorilla.ui.hiccup_renderer]
    [goldly.nrepl.middleware]))
 
 (defn port-from-file []
@@ -46,6 +44,7 @@
   (start!)
   (+ 7 17)
   (println "hello, world!")
+  {:a 1}
   ^:R [:p (+ 8 8)]
   ^:R [:p/vega (+ 8 8)]
                       
