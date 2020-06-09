@@ -44,9 +44,11 @@
   (start!)
   (+ 7 17)
   (println "hello, world!")
+  (do (println "a") 2)
   {:a 1}
   ^:R [:p (+ 8 8)]
   ^:R [:p/vega (+ 8 8)]
+  (pinkie.converter/R [:p/vega (+ 8 8)])
                       
   (send! {:op "eval" :code "(+ 8 8)"})
   (send! {:op "eval" :code "^:R [:p/vega (+ 8 8)]"})

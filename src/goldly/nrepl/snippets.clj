@@ -28,12 +28,16 @@
   (when (and op
              (= op "eval")
              ;ns
-             (or (find resp :value) out)
+             (or (and ns (find resp :value))
+                 (and (nil? ns) out))
              (not (str/starts-with? code "(in-ns '")) ; vs code does this before evals
              (not (symbol? value)) ; response to in-ns
              (not (str/starts-with? code "(with-in-str ")) ;vscode load file to repl
              #_(:as-html msg))
     (let [pinkie (if value (render-value value) nil)]
+      (log {:mval (meta value)
+            :mcode (meta code)})
+      #_(log resp)
       (log {:session session
             :id id
             :ns ns
@@ -41,7 +45,6 @@
             :value value
             :pinkie pinkie
             :out out})
-      #_(log resp)
       pinkie)))
 
 
