@@ -39,11 +39,8 @@
           :middleware ['goldly.nrepl.middleware/render-values
                        ;'goldly.nrepl.middleware/wrap-pinkie
                        ]})
-  ;; => nil
-
   (send! {:op "eval" :code "\"pinkie render loaded!\""})
   )
-
 
 (comment
 
