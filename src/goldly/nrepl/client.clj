@@ -39,17 +39,22 @@
           :middleware ['goldly.nrepl.middleware/render-values
                        ;'goldly.nrepl.middleware/wrap-pinkie
                        ]})
-  (send! {:op "eval" :code "\"pinkie render loaded!\""})
-  )
+  (send! {:op "eval" :code "\"pinkie render loaded!\""}))
 
 (comment
 
   (start!)
   (+ 7 17)
+  (println "hello, world!")
+  ^:R [:p (+ 8 8)]
+  ^:R [:p/vega (+ 8 8)]
+                      
   (send! {:op "eval" :code "(+ 8 8)"})
-   (send! {:op "pinkieeval" :code "^:R [:p (+ 8 8)]"})
-  (send! {:op "eval" :code "^:R [:p (+ 8 8)]"})
+  (send! {:op "eval" :code "^:R [:p/vega (+ 8 8)]"})
   (send! {:op "eval" :code "(time (reduce + (range 1e6)))"})
+
+  (send! {:op "pinkieeval" :code "^:R [:p (+ 8 8)]"})
+
   (send! {:op "describe"})
   (send! {:op "ls-sessions"})
   (send! {:op "ls-middleware"})
@@ -57,11 +62,8 @@
   ;; testing
   (port-from-file)
   (nrepl/connect :port 39719)
-  (send!
-   {:op "add-middleware"
-    :middleware ['pinkgorilla.middleware.render-values/render-values]})
-        ;(send-message {:op "start-rebl-ui"})
-      ;(send-message {:op "close"})
+  (send! {:op "start-rebl-ui"})
+  (send! {:op "close"})
 
   ;
   )

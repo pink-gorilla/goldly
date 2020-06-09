@@ -1,4 +1,6 @@
-(ns goldly.nrepl.logger)
+(ns goldly.nrepl.logger
+  (:require 
+   [goldly.nrepl.ignore :refer [ignore?]]))
 
 (defn cut-namespaces [msg]
   (if (get-in msg [:value :namespace-definitions])
@@ -10,11 +12,6 @@
       cut-namespaces
       (dissoc :nrepl.middleware.print/keys
               :changed-namespaces)))
-
-(def disabled-ops #{"debug-instrumented-defs"
-                    "info"
-                    "ns-list"
-                    "complete"})
 
 (defn max-code [msg code]
   (if code (assoc msg :code code) msg))
@@ -41,10 +38,7 @@
                 :nrepl.middleware.caught/caught-fn))))
 
 (defn on-nrepl-eval [{:keys [op code cause via trace symbol] :as msg} {:keys [id session ns status value out ns-list completions] :as resp}]
-  (when (and (not (contains? disabled-ops op))
-             (nil? completions)
-             ;(nil? ns-list)
-             )
+  (when (not (ignore? msg resp))
     (spit "nrepl.txt"
           (str "\r\n\r\n" (pr-str (msg-safe msg)))
           :append true)

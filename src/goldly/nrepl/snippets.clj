@@ -1,4 +1,4 @@
-(ns goldly.nrepl.notebook
+(ns goldly.nrepl.snippets
   (:require
    [clojure.string :as str]
    [pinkgorilla.ui.gorilla-renderable :refer [#_render render-renderable-meta]]))
@@ -6,7 +6,7 @@
 (def notebooks (atom {}))
 
 (defn log [msg]
-  (spit "nrepl-notebook.txt"
+  (spit "nrepl-snippets.txt"
         (str "\r\n" (pr-str msg))
         :append true))
 
@@ -16,23 +16,30 @@
     val))
 
 (defn render-value [value]
-  (let [r (str "XX:" value)]; (render-renderable-meta value)]
+  (let [r (render-renderable-meta value)] ; (str "XX:" value)];
     r))
 
 (defn on-nrepl-eval [{:keys [op code cause via trace symbol] :as msg} {:keys [id session ns status value out ns-list completions] :as resp}]
-  (when (and op 
-             (= op "eval") 
-             (find resp :value) 
+  (when (and op (= op "pinkieeval"))
+    (log {:pinkie-eval "how great is this?"
+          :code code}))
+  (when (and op
+             (= op "eval")
+             ;ns
+             (or (find resp :value) out)
              (not (str/starts-with? code "(in-ns '")) ; vs code does this before evals
              (not (symbol? value)) ; response to in-ns
              (not (str/starts-with? code "(with-in-str ")) ;vscode load file to repl
              #_(:as-html msg))
-    (let [pinkie (render-value value)]
-      (log {:ns ns
+    (let [pinkie (if value (render-value value) nil)]
+      (log {:session session
+            :id id
+            :ns ns
             :code code
-            :value (cut-namespaces-val value)
+            :value value
             :pinkie pinkie
             :out out})
+      #_(log resp)
       pinkie)))
 
 

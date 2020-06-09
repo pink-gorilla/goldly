@@ -5,8 +5,9 @@
    [nrepl.middleware :as middleware]
    [nrepl.middleware.print]
    [pinkgorilla.middleware.formatter :as formatter]
+   [goldly.nrepl.ignore :refer [ignore?]]
    [goldly.nrepl.logger :as logger]
-   [goldly.nrepl.notebook :as notebook])
+   [goldly.nrepl.snippets :as snippets])
   (:import nrepl.transport.Transport))
 
 ;; Stolen from:
@@ -16,19 +17,20 @@
 ;; This middleware function calls the gorilla-repl render protocol on the value that results from the evaluation, and
 ;; then converts the result to edn.
 
-(defn convert-response [{:keys [op code cause via trace symbol] :as msg} {:keys [id session ns status value out ns-list completions] :as resp}]
+(defn convert-response [msg resp]
    ;; we have to transform the rendered value to EDN here, as otherwise
    ;; it will be pr'ed by the print middleware (which comes with the
    ;; eval middleware), meaning that it won't be mapped to EDN when the
    ;; whole message is mapped to EDN later. This has the unfortunate side
    ;; effect that the string will end up double-escaped.
    ;; (assoc resp :value (json/generate-string (render/render v)))
-  (logger/on-nrepl-eval msg resp)
-  (when (= op "pinkieeval")
-    (println "evalpinkie" resp))
-  (if-let [pinkie (notebook/on-nrepl-eval msg resp)]
-    (assoc resp :pinkie (formatter/serialize pinkie))
-    resp))
+  (if (ignore? msg resp)
+    resp
+    (do
+      (logger/on-nrepl-eval msg resp)
+      (if-let [pinkie (snippets/on-nrepl-eval msg resp)]
+        (assoc resp :pinkie (formatter/serialize pinkie)) ; this is used by the notebook
+        resp))))
 
 (defn render-values
   [handler]
@@ -58,31 +60,31 @@
 
 
 #_(defn send-to-pinkie! [{:keys [code] :as req} {:keys [value] :as resp}]
-  (when (and code true); (contains? resp :value))
-    (println "evalpinkie:" (read-string code) value))
-  resp)
+    (when (and code true); (contains? resp :value))
+      (println "evalpinkie:" (read-string code) value))
+    resp)
 
 #_(defn- wrap-pinkie-sender
-  "Wraps a `Transport` with code which prints the value of messages sent to
+    "Wraps a `Transport` with code which prints the value of messages sent to
   it using the provided function."
-  [{:keys [id op ^Transport transport] :as request}]
-  (reify transport/Transport
-    (recv [this]
-      (.recv transport))
-    (recv [this timeout]
-      (.recv transport timeout))
-    (send [this resp]
-      (.send transport
-             (send-to-pinkie! request resp))
-      this)))
+    [{:keys [id op ^Transport transport] :as request}]
+    (reify transport/Transport
+      (recv [this]
+        (.recv transport))
+      (recv [this timeout]
+        (.recv transport timeout))
+      (send [this resp]
+        (.send transport
+               (send-to-pinkie! request resp))
+        this)))
 
 #_(defn wrap-pinkie [handler]
-  (fn [{:keys [id op transport] :as request}]
-    (if (= op "evalpinkie")
+    (fn [{:keys [id op transport] :as request}]
+      (if (= op "evalpinkie")
       ;(rebl/ui)
-      (handler (assoc request :transport (wrap-pinkie-sender request))))))
+        (handler (assoc request :transport (wrap-pinkie-sender request))))))
 
 #_(middleware/set-descriptor! #'wrap-pinkie
-                            {:requires #{#'nrepl.middleware.print/wrap-print}
-                             :expects  #{"eval"}
-                             :handles {"evalpinkie" "eval with pinkie conversion"}})
+                              {:requires #{#'nrepl.middleware.print/wrap-print}
+                               :expects  #{"eval"}
+                               :handles {"evalpinkie" "eval with pinkie conversion"}})
