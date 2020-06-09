@@ -31,7 +31,9 @@
                          [org.clojure/core.memoize "1.0.236"]
                          ; libpythonclj fixes
                          [net.java.dev.jna/jna "5.5.0"]
-                         [org.ow2.asm/asm "8.0.1"]]
+                         [org.ow2.asm/asm "8.0.1"]
+                         [nrepl "0.8.0-alpha1"]
+                         ]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [thheller/shadow-cljs "2.10.4"]
@@ -57,6 +59,9 @@
                                info.sunng/ring-jetty9-adapter]] ;  websocket
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
+                 ;[nrepl "0.7.0"]
+                 [nrepl "0.8.0-alpha1"]
+                 [org.pinkgorilla/gorilla-middleware "0.2.23"]
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                  ;ui dependencies (clj must serve resources):
                  [org.pinkgorilla/gorilla-renderable-ui "0.2.2"]
