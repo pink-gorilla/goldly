@@ -7,7 +7,8 @@
    [pinkgorilla.middleware.formatter :as formatter]
    [goldly.nrepl.ignore :refer [ignore?]]
    [goldly.nrepl.logger :as logger]
-   [goldly.nrepl.snippets :as snippets])
+   [goldly.nrepl.snippets :as snippets]
+   [systems.snippets :refer [publish-eval!]])
   (:import nrepl.transport.Transport))
 
 ; nrepl docs:
@@ -20,8 +21,8 @@
 ;; https://github.com/clojure/tools.nrepl/blob/master/src/main/clojure/clojure/tools/nrepl/middleware/pr_values.clj
 ;; and as a result the structure of this follows that code rather closely
 
-;; This middleware function calls the gorilla-repl render protocol on the value that results from the evaluation, and
-;; then converts the result to edn.
+;; This middleware function calls the gorilla-repl render protocol on the value that 
+;; results from the evaluation, and then converts the result to edn.
 
 (defn convert-response [msg resp]
    ;; we have to transform the rendered value to EDN here, as otherwise
@@ -34,8 +35,9 @@
     resp
     (do
       (logger/on-nrepl-eval msg resp)
-      (if-let [pinkie (snippets/on-nrepl-eval msg resp)]
-        (assoc resp :pinkie (formatter/serialize pinkie)) ; this is used by the notebook
+      (if-let [eval-result (snippets/on-nrepl-eval msg resp)]
+        (do (publish-eval! eval-result)
+            (assoc resp :pinkie (formatter/serialize (:pinkie eval-result)))) ; this is used by the notebook
         resp))))
 
 (defn render-values

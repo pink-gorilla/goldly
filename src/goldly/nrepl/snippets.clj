@@ -2,20 +2,12 @@
   (:require
    [clojure.string :as str]
    [pinkie.converter :refer [->pinkie]]
-   [pinkie.clj-types] ; side effects! 
-   ))
-
-(def notebooks (atom {}))
-
+   [pinkie.clj-types])) ; side effects! 
+   
 (defn log [msg]
   (spit "nrepl-snippets.txt"
         (str "\r\n" (pr-str msg))
         :append true))
-
-#_(defn cut-namespaces-val [val]
-  (if (get-in val [:namespace-definitions])
-    "ns-defs"
-    val))
 
 (defn render-value [value]
   (let [r (->pinkie value)]
@@ -34,18 +26,20 @@
              (not (symbol? value)) ; response to in-ns
              (not (str/starts-with? code "(with-in-str ")) ;vscode load file to repl
              #_(:as-html msg))
-    (let [pinkie (if value (render-value value) nil)]
-      (log {:mval (meta value)
+    (let [pinkie (if value (render-value value) nil)
+          eval-result {:session session
+                       :id id
+                       :ns ns
+                       :code code
+                       :value value
+                       :pinkie pinkie
+                       :out out}
+          ]
+      #_(log {:mval (meta value)
             :mcode (meta code)})
       #_(log resp)
-      (log {:session session
-            :id id
-            :ns ns
-            :code code
-            :value value
-            :pinkie pinkie
-            :out out})
-      pinkie)))
+      (log eval-result)
+      eval-result)))
 
 
 

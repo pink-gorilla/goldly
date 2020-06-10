@@ -187,7 +187,7 @@
    ;(com.rpl.specter/setval [:a] 1 m) set key a to 1 in m
     (let [_ (info "specter where: " where)
           where-resolved (specter-resolve where)
-          ;_ (info "specter resolved: " where-resolved)
+          _ (info "specter resolved: " where-resolved)
           ]
       (reset! state (setval where-resolved result @state))
       (debug "update state from clj success!")

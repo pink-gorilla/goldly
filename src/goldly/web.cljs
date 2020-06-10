@@ -27,8 +27,8 @@
 (defn print-log-init! []
   (enable-console-print!)
 ;(timbre/set-level! :trace) ; Uncomment for more logging
-;(timbre/set-level! :debug)
-  (timbre/set-level! :info))
+(timbre/set-level! :debug)
+  #_(timbre/set-level! :info))
 
 (defn hook-browser-navigation!
   []

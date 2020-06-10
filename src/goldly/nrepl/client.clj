@@ -1,4 +1,4 @@
-(ns goldy.nrepl.client
+(ns goldly.nrepl.client
   (:require
    [clojure.pprint :refer [pprint]]
    [nrepl.core :as nrepl]
@@ -44,6 +44,8 @@
     ))
 
 (comment
+  (start!)
+  (clojure.core/ns-list)
   (send! {:op "eval" :code "(+ 8 8)"})
   (send! {:op "eval" :code "^:R [:p/vega (+ 8 8)]"})
   (send! {:op "eval" :code "(time (reduce + (range 1e6)))"})

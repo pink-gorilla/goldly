@@ -58,6 +58,7 @@
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
                  [nrepl "0.8.0-alpha1"]
+                 [org.clojure/java.classpath "1.0.0"]
                  [org.pinkgorilla/gorilla-middleware "0.2.23"]
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                  ;ui dependencies (clj must serve resources):
@@ -107,7 +108,9 @@
                                    [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
                                    ]}
 
-             :dev {:source-paths ["profiles/dev/src" "test"]
+             :dev {:source-paths ["profiles/dev/src" 
+                                  "profiles/demo/src"
+                                  "test"]
                    :dependencies [[clj-kondo "2020.05.09"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
