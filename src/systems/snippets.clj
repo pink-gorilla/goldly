@@ -46,7 +46,7 @@
    [:END] is a specter expression that conj the
    eval-result to browser system state"
   [nrepl-eval-result]
-  (info "publish-eval! " (:code nrepl-eval-result))
+  ;(info "publish-eval! " (:code nrepl-eval-result))
   (update-state! (:id s) {:result [nrepl-eval-result]
                           :where [:END]}))
 

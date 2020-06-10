@@ -33,10 +33,11 @@
    ;; (assoc resp :value (json/generate-string (render/render v)))
   (if (ignore? msg resp)
     resp
+    
     (do
       (logger/on-nrepl-eval msg resp)
       (if-let [eval-result (snippets/on-nrepl-eval msg resp)]
-        (do (publish-eval! eval-result)
+        (do ;(publish-eval! eval-result)
             (assoc resp :pinkie (formatter/serialize (:pinkie eval-result)))) ; this is used by the notebook
         resp))))
 
