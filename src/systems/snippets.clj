@@ -1,7 +1,9 @@
 (ns systems.snippets
   (:require
-   [goldly.runner :refer [system-start!]]
-   [goldly.system :as goldly :refer [def-ui]]))
+   [taoensso.timbre :as log :refer [info]]
+   [goldly.system :as goldly :refer [def-ui]]
+   [goldly.runner :refer [system-start! update-state!]]
+   [com.rpl.specter :refer :all]))
 
 (println "loading systems.snippets ..")
 
@@ -30,12 +32,24 @@
     :pinkie [:div "[" [:div {:class "clj-vector"} [:span {:class "clj-keyword"} ":p"] [:span {:class "clj-long"} "16"]] "]"]
     :out nil}])
 
-(system-start!
- (goldly/system
-  {:name "snippets"
-   :state snippets
-   :html  [:p/snippets @state]
-   :fns {}}
-  {:fns {}}))
+(def s (goldly/system
+        {:name "snippets"
+         :state snippets
+         :html  [:p/snippets @state]
+         :fns {}}
+        {:fns {}}))
+
+(system-start! s)
+
+(defn publish-eval! [nrepl-eval-result]
+  (info "publish-eval! " (:code nrepl-eval-result))
+  (update-state! (:id s) {:result [nrepl-eval-result]
+                          :where [:END]})
+   ;(send-event  event-name nrepl-eval-result)  
+  )
+
+
+
+
 
 

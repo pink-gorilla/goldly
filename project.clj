@@ -7,7 +7,6 @@
                                      :sign-releases false}]]
   :min-lein-version "2.9.3"
   :min-java-version "1.11"
-  :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/jul-factory"]
 
   :prep-tasks [;"javac"
                "compile"
@@ -32,8 +31,7 @@
                          ; libpythonclj fixes
                          [net.java.dev.jna/jna "5.5.0"]
                          [org.ow2.asm/asm "8.0.1"]
-                         [nrepl "0.8.0-alpha1"]
-                         ]
+                         [nrepl "0.8.0-alpha1"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [thheller/shadow-cljs "2.10.4"]
@@ -59,12 +57,11 @@
                                info.sunng/ring-jetty9-adapter]] ;  websocket
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
-                 ;[nrepl "0.7.0"]
                  [nrepl "0.8.0-alpha1"]
                  [org.pinkgorilla/gorilla-middleware "0.2.23"]
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                  ;ui dependencies (clj must serve resources):
-                  [org.pinkgorilla/gorilla-renderable "3.0.12"]
+                 [org.pinkgorilla/gorilla-renderable "3.0.12"]
                  [org.pinkgorilla/gorilla-renderable-ui "0.2.4"]
                  [org.pinkgorilla/gorilla-ui "0.2.5"
                   :exclusions [org.clojure/clojurescript]]
@@ -72,26 +69,21 @@
                   :exclusions [org.clojure/clojurescript]]]
 
   :source-paths ["src"]
-  
+
   :resource-paths ["resources"
                    "target/goldly" ; js bundle
                    "target/node_modules"] ; css png resources from npm modules
-  
+
   :resource {:silent false
              :resource-paths [["node_modules/tailwindcss/dist"
-                               {:includes [#".*"] 
-                                :target-path "target/node_modules/public/tailwindcss/dist" 
-                                }]
+                               {:includes [#".*"]
+                                :target-path "target/node_modules/public/tailwindcss/dist"}]
                               ["node_modules/leaflet/dist"
-                               {:includes [#".*\.css" #".*\.png"]  
-                                :target-path "target/node_modules/public/leaflet/dist" 
-                                }]
+                               {:includes [#".*\.css" #".*\.png"]
+                                :target-path "target/node_modules/public/leaflet/dist"}]
                               ["node_modules/ag-grid-community/dist/styles"
                                {:includes [#".*\.css"]
-                                :target-path "target/node_modules/public/ag-grid-community/dist"}]
-                              
-                              
-                              ]}
+                                :target-path "target/node_modules/public/ag-grid-community/dist"}]]}
 
   :target-path  "target/jar"
   :clean-targets ^{:protect false} [:target-path
@@ -161,21 +153,17 @@
                                             merge-meta          [[:inner 0]]
                                             try-if-let          [[:block 1]]}}}
 
-             :demo {:source-paths ["profiles/demo/src"]
-                    :dependencies [[org.clojure/tools.logging "1.1.0"] ; needed by clojisr
-                                   [org.pinkgorilla/clojisr-gorilla "0.0.6"]]}}
+             :demo {:source-paths ["src" "profiles/demo/src"]
+                    :dependencies []}}
 
 
-  :aliases {"ls"
-            ["shell" "ls"]
-
-            "tree" ^{:doc "Runs deps tree with correct profile"}
+  :aliases {"tree" ^{:doc "Runs deps tree with correct profile"}
             ["with-profile" "+cljs" "deps" ":tree"]
 
             "shadow-compile"
             ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
 
-            "l"
+            "bongotrott"
             ["do" ["compile"] ["shadow-compile"] "install"]
   ;["shell" "shadow-cljs" "compile" "web"]
             })

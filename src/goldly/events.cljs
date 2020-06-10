@@ -2,7 +2,11 @@
   "process-instructions from goldly clj server"
   (:require
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch-sync dispatch]]
-   [taoensso.timbre :as timbre :refer-macros (tracef trace debugf info infof warnf errorf error debug)]
+   [taoensso.timbre :as timbre :refer-macros [trace tracef
+                                              debug debugf
+                                              info infof
+                                              warnf
+                                              error errorf]]
    [goldly.ws :refer [chsk-send! send! start-router! -event-msg-handler]]
    #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
 
@@ -14,6 +18,12 @@
    :system nil
    ; system ui
    :running-systems {}})
+
+(defn find-system-by-id [db system-id]
+  (let [systems (vals (:running-systems db))]
+    (->
+     (filter (fn [s] (= system-id (:id s))) systems)
+     (first))))
 
 (reg-event-db
  :db-init
@@ -105,9 +115,15 @@
 (reg-event-db
  :goldly/clj-result
  (fn [db [_ {:keys [run-id system-id fun result error where] :as data}]]
-   (let [system (get-in db [:running-systems run-id])
+   (let [_ (debug "running systems: " (get-in db [:running-systems]))
+         system (if (nil? run-id)
+                  (find-system-by-id db system-id)
+                  (get-in db [:running-systems run-id]))
          update-state (:update-state system)]
      (debug "rcvd clj result: " data) ; " for system: " system
-     (when (and result where update-state)
-       (update-state result where))
+     (if system
+       (if (and result where update-state)
+         (update-state result where)
+         (error "clj result update requirements not met."))
+       (error "received clj result for unknown system-id " system-id))
      db)))

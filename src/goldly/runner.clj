@@ -4,7 +4,6 @@
    [clojure.string]
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
    [taoensso.timbre :as log :refer (tracef debug debugf info infof warnf error errorf)]
-
    [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]
    [goldly.system :refer [system->cljs]]))
 
@@ -34,6 +33,11 @@
 (defn send-event [system-id event-name & args]
   (let [message  {:system system-id :type event-name :args args}]
     (send-all! [:goldly/event message])))
+
+(defn dispatch [system-id event-name & args]
+  (println "dispatching " system-id event-name)
+  (send-event system-id event-name args))
+
 
 (defmethod -event-msg-handler :goldly/systems
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
@@ -97,9 +101,13 @@
         (?reply-fn response)
         (chsk-send! uid [:goldly/dispatch response])))))
 
-(defn dispatch [system-id event-name & args]
-  (println "dispatching " system-id event-name)
-  (send-event system-id event-name args))
+(defn update-state! [system-id {:keys [result where] :as update-spec}]
+  (let [response (merge {:run-id nil
+                         :system-id system-id
+                         :fun nil} update-spec)]
+    (info "sending " response)
+    (send-all! [:goldly/dispatch response])))
+
 
 (add-watch connected-uids :connected-uids
            (fn [_ _ old new]

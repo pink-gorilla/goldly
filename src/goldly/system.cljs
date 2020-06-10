@@ -2,7 +2,11 @@
   "defines reagent-component render-system, that displays a fully defined system"
   (:require
    [clojure.string :as str]
-   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf error info)]
+   [taoensso.timbre :as timbre :refer-macros (tracef
+                                              debug debugf
+                                              info infof
+                                              warnf
+                                              errorf error)]
    [clojure.walk :as walk]
    [sci.core :as sci]
    [cljs.tools.reader :as reader]
@@ -11,7 +15,7 @@
    [reagent.dom]
    [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
    [cljs-uuid-utils.core :as uuid]
-   [com.rpl.specter :refer [transform setval]]
+   [com.rpl.specter :refer [transform setval END]]
    [pinkgorilla.ui.pinkie :as pinkie]
    [pinkgorilla.ui.gorilla-plot.pinkie :refer [sin]]))
 
@@ -167,13 +171,29 @@
                                                         :fns-clj fns-clj} bindings e]))))]
       component)))
 
+(defn specter-resolve
+  [specter-vector]
+  (walk/prewalk
+   (fn [x] (if (keyword? x)
+             (case x
+               :END END
+               x)
+             x))
+   specter-vector))
+
 (defn update-state-from-clj-result [state result where]
   (debugf "updating state from clj result: %s where: %s" result where)
   (try
    ;(com.rpl.specter/setval [:a] 1 m) set key a to 1 in m
-    (reset! state (setval where result @state))
+    (let [_ (info "specter where: " where)
+          where-resolved (specter-resolve where)
+          ;_ (info "specter resolved: " where-resolved)
+          ]
+      (reset! state (setval where-resolved result @state))
+      (debug "update state from clj success!")
+      (debug "system state after clj-update: " (pr-str state)))
     (catch :default e
-      (error "exception in updating state afterclj result call:" e))))
+      (error "exception in updating state after clj result call:" e))))
 
 (defn render-system-impl [run-id]
   (fn [{:keys [state html fns fns-clj] :as system}]

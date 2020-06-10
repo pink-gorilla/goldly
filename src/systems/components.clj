@@ -1,7 +1,7 @@
 (ns systems.components
   (:require
-   [goldly.runner :refer [system-start!]]
-   [goldly.system :as goldly]))
+   [goldly.system :as goldly]
+   [goldly.runner :refer [system-start!]]))
 
 (println "loading systems.components ..")
 

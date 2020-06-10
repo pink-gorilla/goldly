@@ -5,7 +5,9 @@
    [clojure.java.io]
       ;[cemerick.pomegranate :as pg]
    [goldly.runner :refer [systems-response system-start!]]
-   [goldly.web :as web])
+   [goldly.web :as web]
+  ; [systems.snippets :as snippets]
+   )
   (:gen-class))
 
 #_(defn add-dependencies
@@ -77,25 +79,36 @@
         symbols (map symbol namespaces)]
     symbols))
 
+(defn load-components-namespaces [namespace-symbols]
+  (doall (for [s namespace-symbols]
+           (do (println "loading goldly system:" s)
+               (require  s))))
+  namespace-symbols)
+
 (defn- require-components [directory]
   (let [namespaces (requires-for-directory directory)
         symbols (map symbol namespaces)]
-    (doall (for [s symbols]
-             (do (println "loading goldly system:" s)
-                 (require  s))))
-    symbols))
+    (load-components-namespaces symbols)
+    ))
+
+
 
 (defn goldly-run!
   "This starts goldly (web server, user defined systems,...)"
   [{:keys [port
-           app-systems-dir
+           app-systems-ns
            user-systems-dir]
     :or {port 8000
-         app-systems-dir "./src/systems/"}}]
+         ;app-systems-dir "./src/systems/"
+         app-systems-ns '[systems.help
+                          systems.components
+                          systems.snippets]
+         }}]
   ;(system-start! components)
-  (when app-systems-dir
-    (println "loading app systems from: " app-systems-dir)
-    (require-components app-systems-dir))
+  (when app-systems-ns
+    (println "loading app systems from: " app-systems-ns)
+    ;(load "address_book/core") ; this works with classpath
+    (load-components-namespaces app-systems-ns))
   (when user-systems-dir
     (println "loading user systems from: " user-systems-dir)
     (require-components user-systems-dir))
@@ -108,6 +121,9 @@
   (println "goldly started successfully. systems running: " (systems-response)))
 
 (comment
+  (goldly-run! {})
+  
+  
   (files-in-directory "./src/systems/")
   (requires-for-directory "./src/systems/")
   (component-symbols "./src/systems/")
