@@ -49,6 +49,8 @@
                  [http-kit "2.3.0"]
                  [compojure "1.6.1"]
                  [hiccup "1.0.5"]
+                 [bidi "2.1.6"]
+                 
                  [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.119.0"]
                  [com.taoensso/sente "1.15.0"
@@ -113,6 +115,7 @@
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
                                    [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
+                                   [clj-commons/pushy "0.3.10"]
                                    ]}
 
              :dev {:source-paths ["profiles/dev/src" 
