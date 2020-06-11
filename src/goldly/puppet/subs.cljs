@@ -1,4 +1,4 @@
-(ns goldly.subs
+(ns goldly.puppet.subs
   (:require-macros
    [reagent.ratom])
   (:require

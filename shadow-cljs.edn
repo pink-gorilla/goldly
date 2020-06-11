@@ -12,15 +12,13 @@
                   "classpath:resources/public"
                   "resources/public"
                   "node_modules" ; access css and bundles in npm dependencies
-                  #_"node_modules/leaflet/dist"
-                  #_"node_modules/mathjax/es5"
-                  #_"node_modules/ag-grid-community"]}
+                  ]}
  :builds {:web {:target :browser
                 :output-dir "target/goldly"
                 :asset-path "/goldly"
-                :modules {:main {:entries [goldly.web]}}
-                :devtools {:before-load goldly.web/stop
-                           :after-load goldly.web/start}
+                :modules {:main {:entries [goldly.app]}}
+                :devtools {:before-load goldly.app/stop
+                           :after-load goldly.app/start}
                 :js-options       {:minimize-require false ; module requires full name instead of index
                                                         ;:js-package-dirs ["packages/babel-worker/node_modules"]
                                                         ;:js-provider :require
