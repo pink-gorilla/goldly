@@ -9,6 +9,7 @@
 (system-start!
  (goldly/system
   {:name "click counter"
+   :route "/route"
    :state 42
    :html  [:div "Clicked "
            panther

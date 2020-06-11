@@ -13,6 +13,7 @@
                    :ns "goldy.nrepl.client"
                    :code "(pinkie.converter/R [:p/vega (+ 8 8)])"
                    :value [:p/vega 16]
+                
                    :pinkie [:p/vega
                             {:data {:values [{:x 3 :y 4} {:x 7 :y 1}]}
                              :mark :point
@@ -36,6 +37,21 @@
   ^:R [:p/vega (+ 8 8)]
   (R [:p/vega (+ 8 8)]) ; works in vs-code also
 
+   (def data
+     {:$schema "https://vega.github.io/schema/vega-lite/v4.json"
+      :description "A simple bar chart with embedded data."
+      :data {:values [{:a "A" :b 28} {:a "B" :b 55} {:a "C" :b 43} {:a "D" :b 91} {:a "E" :b 81} {:a "F" :b 53}
+                      {:a "G" :b 19} {:a "H" :b 87} {:a "I" :b 52} {:a "J" :b 127}]}
+      :mark "bar"
+      :encoding {:x {:field "a" :type "ordinal"}
+                 :y {:field "b" :type "quantitative"}}})
+
+(R [:p/vega data])
+
+(R [:p/player "https://www.youtube.com/watch?v=Bs44qdAX5yo"])
+
+  
+  
   ; test how to add an item to an array in specter
   (def data {:a [1 2 3]})
   (require '[com.rpl.specter])

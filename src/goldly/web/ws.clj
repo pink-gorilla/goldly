@@ -1,4 +1,4 @@
-(ns goldly.ws
+(ns goldly.web.ws
   (:require
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
    [clojure.java.io :as io]

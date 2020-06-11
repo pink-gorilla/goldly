@@ -7,7 +7,7 @@
                                               info infof
                                               warnf
                                               error errorf]]
-   [goldly.ws :refer [chsk-send! send! start-router! -event-msg-handler]]
+   [goldly.web.ws :refer [chsk-send! send! start-router! -event-msg-handler]]
    #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
 
 (def initial-db

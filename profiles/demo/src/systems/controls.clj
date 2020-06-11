@@ -6,6 +6,7 @@
 (system-start! 
   (goldly/system
    {:name "controls"
+    :route "/controls"
     :state {:language "CommonLisp"}
     :html  [:div
             [:p "Favorite Language: " (:language @state)]

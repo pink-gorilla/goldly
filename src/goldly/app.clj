@@ -4,8 +4,9 @@
    [clojure.string :as str]
    [clojure.java.io]
       ;[cemerick.pomegranate :as pg]
+   [goldly.web.http :as web]
    [goldly.runner :refer [systems-response system-start!]]
-   [goldly.web :as web]
+
   ; [systems.snippets :as snippets]
    )
   (:gen-class))

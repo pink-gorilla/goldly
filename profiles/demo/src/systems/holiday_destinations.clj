@@ -14,6 +14,7 @@
 (system-start!
  (goldly/system
   {:name "holiday destinations"
+   :route "/holiday-destinaions"
    :state {:place :london
            :map [{:type :view :center [51.49, -0.08] :zoom 12 :height 600 :width 700}
                  {:type :rectangle :bounds [[51.49, -0.08] [51.5, -0.06]]}]}

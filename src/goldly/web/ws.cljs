@@ -1,4 +1,4 @@
-(ns goldly.ws
+(ns goldly.web.ws
   (:require
    [clojure.string :as str]
    [cljs.core.async :as async  :refer (<! >! put! chan)]

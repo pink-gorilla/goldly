@@ -4,7 +4,7 @@
    [clojure.string]
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
    [taoensso.timbre :as log :refer (tracef debug debugf info infof warnf error errorf)]
-   [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]
+   [goldly.web.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]
    [goldly.system :refer [system->cljs]]))
 
 ;; system

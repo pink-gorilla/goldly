@@ -1,4 +1,4 @@
-(ns goldly.web
+(ns goldly.web.http
   (:require
    [clojure.string]
    [clojure.java.io :as io]
@@ -19,8 +19,7 @@
    [compojure.handler :as handler]
    [org.httpkit.server :as httpkit]
    [hiccup.page :as page]
-   ;[goldly.core]
-   [goldly.ws :refer [start-router! ws-handler]]))
+   [goldly.web.ws :refer [start-router! ws-handler]]))
 
 (defn unique-id
   "Get a unique id."

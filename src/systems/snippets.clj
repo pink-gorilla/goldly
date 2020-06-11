@@ -37,6 +37,7 @@
 
 (def s (goldly/system
         {:name "snippets"
+         :route "/snippets"
          :state snippets
          :html  [:p/snippets @state]
          :fns {}}

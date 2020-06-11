@@ -8,6 +8,7 @@
 (system-start!
  (goldly/system
   {:name "components"
+   :route "/"
    :state 42
    :html  [:p/componentsui]
    :fns {}}

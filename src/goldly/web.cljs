@@ -13,21 +13,24 @@
    [reagent.core :as r]
    [reagent.dom]
    [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
-   [goldly.system :refer [render-system]]
-   [goldly.ws :refer [send! start-router!]]
-   [goldly.events] ; add reframe event handlers
-   [goldly.subs]
-   ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
+
    ; the following just adds dependencies to bundle
    [pinkgorilla.ui.default-setup] ; renderable-ui
    [pinkgorilla.ui.default-renderer] ; gorilla-ui 
    [pinkgorilla.ui.gorilla-plot.pinkie] ; gorilla-plot
+   ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
+   
+   [goldly.web.ws :refer [send! start-router!]]
+   [goldly.system :refer [render-system]]
+   [goldly.events] ; add reframe event handlers
+   [goldly.subs]
+   
    ))
 
 (defn print-log-init! []
   (enable-console-print!)
 ;(timbre/set-level! :trace) ; Uncomment for more logging
-(timbre/set-level! :debug)
+  (timbre/set-level! :debug)
   #_(timbre/set-level! :info))
 
 (defn hook-browser-navigation!

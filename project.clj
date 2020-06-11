@@ -65,7 +65,7 @@
                  ;ui dependencies (clj must serve resources):
                  [org.pinkgorilla/gorilla-renderable "3.0.12"]
                  [org.pinkgorilla/gorilla-renderable-ui "0.2.4"]
-                 [org.pinkgorilla/gorilla-ui "0.2.8"
+                 [org.pinkgorilla/gorilla-ui "0.2.10"
                   :exclusions [org.clojure/clojurescript]]
                  [org.pinkgorilla/gorilla-plot "1.2.2"
                   :exclusions [org.clojure/clojurescript]]]
