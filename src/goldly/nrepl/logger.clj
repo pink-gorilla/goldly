@@ -38,10 +38,13 @@
 
 (def log-file-nrepl "nrepl.txt")
 (def log-file-snippets "nrepl-snippets.txt")
+(def log-file-published "nrepl-published.txt")
 
 (defn new-log-session! [session-id]
   (spit log-file-nrepl (str "new session: " session-id))
-  (spit log-file-snippets (str "new session: " session-id)))
+  (spit log-file-snippets (str "new session: " session-id))
+  (spit log-file-published (str "new session: " session-id))
+  )
 
 (defn on-nrepl-eval [msg  resp]
   (when (not (ignore? msg resp))
@@ -52,5 +55,10 @@
 
 (defn log! [msg]
   (spit log-file-snippets
+        (str "\r\n" (pr-str msg))
+        :append true))
+
+(defn log-publish! [msg]
+  (spit log-file-published
         (str "\r\n" (pr-str msg))
         :append true))

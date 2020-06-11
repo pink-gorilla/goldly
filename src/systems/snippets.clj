@@ -5,6 +5,7 @@
    [goldly.system :as goldly :refer [def-ui]]
    [goldly.runner :refer [system-start! update-state!]]
    [com.rpl.specter :refer :all]
+   [goldly.nrepl.logger :refer [log-publish!]]
    [goldly.nrepl.sniffer.middleware :refer [chan-eval-results]]))
 
 (println "loading systems.snippets ..")
@@ -55,6 +56,7 @@
 (go (while true
       (let [n (<! chan-eval-results)]
         ;(println "Read" n)
+        (log-publish! n)
         (publish-eval! n))))
 
 

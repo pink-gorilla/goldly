@@ -65,7 +65,7 @@
                  ;ui dependencies (clj must serve resources):
                  [org.pinkgorilla/gorilla-renderable "3.0.12"]
                  [org.pinkgorilla/gorilla-renderable-ui "0.2.4"]
-                 [org.pinkgorilla/gorilla-ui "0.2.7"
+                 [org.pinkgorilla/gorilla-ui "0.2.8"
                   :exclusions [org.clojure/clojurescript]]
                  [org.pinkgorilla/gorilla-plot "1.2.2"
                   :exclusions [org.clojure/clojurescript]]]
@@ -85,7 +85,13 @@
                                 :target-path "target/node_modules/public/leaflet/dist"}]
                               ["node_modules/ag-grid-community/dist/styles"
                                {:includes [#".*\.css"]
-                                :target-path "target/node_modules/public/ag-grid-community/dist"}]]}
+                                :target-path "target/node_modules/public/ag-grid-community/dist"}]
+                              ["node_modules/highlight.js/styles"
+                               {:includes [#".*\.css"]
+                                :target-path "target/node_modules/public/highlight.js/styles"}]
+                              
+                             ;  http://localhost:8000/highlight.js/styles/github.css
+                              ]}
 
   :target-path  "target/jar"
   :clean-targets ^{:protect false} [:target-path
