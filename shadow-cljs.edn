@@ -14,7 +14,7 @@
                   "node_modules" ; access css and bundles in npm dependencies
                   ]}
  :builds {:web {:target :browser
-                :output-dir "target/goldly"
+                :output-dir "target/goldly/public"
                 :asset-path "/goldly"
                 :modules {:main {:entries [goldly.app]}}
                 :devtools {:before-load goldly.app/stop

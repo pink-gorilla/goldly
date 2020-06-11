@@ -5,6 +5,17 @@
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [hiccup.page :as page]))
 
+
+(defn app-page [csrf-token]
+  (page/html5
+   [:head
+    [:title "goldly"]
+    [:link {:rel "stylesheet" :href "tailwindcss/dist/tailwind.css" :type "text/css"}]]
+   [:body
+    [:div#sente-csrf-token {:data-csrf-token csrf-token}]
+    [:div#app]
+    [:script {:src "main.js" :type "text/javascript"}]]))
+
 (defn unique-id
   "Get a unique id."
   []
@@ -15,22 +26,15 @@
   [req]
   (get-in req [:session :uid]))
 
-(defn app [req]
+(defn app-handler [req]
   (let [csrf-token (force *anti-forgery-token*) ;(:anti-forgery-token ring-req)] ; Also an option
         session (if (session-uid req)
                   (:session req)
                   (assoc (:session req) :uid (unique-id)))]
-
     (response/content-type
      {:status 200
       :session session
-      :body
-      (page/html5
-       [:head
-        [:title "goldly"]
-        [:link {:rel "stylesheet" :href "tailwindcss/dist/tailwind.css" :type "text/css"}]]
-       [:body
-        [:div#sente-csrf-token {:data-csrf-token csrf-token}]
-        [:div#app]
-        [:script {:src "main.js" :type "text/javascript"}]])}
+      :body (app-page csrf-token)
+      }
      "text/html")))
+

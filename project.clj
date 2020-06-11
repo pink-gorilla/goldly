@@ -47,10 +47,11 @@
                  [ring-cljsjs "0.2.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [http-kit "2.3.0"]
+                 [ring/ring-mock "0.3.0"]
                  [compojure "1.6.1"]
-                 [hiccup "1.0.5"]
                  [bidi "2.1.6"]
-                 
+                 [hiccup "1.0.5"]
+
                  [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.119.0"]
                  [com.taoensso/sente "1.15.0"
@@ -67,14 +68,14 @@
                  ;ui dependencies (clj must serve resources):
                  [org.pinkgorilla/gorilla-renderable "3.0.12"]
                  [org.pinkgorilla/gorilla-renderable-ui "0.2.4"]
-                 [org.pinkgorilla/gorilla-ui "0.2.10"
+                 [org.pinkgorilla/gorilla-ui "0.2.11"
                   :exclusions [org.clojure/clojurescript]]
                  [org.pinkgorilla/gorilla-plot "1.2.2"
                   :exclusions [org.clojure/clojurescript]]]
 
   :source-paths ["src"]
 
-  :resource-paths ["resources"
+  :resource-paths ["resources" ; resources that goldly brings (not in maven/npm)
                    "target/goldly" ; js bundle
                    "target/node_modules"] ; css png resources from npm modules
 
@@ -91,7 +92,7 @@
                               ["node_modules/highlight.js/styles"
                                {:includes [#".*\.css"]
                                 :target-path "target/node_modules/public/highlight.js/styles"}]
-                              
+
                              ;  http://localhost:8000/highlight.js/styles/github.css
                               ]}
 
@@ -115,10 +116,9 @@
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
                                    [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
-                                   [clj-commons/pushy "0.3.10"]
-                                   ]}
+                                   [clj-commons/pushy "0.3.10"]]}
 
-             :dev {:source-paths ["profiles/dev/src" 
+             :dev {:source-paths ["profiles/dev/src"
                                   "profiles/demo/src"
                                   "test"]
                    :dependencies [[clj-kondo "2020.05.09"]]

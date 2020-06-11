@@ -13,7 +13,7 @@
    [compojure.core :as compojure :refer [defroutes routes context GET POST]]
    [compojure.route :refer [files resources not-found] :as compojure-route]
    [compojure.handler :as handler]
-   [goldly.web.routes :refer [app-handler resource-handler]]
+   [goldly.web.routes :refer [app-handler2 resource-handler]]
    ))
 
 ;; DEFAULT HANDLER
@@ -28,7 +28,7 @@
       (wrap-restful-format :formats [:json :transit-json :edn])))
 
 (defroutes default-handler
-  (-> app-handler
+  (-> app-handler2
       (wrap-defaults site-defaults)
       #_(wrap-defaults
          (-> site-defaults
