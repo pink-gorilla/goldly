@@ -9,9 +9,10 @@
   #{"stacktrace"
    "eval"})
 
-(defn ignore? [{:keys [op code cause via trace symbol] :as msg} {:keys [id session ns status value out ns-list completions] :as resp}]
-  (or ;(contains? disabled-ops op)
-      (not (contains? enabled-ops op))
+(defn ignore? [{:keys [op] :as req} 
+               {:keys [completions] :as res}]
+  (or (contains? disabled-ops op)
+      ;(not (contains? enabled-ops op))
       completions
              ;(nil? ns-list)
       ))

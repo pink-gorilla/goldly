@@ -2,7 +2,7 @@
   (:require
    [pinkie.converter :refer [R]]
    [goldly.app :refer [goldly-run!]]
-   [goldly.nrepl.client :refer [start!]]
+   [goldly.nrepl.sniffer.core :refer [start-sniffer!]]
    [systems.snippets :refer [publish-eval!]]))
 
 (comment
@@ -20,12 +20,11 @@
                                         :y {:field :y :type :quantitative}}}]})
 
   ; this code should be run in your ide;
-  ; we tested with vs-code.
-  ; In VS-Code:
+  ; in VS-Code:
   ; jack-in -> leiningen -> no alias -> demo profile
 
   ; connect to nrepl session of IDE
-  (start!)
+  (start-sniffer!)
 
   ; after executing (start!), all the following evals will be
   ; captured by goldly nrepl middleware
@@ -36,8 +35,6 @@
   ^:R [:p (+ 8 8)]  ; does not work in vs-code (vs-code does not send meta data)
   ^:R [:p/vega (+ 8 8)]
   (R [:p/vega (+ 8 8)]) ; works in vs-code also
-
-  
 
   ; test how to add an item to an array in specter
   (def data {:a [1 2 3]})

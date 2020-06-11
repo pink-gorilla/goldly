@@ -1,14 +1,14 @@
-(ns goldly.nrepl.middleware
+(ns goldly.nrepl.sniffer.middleware
   (:require
    ;[clojure.tools.logging :refer (info)]
+   [clojure.core.async :refer [chan >! go]]
    [nrepl.transport :as transport]
    [nrepl.middleware :as middleware]
    [nrepl.middleware.print]
    [pinkgorilla.middleware.formatter :as formatter]
    [goldly.nrepl.ignore :refer [ignore?]]
    [goldly.nrepl.logger :as logger]
-   [goldly.nrepl.snippets :as snippets]
-   [systems.snippets :refer [publish-eval!]])
+   [goldly.nrepl.sniffer.notebook :refer [->notebook]])
   (:import nrepl.transport.Transport))
 
 ; nrepl docs:
@@ -24,6 +24,9 @@
 ;; This middleware function calls the gorilla-repl render protocol on the value that 
 ;; results from the evaluation, and then converts the result to edn.
 
+(def chan-eval-results (chan))
+
+
 (defn convert-response [msg resp]
    ;; we have to transform the rendered value to EDN here, as otherwise
    ;; it will be pr'ed by the print middleware (which comes with the
@@ -33,12 +36,17 @@
    ;; (assoc resp :value (json/generate-string (render/render v)))
   (if (ignore? msg resp)
     resp
-    
     (do
       (logger/on-nrepl-eval msg resp)
-      (if-let [eval-result (snippets/on-nrepl-eval msg resp)]
-        (do ;(publish-eval! eval-result)
-            (assoc resp :pinkie (formatter/serialize (:pinkie eval-result)))) ; this is used by the notebook
+      (if-let [nb (->notebook msg resp)]
+        (do
+          (go (>! chan-eval-results nb))
+          ;(publish-eval! eval-result)
+          #_(client/send!  {:op "eval"
+                            :code (str "(systems.snippets/publish-eval! "
+                                       (pr-str eval-result)
+                                       ")")})
+          (assoc resp :pinkie (formatter/serialize (:pinkie nb)))) ; this is used by the notebook
         resp))))
 
 (defn render-values

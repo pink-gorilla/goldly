@@ -17,8 +17,8 @@
 (defn max-code [msg]
   (let [code (:code msg)
         c (if code (count code) 0)
-        long? (> c 40)
-        code (if long? (subs code 0 40) code)]
+        long? (> c 240)
+        code (if long? (subs code 0 240) code)]
     (if code (assoc msg :code code) msg)))
 
 (defn msg-safe [msg]
@@ -36,9 +36,21 @@
               :nrepl.middleware.print/options
               :nrepl.middleware.caught/caught-fn)))
 
-(defn on-nrepl-eval [{:keys [op code cause via trace symbol] :as msg} {:keys [id session ns status value out ns-list completions] :as resp}]
+(def log-file-nrepl "nrepl.txt")
+(def log-file-snippets "nrepl-snippets.txt")
+
+(defn new-log-session! [session-id]
+  (spit log-file-nrepl (str "new session: " session-id))
+  (spit log-file-snippets (str "new session: " session-id)))
+
+(defn on-nrepl-eval [msg  resp]
   (when (not (ignore? msg resp))
-    (spit "nrepl.txt"
+    (spit log-file-nrepl
           (str "\r\n\r\n" "req " (pr-str (msg-safe msg))
                "\r\n" "res " (pr-str (resp-safe resp)))
           :append true)))
+
+(defn log! [msg]
+  (spit log-file-snippets
+        (str "\r\n" (pr-str msg))
+        :append true))
