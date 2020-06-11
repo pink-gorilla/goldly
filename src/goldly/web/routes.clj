@@ -3,11 +3,11 @@
    [clojure.string]
    [clojure.pprint]
    [bidi.bidi :as bidi]
-   [bidi.ring ;:refer [resources]
-    ]
+   [bidi.ring]
    [ring.mock.request :refer (request) :rename {request mock-request}]
    [compojure.core :as compojure :refer [defroutes routes context GET POST]]
    [compojure.route :refer [files resources not-found] :as compojure-route]
+   [goldly.web.middleware :refer [wrap-app]]
    [goldly.web.views :refer [app-handler]]
    [goldly.web.ws :refer [ws-handler]]))
 
@@ -25,6 +25,12 @@
   (GET "/" req (app-handler req))
   ws-handler)
 
+(defroutes goldly-handler
+  (-> app-handler2
+      wrap-app)
+  resource-handler)
+
+
 ; new - bidi
 
 (defn test-handler [req]
@@ -33,16 +39,23 @@
 
 (def routes-bidi
  [""
-  [
+  [; api resonses have priority 1
+   ; (serving a resource for an api call would be horrible)
+   [["/user/" :userid "/article"]
+    (fn [req] {:status 201 :body (:route-params req)})]
+   
+   ; resources
    ["" (bidi.ring/->ResourcesMaybe {:prefix "public/"})]  
+   
+   ; the app is greedy.
    ["app" (-> #'app-handler)]
    ["app/" (-> #'app-handler)]
    ["/app" (-> #'app-handler)]
    ["/app/" (-> #'app-handler)]
-
+   [#"^.*$" #'app-handler]  ;; redirect / to index.html
+   
    ["/test" (-> #'test-handler (bidi.bidi/tag :index))]
-   [["/user/" :userid "/article"]
-    (fn [req] {:status 201 :body (:route-params req)})]
+   
    ["/blog"
     [["/index.html" (fn [req] {:status 200 :body "Index"})]
      [["/b"] 'blog-article-handler]
@@ -51,6 +64,11 @@
                        ;["/images/" 'image-handler]
                        ; (fn [req] {:status 200 :body "Not found"})
    ]])
+
+(def handler
+  (bidi.ring/make-handler routes-bidi))
+
+(comment
 
 (def routes-app
   ["" {"" :index
@@ -65,14 +83,13 @@
        "missing-route" :missing-route
        true :four-o-four}])
 
-(comment
+
   (bidi/match-route routes-app "/this-route" :request-method :get)
   (bidi/match-route routes-app "/this-route/something" :request-method :get)
   (bidi/match-route routes-app "/this-route/something-else" :request-method :get)
   (bidi/match-route routes-app "a-items" :request-method :get)
   (bidi/match-route routes-app "a-items/kjhkjk" :request-method :get)
-  ;
-  )
+  
 
 (def serve-index-page
   (bidi/handler (java.io.File. "resources/public/index.html")))
@@ -99,10 +116,8 @@
 
 (GET "/" req (app-handler req))
 
-(def handler
-  (bidi.ring/make-handler routes-bidi))
 
-(comment
+
 (handler (mock-request :get "/blog/index.html"))
 ;{:status 200 :body "Index"}))
   (handler (mock-request :get "/test"))
@@ -116,6 +131,7 @@
  (handler (mock-request :get "/blog/b"))
  (handler (mock-request :get "/blog/article/8.html"))
 
+; huge comment
   )
 
 

@@ -18,5 +18,10 @@
   (is (= #'goldly.web.views/app-handler (get-handler "/app")))
   (is (= #'goldly.web.views/app-handler (get-handler "/app/"))))
 
+(get-handler "/app/system/15")
+
+(deftest app-routes-greedy []
+  (is (= #'goldly.web.views/app-handler (get-handler "app/system/15"))))
+
 
 

@@ -14,7 +14,8 @@
 
 ; resources
 
-(deftest resource-not-existing []
+; app is now greedy.
+#_(deftest resource-not-existing []
   (is (= nil
          (-> "alice/in/wonderland/x.ico" GET))))
 

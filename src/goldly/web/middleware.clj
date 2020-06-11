@@ -1,4 +1,6 @@
-(ns goldly.web.handler
+(ns goldly.web.middleware
+  "a middleware takes a handler, and wraps a middleware around it.
+   It is handler transformation, not routing related."
   (:require
    [clojure.string]
    [ring.middleware.cors :refer [wrap-cors]]
@@ -9,14 +11,7 @@
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
    [ring.middleware.session :refer [wrap-session]]
    [ring.middleware.format :refer [wrap-restful-format]]
-   [ring.middleware.json :refer [wrap-json-response]]
-   [compojure.core :as compojure :refer [defroutes routes context GET POST]]
-   [compojure.route :refer [files resources not-found] :as compojure-route]
-   [compojure.handler :as handler]
-   [goldly.web.routes :refer [app-handler2 resource-handler]]
-   ))
-
-;; DEFAULT HANDLER
+   [ring.middleware.json :refer [wrap-json-response]]))
 
 (defn wrap-api-handler
   "a wrapper for JSON API calls
@@ -27,8 +22,8 @@
       (wrap-defaults api-defaults)
       (wrap-restful-format :formats [:json :transit-json :edn])))
 
-(defroutes default-handler
-  (-> app-handler2
+(defn wrap-app [handler]
+  (-> handler
       (wrap-defaults site-defaults)
       #_(wrap-defaults
          (-> site-defaults
@@ -40,6 +35,7 @@
       (wrap-cljsjs) ; oz
       ;(wrap-session)
       ;(wrap-json-response)
-      (wrap-gzip)) ;oz
-  resource-handler)
+      (wrap-gzip))) ;oz 
+
+
 
