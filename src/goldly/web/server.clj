@@ -1,4 +1,4 @@
-(ns goldly.web.http
+(ns goldly.web.server
   (:require
    [clojure.string]
    [org.httpkit.server :as httpkit]

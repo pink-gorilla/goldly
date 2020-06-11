@@ -2,7 +2,7 @@
   "the main goldly application"
   (:require
    [clojure.java.io]
-   [goldly.web.http :as web]
+   [goldly.web.server :as web]
    [goldly.puppet.loader :refer [load-components-namespaces require-components]]
    [goldly.puppet.db :refer [systems-response]])
   (:gen-class))

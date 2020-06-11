@@ -13,7 +13,7 @@
    [compojure.core :as compojure :refer [defroutes routes context GET POST]]
    [compojure.route :refer [files resources not-found] :as compojure-route]
    [compojure.handler :as handler]
-   [goldly.web.routes2 :refer [app-handler resource-handler]]
+   [goldly.web.routes :refer [app-handler resource-handler]]
    ))
 
 ;; DEFAULT HANDLER
