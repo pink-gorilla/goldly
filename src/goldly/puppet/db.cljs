@@ -16,7 +16,7 @@
           ;{:route-params {:item-id "1"} :handler :a-item}
    :systems []
    :id nil
-   
+
    ; system ui
    :running-systems {}})
 

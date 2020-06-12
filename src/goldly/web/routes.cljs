@@ -22,7 +22,6 @@
           [:a {:href "https://github.com/venantius/accountant"} "Accountant"]
           ")"]])))
 
-
 (def app-routes
   ["/" {"app"                  :main
         ["system/" :system-id] :system

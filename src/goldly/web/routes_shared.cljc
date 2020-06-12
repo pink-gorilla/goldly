@@ -5,7 +5,6 @@
    ;[pushy.core :as pushy]
    ))
 
-
 (def app-routes
   ["" {""               :main
        ["/system/" :system-id] :system
@@ -15,7 +14,6 @@
        "section-b"     :section-b
         ;true           :four-o-four
        ["" :id]        :bongo}])
-
 
 (bidi/path-for app-routes :main)
 (bidi/path-for app-routes :section-a)

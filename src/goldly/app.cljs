@@ -10,17 +10,18 @@
    [pinkgorilla.ui.default-renderer] ; gorilla-ui 
    [pinkgorilla.ui.gorilla-plot.pinkie] ; gorilla-plot
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
+   [pinkgorilla.ui.config :refer [set-prefix!]]
 
    [goldly.web.ws :refer [start-router!]]
    [goldly.web.views :refer [goldly-app-page]]
    [goldly.web.routes-old :refer [app-routes]]
    [goldly.web.routes :refer [init-routes]]
-   
+
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]
-   [goldly.puppet.db]
+   [goldly.puppet.db]))
 
-   ))
+(set-prefix! "/r/")
 
 (defn print-log-init! []
   (enable-console-print!)

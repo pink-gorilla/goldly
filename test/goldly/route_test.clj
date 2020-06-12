@@ -35,7 +35,7 @@
   (is (= #'goldly.web.handler/ws-chsk-post (handler POST "/chsk"))))
 
 (comment
-(handler GET  "aa")
+  (handler GET  "aa")
   (GET "aa")
   (GET "/r/favicon.ico")
   (handler GET  "/r/favicon.ico")

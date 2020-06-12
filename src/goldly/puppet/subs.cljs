@@ -10,12 +10,10 @@
  (fn [db _]
    (:route db)))
 
-
 (reg-sub
  :systems
  (fn [db _]
    (:systems db)))
-
 
 (reg-sub
  :system

@@ -39,25 +39,26 @@
    [:h1 "system does not exist!"]
    [:p id]])
 
-
 (defn system
   "requests system with id from server
    and displays it."
   [id]
   (info "showing system: " id)
-  (dispatch-sync [:goldly/system-store id nil])
+  (dispatch-sync [:goldly/system-store :g/system-loading])
   (dispatch [:goldly/send :goldly/system id])
   (let [system (subscribe [:system])]
     (fn []
       [:<>
        [:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
             :href (bidi/path-for app-routes :main)} "Systems"] ; "#/info"
-       (cond
-         (= @system :g/system-nil) [system-nil id]
-         (not @system) [system-loading id]
-         :else [:<>
-                [:h1.bg-orange-300 (str (:name @system) " " id)]
-                [error-boundary
-                 [render-system (merge {:id (:id @system)}
-                                       (:cljs @system)
-                                       {:fns-clj (:fns-clj @system)})]]])])))
+       (case @system
+         :g/system-nil [system-nil id]
+         :g/system-loading [system-loading id]
+         (if (nil? @system)
+           [:h1 "something is broken"]
+           [:<>
+            [:h1.bg-orange-300 (str (:name @system) " " id)]
+            [error-boundary
+             [render-system (merge {:id (:id @system)}
+                                   (:cljs @system)
+                                   {:fns-clj (:fns-clj @system)})]]]))])))

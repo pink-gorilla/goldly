@@ -16,7 +16,7 @@
         ^{:key id}
         [:li.m-3
          [:a {:class "m-3 bg-yellow-300"
-              :href (bidi/path-for app-routes :system :system-id id) } name]])]])) ; (str "/system/" id) "#/system/"
+              :href (bidi/path-for app-routes :system :system-id id)} name]])]])) ; (str "/system/" id) "#/system/"
 
 (defn goldly-app-page []
   (let [route (subscribe [:route])
@@ -28,7 +28,6 @@
        [main-page])]))
 
 ;{:route-params {:item-id "1"}, :handler :a-item}
-
 
 
 #_(defmulti page-contents identity)
