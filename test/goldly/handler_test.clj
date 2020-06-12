@@ -32,9 +32,9 @@
 
 (deftest resource-aggrid []
   (is (= "text/css"
-         (-> "/r/ag-grid-community/dist/ag-grid.css" GET content-type)))
+         (-> "/r/ag-grid-community/dist/styles/ag-grid.css" GET content-type)))
   (is (= "text/css"
-         (-> "/r/ag-grid-community/dist/ag-theme-balham.css" GET content-type))))
+         (-> "/r/ag-grid-community/dist/styles/ag-theme-balham.css" GET content-type))))
 
 ; cljs-bundle
 

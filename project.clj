@@ -10,8 +10,7 @@
 
   :prep-tasks [;"javac"
                "compile"
-               "resource"
-               ;"ls"
+               ;"resource"
                ;"shadowcompile2"
                ]
 
@@ -80,7 +79,7 @@
                    "target/goldly" ; js bundle
                    "target/node_modules"] ; css png resources from npm modules
 
-  :resource {:silent false
+ #_ :resource #_{:silent false
              :resource-paths [["node_modules/tailwindcss/dist"
                                {:includes [#".*"]
                                 :target-path "target/node_modules/public/tailwindcss/dist"}]
