@@ -13,7 +13,6 @@
    [pinkgorilla.ui.config :refer [set-prefix!]]
    [goldly.web.ws :refer [start-router!]]
    [goldly.web.views :refer [goldly-app-page]]
-   [goldly.web.routes-old :refer [app-routes]]
    [goldly.web.routes :refer [init-routes]]
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]
