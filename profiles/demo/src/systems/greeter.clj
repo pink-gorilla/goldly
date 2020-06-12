@@ -6,6 +6,7 @@
 (system-start!
  (goldly/system
   {:name "greeter"
+   :route "/greeter"
    :state {:in ""
            :msg "Type Something..."}
    :html  [:div.rows

@@ -7,12 +7,10 @@
                                      :sign-releases false}]]
   :min-lein-version "2.9.3"
   :min-java-version "1.11"
-  :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/jul-factory"]
 
   :prep-tasks [;"javac"
                "compile"
-               "resource"
-               ;"ls"
+               ;"resource"
                ;"shadowcompile2"
                ]
 
@@ -31,12 +29,15 @@
                          [org.clojure/core.memoize "1.0.236"]
                          ; libpythonclj fixes
                          [net.java.dev.jna/jna "5.5.0"]
-                         [org.ow2.asm/asm "8.0.1"]]
+                         [org.ow2.asm/asm "8.0.1"]
+                         [nrepl "0.8.0-alpha1"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
+                 [org.clojure/core.async]
                  [thheller/shadow-cljs "2.10.4"]
                  [thheller/shadow-cljsjs "0.0.21"]
                  [ring/ring-core "1.8.1"]
+                 [ring/ring-anti-forgery "1.3.0"]
                  [ring-cors "0.1.13"]
                  [ring/ring-defaults "0.3.2"
                   :exclusions [javax.servlet/servlet-api]]
@@ -46,8 +47,11 @@
                  [ring-cljsjs "0.2.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [http-kit "2.3.0"]
-                 [compojure "1.6.1"]
+                 [ring/ring-mock "0.4.0"]
+                 ;[compojure "1.6.1"]
+                 [bidi "2.1.6"]
                  [hiccup "1.0.5"]
+
                  [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.119.0"]
                  [com.taoensso/sente "1.15.0"
@@ -57,34 +61,39 @@
                                info.sunng/ring-jetty9-adapter]] ;  websocket
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
+                 [nrepl "0.8.0-alpha1"]
+                 [org.clojure/java.classpath "1.0.0"]
+                 [org.pinkgorilla/gorilla-middleware "0.2.23"]
                  ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
                  ;ui dependencies (clj must serve resources):
-                 [org.pinkgorilla/gorilla-renderable-ui "0.2.2"]
-                 [org.pinkgorilla/gorilla-ui "0.2.2"
+                 [org.pinkgorilla/gorilla-renderable "3.0.12"]
+                 [org.pinkgorilla/gorilla-renderable-ui "0.2.4"]
+                 [org.pinkgorilla/gorilla-ui "0.2.14"
                   :exclusions [org.clojure/clojurescript]]
                  [org.pinkgorilla/gorilla-plot "1.2.2"
                   :exclusions [org.clojure/clojurescript]]]
 
   :source-paths ["src"]
-  
-  :resource-paths ["resources"
+
+  :resource-paths ["resources" ; resources that goldly brings (not in maven/npm)
                    "target/goldly" ; js bundle
                    "target/node_modules"] ; css png resources from npm modules
-  
-  :resource {:silent false
+
+ #_ :resource #_{:silent false
              :resource-paths [["node_modules/tailwindcss/dist"
-                               {:includes [#".*"] 
-                                :target-path "target/node_modules/public/tailwindcss/dist" 
-                                }]
+                               {:includes [#".*"]
+                                :target-path "target/node_modules/public/tailwindcss/dist"}]
                               ["node_modules/leaflet/dist"
-                               {:includes [#".*\.css" #".*\.png"]  
-                                :target-path "target/node_modules/public/leaflet/dist" 
-                                }]
+                               {:includes [#".*\.css" #".*\.png"]
+                                :target-path "target/node_modules/public/leaflet/dist"}]
                               ["node_modules/ag-grid-community/dist/styles"
                                {:includes [#".*\.css"]
                                 :target-path "target/node_modules/public/ag-grid-community/dist"}]
-                              
-                              
+                              ["node_modules/highlight.js/styles"
+                               {:includes [#".*\.css"]
+                                :target-path "target/node_modules/public/highlight.js/styles"}]
+
+                             ;  http://localhost:8000/highlight.js/styles/github.css
                               ]}
 
   :target-path  "target/jar"
@@ -107,9 +116,11 @@
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
                                    [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
-                                   ]}
+                                   [clj-commons/pushy "0.3.10"]]}
 
-             :dev {:source-paths ["profiles/dev/src" "test"]
+             :dev {:source-paths ["profiles/dev/src"
+                                  "profiles/demo/src"
+                                  "test"]
                    :dependencies [[clj-kondo "2020.05.09"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
@@ -155,21 +166,17 @@
                                             merge-meta          [[:inner 0]]
                                             try-if-let          [[:block 1]]}}}
 
-             :demo {:source-paths ["profiles/demo/src"]
-                    :dependencies [[org.clojure/tools.logging "1.1.0"] ; needed by clojisr
-                                   [org.pinkgorilla/clojisr-gorilla "0.0.6"]]}}
+             :demo {:source-paths ["src" "profiles/demo/src"]
+                    :dependencies []}}
 
 
-  :aliases {"ls"
-            ["shell" "ls"]
-
-            "tree" ^{:doc "Runs deps tree with correct profile"}
+  :aliases {"tree" ^{:doc "Runs deps tree with correct profile"}
             ["with-profile" "+cljs" "deps" ":tree"]
 
             "shadow-compile"
             ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
 
-            "l"
+            "bongotrott"
             ["do" ["compile"] ["shadow-compile"] "install"]
   ;["shell" "shadow-cljs" "compile" "web"]
             })

@@ -4,61 +4,23 @@
    [clojure.string]
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
    [taoensso.timbre :as log :refer (tracef debug debugf info infof warnf error errorf)]
-
-   [goldly.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]
+   [goldly.web.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]
+   [goldly.puppet.db :refer [get-system add-system]]
    [goldly.system :refer [system->cljs]]))
 
 ;; system
-
-(def systems (atom {}))
-
-(defn systems-response []
-  (let [;_ (println "systems-response: " @systems)
-        summary (into []
-                      (map (fn [[k v]]
-                             {:id (name k)
-                              :name (or (:name v) "")}) @systems))
-        ;ids (keys @systems)
-        ;ids (into [] (map name ids))
-        ]
-    [:goldly/systems #_ids summary]))
-
-(defn system-response
-  "gets system to be sent to clj"
-  [id]
-  (let [id (keyword id)
-        system (id @systems)]
-    (when system
-      (system->cljs system))))
 
 (defn send-event [system-id event-name & args]
   (let [message  {:system system-id :type event-name :args args}]
     (send-all! [:goldly/event message])))
 
-(defmethod -event-msg-handler :goldly/systems
-  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (let [session (:session ring-req)
-        uid (:uid session)]
-    (tracef "systems event: %s" event)
-    (when ?reply-fn
-      (?reply-fn (systems-response)))))
-
-(defmethod -event-msg-handler :goldly/system
-  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (let [session (:session ring-req)
-        uid (:uid session)
-        [event-name system-id] event]
-    (infof "rcvd  %s %s" event-name system-id)
-    (let [response (system-response system-id)]
-      (if response
-        (if ?reply-fn
-          (?reply-fn response)
-          (chsk-send! uid [:goldly/system response]))
-        (info ":goldly/system request for unknown system: " system-id)))))
+(defn dispatch [system-id event-name & args]
+  (println "dispatching " system-id event-name)
+  (send-event system-id event-name args))
 
 (defn run-system-fn-clj [id fun-kw args]
   (infof "run-system-fn-clj system %s fun: %s" id fun-kw)
-  (let [system ((keyword id) @systems)]
+  (let [system (get-system (keyword id))]
     (if system
       (let [fun-vec (get-in system [:clj :fns fun-kw])]
         (if fun-vec
@@ -97,38 +59,20 @@
         (?reply-fn response)
         (chsk-send! uid [:goldly/dispatch response])))))
 
-(defn dispatch [system-id event-name & args]
-  (println "dispatching " system-id event-name)
-  (send-event system-id event-name args))
-
-(add-watch connected-uids :connected-uids
-           (fn [_ _ old new]
-             (when (not= old new)
-               (infof "Connected uids change: %s" new)
-               (let [uids (:any new)]
-                 (info "uids: " uids)
-                 (doseq [uid uids]
-                   (info "sending systems info to: " uid)
-                   (chsk-send! uid (systems-response)))))))
+(defn update-state! [system-id {:keys [result where] :as update-spec}]
+  (let [response (merge {:run-id nil
+                         :system-id system-id
+                         :fun nil} update-spec)]
+    (info "sending " response)
+    (send-all! [:goldly/dispatch response])))
 
 (defn system-start!
   [system]
-  (println "starting system " (:id system))
-  (swap! systems assoc (keyword (:id system)) system)
+  (info "starting system " (:id system))
+  (add-system system)
   (system->cljs system))
 
-(def broadcast-enabled?_ (atom true))
 
-(defn start-heartbeats!
-  "setup a loop to broadcast an event to all connected users every second"
-  []
-  (go-loop [i 0]
-    (<! (async/timeout 60000))
-    (when @broadcast-enabled?_ (send-all! (systems-response)))
-    (recur (inc i))))
-
-;(start-heartbeats!)
-;
 
 
 

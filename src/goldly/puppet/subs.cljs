@@ -1,4 +1,4 @@
-(ns goldly.subs
+(ns goldly.puppet.subs
   (:require-macros
    [reagent.ratom])
   (:require
@@ -6,19 +6,14 @@
    [re-frame.core :refer [reg-sub]]))
 
 (reg-sub
- :main
+ :route
  (fn [db _]
-   (:main db)))
+   (:route db)))
 
 (reg-sub
  :systems
  (fn [db _]
    (:systems db)))
-
-(reg-sub
- :system-id
- (fn [db _]
-   (:id db)))
 
 (reg-sub
  :system

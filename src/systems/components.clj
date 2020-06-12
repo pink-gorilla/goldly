@@ -1,13 +1,14 @@
 (ns systems.components
   (:require
-   [goldly.runner :refer [system-start!]]
-   [goldly.system :as goldly]))
+   [goldly.system :as goldly]
+   [goldly.runner :refer [system-start!]]))
 
 (println "loading systems.components ..")
 
 (system-start!
  (goldly/system
   {:name "components"
+   :route "/"
    :state 42
    :html  [:p/componentsui]
    :fns {}}
