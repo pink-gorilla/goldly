@@ -209,13 +209,13 @@
 ; to not recompile the code at each rerender of the data that the system
 ; is displaying. 
 
-(defn render-system [{:keys [state html fns fns-clj] :as system}]
+(defn render-system [{:keys [state html fns fns-clj id] :as system}]
   (let [id (uuid/uuid-string (uuid/make-random-uuid))]
     (r/create-class
      {:display-name          "goldly-render-system"
       :reagent-render        (render-system-impl id)
       :component-will-unmount (fn [this] ;  just before the component is unmounted from the DOM.
-                                (info "render-system will unmount")
+                                (infof "render-system id: %s - will unmount" id)
                                 (dispatch [:goldly/remove-running-system id]))})))
 
 

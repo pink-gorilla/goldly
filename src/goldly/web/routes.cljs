@@ -1,5 +1,7 @@
 (ns goldly.web.routes
   (:require
+   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
+   [re-frame.core :refer [dispatch]]
    [bidi.bidi :as bidi]
    [pushy.core :as pushy]))
 
@@ -20,20 +22,23 @@
           [:a {:href "https://github.com/venantius/accountant"} "Accountant"]
           ")"]])))
 
-(def state (atom {}))
 
 (def app-routes
-  ["/" {"" :index
-        "section-a" {"" :section-a
-                     ["/item-" :item-id] :a-item}
-        "section-b" :section-b
-        "missing-route" :missing-route
-        true :four-o-four}])
+  ["/" {"app"                  :main
+        ["system/" :system-id] :system
+        "section-a"            {"" :section-a
+                                ["/item-" :item-id] :a-item}
+        "section-b"            :section-b
+        true                   :four-o-four
+        ["" :id]               :bongo}])
 
 (defn set-page! [match]
-  (swap! state assoc :page match))
+  (info "setting page to: " match)
+  (dispatch [:goldly/nav match]))
 
 (def history
   (pushy/pushy set-page! (partial bidi/match-route app-routes)))
 
-(pushy/start! history)
+(defn init-routes []
+  (info "starting pushy")
+  (pushy/start! history))

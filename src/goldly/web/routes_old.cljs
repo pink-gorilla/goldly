@@ -1,4 +1,4 @@
-(ns goldly.puppet.nav
+(ns goldly.web.routes-old
   (:require-macros [secretary.core :refer [defroute]])
   (:import
    [goog History]

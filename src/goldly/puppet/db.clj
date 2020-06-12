@@ -42,7 +42,7 @@
 (defmethod -event-msg-handler :goldly/system
   [{:as ev-msg :keys [event]}]
   (let [[event-name system-id] event]
-    (let [response (system-response system-id)
+    (let [response (or (system-response system-id) :g/system-nil)
           _ (info "sending system-response: " response)]
       (send-ws-response ev-msg :goldly/system response))))
 

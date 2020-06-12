@@ -109,7 +109,11 @@
                         response]
   (let [session (:session ring-req)
         uid (:uid session)]
-    (info "?reply-fn: " ?reply-fn  "uid: " uid)
+    (when (nil? ?reply-fn)
+      (error "reply-fn is nil. this should not happen."))
+    (if (nil? uid)
+      (error "uid is nil. this should not happen.")
+      (info "uid: " uid))
     (if response
       (cond
         ?reply-fn (?reply-fn response)

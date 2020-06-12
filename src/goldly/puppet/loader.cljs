@@ -8,6 +8,8 @@
    [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
    [reagent.core :as r]
    [re-frame.core :refer [dispatch dispatch-sync subscribe]]
+   [bidi.bidi :as bidi]
+   [goldly.web.routes :refer [app-routes]]
    [goldly.system :refer [render-system]]
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]))
@@ -27,6 +29,17 @@
                            [:p (str @error)]]
                           comp))})))
 
+(defn system-loading [id]
+  [:div.bg-orange-300.m-16
+   [:h1 "loading system "]
+   [:p id]])
+
+(defn system-nil [id]
+  [:div.bg-red-500.m-16
+   [:h1 "system does not exist!"]
+   [:p id]])
+
+
 (defn system
   "requests system with id from server
    and displays it."
@@ -38,12 +51,13 @@
     (fn []
       [:<>
        [:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
-            :href "#/info"} "Systems"]
-       (if (nil? @system)
-         [:h1 "loading .."]
-         [:<>
-          [:h1.bg-orange-300 (str (:name @system) " " id)]
-          [error-boundary
-           [render-system (merge {:id (:id @system)}
-                                 (:cljs @system)
-                                 {:fns-clj (:fns-clj @system)})]]])])))
+            :href (bidi/path-for app-routes :main)} "Systems"] ; "#/info"
+       (cond
+         (= @system :g/system-nil) [system-nil id]
+         (not @system) [system-loading id]
+         :else [:<>
+                [:h1.bg-orange-300 (str (:name @system) " " id)]
+                [error-boundary
+                 [render-system (merge {:id (:id @system)}
+                                       (:cljs @system)
+                                       {:fns-clj (:fns-clj @system)})]]])])))

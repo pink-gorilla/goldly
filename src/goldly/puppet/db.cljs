@@ -10,10 +10,13 @@
 
 (def initial-db
   {; system explorer
-   :main :info
+   ;:main :info
+   ; :system nil
+   :route {:route-params {} :handler :main}
+          ;{:route-params {:item-id "1"} :handler :a-item}
    :systems []
    :id nil
-   :system nil
+   
    ; system ui
    :running-systems {}})
 
@@ -31,11 +34,9 @@
 
 (reg-event-db
  :goldly/nav
- (fn [db [_ data id]]
-   (infof "nav: %s %s" data id)
-   (assoc db
-          :main data
-          :id id)))
+ (fn [db [_ route]]
+   (infof "nav: %s " route)
+   (assoc db :route route)))
 
 (reg-event-db
  :goldly/systems-store

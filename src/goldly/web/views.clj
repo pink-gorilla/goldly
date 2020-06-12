@@ -9,12 +9,12 @@
     [:meta {:http-equiv "Content-Type"
             :content "text/html; charset=utf-8"}]
     [:title "goldly"]
-    [:link {:rel "stylesheet" :href "tailwindcss/dist/tailwind.css" :type "text/css"}]]
+    [:link {:rel "stylesheet" :href "/tailwindcss/dist/tailwind.css" :type "text/css"}]]
    [:body
     [:div#goldly
      page]
     (if load-bundle
-      [:script {:src "main.js" :type "text/javascript"}]
+      [:script {:src "/main.js" :type "text/javascript"}]
       [:span "bundle not loading!"])]))
 
 (defn app-page [csrf-token]

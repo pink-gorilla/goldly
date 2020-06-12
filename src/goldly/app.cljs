@@ -12,11 +12,15 @@
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
 
    [goldly.web.ws :refer [start-router!]]
+   [goldly.web.views :refer [goldly-app-page]]
+   [goldly.web.routes-old :refer [app-routes]]
+   [goldly.web.routes :refer [init-routes]]
+   
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]
    [goldly.puppet.db]
-   [goldly.puppet.loader :refer [system]]
-   [goldly.puppet.nav :refer [app-routes]]))
+
+   ))
 
 (defn print-log-init! []
   (enable-console-print!)
@@ -24,34 +28,12 @@
   (timbre/set-level! :debug)
   #_(timbre/set-level! :info))
 
-(defn infos []
-  (let [systems (subscribe [:systems])
-        _ (println "info: systems: " @systems)]
-    [:<>
-     [:h1 "running systems: " (count @systems)]
-     [:ul
-      (for [{:keys [id name]} @systems]
-        ^{:key id}
-        [:li.m-3
-         [:a {:class "m-3 bg-yellow-300"
-              :href (str "#/system/" id)} name]])]]))
-
-(defn app []
-  (let [main (subscribe [:main])
-        id (subscribe [:system-id])]
-    [:div ;.w.container
-     (case @main
-       :info [infos]
-       :system [system @id]
-       [infos])]))
-
 (defn mount-app []
-  (reagent.dom/render [app]
+  (reagent.dom/render [goldly-app-page]
                       (.getElementById js/document "app")))
 
  ; (secretary/dispatch! route))
 ; 
-
 
 ;; before-reload is a good place to stop application stuff before we reload.
 (defn ^:dev/before-load before-reload []
@@ -69,7 +51,7 @@
   (println "re-loading configuration from server..")
   ;(dispatch [:load-config])
 
-  (app-routes)
+  (init-routes)
   (start-router!)
   (println "mounting notebook-app ..")
   (mount-app))

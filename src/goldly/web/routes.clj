@@ -41,44 +41,54 @@
   {:status 200 :body "test"})
 
 (def routes-bidi
-  [""
-   [; api responses have priority 1
-   ; (serving a resource for an api call would be horrible)
-    [["/user/" :userid "/article"]
-     (fn [req] {:status 201 :body (:route-params req)})]
+  ["/" {"app"                   (-> #'app-handler)
+        ["system/" :system-id]  (-> #'app-handler)
+        ; ws
+        "token"                 #'ws-token-handler
+        "chsk"                  {:get #'ws-chsk-get
+                                 :post #'ws-chsk-post}
+        "r"                  (bidi.ring/->ResourcesMaybe {:prefix "public"})}
 
-   ; resources
-    ["" (bidi.ring/->ResourcesMaybe {:prefix "public"})]
+   true                        not-found-handler])
 
-     ; ws
-    ["/token" ws-token-handler]
-    ["/chsk" {:get #'ws-chsk-get
-              :post #'ws-chsk-post}]
-
-   ; the app is greedy.
-    ["app" (-> #'app-handler)]
-    ["app/" (-> #'app-handler)]
-    ["/app" (-> #'app-handler)]
-    ["/app/" (-> #'app-handler)]
-    ;[#"^.*$" #'app-handler]  ;; redirect / to index.html
-
-    #_["/test" (-> #'test-handler (bidi.bidi/tag :index))]
-
-    #_["/blog"
-       [["/index.html" (fn [req] {:status 200 :body "Index"})]
-        [["/b"] 'blog-article-handler]
-        [["/article/" :id ".html"] 'blog-article-handler]
-        [["/archive/" :id "/" :page ".html"] 'archive-handler]]]
-
-                       ;["/images/" 'image-handler]
-                       ; (fn [req] {:status 200 :body "Not found"})
-
-    [true         not-found-handler]]])
+;; The Resources and ResourcesMaybe record can be used on the right-hand 
+;; side of a route. It serves resources from the classpath. After the 
+;; pattern is matched, the remaining part of the path is added to the given prefix.
+;; ["/resources" (->ResourcesMaybe {:prefix "public/"})
+;; There is an important difference between Resources and ResourcesMaybe. 
+;; Resources will return a 404 response if the resource cannot be found, while
+;;  ResourcesMaybe will return nil, allowing subsequent routes to be tried.
 
 (def goldly-handler
   (bidi.ring/make-handler routes-bidi))
 
 (comment
+
+     ; the app is greedy.
+  ["app" (-> #'app-handler)]
+  ["app/" (-> #'app-handler)]
+  ["/app" (-> #'app-handler)]
+  ["/app/" (-> #'app-handler)]
+    ;[#"^.*$" #'app-handler]  ;; redirect / to index.html
+
+
+
+
+
+  [["/user/" :userid "/article"]
+   (fn [req] {:status 201 :body (:route-params req)})]
+
+  #_["/test" (-> #'test-handler (bidi.bidi/tag :index))]
+
+  #_["/blog"
+     [["/index.html" (fn [req] {:status 200 :body "Index"})]
+      [["/b"] 'blog-article-handler]
+      [["/article/" :id ".html"] 'blog-article-handler]
+      [["/archive/" :id "/" :page ".html"] 'archive-handler]]]
+
+                       ;["/images/" 'image-handler]
+                       ; (fn [req] {:status 200 :body "Not found"})
+
 
   (def routes-app
     ["" {"" :index

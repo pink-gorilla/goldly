@@ -16,25 +16,38 @@
   (-> url OP :handler))
 
 (deftest app-routes []
-  (is (= #'goldly.web.views/app-handler (handler GET "app")))
-  (is (= #'goldly.web.views/app-handler (handler GET "app/")))
-  (is (= #'goldly.web.views/app-handler (handler GET "/app")))
-  (is (= #'goldly.web.views/app-handler (handler GET "/app/"))))
+  ;(is (= #'goldly.web.handler/app-handler (handler GET "app")))
+  ;(is (= #'goldly.web.handler/app-handler (handler GET "app/")))
+  (is (= #'goldly.web.handler/app-handler (handler GET "/app")))
+  #_(is (= #'goldly.web.handler/app-handler (handler GET "/app/"))))
 
 ;(get-handler "/app/system/15")
+;
 
 (deftest app-routes-greedy []
-  (is (= #'goldly.web.views/app-handler (handler GET "app/system/15"))))
+  (is (= #'goldly.web.handler/app-handler (handler GET "/system/15"))))
 
 ; websocket
 
 (deftest ws-routes []
-  (is (= #'goldly.web.handler/token-handler (handler GET  "/token")))
+  (is (= #'goldly.web.handler/ws-token-handler (handler GET  "/token")))
   (is (= #'goldly.web.handler/ws-chsk-get (handler GET  "/chsk")))
   (is (= #'goldly.web.handler/ws-chsk-post (handler POST "/chsk"))))
 
-(handler GET  "/token")
+(comment
+(handler GET  "aa")
+  (GET "aa")
+  (GET "/r/favicon.ico")
+  (handler GET  "/r/favicon.ico")
+  (handler GET  "favicon.ico")
+  (handler GET  "//favicon.ico")
 
-(handler GET  "/app")
+  (handler GET "/tailwindcss/dist/tailwind.css")
+  (handler GET  "/app")
+  (handler GET  "/system/42")
+  (handler GET  "/token")
+  (handler GET  "/chsk")
 
+ ; 
+  )
 
