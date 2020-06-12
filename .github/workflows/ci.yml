@@ -36,14 +36,14 @@ jobs:
         lein deps
     - name: Check formatting
       run: lein cljfmt check
+    - name: Build cljs bundle
+      run: |
+          lein shadow-compile
     - name: Run tests
       run: |
         lein test
     #    lein build-shadow-ci
     #    ./node_modules/karma/bin/karma start --single-run
-    - name: Build cljs bundle
-      run: |
-          lein shadow-compile
     - name: Release
       if: success()
       env:
