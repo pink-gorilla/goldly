@@ -48,7 +48,7 @@
      (fn [req] {:status 201 :body (:route-params req)})]
 
    ; resources
-    ["" (bidi.ring/->ResourcesMaybe {:prefix "public/"})]
+    ["" (bidi.ring/->ResourcesMaybe {:prefix "public"})]
 
      ; ws
     ["/token" ws-token-handler]
