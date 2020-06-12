@@ -48,7 +48,6 @@
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [http-kit "2.3.0"]
                  [ring/ring-mock "0.4.0"]
-                 ;[compojure "1.6.1"]
                  [bidi "2.1.6"]
                  [hiccup "1.0.5"]
 
@@ -115,7 +114,7 @@
                                    [etaoin "0.3.6"]
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
-                                   [clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
+                                   ;[clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
                                    [clj-commons/pushy "0.3.10"]]}
 
              :dev {:source-paths ["profiles/dev/src"

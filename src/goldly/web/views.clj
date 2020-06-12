@@ -15,7 +15,11 @@
     [:div#goldly
      page]
     (if load-bundle
-      [:script {:src "/r/main.js" :type "text/javascript"}]
+      [:div
+       [:script {:src "/r/main.js" :type "text/javascript"}]
+       ; todo: start goldly via explicit command
+       #_[:script {:type "text/javascript"} "routing_example.core.init_BANG_ (); "]]
+
       [:span "bundle not loading!"])]))
 
 (defn app-page [csrf-token]

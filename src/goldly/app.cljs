@@ -11,12 +11,10 @@
    [pinkgorilla.ui.gorilla-plot.pinkie] ; gorilla-plot
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
    [pinkgorilla.ui.config :refer [set-prefix!]]
-
    [goldly.web.ws :refer [start-router!]]
    [goldly.web.views :refer [goldly-app-page]]
    [goldly.web.routes-old :refer [app-routes]]
    [goldly.web.routes :refer [init-routes]]
-
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]
    [goldly.puppet.db]))
@@ -32,9 +30,6 @@
 (defn mount-app []
   (reagent.dom/render [goldly-app-page]
                       (.getElementById js/document "app")))
-
- ; (secretary/dispatch! route))
-; 
 
 ;; before-reload is a good place to stop application stuff before we reload.
 (defn ^:dev/before-load before-reload []

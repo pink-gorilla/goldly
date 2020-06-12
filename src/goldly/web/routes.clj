@@ -5,34 +5,8 @@
    [ring.mock.request :refer (request) :rename {request mock-request}]
    [bidi.bidi :as bidi]
    [bidi.ring]
-   ;[compojure.core :as compojure :refer [defroutes routes context GET POST]]
-   ;[compojure.route :refer [files resources not-found] :as compojure-route]
    [goldly.web.handler :refer [app-handler not-found-handler
                                ws-chsk-get ws-chsk-post ws-token-handler]]))
-
-; old  - compojure
-
-#_(defroutes resource-handler
-    (resources "/"  {:root ""}) ; serve resources from jars (:root defaults to "public")
-  ;(files "/goldly/" {:root "./target/goldly"}) ; compiled cljs
-  ;(files "/cljs-runtime/" {:root "./target/cljs-runtime"}) ; compiled cljs
-  ;(files "/" {:root "./node_modules"}) ; access css and bundles in npm dependencies
-    (files "/" {:root "./profiles/demo/src/systems"}) ; resources of systems
-    (not-found "Bummer, not found"))
-
-#_(defroutes ws-handler
-    (GET "/token" req (token-handler req))
-    (GET  "/chsk" req (ws-handshake-handler req))
-    (POST "/chsk" req (ring-ajax-post req)))
-
-#_(defroutes main-handler
-    (GET "/" req (app-handler req))
-    ws-handler)
-
-#_(defroutes goldly-handler
-    (-> main-handler
-        wrap-app)
-    resource-handler)
 
 ; bidi
 
@@ -50,6 +24,9 @@
         "r"                  (bidi.ring/->ResourcesMaybe {:prefix "public"})}
 
    true                        not-found-handler])
+
+;; todo: (files "/" {:root "./profiles/demo/src/systems"}) ; resources of systems
+
 
 ;; from: 
 ;; https://github.com/juxt/bidi/blob/master/README.md
