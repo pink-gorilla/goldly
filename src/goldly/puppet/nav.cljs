@@ -11,8 +11,7 @@
    [goog.history.EventType :as EventType]
    [secretary.core :as secretary]
    [reagent.dom]
-   [re-frame.core :refer [dispatch]]
-))
+   [re-frame.core :refer [dispatch]]))
 
 (defn hook-browser-navigation!
   []

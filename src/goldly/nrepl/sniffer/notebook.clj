@@ -4,7 +4,7 @@
    [pinkie.converter :refer [->pinkie]]
    [pinkie.clj-types] ; side effects! 
    [goldly.nrepl.logger :refer [log!]]
-   [goldly.nrepl.sniffer.core :as sniffer])) 
+   [goldly.nrepl.sniffer.core :as sniffer]))
 
 (defn our-msg? [msg]
   (let [msg-session-id (:session msg)
@@ -22,11 +22,11 @@
   (let [r (->pinkie value)]
     r))
 
-(defn ->notebook [{:keys [op code] :as msg} 
-                     {:keys [id session ns status value out] :as resp}]
+(defn ->notebook [{:keys [op code] :as msg}
+                  {:keys [id session ns status value out] :as resp}]
   (when (and op (= op "pinkieeval"))
     (log! {:pinkie-eval "how great is this?"
-          :code code}))
+           :code code}))
   (when (and op
              (= op "eval")
              ;ns
@@ -45,7 +45,7 @@
                        :pinkie pinkie
                        :out out}]
       #_(log! {:mval (meta value)
-              :mcode (meta code)})
+               :mcode (meta code)})
       #_(log! resp)
       (log! eval-result)
       eval-result)))

@@ -19,7 +19,6 @@
    :fns {:incr (fn [_ s] (inc s))}}
   {:fns {}}))
 
-
 (comment
 
   (println click-counter)

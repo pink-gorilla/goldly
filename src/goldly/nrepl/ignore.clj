@@ -7,9 +7,9 @@
 
 (def enabled-ops
   #{"stacktrace"
-   "eval"})
+    "eval"})
 
-(defn ignore? [{:keys [op] :as req} 
+(defn ignore? [{:keys [op] :as req}
                {:keys [completions] :as res}]
   (or (contains? disabled-ops op)
       ;(not (contains? enabled-ops op))

@@ -7,7 +7,6 @@
    [goldly.puppet.db :refer [systems-response]])
   (:gen-class))
 
-
 (defn goldly-run!
   "This starts goldly (web server, user defined systems,...)"
   [{:keys [port

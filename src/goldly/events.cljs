@@ -11,17 +11,19 @@
    [goldly.puppet.db :refer [find-system-by-id]]
    #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
 
-
 (reg-event-fx
  :goldly/send ; send data to clj. used by get-system + clj fn dispatch
  (fn [cofx [_ & data]] ; strip off :goldly/send from args vector
    ; example for data: 
    ; [:goldly/send :goldly/dispatch id fun-name arg1 arg2]
    ; [:goldly/send :goldly/system id]
-   (let [data-v (into [] data)]
+   (let [data-v (into [] data)
+         goldly-tag (first data-v)]
      (infof "goldly/send %s " data-v)
      (try
-       (chsk-send! data-v)
+       (chsk-send! data-v 5000 (fn [data] ; [event-type data]]
+                                 (info "send data:" data)
+                                 (dispatch [:goldly/event goldly-tag data])))
        (catch :default e
          (error "exception sending to clj: " e)))
      (info "goldly/send done.")
@@ -29,6 +31,7 @@
 
 (defn request-systems []
   (try
+    (infof "goldly/send %s "  [:goldly/systems])
     (chsk-send! [:goldly/systems]
                 5000
                 (fn [[event-type data]]
@@ -57,10 +60,7 @@
 
 (defmethod -event-msg-handler :goldly/systems
   [{:keys [?data] :as ev-msg}]
-  ;(let [[?uid ?csrf-token ?handshake-data] ?data]
   (debugf "systems received: %s" ev-msg)) ; ?data)))
-
-
 
 
 (reg-event-db

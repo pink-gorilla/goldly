@@ -15,7 +15,6 @@
    :encoding {:x {:field "a" :type "ordinal"}
               :y {:field "b" :type "quantitative"}}})
 
-
 (def-ui multi-plot-zoom
   {:$schema
    "https://vega.github.io/schema/vega-lite/v4.json"
@@ -38,7 +37,6 @@
                 {:field "price"
                  :type "quantitative"
                  :axis {:tickCount 3, :grid false}}}}]})
-
 
 (def-ui multi-line
   {:$schema "https://vega.github.io/schema/vega-lite/v4.json"
@@ -65,7 +63,6 @@
                                      :value [2,2]}}}
                :y {:field "price", :type "quantitative"}
                :color {:field "symbol", :type "nominal"}}})
-
 
 (system-start!
  (goldly/system

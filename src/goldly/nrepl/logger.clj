@@ -43,8 +43,7 @@
 (defn new-log-session! [session-id]
   (spit log-file-nrepl (str "new session: " session-id))
   (spit log-file-snippets (str "new session: " session-id))
-  (spit log-file-published (str "new session: " session-id))
-  )
+  (spit log-file-published (str "new session: " session-id)))
 
 (defn on-nrepl-eval [msg  resp]
   (when (not (ignore? msg resp))

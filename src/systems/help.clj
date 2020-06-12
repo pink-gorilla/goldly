@@ -1,8 +1,7 @@
 (ns systems.help
   (:require
    [goldly.system :as goldly]
-   [goldly.runner :refer [system-start!]]
-   ))
+   [goldly.runner :refer [system-start!]]))
 
 (println "loading systems.help ..")
 

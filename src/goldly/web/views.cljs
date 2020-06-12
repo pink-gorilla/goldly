@@ -1,8 +1,7 @@
 (ns goldly.web.views
-  (:require 
+  (:require
    [bidi.bidi :as bidi]
-   [goldly.web.routes :refer [app-routes]]
-   ))
+   [goldly.web.routes :refer [app-routes]]))
 
 (defmulti page-contents identity)
 

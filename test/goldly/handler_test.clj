@@ -16,8 +16,8 @@
 
 ; app is now greedy.
 #_(deftest resource-not-existing []
-  (is (= nil
-         (-> "alice/in/wonderland/x.ico" GET))))
+    (is (= nil
+           (-> "alice/in/wonderland/x.ico" GET))))
 
 ; resources added by goldly 
 (deftest resource-favicon []
@@ -59,5 +59,19 @@
   (is (= "text/html"
          (-> "/app" GET content-type))))
 
+; websocket
+
+#_(deftest ws-token []
+    (is (= "text/html"
+           (-> "/token" GET content-type))))
+
+;(-> "/app" GET)
+
+#_(with-redefs [ring.middleware.anti-forgery/*anti-forgery-token* {:csfr-token "15"}]
+    ring.middleware.anti-forgery/*anti-forgery-token*
+  ;(-> "/token" GET)
+    )
+
+;(-> "/chsk" GET)
 
 

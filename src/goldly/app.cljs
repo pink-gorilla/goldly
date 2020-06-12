@@ -10,21 +10,19 @@
    [pinkgorilla.ui.default-renderer] ; gorilla-ui 
    [pinkgorilla.ui.gorilla-plot.pinkie] ; gorilla-plot
    ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
-   
+
    [goldly.web.ws :refer [start-router!]]
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]
    [goldly.puppet.db]
-   [goldly.puppet.loader :refer [system]] 
-   [goldly.puppet.nav :refer [app-routes]]
-   ))
+   [goldly.puppet.loader :refer [system]]
+   [goldly.puppet.nav :refer [app-routes]]))
 
 (defn print-log-init! []
   (enable-console-print!)
 ;(timbre/set-level! :trace) ; Uncomment for more logging
   (timbre/set-level! :debug)
   #_(timbre/set-level! :info))
-
 
 (defn infos []
   (let [systems (subscribe [:systems])

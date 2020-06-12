@@ -1,40 +1,33 @@
 (ns goldly.web.views
   (:require
    [clojure.string]
-   [ring.util.response :as response]
-   [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [hiccup.page :as page]))
 
-
-(defn app-page [csrf-token]
+(defn layout [{:keys [load-bundle]} page]
   (page/html5
    [:head
+    [:meta {:http-equiv "Content-Type"
+            :content "text/html; charset=utf-8"}]
     [:title "goldly"]
     [:link {:rel "stylesheet" :href "tailwindcss/dist/tailwind.css" :type "text/css"}]]
    [:body
-    [:div#sente-csrf-token {:data-csrf-token csrf-token}]
-    [:div#app]
-    [:script {:src "main.js" :type "text/javascript"}]]))
+    [:div#goldly
+     page]
+    (if load-bundle
+      [:script {:src "main.js" :type "text/javascript"}]
+      [:span "bundle not loading!"])]))
 
-(defn unique-id
-  "Get a unique id."
-  []
-  (str (java.util.UUID/randomUUID)))
+(defn app-page [csrf-token]
+  (layout {:load-bundle true}
+          [:div#app
+           [:div#sente-csrf-token {:data-csrf-token csrf-token}]
+           [:div#app]]))
 
-(defn session-uid
-  "Get session uuid from a request."
-  [req]
-  (get-in req [:session :uid]))
+(defn not-found-page []
+  (layout {:load-bundle false}
+          [:div#not-found.bg-red-500.m-5
+           [:div#noapp]
+           [:h1 "Bummer,  not found!"]]))
 
-(defn app-handler [req]
-  (let [csrf-token (force *anti-forgery-token*) ;(:anti-forgery-token ring-req)] ; Also an option
-        session (if (session-uid req)
-                  (:session req)
-                  (assoc (:session req) :uid (unique-id)))]
-    (response/content-type
-     {:status 200
-      :session session
-      :body (app-page csrf-token)
-      }
-     "text/html")))
+
 

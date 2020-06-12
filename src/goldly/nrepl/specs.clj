@@ -20,7 +20,6 @@
    :inspect-refresh
    :close
 
-
    :init-debugger
    :stdin
    :refresh-clear
@@ -28,8 +27,6 @@
    :debug-instrumented-defs
    :spec-example
    :format-edn
-
-
 
    :inspect-push      ; sounds useful!
    :inspect-next-page
@@ -96,7 +93,6 @@
    :test-stacktrace
    :content-type-middleware])
 
-
 (def describe-response
   {:aux {:cider-version
          {:incremental 0, :major 0, :minor 23, :qualifier [], :version-string "0.23.0"}
@@ -120,8 +116,6 @@
    {:id "128705fa-4ce6-4ec7-a906-0aa39b3e314d"
     :session "ac209158-9ea0-41a7-bcb9-25d0a46eea53"
     :status ["done"]}
-
-
 
    {:id "f1160046-3963-4322-9693-5f0046504948"
     :session "396076f2-a4dc-4ba4-ade9-9d371df6149c"
@@ -155,7 +149,6 @@
     :value nil
     :pinkie nil
     :out "20-06-10 03:29:52 lggram INFO [systems.snippets:49] - publish-eval!  nil\n"}
-
 
    {:session "dd11ef70-2803-428e-9bb2-f388705ac16c"
     :id "90", :ns nil, :code "(+ 7 17)"

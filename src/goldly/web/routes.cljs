@@ -7,18 +7,18 @@
 ; https://github.com/clj-commons/pushy
 
 #_(defn page []
-  (fn []
-    (let [page (:current-page (session/get :route))]
-      [:div
-       [:p [:a {:href (bidi/path-for app-routes :index)} "Go home"]]
-       [:hr]
-       (page-contents page) ;;
-       [:hr]
-       [:p "(Using "
-        [:a {:href "https://reagent-project.github.io/"} "Reagent"] ", "
-        [:a {:href "https://github.com/juxt/bidi"} "Bidi"] " & "
-        [:a {:href "https://github.com/venantius/accountant"} "Accountant"]
-        ")"]])))
+    (fn []
+      (let [page (:current-page (session/get :route))]
+        [:div
+         [:p [:a {:href (bidi/path-for app-routes :index)} "Go home"]]
+         [:hr]
+         (page-contents page) ;;
+         [:hr]
+         [:p "(Using "
+          [:a {:href "https://reagent-project.github.io/"} "Reagent"] ", "
+          [:a {:href "https://github.com/juxt/bidi"} "Bidi"] " & "
+          [:a {:href "https://github.com/venantius/accountant"} "Accountant"]
+          ")"]])))
 
 (def state (atom {}))
 
@@ -29,7 +29,6 @@
         "section-b" :section-b
         "missing-route" :missing-route
         true :four-o-four}])
-
 
 (defn set-page! [match]
   (swap! state assoc :page match))

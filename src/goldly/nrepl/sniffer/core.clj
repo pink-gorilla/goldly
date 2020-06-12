@@ -49,12 +49,11 @@
     (println "goldly snippets connected successfully to nrepl port " port)
     (println "evals will be displayed at http://localhost:8000/#/snippets")))
 
-
 (comment
 
   (start-sniffer!)
 
- (send! {:op "ls-sessions"})
+  (send! {:op "ls-sessions"})
   (send! {:op "eval" :code "(+ 8 8)"})
 
   (send! {:op "eval" :code "^:R [:p/vega (+ 8 8)]"})
@@ -62,12 +61,12 @@
 
   (send! {:op "pinkieeval" :code "^:R [:p (+ 8 8)]"})
 
-
-
   (send! {:op "start-rebl-ui"})
 
 
   ;; testing
+
+
   (port-from-file)
 
 

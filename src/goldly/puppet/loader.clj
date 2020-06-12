@@ -2,7 +2,8 @@
   "loads systems from files or classpath"
   (:require
    [clojure.string :as str]
-   [clojure.java.io]))
+   [clojure.java.io]
+   [taoensso.timbre :as log :refer (tracef debugf info infof warnf errorf)]))
 
 (defn- ends-with
   [string ending]
@@ -56,7 +57,7 @@
 
 (defn load-components-namespaces [namespace-symbols]
   (doall (for [s namespace-symbols]
-           (do (println "loading goldly system:" s)
+           (do (info "loading goldly system:" s)
                (require  s))))
   namespace-symbols)
 
@@ -64,7 +65,6 @@
   (let [namespaces (requires-for-directory directory)
         symbols (map symbol namespaces)]
     (load-components-namespaces symbols)))
-
 
 (comment
   (files-in-directory "./src/systems/")

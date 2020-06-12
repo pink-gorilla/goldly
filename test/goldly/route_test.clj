@@ -9,19 +9,32 @@
 (defn GET [url]
   (bidi/match-route routes-bidi url :request-method :get))
 
-(defn get-handler [url]
-  (-> url GET :handler))
- 
-(deftest app-routes []
-  (is (= #'goldly.web.views/app-handler (get-handler "app")))
-  (is (= #'goldly.web.views/app-handler (get-handler "app/")))
-  (is (= #'goldly.web.views/app-handler (get-handler "/app")))
-  (is (= #'goldly.web.views/app-handler (get-handler "/app/"))))
+(defn POST [url]
+  (bidi/match-route routes-bidi url :request-method :post))
 
-(get-handler "/app/system/15")
+(defn handler [OP url]
+  (-> url OP :handler))
+
+(deftest app-routes []
+  (is (= #'goldly.web.views/app-handler (handler GET "app")))
+  (is (= #'goldly.web.views/app-handler (handler GET "app/")))
+  (is (= #'goldly.web.views/app-handler (handler GET "/app")))
+  (is (= #'goldly.web.views/app-handler (handler GET "/app/"))))
+
+;(get-handler "/app/system/15")
 
 (deftest app-routes-greedy []
-  (is (= #'goldly.web.views/app-handler (get-handler "app/system/15"))))
+  (is (= #'goldly.web.views/app-handler (handler GET "app/system/15"))))
 
+; websocket
+
+(deftest ws-routes []
+  (is (= #'goldly.web.handler/token-handler (handler GET  "/token")))
+  (is (= #'goldly.web.handler/ws-chsk-get (handler GET  "/chsk")))
+  (is (= #'goldly.web.handler/ws-chsk-post (handler POST "/chsk"))))
+
+(handler GET  "/token")
+
+(handler GET  "/app")
 
 

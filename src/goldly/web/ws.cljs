@@ -30,12 +30,11 @@
 (debugf "connecting sente websocket..")
 
 (let [packer (sente-transit/get-transit-packer)
-      {:keys [chsk ch-recv send-fn state]}
-      (sente/make-channel-socket-client!
-       "/chsk" ; Must match server Ring routing URL
-       ?csrf-token
-       {:type :auto  ; :ajax
-        :packer packer})]
+      {:keys [chsk ch-recv send-fn state]} (sente/make-channel-socket-client!
+                                            "/chsk" ; Must match server Ring routing URL
+                                            ?csrf-token
+                                            {:type :auto  ; :ajax
+                                             :packer packer})]
   (def chsk chsk)
   (def ch-chsk ch-recv)
   (def chsk-send! send-fn)
@@ -81,8 +80,7 @@
   (stop-router!)
   (sente-csrf-warning)
   (reset! router_
-          (sente/start-client-chsk-router!
-           ch-chsk event-msg-handler)))
+          (sente/start-client-chsk-router! ch-chsk event-msg-handler)))
 
 (defn send! [data]
   (chsk-send! data 5000

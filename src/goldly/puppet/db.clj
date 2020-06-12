@@ -4,7 +4,7 @@
    [clojure.string]
    [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
    [taoensso.timbre :as log :refer (tracef debug debugf info infof warnf error errorf)]
-   [goldly.web.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]
+   [goldly.web.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids send-ws-response]]
    [goldly.system :refer [system->cljs]]))
 
 (def systems (atom {}))
@@ -26,14 +26,10 @@
         ]
     [:goldly/systems #_ids summary]))
 
-
 (defmethod -event-msg-handler :goldly/systems
-  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (let [session (:session ring-req)
-        uid (:uid session)]
-    (tracef "systems event: %s" event)
-    (when ?reply-fn
-      (?reply-fn (systems-response)))))
+  [ev-msg]
+  (let [response (systems-response)]
+    (send-ws-response ev-msg :goldly/system response)))
 
 (defn system-response
   "gets system to be sent to clj"
@@ -43,27 +39,18 @@
     (when system
       (system->cljs system))))
 
-
 (defmethod -event-msg-handler :goldly/system
-  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (let [session (:session ring-req)
-        uid (:uid session)
-        [event-name system-id] event]
-    (infof "rcvd  %s %s" event-name system-id)
-    (let [response (system-response system-id)]
-      (if response
-        (if ?reply-fn
-          (?reply-fn response)
-          (chsk-send! uid [:goldly/system response]))
-        (info ":goldly/system request for unknown system: " system-id)))))
-
+  [{:as ev-msg :keys [event]}]
+  (let [[event-name system-id] event]
+    (let [response (system-response system-id)
+          _ (info "sending system-response: " response)]
+      (send-ws-response ev-msg :goldly/system response))))
 
 (add-watch connected-uids :connected-uids
            (fn [_ _ old new]
              (when (not= old new)
-               (infof "Connected uids change: %s" new)
                (let [uids (:any new)]
-                 (info "uids: " uids)
+                 (info "uids connected: " uids)
                  (doseq [uid uids]
                    (info "sending systems info to: " uid)
                    (chsk-send! uid (systems-response)))))))

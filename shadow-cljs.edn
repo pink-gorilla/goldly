@@ -15,7 +15,7 @@
                   ]}
  :builds {:web {:target :browser
                 :output-dir "target/goldly/public"
-                :asset-path "/goldly"
+                :asset-path "/"
                 :modules {:main {:entries [goldly.app]}}
                 :devtools {:before-load goldly.app/stop
                            :after-load goldly.app/start}

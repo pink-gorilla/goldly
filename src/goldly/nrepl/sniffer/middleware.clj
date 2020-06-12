@@ -26,7 +26,6 @@
 
 (def chan-eval-results (chan))
 
-
 (defn convert-response [msg resp]
    ;; we have to transform the rendered value to EDN here, as otherwise
    ;; it will be pr'ed by the print middleware (which comes with the
@@ -70,11 +69,11 @@
 ;; what we do is fudge the :requires and :expects values to ensure that our rendering middleware gets inserted into
 ;; the linearized middlware stack between the eval middleware and the pr-values middleware. A bit of a hack!
 
+
 (middleware/set-descriptor! #'render-values
                             {:requires #{#'nrepl.middleware.print/wrap-print}
                              :expects  #{"eval"}
                              :handles {"pinkieeval" "eval with pinkie conversion"}})
-
 
 #_(defn send-to-pinkie! [{:keys [code] :as req} {:keys [value] :as resp}]
     (when (and code true); (contains? resp :value))

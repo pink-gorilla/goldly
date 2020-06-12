@@ -66,12 +66,9 @@
     (info "sending " response)
     (send-all! [:goldly/dispatch response])))
 
-
-
-
 (defn system-start!
   [system]
-  (println "starting system " (:id system))
+  (info "starting system " (:id system))
   (add-system system)
   (system->cljs system))
 

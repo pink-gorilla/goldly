@@ -1,5 +1,4 @@
 (ns goldly.puppet.loader
-  (:require-macros [secretary.core :refer [defroute]])
   (:import
    [goog History]
     ;; [goog.history Html5History]
@@ -7,25 +6,11 @@
   (:require
    [cljs.pprint]
    [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
-   [goog.events :as events]
-   [goog.history.EventType :as EventType]
-   [secretary.core :as secretary]
    [reagent.core :as r]
-   [reagent.dom]
-   [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
-
-   ; the following just adds dependencies to bundle
-   [pinkgorilla.ui.default-setup] ; renderable-ui
-   [pinkgorilla.ui.default-renderer] ; gorilla-ui 
-   [pinkgorilla.ui.gorilla-plot.pinkie] ; gorilla-plot
-   ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
-
-   [goldly.web.ws :refer [send! start-router!]]
+   [re-frame.core :refer [dispatch dispatch-sync subscribe]]
    [goldly.system :refer [render-system]]
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]))
-
-
 
 (defn error-boundary [_ #_comp]
   (let [error (r/atom nil)

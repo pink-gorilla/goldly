@@ -1,12 +1,11 @@
 (ns goldly.puppet.db
-   (:require
+  (:require
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch-sync dispatch]]
    [taoensso.timbre :as timbre :refer-macros [trace tracef
                                               debug debugf
                                               info infof
                                               warnf
                                               error errorf]]
-   [goldly.web.ws :refer [chsk-send! send! start-router! -event-msg-handler]]
    #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
 
 (def initial-db
@@ -49,9 +48,6 @@
  (fn [db [_ system]]
    (info "running goldly system: " system)
    (assoc db :system system)))
-
-
-
 
 (reg-event-db
  :goldly/add-running-system

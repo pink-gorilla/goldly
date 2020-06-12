@@ -38,6 +38,7 @@
                  [thheller/shadow-cljs "2.10.4"]
                  [thheller/shadow-cljsjs "0.0.21"]
                  [ring/ring-core "1.8.1"]
+                 [ring/ring-anti-forgery "1.3.0"]
                  [ring-cors "0.1.13"]
                  [ring/ring-defaults "0.3.2"
                   :exclusions [javax.servlet/servlet-api]]
@@ -47,8 +48,8 @@
                  [ring-cljsjs "0.2.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [http-kit "2.3.0"]
-                 [ring/ring-mock "0.3.0"]
-                 [compojure "1.6.1"]
+                 [ring/ring-mock "0.4.0"]
+                 ;[compojure "1.6.1"]
                  [bidi "2.1.6"]
                  [hiccup "1.0.5"]
 
@@ -68,7 +69,7 @@
                  ;ui dependencies (clj must serve resources):
                  [org.pinkgorilla/gorilla-renderable "3.0.12"]
                  [org.pinkgorilla/gorilla-renderable-ui "0.2.4"]
-                 [org.pinkgorilla/gorilla-ui "0.2.11"
+                 [org.pinkgorilla/gorilla-ui "0.2.12"
                   :exclusions [org.clojure/clojurescript]]
                  [org.pinkgorilla/gorilla-plot "1.2.2"
                   :exclusions [org.clojure/clojurescript]]]

@@ -8,15 +8,12 @@
    [ring.middleware.params]
 ;   [ring.middleware.cljsjs :refer [wrap-cljsjs]]
   ; [ring.middleware.anti-forgery :as af :refer :all]
-   [ring.middleware.anti-forgery :refer (*anti-forgery-token*)]
    [ring.util.response :as response]
-   [compojure.core :as comp :refer (defroutes GET POST)]
    [taoensso.encore :as encore :refer (have have?)]
-   [taoensso.timbre :as log :refer (tracef debugf info infof warnf errorf)]
+   [taoensso.timbre :as log :refer (tracef debugf info infof warnf error errorf)]
    [taoensso.sente  :as sente]
    [taoensso.sente.server-adapters.http-kit :refer (get-sch-adapter)]
-   [taoensso.sente.packers.transit :as sente-transit]
-   [cheshire.core :as json]))
+   [taoensso.sente.packers.transit :as sente-transit]))
 
 (defn unique-id
   "Get a unique id for a session."
@@ -32,12 +29,24 @@
 
 ; packer :edn
 
+(defn get-sente-session-uid
+  "Get session uuid from a request."
+  [req]
+  (or (get-in req [:session :uid])
+      (unique-id)))
+
+(defn sente-session-with-uid [req]
+  (let [session (or (:session req) {})
+        uid (or (get-sente-session-uid req)
+                (unique-id))]
+    (assoc session :uid uid)))
+
 (let [packer (sente-transit/get-transit-packer)
       chsk-server (sente/make-channel-socket-server!
                    (get-sch-adapter)
                    {:packer packer
                     :csrf-token-fn nil ; awb99; disable CSRF checking.
-                    })
+                    :user-id-fn get-sente-session-uid})
       {:keys [ch-recv send-fn connected-uids
               ajax-post-fn ajax-get-or-ws-handshake-fn]} chsk-server]
   (def ring-ajax-post ajax-post-fn)
@@ -49,29 +58,17 @@
 (defn send-all!
   [data]
   (let [uids (:any @connected-uids)]
-    (debugf "Broadcasting %s to %s clients" (first data) (count uids))
+    (debugf "Broadcasting event %s to %s clients" (first data) (count uids))
     (doseq [uid uids]
       (when-not (= uid :sente/nil-uid)
         (chsk-send! uid data)))))
 
-(defroutes ws-handler
-  (GET "/token" req (json/generate-string {:csrf-token *anti-forgery-token*}))
-  (GET  "/chsk" req
-    (debugf "/chsk got: %s" req)
-    (let [r (ring-ajax-get-or-ws-handshake req)]
-      (println "ws init: " r)
-      (println "ws csrf: " (get-in req [:session :ring.middleware.anti-forgery/anti-forgery-token]))
-      r))
-  (POST "/chsk" req (ring-ajax-post req)))
-
-
 ;; Router
-
 
 (defmulti -event-msg-handler :id)
 
 (defn event-msg-handler [{:keys [id ?data event] :as ev-msg}]
-  (tracef "Event: %s" event)
+  (infof "RCVD: %s" event)
   (if ev-msg
     (-event-msg-handler ev-msg)))
 
@@ -85,21 +82,15 @@
 
 (defmethod -event-msg-handler :chsk/uidport-open
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (let [;session (:session ring-req)
-        ;uid (:uid session)
-        ]
-    (info ":chsk/uidport-open: %s" ev-msg)
-    #_(when ?reply-fn
-        (?reply-fn (systems-response)))))
+  (info ":chsk/uidport-open: %s" ev-msg))
 
 (defmethod -event-msg-handler :chsk/uidport-close
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (let [;session (:session ring-req)
-        ;uid (:uid session)
-        ]
-    (info ":chsk/uidport-close: %s" ev-msg)
-    #_(when ?reply-fn
-        (?reply-fn (systems-response)))))
+  (info ":chsk/uidport-close: %s" ev-msg))
+
+(defmethod -event-msg-handler :chsk/ws-ping
+  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
+  (info ":chsk/ws-ping: %s" ev-msg))
 
 (defonce router_ (atom nil))
 
@@ -111,7 +102,24 @@
   (reset! router_
           (sente/start-server-chsk-router! ch-chsk event-msg-handler)))
 
+;; helper fns
+
+(defn send-ws-response [{:as ev-msg :keys [id ?data ring-req ?reply-fn send-fn]}
+                        goldly-tag
+                        response]
+  (let [session (:session ring-req)
+        uid (:uid session)]
+    (info "?reply-fn: " ?reply-fn  "uid: " uid)
+    (if response
+      (cond
+        ?reply-fn (?reply-fn response)
+        uid (chsk-send! uid [:goldly/system response])
+        :else (error "Cannot send ws-response: neither ?reply-fn nor uid was set!"))
+      (error "Can not send ws-response for nil response. " goldly-tag))))
+
+
 ;; Heartbeat sender
+
 
 (def broadcast-enabled?_ (atom true))
 

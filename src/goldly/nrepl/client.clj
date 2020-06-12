@@ -13,12 +13,11 @@
    - take interface from system / nrepl ?
    - convert to async channels ?   
    "
-  
+
   (:require
    [clojure.pprint :refer [pprint]]
    [nrepl.core :as nrepl]
    [goldly.nrepl.logger :refer [new-log-session!]]))
-
 
 (defn- set-session-id! [state fragments]
   ;(println "set-session-id!")
@@ -57,7 +56,6 @@
                      :session-id nil})]
     (send! state pprint {:op "clone"})
     state))
-
 
 (comment
 
