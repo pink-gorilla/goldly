@@ -51,6 +51,7 @@
                  [bidi "2.1.6"]
                  [hiccup "1.0.5"]
                  [luminus-transit "0.1.1"]
+                 [luminus/ring-ttl-session "0.3.3"]
                  [metosin/muuntaja "0.6.4"]
                   ;[clj-oauth2 "0.2.0"] ;oauth2
                  ;[com.telenordigital.data-insights/clj-oauth2 "0.7.2"]
@@ -58,7 +59,7 @@
                  [cprop "0.1.14"] ; configuration
                  [mount "0.1.16"]
                  [expound "0.7.2"] ; see clojurewb
-                 
+
                  [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.119.0"]
                  [com.taoensso/sente "1.15.0"
@@ -176,6 +177,7 @@
                                             try-if-let          [[:block 1]]}}}
 
              :demo {:source-paths ["src" "profiles/demo/src"]
+                    :resource-paths ["profiles/demo/resources"]
                     :dependencies []}}
 
 

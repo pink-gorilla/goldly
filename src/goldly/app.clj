@@ -12,7 +12,7 @@
   [{:keys [port
            app-systems-ns
            user-systems-dir]
-    :or {port 8000
+    :or {port 3000 ; 3000 is important because this is how github oauth is configured
          ;app-systems-dir "./src/systems/"
          app-systems-ns '[systems.help
                           systems.components

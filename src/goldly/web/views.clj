@@ -10,11 +10,12 @@
           :href link}])
 
 (defn load-fonts []
-  [:<>
-   [css "http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"]
-   [css "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"]
-   [css "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300"]
-   [css "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"]])
+  [:div
+   (css "http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic")
+   (css "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic")
+   (css "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300")
+   (css "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css")])
+
 
 (defn layout [{:keys [load-bundle]} page]
   (page/html5
@@ -27,8 +28,8 @@
 
     [:title "goldly"]
     [:link {:rel "shortcut icon" :href "/r/favicon.ico"}]
-    [css "/r/tailwindcss/dist/tailwind.css"]
-    [load-fonts]
+    (css "/r/tailwindcss/dist/tailwind.css")
+    (load-fonts)
     ]
    [:body
     [:div#goldly

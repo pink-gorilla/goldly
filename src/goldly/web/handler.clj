@@ -2,13 +2,14 @@
   (:require
    [clojure.string]
    [clojure.pprint]
-   [taoensso.timbre :as log :refer (tracef debugf info infof warnf errorf)]
+   [taoensso.timbre :as log :refer [tracef debugf info infof warnf errorf]]
    [cheshire.core :as json]
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
-   [ring.mock.request :refer (request) :rename {request mock-request}]
+   [ring.mock.request :refer [request] :rename {request mock-request}]
    [bidi.bidi :as bidi]
    [bidi.ring]
+   [goldly.user.auth.middleware :refer [wrap-oauth]]
    [goldly.web.middleware :refer [wrap-goldly]]
    [goldly.web.views :refer [app-page not-found-page]]
    [goldly.web.ws :refer [get-sente-session-uid sente-session-with-uid
@@ -98,5 +99,15 @@
 (def ws-chsk-post
   (-> ws-ajax-post-handler
       wrap-goldly))
+
+
+
+; oauth
+
+
+(def handler-auth
+  (-> goldly.user.auth.middleware/handler-auth
+      wrap-oauth))
+
 
 
