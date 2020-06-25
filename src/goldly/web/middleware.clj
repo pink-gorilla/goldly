@@ -14,6 +14,15 @@
    [ring.middleware.format :refer [wrap-restful-format]]
    [ring.middleware.json :refer [wrap-json-response]]))
 
+
+;from clojurewb - good example for middleware for websocket requests
+#_(defn wrap-formats2 [handler]
+  (let [wrapped (-> handler wrap-params (wrap-format formats/instance))]
+    (fn [request]
+      ;; disable wrap-formats for websockets
+      ;; since they're not compatible with this middleware
+      ((if (:websocket? request) handler wrapped) request))))
+
 (defn wrap-api-handler
   "a wrapper for JSON API calls
    from pinkgorilla notebook

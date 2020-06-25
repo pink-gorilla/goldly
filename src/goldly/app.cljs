@@ -16,7 +16,10 @@
    [goldly.web.routes :refer [init-routes]]
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]
-   [goldly.puppet.db]))
+   [goldly.puppet.db]
+   
+   [goldly.user.auth.view]
+   ))
 
 (set-prefix! "/r/")
 

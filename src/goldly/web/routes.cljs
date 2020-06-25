@@ -1,6 +1,6 @@
 (ns goldly.web.routes
   (:require
-   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
+   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf info]]
    [re-frame.core :refer [dispatch]]
    [bidi.bidi :as bidi]
    [pushy.core :as pushy]))

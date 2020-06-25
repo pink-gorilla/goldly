@@ -17,3 +17,5 @@ node_modules/
 nrepl-snippets.txt
 nrepl.txt
 nrepl-published.txt
+profiles/demo/resources/creds-fh-awb99.edn
+profiles/demo/resources/creds-localhst-awb99.edn

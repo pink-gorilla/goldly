@@ -50,7 +50,15 @@
                  [ring/ring-mock "0.4.0"]
                  [bidi "2.1.6"]
                  [hiccup "1.0.5"]
-
+                 [luminus-transit "0.1.1"]
+                 [metosin/muuntaja "0.6.4"]
+                  ;[clj-oauth2 "0.2.0"] ;oauth2
+                 ;[com.telenordigital.data-insights/clj-oauth2 "0.7.2"]
+                 [ring-oauth2 "0.1.4"]
+                 [cprop "0.1.14"] ; configuration
+                 [mount "0.1.16"]
+                 [expound "0.7.2"] ; see clojurewb
+                 
                  [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.119.0"]
                  [com.taoensso/sente "1.15.0"
@@ -78,22 +86,22 @@
                    "target/goldly" ; js bundle
                    "target/node_modules"] ; css png resources from npm modules
 
- #_ :resource #_{:silent false
-             :resource-paths [["node_modules/tailwindcss/dist"
-                               {:includes [#".*"]
-                                :target-path "target/node_modules/public/tailwindcss/dist"}]
-                              ["node_modules/leaflet/dist"
-                               {:includes [#".*\.css" #".*\.png"]
-                                :target-path "target/node_modules/public/leaflet/dist"}]
-                              ["node_modules/ag-grid-community/dist/styles"
-                               {:includes [#".*\.css"]
-                                :target-path "target/node_modules/public/ag-grid-community/dist"}]
-                              ["node_modules/highlight.js/styles"
-                               {:includes [#".*\.css"]
-                                :target-path "target/node_modules/public/highlight.js/styles"}]
+  #_:resource #_{:silent false
+                 :resource-paths [["node_modules/tailwindcss/dist"
+                                   {:includes [#".*"]
+                                    :target-path "target/node_modules/public/tailwindcss/dist"}]
+                                  ["node_modules/leaflet/dist"
+                                   {:includes [#".*\.css" #".*\.png"]
+                                    :target-path "target/node_modules/public/leaflet/dist"}]
+                                  ["node_modules/ag-grid-community/dist/styles"
+                                   {:includes [#".*\.css"]
+                                    :target-path "target/node_modules/public/ag-grid-community/dist"}]
+                                  ["node_modules/highlight.js/styles"
+                                   {:includes [#".*\.css"]
+                                    :target-path "target/node_modules/public/highlight.js/styles"}]
 
                              ;  http://localhost:8000/highlight.js/styles/github.css
-                              ]}
+                                  ]}
 
   :target-path  "target/jar"
   :clean-targets ^{:protect false} [:target-path
@@ -103,7 +111,7 @@
   :profiles {:cljs {:dependencies [[org.clojure/clojurescript "1.10.773"]
                                    [thi.ng/strf "0.2.2"]
                                    [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
-                                   ; [check "0.1.0-SNAPSHOT"] ;mauricio test helper
+                                   ; compiler 
                                    [funcool/promesa "4.0.2"]
                                    [paprika "0.1.3"] ; mauricio helper functions 
                                    [borkdude/sci "0.0.13-alpha.17"]
@@ -112,10 +120,12 @@
                                    [org.rksm/suitable "0.3.2"  :exclusions [org.clojure/clojurescript]]
                                    [cider/orchard "0.5.8"]
                                    [etaoin "0.3.6"]
+                                   ; reagent
                                    [reagent "0.10.0"]
                                    [re-frame "0.12.0"]
-                                   ;[clj-commons/secretary "1.2.4"]   ; client side routing - TODO: replace by jux/bidi ?
-                                   [clj-commons/pushy "0.3.10"]]}
+                                   [clj-commons/pushy "0.3.10"]
+                                   [district0x.re-frame/google-analytics-fx "1.0.0"
+                                    :exclusions [re-frame]]]}
 
              :dev {:source-paths ["profiles/dev/src"
                                   "profiles/demo/src"
