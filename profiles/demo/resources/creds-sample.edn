@@ -1,0 +1,3 @@
+;; Copy to creds.edn and set your private values.
+{:github-token "bar"
+ :gist-id      "foo"}
