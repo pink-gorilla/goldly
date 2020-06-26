@@ -27,7 +27,6 @@
       :redirect-uri     "/oauth2/github/callback"
       :landing-uri      "/my"}}))
 
-
 (defn wrap-oauth [handler]
   ;(wrap-oauth2 handler my-oauth-profiles)
   (-> handler

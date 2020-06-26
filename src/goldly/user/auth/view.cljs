@@ -64,6 +64,7 @@
 ; [:button.github {:on-click (fn [_] (set! (.-location js/window) "/github-login"))}
 ;          "Login with Github"]]
 
+
 (defn auth-login []
   [:span.bg-red-700.pt-2.p-2
    [:a {:class "block mt-4 lg:inline-block lg:mt-0 text-pink-600 hover:bg-orange-500 mr-4"

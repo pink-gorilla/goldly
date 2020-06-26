@@ -16,7 +16,8 @@
          ;app-systems-dir "./src/systems/"
          app-systems-ns '[systems.help
                           systems.components
-                          systems.snippets]}}]
+                          systems.snippets
+                          systems.login]}}]
   ;(system-start! components)
   (when app-systems-ns
     (println "loading app systems from: " app-systems-ns)

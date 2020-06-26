@@ -69,17 +69,17 @@
                                info.sunng/ring-jetty9-adapter]] ;  websocket
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
-                 [nrepl "0.8.0-alpha1"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.pinkgorilla/gorilla-middleware "0.2.23"]
-                 ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
-                 ;ui dependencies (clj must serve resources):
-                 [org.pinkgorilla/gorilla-renderable "3.0.12"]
-                 [org.pinkgorilla/gorilla-renderable-ui "0.2.4"]
-                 [org.pinkgorilla/gorilla-ui "0.2.14"
+                 [org.pinkgorilla/pinkie "0.2.9"]
+                 [org.pinkgorilla/gorilla-ui "0.2.19"
                   :exclusions [org.clojure/clojurescript]]
                  [org.pinkgorilla/gorilla-plot "1.2.2"
-                  :exclusions [org.clojure/clojurescript]]]
+                  :exclusions [org.clojure/clojurescript]]
+                 [org.pinkgorilla/picasso "3.1.6"]
+                 [org.pinkgorilla/nrepl-middleware "0.3.3"]
+                 ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
+                 ;ui dependencies (clj must serve resources):
+                 ]
 
   :source-paths ["src"]
 
@@ -153,13 +153,11 @@
                                   "outdated" ^{:doc "Runs ancient"}
                                   ["with-profile" "+cljs" "ancient"]
 
-
-
                                   "bump-version"
                                   ["change" "version" "leiningen.release/bump-version"]
 
                                   "goldly" ^{:doc "Runs goldly app (with only default system components)"}
-                                  ["run" "-m" "goldly.app"]
+                                  ["with-profile" "+demo" "run" "-m" "goldly.app"]
 
                                   "demo" ^{:doc "Runs goldly app (with demo components)"}
                                   ["with-profile" "+demo" "run" "-m" "goldly.app" "./profiles/demo/src/systems/"]}

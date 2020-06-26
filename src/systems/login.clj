@@ -3,7 +3,6 @@
    [goldly.system :as goldly]
    [goldly.runner :refer [system-start!]]))
 
-
 (system-start!
  (goldly/system
   {:name "login"

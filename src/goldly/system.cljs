@@ -16,8 +16,11 @@
    [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
    [cljs-uuid-utils.core :as uuid]
    [com.rpl.specter :refer [transform setval END]]
-   [pinkgorilla.ui.pinkie :as pinkie]
-   [pinkgorilla.ui.gorilla-plot.pinkie :refer [sin]]))
+   [pinkie.pinkie :as pinkie]
+   ;[pinkgorilla.ui.gorilla-plot.pinkie :refer [sin]]
+   ))
+
+(defn sin [x] 0.5)
 
 ;; cljs compile
 

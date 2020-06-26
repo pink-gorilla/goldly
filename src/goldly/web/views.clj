@@ -3,7 +3,6 @@
    [clojure.string]
    [hiccup.page :as page]))
 
-
 (defn css [link]
   [:link {:rel "stylesheet"
           :type "text/css"
@@ -15,7 +14,6 @@
    (css "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic")
    (css "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300")
    (css "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css")])
-
 
 (defn layout [{:keys [load-bundle]} page]
   (page/html5
@@ -29,8 +27,7 @@
     [:title "goldly"]
     [:link {:rel "shortcut icon" :href "/r/favicon.ico"}]
     (css "/r/tailwindcss/dist/tailwind.css")
-    (load-fonts)
-    ]
+    (load-fonts)]
    [:body
     [:div#goldly
      page]
