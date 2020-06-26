@@ -14,9 +14,6 @@
                   (edn/read-string))
             {}))))
 
-
-
-
 (defn secrets
   "Get creds from secrets from file. See sample-creds.edn for an example"
   ([] (secrets "creds.edn"))
