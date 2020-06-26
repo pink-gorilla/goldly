@@ -4,19 +4,19 @@
    [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
    [reagent.dom]
    [re-frame.core :refer [clear-subscription-cache! subscribe]]
-
-   ; the following just adds dependencies to bundle
-   [pinkgorilla.ui.default-setup] ; renderable-ui
-   [pinkgorilla.ui.default-renderer] ; gorilla-ui 
-   [pinkgorilla.ui.gorilla-plot.pinkie] ; gorilla-plot
-   ;[pinkgorilla.ui.pinkie :refer [tag-inject renderer-list]]
+   [pinkie.default-setup] ; side-effecs pinkie
+   [picasso.default-config] ; side-efects picasso
+   [pinkgorilla.ui.default-renderer] ; side-effects gorilla-ui 
+   ;[pinkgorilla.ui.gorilla-plot.pinkie] ; side-effects gorilla-plot TODO: update to pinkie v2
    [pinkgorilla.ui.config :refer [set-prefix!]]
    [goldly.web.ws :refer [start-router!]]
    [goldly.web.views :refer [goldly-app-page]]
    [goldly.web.routes :refer [init-routes]]
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]
-   [goldly.puppet.db]))
+   [goldly.puppet.db]
+   [goldly.user.auth.view] ; side effects
+   ))
 
 (set-prefix! "/r/")
 

@@ -6,7 +6,8 @@
    [bidi.bidi :as bidi]
    [bidi.ring]
    [goldly.web.handler :refer [app-handler not-found-handler
-                               ws-chsk-get ws-chsk-post ws-token-handler]]))
+                               ws-chsk-get ws-chsk-post ws-token-handler
+                               handler-auth]]))
 
 ; bidi
 
@@ -15,14 +16,20 @@
   {:status 200 :body "test"})
 
 (def routes-bidi
-  ["/" {"app"                   (-> #'app-handler)
+  ["/" {;oauth
+        "test"                    (-> #'handler-auth)
+        "oauth2/github"           (-> #'handler-auth)
+        "oauth2/github/callback"  (-> #'handler-auth)
+        "my"                      (-> #'handler-auth)
+       ;goldly 
+        "app"                   (-> #'app-handler)
         ["system/" :system-id]  (-> #'app-handler)
         ; ws
         "token"                 #'ws-token-handler
         "chsk"                  {:get #'ws-chsk-get
                                  :post #'ws-chsk-post}
+        ;resources (dedicated path so there is no overlap with api)
         "r"                  (bidi.ring/->ResourcesMaybe {:prefix "public"})}
-
    true                        not-found-handler])
 
 ;; todo: (files "/" {:root "./profiles/demo/src/systems"}) ; resources of systems

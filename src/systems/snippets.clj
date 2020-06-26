@@ -5,8 +5,8 @@
    [goldly.system :as goldly :refer [def-ui]]
    [goldly.runner :refer [system-start! update-state!]]
    [com.rpl.specter :refer :all]
-   [goldly.nrepl.logger :refer [log-publish!]]
-   [goldly.nrepl.sniffer.middleware :refer [chan-eval-results]]))
+   [pinkgorilla.nrepl.logger :refer [log-publish!]]
+   [pinkgorilla.nrepl.sniffer.middleware :refer [chan-eval-results]]))
 
 (println "loading systems.snippets ..")
 

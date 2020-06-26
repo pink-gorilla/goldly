@@ -2,7 +2,7 @@
   (:require
    [pinkie.converter :refer [R]]
    [goldly.app :refer [goldly-run!]]
-   [goldly.nrepl.sniffer.core :refer [start-sniffer!]]
+   [pinkgorilla.nrepl.sniffer.core :refer [start-sniffer!]]
    [systems.snippets :refer [publish-eval!]]))
 
 (comment
