@@ -1,15 +1,11 @@
 (ns goldly.puppet.loader
-  (:import
-   [goog History]
-    ;; [goog.history Html5History]
-   )
   (:require
    [cljs.pprint]
-   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf info)]
+   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf info]]
    [reagent.core :as r]
    [re-frame.core :refer [dispatch dispatch-sync subscribe]]
    [bidi.bidi :as bidi]
-   [goldly.web.routes :refer [app-routes]]
+   [goldly.web.routes :refer [goldly-routes-frontend]]
    [goldly.system :refer [render-system]]
    [goldly.events] ; add reframe event handlers
    [goldly.puppet.subs]))
@@ -50,7 +46,7 @@
     (fn []
       [:<>
        [:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
-            :href (bidi/path-for app-routes :main)} "Systems"] ; "#/info"
+            :href (bidi/path-for goldly-routes-frontend :ui/main)} "Systems"] ; "#/info"
        (case @system
          :g/system-nil [system-nil id]
          :g/system-loading [system-loading id]

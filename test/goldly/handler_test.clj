@@ -30,26 +30,6 @@
   (is (= "text/css"
          (-> "/r/tailwindcss/dist/tailwind.css" GET content-type))))
 
-(deftest resource-aggrid []
-  (is (= "text/css"
-         (-> "/r/ag-grid-community/dist/styles/ag-grid.css" GET content-type)))
-  (is (= "text/css"
-         (-> "/r/ag-grid-community/dist/styles/ag-theme-balham.css" GET content-type))))
-
-; cljs-bundle
-
-(-> "/r/main.js" GET)
-
-(deftest cljs-bundle-main []
-  (is (= "text/javascript"
-         (-> "/r/main.js" GET content-type))))
-
-(deftest cljs-bundle-runtime []
-  (is (= "text/javascript"
-         (-> "/r/cljs-runtime/cljs.core.js" GET content-type)))
-  (is (= "application/octet-stream"
-         (-> "/r/cljs-runtime/cljs.core.js.map" GET content-type))))
-
 ; application
 
 ; this actually tests the hiccup conversion
@@ -63,7 +43,7 @@
 
 #_(deftest ws-token []
     (is (= "text/html"
-           (-> "/token" GET content-type))))
+           (-> "/api/token" GET content-type))))
 
 ;(-> "/app" GET)
 

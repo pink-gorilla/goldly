@@ -4,22 +4,15 @@
    [clojure.pprint]
    [taoensso.timbre :as log :refer [tracef debugf info infof warnf errorf]]
    [cheshire.core :as json]
-   [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
-   [ring.mock.request :refer [request] :rename {request mock-request}]
-   [bidi.bidi :as bidi]
-   [bidi.ring]
-   [goldly.user.auth.middleware :refer [wrap-oauth]]
-   [goldly.web.middleware :refer [wrap-goldly]]
-   [goldly.web.views :refer [app-page not-found-page]]
+   [webly.web.handler :refer [add-ring-handler]]
+   [webly.web.middleware :refer [wrap-webly]]
    [goldly.web.ws :refer [get-sente-session-uid sente-session-with-uid
                           ring-ajax-get-or-ws-handshake ring-ajax-post]]))
 
-(defn html-response [html]
-  (response/content-type
-   {:status 200
-    :body html}
-   "text/html"))
+(defn test-handler [req]
+  (clojure.pprint/pprint req)
+  {:status 200 :body "test"})
 
 
 ; CSRF TOKEN
@@ -35,17 +28,7 @@
   []
   (str (java.util.UUID/randomUUID)))
 
-(defn not-found-handler [req]
-  (let [;csrf-token (get-csrf-token)
-        ;session (if (session-uid req)
-        ;          (:session req)
-        ;          (assoc (:session req) :uid (unique-id)))
-        ]
-    (response/content-type
-     {:status 404
-     ; :session session
-      :body (not-found-page)}
-     "text/html")))
+
 
 ; WEBSOCKET
 
@@ -71,43 +54,8 @@
     ;(info "ws csrf: " (get-in req [:session :ring.middleware.anti-forgery/anti-forgery-token]))
     r))
 
-;; APP
 
-(defn app-handler-raw [req]
-  (let [; csrf-token and session are sente requirements
-        csrf-token (get-csrf-token)
-        session  (sente-session-with-uid req)
-        res (response/content-type
-             {:status 200
-              :session session
-              :body (app-page csrf-token)}
-             "text/html")]
-    (response/header res "session" session)))
-
-(def app-handler
-  (-> app-handler-raw
-      wrap-goldly))
-
-(def ws-token-handler
-  (-> ws-token-handler-raw
-      wrap-goldly))
-
-(def ws-chsk-get
-  (-> ws-handshake-handler
-      wrap-goldly))
-
-(def ws-chsk-post
-  (-> ws-ajax-post-handler
-      wrap-goldly))
-
-
-
-; oauth
-
-
-(def handler-auth
-  (-> goldly.user.auth.middleware/handler-auth
-      wrap-oauth))
-
-
+(add-ring-handler :ws/token (wrap-webly ws-token-handler-raw))
+(add-ring-handler :ws/chsk-get (wrap-webly ws-handshake-handler))
+(add-ring-handler :ws/chsk-post (wrap-webly ws-ajax-post-handler))
 

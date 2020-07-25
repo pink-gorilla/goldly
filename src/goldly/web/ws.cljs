@@ -31,7 +31,7 @@
 
 (let [packer (sente-transit/get-transit-packer)
       {:keys [chsk ch-recv send-fn state]} (sente/make-channel-socket-client!
-                                            "/chsk" ; Must match server Ring routing URL
+                                            "/api/chsk" ; Must match server Ring routing URL
                                             ?csrf-token
                                             {:type :auto  ; :ajax
                                              :packer packer})]

@@ -5,14 +5,13 @@
                                               debug debugf
                                               info infof
                                               warnf
-                                              error errorf]]
-   #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
+                                              error errorf]]))
 
 (def initial-db
   {; system explorer
    ;:main :info
    ; :system nil
-   :route {:route-params {} :handler :main}
+   :route {:route-params {} :handler :ui/main}
           ;{:route-params {:item-id "1"} :handler :a-item}
    :systems []
    :id nil

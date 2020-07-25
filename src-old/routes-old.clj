@@ -1,50 +1,3 @@
-(ns goldly.web.routes
-  (:require
-   [clojure.string]
-   [clojure.pprint]
-   [ring.mock.request :refer (request) :rename {request mock-request}]
-   [bidi.bidi :as bidi]
-   [bidi.ring]
-   [goldly.web.handler :refer [app-handler not-found-handler
-                               ws-chsk-get ws-chsk-post ws-token-handler
-                               handler-auth]]))
-
-; bidi
-
-(defn test-handler [req]
-  (clojure.pprint/pprint req)
-  {:status 200 :body "test"})
-
-(def routes-bidi
-  ["/" {;oauth
-        "test"                    (-> #'handler-auth)
-        "oauth2/github"           (-> #'handler-auth)
-        "oauth2/github/callback"  (-> #'handler-auth)
-        "my"                      (-> #'handler-auth)
-       ;goldly 
-        "app"                   (-> #'app-handler)
-        ["system/" :system-id]  (-> #'app-handler)
-        ; ws
-        "token"                 #'ws-token-handler
-        "chsk"                  {:get #'ws-chsk-get
-                                 :post #'ws-chsk-post}
-        ;resources (dedicated path so there is no overlap with api)
-        "r"                  (bidi.ring/->ResourcesMaybe {:prefix "public"})}
-   true                        not-found-handler])
-
-;; todo: (files "/" {:root "./profiles/demo/src/systems"}) ; resources of systems
-
-
-;; from: 
-;; https://github.com/juxt/bidi/blob/master/README.md
-;; 
-;; The Resources and ResourcesMaybe record can be used on the right-hand 
-;; side of a route. It serves resources from the classpath. After the 
-;; pattern is matched, the remaining part of the path is added to the given prefix.
-;; ["/resources" (->ResourcesMaybe {:prefix "public/"})
-;; There is an important difference between Resources and ResourcesMaybe. 
-;; Resources will return a 404 response if the resource cannot be found, while
-;;  ResourcesMaybe will return nil, allowing subsequent routes to be tried.
 
 ;; WrapMiddleware
 ;; You can wrap the target handler in Ring middleware as usual. But sometimes
@@ -157,6 +110,6 @@
   (handler (mock-request :get "/blog/article/8.html"))
 
 ; huge comment
-  )
+  )(handler/site app-routes)
 
 

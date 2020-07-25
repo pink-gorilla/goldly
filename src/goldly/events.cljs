@@ -8,8 +8,7 @@
                                               warnf
                                               error errorf]]
    [goldly.web.ws :refer [chsk-send! send! start-router! -event-msg-handler]]
-   [goldly.puppet.db :refer [find-system-by-id]]
-   #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
+   [goldly.puppet.db :refer [find-system-by-id]]))
 
 (reg-event-fx
  :goldly/send ; send data to clj. used by get-system + clj fn dispatch
