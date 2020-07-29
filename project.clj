@@ -12,7 +12,6 @@
                ;"resource"
                ]
 
-
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
                   ["vcs" "commit" "Release %s"]
@@ -83,25 +82,9 @@
   :source-paths ["src"]
 
   :resource-paths ["resources" ; resources that goldly brings (not in maven/npm)
-                   "target/goldly" ; js bundle
-                   "target/node_modules"] ; css png resources from npm modules
+                   "target/webly" ; js bundle
+                   #_"target/node_modules"] ; css png resources from npm modules
 
-  #_:resource #_{:silent false
-                 :resource-paths [["node_modules/tailwindcss/dist"
-                                   {:includes [#".*"]
-                                    :target-path "target/node_modules/public/tailwindcss/dist"}]
-                                  ["node_modules/leaflet/dist"
-                                   {:includes [#".*\.css" #".*\.png"]
-                                    :target-path "target/node_modules/public/leaflet/dist"}]
-                                  ["node_modules/ag-grid-community/dist/styles"
-                                   {:includes [#".*\.css"]
-                                    :target-path "target/node_modules/public/ag-grid-community/dist"}]
-                                  ["node_modules/highlight.js/styles"
-                                   {:includes [#".*\.css"]
-                                    :target-path "target/node_modules/public/highlight.js/styles"}]
-
-                             ;  http://localhost:8000/highlight.js/styles/github.css
-                                  ]}
 
   :target-path  "target/jar"
   :clean-targets ^{:protect false} [:target-path
@@ -127,8 +110,7 @@
                                    #_[district0x.re-frame/google-analytics-fx "1.0.0"
                                       :exclusions [re-frame]]]}
 
-             :dev {:source-paths ["profiles/dev/src"
-                                  "profiles/demo/src"
+             :dev {:source-paths ["profiles/demo/src"
                                   "test"]
                    :dependencies [[clj-kondo "2020.06.21"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
@@ -152,11 +134,7 @@
                                   "bump-version"
                                   ["change" "version" "leiningen.release/bump-version"]
 
-                                  "goldly" ^{:doc "Runs goldly app (with only default system components)"}
-                                  ["with-profile" "+demo" "run" "-m" "goldly.app"]
-
-                                  "demo" ^{:doc "Runs goldly app (with demo components)"}
-                                  ["with-profile" "+demo" "run" "-m" "goldly.app" "./profiles/demo/src/systems/"]}
+                                }
 
                    :aot []
                    :cloverage    {:codecov? true
@@ -170,19 +148,13 @@
                                             merge-meta          [[:inner 0]]
                                             try-if-let          [[:block 1]]}}}
 
-             :demo {:source-paths ["src"
-                                   "profiles/demo/src"]
-                    :resource-paths ["profiles/demo/resources"
-                                     "target/webly" ; bundle
-                                     ]
+             :demo {:source-paths ["profiles/demo/src"]
+                    :resource-paths ["profiles/demo/resources"]
                     :dependencies []}}
 
 
   :aliases {;"shadow-compile"
             ;["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
-
-            ;"bongotrott"
-            ;["do" ["compile"] ["shadow-compile"] "install"]
 
              ;; APP
 
@@ -192,9 +164,11 @@
             "build-prod"  ^{:doc "compiles bundle via webly"}
             ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+cljs" "goldly.app/handler" "demo.app"]
 
+            "goldly-tidy"  ^{:doc "runs compiled bundle on shadow dev server"}
+            ["with-profile" "+demo" "run" "-m" "goldly.app" ]
+            
             "goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "goldly.app" "run"]
+            ["with-profile" "+demo" "run" "-m" "goldly.app"  "profiles/demo/src/systems/"]
 
-            "demo"  ^{:doc "Runs UI components via webserver."}
-            ["with-profile" "+demo" "run" "-m" "goldly.app" "watch"]})
+            })
 

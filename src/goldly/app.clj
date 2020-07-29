@@ -48,11 +48,11 @@
   (start-httpkit-server! {:port port}))
 
 (defn -main [& args]
-  (println "goldly app starting with cli-args: " args)
+  (println "goldly starting with cli-args: " args)
   
   (swap! webly-config assoc :timbre-loglevel :info)
   (swap! webly-config assoc :title "goldly")
-  (swap! webly-config assoc :start "goldy.app.start (); ")
+  (swap! webly-config assoc :start "goldy.app.start();")
 
   (let [user-systems-dir (first args)]
     (goldly-run! {:user-systems-dir user-systems-dir}))

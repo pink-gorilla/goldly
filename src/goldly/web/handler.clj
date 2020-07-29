@@ -2,7 +2,7 @@
   (:require
    [clojure.string]
    [clojure.pprint]
-   [taoensso.timbre :as log :refer [tracef debugf info infof warnf errorf]]
+   [taoensso.timbre :as log :refer [info infof]]
    [cheshire.core :as json]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [webly.web.handler :refer [add-ring-handler]]
@@ -14,21 +14,17 @@
   (clojure.pprint/pprint req)
   {:status 200 :body "test"})
 
-
 ; CSRF TOKEN
-
 
 (defn get-csrf-token []
   ; Another option:
   ;(:anti-forgery-token ring-req)] 
   (force *anti-forgery-token*))
 
-(defn unique-id
+#_(defn unique-id
   "Get a unique id."
   []
   (str (java.util.UUID/randomUUID)))
-
-
 
 ; WEBSOCKET
 

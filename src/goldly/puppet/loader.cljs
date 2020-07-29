@@ -1,14 +1,13 @@
 (ns goldly.puppet.loader
   (:require
    [cljs.pprint]
-   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf info]]
+   [taoensso.timbre :as timbre :refer-macros [info]]
    [reagent.core :as r]
    [re-frame.core :refer [dispatch dispatch-sync subscribe]]
    [bidi.bidi :as bidi]
+   [webly.web.handler :refer [reagent-page]]
    [goldly.web.routes :refer [goldly-routes-frontend]]
-   [goldly.system :refer [render-system]]
-   [goldly.events] ; add reframe event handlers
-   [goldly.puppet.subs]))
+   [goldly.system :refer [render-system]]))
 
 (defn error-boundary [_ #_comp]
   (let [error (r/atom nil)
@@ -58,3 +57,7 @@
              [render-system (merge {:id (:id @system)}
                                    (:cljs @system)
                                    {:fns-clj (:fns-clj @system)})]]]))])))
+
+(defmethod reagent-page :ui/system [{:keys [route-params handler]}]
+  (info "loading system" route-params)
+  [system (:system-id route-params)])

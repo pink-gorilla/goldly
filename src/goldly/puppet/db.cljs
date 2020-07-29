@@ -8,10 +8,7 @@
                                               error errorf]]))
 
 (def initial-db
-  {; system explorer
-   ;:main :info
-   ; :system nil
-   :route {:route-params {} :handler :ui/main}
+  {; :route {:route-params {} :handler :ui/main}
           ;{:route-params {:item-id "1"} :handler :a-item}
    :systems []
    :id nil
@@ -31,7 +28,7 @@
    (info "initializing app-db ..")
    initial-db))
 
-(reg-event-db
+#_(reg-event-db
  :goldly/nav
  (fn [db [_ route]]
    (infof "nav: %s " route)

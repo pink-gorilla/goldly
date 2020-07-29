@@ -4,8 +4,7 @@
    [re-frame.core :refer [subscribe]]
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
-   [goldly.web.routes :refer [goldly-routes-frontend]]
-   [goldly.puppet.loader :refer [system]]))
+   [goldly.web.routes :refer [goldly-routes-frontend]]))
 
 (defn main-page []
   (let [systems (subscribe [:systems])
@@ -22,8 +21,7 @@
 (defmethod reagent-page :ui/main [& args]
   [main-page])
 
-(defmethod reagent-page :ui/system [& args]
-  [system (:system-id args)])
+
 
 
 

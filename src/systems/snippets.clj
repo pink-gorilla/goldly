@@ -8,7 +8,6 @@
    [pinkgorilla.nrepl.logger :refer [log-publish!]]
    [pinkgorilla.nrepl.sniffer.middleware :refer [chan-eval-results]]))
 
-(println "loading systems.snippets ..")
 
 (def-ui snippets
   [{:session "3ced9967-e16c-4e47-a661-53b2d8527d96"
