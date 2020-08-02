@@ -1,13 +1,13 @@
 (ns goldly.handler-test
   (:require
    [clojure.test :refer [deftest is testing]]
-   [ring.mock.request :refer (request) :rename {request mock-request}]
+   [ring.mock.request :refer [request] :rename {request mock-request}]
    [bidi.bidi :as bidi]
    [bidi.ring]
-   [goldly.web.routes :refer [goldly-handler]]))
+   [goldly.app :refer [handler]]))
 
 (defn GET [url]
-  (goldly-handler (mock-request :get url)))
+  (handler (mock-request :get url)))
 
 (defn content-type [res]
   (get-in res [:headers "Content-Type"]))
@@ -15,14 +15,14 @@
 ; resources
 
 ; app is now greedy.
-#_(deftest resource-not-existing []
+(deftest resource-not-existing []
     (is (= nil
            (-> "alice/in/wonderland/x.ico" GET))))
 
 ; resources added by goldly 
 (deftest resource-favicon []
   (is (= "image/x-icon"
-         (-> "/r/favicon.ico" GET content-type))))
+         (-> "/r/webly/favicon.ico" GET content-type))))
 
 ; resources from gorilla-ui
 
@@ -37,7 +37,7 @@
 
 (deftest app-html []
   (is (= "text/html; charset=utf-8"
-         (-> "/app" GET content-type))))
+         (-> "/" GET content-type))))
 
 ; websocket
 
