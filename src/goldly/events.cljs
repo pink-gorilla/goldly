@@ -1,12 +1,8 @@
 (ns goldly.events
   "process-instructions from goldly clj server"
   (:require
-   [re-frame.core :refer [reg-event-db reg-event-fx dispatch-sync dispatch]]
-   [taoensso.timbre :as timbre :refer-macros [trace tracef
-                                              debug debugf
-                                              info infof
-                                              warnf
-                                              error errorf]]
+   [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
+   [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
    [goldly.web.ws :refer [chsk-send! send! start-router! -event-msg-handler]]
    [goldly.puppet.db :refer [find-system-by-id]]))
 

@@ -31,32 +31,13 @@
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async]
-                 [org.pinkgorilla/webly "0.0.20"] ; brings shadow
-                 ;[thheller/shadow-cljs "2.10.4"]
-                 ;[thheller/shadow-cljsjs "0.0.21"]
-                 ;[ring/ring-core "1.8.1"]
-                 ;[ring/ring-anti-forgery "1.3.0"]
-                 ;[ring-cors "0.1.13"]
-                 ;[ring/ring-defaults "0.3.2"
-                 ; :exclusions [javax.servlet/servlet-api]]
-                 ;; [ring.middleware.logger "0.5.0"]
-                 ;[ring-middleware-format "0.7.4"]
-                 ;[ring/ring-json "0.5.0"]
-                 ;[ring-cljsjs "0.2.0"]
-                 ;[bk/ring-gzip "0.3.0"] ; from oz
-                 ;[http-kit "2.3.0"]
-                 ;[ring/ring-mock "0.4.0"]
-                 ;[bidi "2.1.6"]
-                 ;[hiccup "1.0.5"]
-                 ;[luminus-transit "0.1.1"]
-                 ;[luminus/ring-ttl-session "0.3.3"]
-                 ;[metosin/muuntaja "0.6.4"]
-                  ;[clj-oauth2 "0.2.0"] ;oauth2
-                 ;[com.telenordigital.data-insights/clj-oauth2 "0.7.2"]
-                 ;[ring-oauth2 "0.1.4"]
-                 [cprop "0.1.14"] ; configuration
-                 [mount "0.1.16"]
-                 [expound "0.7.2"] ; see clojurewb
+                 [org.pinkgorilla/webly "0.0.22"] ; brings shadow
+                 [http-kit "2.3.0"] ; sente needs httpkit
+                 
+                 ; goldly.user.config:
+                 ;[cprop "0.1.14"] ; configuration
+                 ;[mount "0.1.16"]
+                 ;[expound "0.7.2"] ; see clojurewb
 
                  [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.122.0"]
@@ -67,16 +48,15 @@
                                info.sunng/ring-jetty9-adapter]] ;  websocket
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
-                 [org.clojure/java.classpath "1.0.0"]
+                 ;[org.clojure/java.classpath "1.0.0"]
                  [org.pinkgorilla/pinkie "0.2.10"]
-                 [org.pinkgorilla/gorilla-ui "0.2.28"
-                  :exclusions [org.clojure/clojurescript]]
-                 [org.pinkgorilla/gorilla-plot "1.2.2"
-                  :exclusions [org.clojure/clojurescript]]
                  [org.pinkgorilla/picasso "3.1.18"]
                  [org.pinkgorilla/nrepl-middleware "0.3.11"]
-                 ;[clj-commons/pomegranate "1.2.0"] ; add-dependency in clj kernel TODO : Replace pomegranate with tools alpha
-                 ;ui dependencies (clj must serve resources):
+                 [org.pinkgorilla/gorilla-ui "0.2.28"
+                  :exclusions [org.clojure/clojurescript]]
+                 [org.pinkgorilla/notebook-ui "0.0.70"]
+                 [org.pinkgorilla/gorilla-plot "1.2.2"
+                  :exclusions [org.clojure/clojurescript]]
                  ]
 
   :source-paths ["src"]
@@ -91,28 +71,22 @@
                                     [:goldly :builds :app :compiler :output-dir]
                                     [:goldly :builds :app :compiler :output-to]]
 
-  :profiles {:cljs {:dependencies [[org.clojure/clojurescript "1.10.773"]
+  :profiles {:cljs {:dependencies [;[org.clojure/clojurescript "1.10.773"] ; webly
                                    [thi.ng/strf "0.2.2"]
                                    [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
                                    ; compiler 
                                    [funcool/promesa "4.0.2"]
                                    [paprika "0.1.3"] ; mauricio helper functions 
                                    [borkdude/sci "0.0.13-alpha.17"]
-                                   ; [compliment "0.4.0-SNAPSHOT"] ; code completions
                                    [rewrite-cljs "0.4.4"]
                                    [org.rksm/suitable "0.3.2"  :exclusions [org.clojure/clojurescript]]
                                    [cider/orchard "0.5.8"]
-                                   [etaoin "0.3.6"]
-                                   ; reagent
-                                   ;[reagent "0.10.0"]
-                                   ;[re-frame "0.12.0"]
-                                   ;[clj-commons/pushy "0.3.10"]
-                                   #_[district0x.re-frame/google-analytics-fx "1.0.0"
-                                      :exclusions [re-frame]]]}
+                                   [etaoin "0.3.6"]]}
 
              :dev {:source-paths ["profiles/demo/src"
                                   "test"]
-                   :dependencies [[clj-kondo "2020.06.21"]]
+                   :dependencies [[clj-kondo "2020.06.21"]
+                                  [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
                                   [lein-codox "0.10.7"]
@@ -132,9 +106,7 @@
                                   ["with-profile" "+cljs" "deps" ":tree"]
 
                                   "bump-version"
-                                  ["change" "version" "leiningen.release/bump-version"]
-
-                                }
+                                  ["change" "version" "leiningen.release/bump-version"]}
 
                    :aot []
                    :cloverage    {:codecov? true
@@ -153,22 +125,21 @@
                     :dependencies []}}
 
 
-  :aliases {;"shadow-compile"
-            ;["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":web"]
+  :aliases {; shadow-compile is only needed to update package.json with transitive dependencies
+            "shadow-compile"
+            ["with-profile" "+cljs" "run" "-m" "shadow.cljs.devtools.cli" "compile" ":webly"]
 
              ;; APP
 
-            "build-dev"  ^{:doc "compiles bundle via webly"}
+            "build-dev"  ^{:doc "compiles bundle-dev"}
             ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+cljs" "goldly.app/handler" "goldly.app"]
 
-            "build-prod"  ^{:doc "compiles bundle via webly"}
-            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+cljs" "goldly.app/handler" "demo.app"]
+            "build-prod"  ^{:doc "compiles bundle-prod"}
+            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+cljs" "goldly.app/handler" "goldly.app"]
 
             "goldly-tidy"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "goldly.app" ]
-            
-            "goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "goldly.app"  "profiles/demo/src/systems/"]
+            ["with-profile" "+demo" "run" "-m" "goldly.app"]
 
-            })
+            "goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
+            ["with-profile" "+demo" "run" "-m" "goldly.app"  "profiles/demo/src/systems/"]})
 

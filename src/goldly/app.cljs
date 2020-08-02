@@ -4,7 +4,6 @@
    [pinkie.default-setup] ; side-effecs pinkie
    [picasso.default-config] ; side-efects picasso
    [pinkgorilla.ui.default-renderer] ; side-effects gorilla-ui 
-   ;[pinkgorilla.ui.gorilla-plot.pinkie] ; side-effects gorilla-plot TODO: update to pinkie v2
    [webly.web.app]
    [webly.config :refer [webly-config]]
    [goldly.web.ws :refer [start-router!]]
@@ -13,8 +12,10 @@
    [goldly.events] ; side-effects
    [goldly.puppet.subs] ; side-effects
    [goldly.puppet.db] ; side-effects
-   [goldly.web.routes :refer [goldly-routes-backend]]))
-
+   [goldly.web.routes :refer [goldly-routes-backend]]
+   [pinkgorilla.notebook-ui.default-config] ; side-effects
+    ;[pinkgorilla.ui.gorilla-plot.pinkie] ; side-effects gorilla-plot TODO: update to pinkie v2
+   ))
 
 (defn ^:export start []
   (swap! webly-config assoc :timbre-loglevel :info)
@@ -22,3 +23,5 @@
   (webly.web.app/start goldly-routes-backend)
   (webly.web.app/mount-app)
   (start-router!))
+
+;(start)

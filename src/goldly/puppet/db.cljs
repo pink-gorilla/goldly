@@ -1,6 +1,6 @@
 (ns goldly.puppet.db
   (:require
-   [re-frame.core :refer [reg-event-db reg-event-fx dispatch-sync dispatch]]
+   [re-frame.core :refer [reg-event-db]]
    [taoensso.timbre :as timbre :refer-macros [trace tracef
                                               debug debugf
                                               info infof

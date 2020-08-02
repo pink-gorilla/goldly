@@ -1,0 +1,9 @@
+{:timbre-loglevel :debug
+ :goldly {:port 9000
+          ;:app-systems-dir "./src/systems/"
+          :app-systems-ns [systems.help
+                           systems.components
+                           systems.snippets
+                           systems.login]
+          ;:user-systems-dir
+          }}

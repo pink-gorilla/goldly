@@ -2,8 +2,8 @@
   "runs goldly systems"
   (:require
    [clojure.string]
-   [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
-   [taoensso.timbre :as log :refer (tracef debug debugf info infof warnf error errorf)]
+   [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
+   [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
    [goldly.web.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids send-ws-response]]
    [goldly.system :refer [system->cljs]]))
 

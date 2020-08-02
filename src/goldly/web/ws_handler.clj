@@ -1,4 +1,4 @@
-(ns goldly.web.handler
+(ns goldly.web.ws-handler
   (:require
    [clojure.string]
    [clojure.pprint]

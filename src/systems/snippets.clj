@@ -17,17 +17,17 @@
     :value nil
     :pinkie nil
     :out "Welcome to goldly snippets!"}
-   #_{:session "840dadb8-3cd2-486a-bf0f-ccf695804c81"
+   {:session "840dadb8-3cd2-486a-bf0f-ccf695804c81"
       :id "86"
       :ns "goldy.nrepl.client"
       :code "(pinkie.converter/R [:p/vega (+ 8 8)])"
       :value [:p/vega 16]
-      :pinkie [:p/vega
+      :picasso [:p/vega
                {:data {:values [{:x 3 :y 4} {:x 7 :y 1}]}
                 :mark :point
                 :encoding {:x {:field :x :type :quantitative} :y {:field :y :type :quantitative}}}]
       :out nil}
-   #_{:session "3ced9967-e16c-4e47-a661-53b2d8527d96"
+   {:session "3ced9967-e16c-4e47-a661-53b2d8527d96"
       :id "323", :ns "goldy.nrepl.client"
       :code "[66 (+ 8 8)]"
       :value [66 "16"]
