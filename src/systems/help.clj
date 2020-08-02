@@ -10,8 +10,7 @@
    :state 42
    :html  [:div
            [:h1 "Goldly"]
-           [:p "no docs written yet..."]
-           ]
+           [:p "no docs written yet..."]]
    :fns {}}
   {:fns {}}))
 

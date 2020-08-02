@@ -29,10 +29,10 @@
    initial-db))
 
 #_(reg-event-db
- :goldly/nav
- (fn [db [_ route]]
-   (infof "nav: %s " route)
-   (assoc db :route route)))
+   :goldly/nav
+   (fn [db [_ route]]
+     (infof "nav: %s " route)
+     (assoc db :route route)))
 
 (reg-event-db
  :goldly/systems-store

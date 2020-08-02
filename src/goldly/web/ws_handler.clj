@@ -22,9 +22,9 @@
   (force *anti-forgery-token*))
 
 #_(defn unique-id
-  "Get a unique id."
-  []
-  (str (java.util.UUID/randomUUID)))
+    "Get a unique id."
+    []
+    (str (java.util.UUID/randomUUID)))
 
 ; WEBSOCKET
 
@@ -49,7 +49,6 @@
     (info "/chsk post result: " r)
     ;(info "ws csrf: " (get-in req [:session :ring.middleware.anti-forgery/anti-forgery-token]))
     r))
-
 
 (add-ring-handler :ws/token (wrap-webly ws-token-handler-raw))
 (add-ring-handler :ws/chsk-get (wrap-webly ws-handshake-handler))

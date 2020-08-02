@@ -23,7 +23,6 @@
   (httpkit/run-server handler {:port (:port options)})
   (start-router!))
 
-
 (defn goldly-run!
   "This starts goldly (web server, user defined systems,...)"
   [{:keys [timbre-loglevel

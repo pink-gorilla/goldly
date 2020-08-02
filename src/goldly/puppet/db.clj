@@ -35,8 +35,7 @@
   "gets system to be sent to clj"
   [id]
   (let [id (keyword id)
-        system (when id (id @systems))
-        ]
+        system (when id (id @systems))]
     (info "loaded system id" id " system:" system)
     (when system
       (system->cljs system))))
