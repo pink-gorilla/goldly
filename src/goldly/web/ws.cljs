@@ -1,15 +1,15 @@
 (ns goldly.web.ws
+  (:require-macros
+   [cljs.core.async.macros :as asyncm :refer [go go-loop]])
   (:require
    [clojure.string :as str]
-   [cljs.core.async :as async  :refer (<! >! put! chan)]
+   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf trace]]
+   [cljs.core.async :as async  :refer [<! >! put! chan]]
    [re-frame.core :refer [reg-event-db dispatch-sync dispatch]]
-   [taoensso.encore :as encore :refer-macros (have have?)]
-   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf trace)]
-   [taoensso.sente :as sente :refer (cb-success?)]
+   [taoensso.encore :as encore :refer-macros [have have?]]
+   [taoensso.sente :as sente :refer [cb-success?]]
    [taoensso.sente.packers.transit :as sente-transit] ;; Optional, for Transit encoding
-   )
-  (:require-macros
-   [cljs.core.async.macros :as asyncm :refer (go go-loop)]))
+   ))
 
 ;; CSRF check
 
@@ -31,7 +31,7 @@
 
 (let [packer (sente-transit/get-transit-packer)
       {:keys [chsk ch-recv send-fn state]} (sente/make-channel-socket-client!
-                                            "/chsk" ; Must match server Ring routing URL
+                                            "/api/chsk" ; Must match server Ring routing URL
                                             ?csrf-token
                                             {:type :auto  ; :ajax
                                              :packer packer})]

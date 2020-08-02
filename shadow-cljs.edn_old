@@ -1,0 +1,33 @@
+{:lein   {:profile "+cljs"}
+ :source-paths ["src"]
+ :resource-paths  ["resources"]
+ 
+ ; shadow dev http server settings
+ :dev-http {8000 ["target"
+                  ;"classpath:public" 
+                  ;"resources/public" 
+                  "classpath:resources"
+                  "classpath:resources/public"
+                  "resources/public"
+                  "node_modules" ; access css and bundles in npm dependencies
+                  ]}
+ :builds {:web {:target :browser
+                :output-dir "target/goldly/public"
+                :asset-path "/"
+                :modules {:main {:entries [goldly.app]}}
+                :devtools {:before-load goldly.app/stop
+                           :after-load goldly.app/start}
+                :js-options       {:minimize-require false ; module requires full name instead of index
+                                                        ;:js-package-dirs ["packages/babel-worker/node_modules"]
+                                                        ;:js-provider :require
+                                   }
+                :compiler-options {;; preferrably implicit by shadow-cljs compile/watch/release
+                                                        ;; Beware: releasing :none not supported by shadow
+                                                        ;; :optimizations   :none
+                                   :optimizations   :simple
+                                   ;:optimizations  :none
+                                   }}
+          :ci  {:target :karma
+                :output-to  "target/ci/ci.js"
+                :ns-regexp "-test$"}}}
+

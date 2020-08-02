@@ -1,18 +1,14 @@
 (ns goldly.puppet.db
   (:require
-   [re-frame.core :refer [reg-event-db reg-event-fx dispatch-sync dispatch]]
+   [re-frame.core :refer [reg-event-db]]
    [taoensso.timbre :as timbre :refer-macros [trace tracef
                                               debug debugf
                                               info infof
                                               warnf
-                                              error errorf]]
-   #_[pinkgorilla.events.helper :refer [standard-interceptors]]))
+                                              error errorf]]))
 
 (def initial-db
-  {; system explorer
-   ;:main :info
-   ; :system nil
-   :route {:route-params {} :handler :main}
+  {; :route {:route-params {} :handler :ui/main}
           ;{:route-params {:item-id "1"} :handler :a-item}
    :systems []
    :id nil
@@ -32,11 +28,11 @@
    (info "initializing app-db ..")
    initial-db))
 
-(reg-event-db
- :goldly/nav
- (fn [db [_ route]]
-   (infof "nav: %s " route)
-   (assoc db :route route)))
+#_(reg-event-db
+   :goldly/nav
+   (fn [db [_ route]]
+     (infof "nav: %s " route)
+     (assoc db :route route)))
 
 (reg-event-db
  :goldly/systems-store

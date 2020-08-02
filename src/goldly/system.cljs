@@ -2,18 +2,14 @@
   "defines reagent-component render-system, that displays a fully defined system"
   (:require
    [clojure.string :as str]
-   [taoensso.timbre :as timbre :refer-macros (tracef
-                                              debug debugf
-                                              info infof
-                                              warnf
-                                              errorf error)]
+   [taoensso.timbre :as timbre :refer-macros [debug debugf info infof error]]
    [clojure.walk :as walk]
    [sci.core :as sci]
-   [cljs.tools.reader :as reader]
+   ;[cljs.tools.reader :as reader]
    [cljs.reader]
    [reagent.core :as r]
    [reagent.dom]
-   [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache! subscribe]]
+   [re-frame.core :refer [dispatch]]
    [cljs-uuid-utils.core :as uuid]
    [com.rpl.specter :refer [transform setval END]]
    [pinkie.pinkie :as pinkie]

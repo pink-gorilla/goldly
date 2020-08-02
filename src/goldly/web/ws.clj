@@ -1,6 +1,6 @@
 (ns goldly.web.ws
   (:require
-   [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
+   [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
    [clojure.java.io :as io]
    ;[ring.middleware.defaults :refer [wrap-defaults site-defaults]]
    ;[ring.middleware.gzip :refer [wrap-gzip]]
@@ -9,10 +9,10 @@
 ;   [ring.middleware.cljsjs :refer [wrap-cljsjs]]
   ; [ring.middleware.anti-forgery :as af :refer :all]
    [ring.util.response :as response]
-   [taoensso.encore :as encore :refer (have have?)]
-   [taoensso.timbre :as log :refer (tracef debugf info infof warnf error errorf)]
+   [taoensso.encore :as encore :refer [have have?]]
+   [taoensso.timbre :as log :refer [tracef debugf info infof warnf error errorf]]
    [taoensso.sente  :as sente]
-   [taoensso.sente.server-adapters.http-kit :refer (get-sch-adapter)]
+   [taoensso.sente.server-adapters.http-kit :refer [get-sch-adapter]]
    [taoensso.sente.packers.transit :as sente-transit]))
 
 (defn unique-id

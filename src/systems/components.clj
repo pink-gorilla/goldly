@@ -3,8 +3,6 @@
    [goldly.system :as goldly]
    [goldly.runner :refer [system-start!]]))
 
-(println "loading systems.components ..")
-
 (system-start!
  (goldly/system
   {:name "components"

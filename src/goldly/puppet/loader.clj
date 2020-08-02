@@ -3,7 +3,7 @@
   (:require
    [clojure.string :as str]
    [clojure.java.io]
-   [taoensso.timbre :as log :refer (tracef debugf info infof warnf errorf)]))
+   [taoensso.timbre :refer [tracef debugf info infof warnf errorf]]))
 
 (defn- ends-with
   [string ending]
@@ -44,6 +44,7 @@
          (map #(subs % 0 (- (count %) 4))))))
 
 (defn- ns-for-file [f]
+  (info "making ns for file: " f)
   (str "systems." f))
 
 (defn- requires-for-directory [directory]
@@ -57,7 +58,7 @@
 
 (defn load-components-namespaces [namespace-symbols]
   (doall (for [s namespace-symbols]
-           (do (info "loading goldly system:" s)
+           (do (info "loading system in ns: " s)
                (require  s))))
   namespace-symbols)
 

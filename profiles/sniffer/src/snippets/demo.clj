@@ -62,8 +62,8 @@
   (symbol? 'com.rpl.specter/END)
   (resolve 'com.rpl.specter/END)
 
-  (require '[clojure.java.classpath :as cp])
-  (cp/classpath)
+  ;(require '[clojure.java.classpath :as cp])
+  ;(cp/classpath)
 
 
 ; 
