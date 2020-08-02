@@ -1,16 +1,16 @@
 (ns goldly.route-test
   (:require
    [clojure.test :refer [deftest is testing]]
-   [ring.mock.request :refer (request) :rename {request mock-request}]
+   [ring.mock.request :refer [request] :rename {request mock-request}]
    [bidi.bidi :as bidi]
    [bidi.ring]
-   [goldly.web.routes :refer [routes-bidi]]))
+   [goldly.web.routes :refer [goldly-routes-backend]]))
 
 (defn GET [url]
-  (bidi/match-route routes-bidi url :request-method :get))
+  (bidi/match-route goldly-routes-backend url :request-method :get))
 
 (defn POST [url]
-  (bidi/match-route routes-bidi url :request-method :post))
+  (bidi/match-route goldly-routes-backend url :request-method :post))
 
 (defn handler [OP url]
   (-> url OP :handler))
@@ -18,21 +18,21 @@
 (deftest app-routes []
   ;(is (= #'goldly.web.handler/app-handler (handler GET "app")))
   ;(is (= #'goldly.web.handler/app-handler (handler GET "app/")))
-  (is (= #'goldly.web.handler/app-handler (handler GET "/app")))
+  (is (= :ui/main (handler GET "/")))
   #_(is (= #'goldly.web.handler/app-handler (handler GET "/app/"))))
 
 ;(get-handler "/app/system/15")
 ;
 
 (deftest app-routes-greedy []
-  (is (= #'goldly.web.handler/app-handler (handler GET "/system/15"))))
+  (is (= :ui/system (handler GET "/system/15"))))
 
 ; websocket
 
 (deftest ws-routes []
-  (is (= #'goldly.web.handler/ws-token-handler (handler GET  "/token")))
-  (is (= #'goldly.web.handler/ws-chsk-get (handler GET  "/chsk")))
-  (is (= #'goldly.web.handler/ws-chsk-post (handler POST "/chsk"))))
+  (is (= :ws/token (handler GET  "/api/token")))
+  (is (= :ws/chsk-get (handler GET  "/api/chsk")))
+  (is (= :ws/chsk-post (handler POST "/api/chsk"))))
 
 (comment
   (handler GET  "aa")
