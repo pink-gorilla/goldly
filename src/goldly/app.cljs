@@ -13,8 +13,6 @@
    [goldly.puppet.subs] ; side-effects
    [goldly.puppet.db] ; side-effects
    [goldly.web.routes :refer [goldly-routes-backend]]
-   [pinkgorilla.notebook-ui.default-config] ; side-effects
-    ;[pinkgorilla.ui.gorilla-plot.pinkie] ; side-effects gorilla-plot TODO: update to pinkie v2
    ))
 
 (defn ^:export start []

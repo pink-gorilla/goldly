@@ -33,12 +33,6 @@
                  [org.clojure/core.async]
                  [org.pinkgorilla/webly "0.0.22"] ; brings shadow
                  [http-kit "2.3.0"] ; sente needs httpkit
-                 
-                 ; goldly.user.config:
-                 ;[cprop "0.1.14"] ; configuration
-                 ;[mount "0.1.16"]
-                 ;[expound "0.7.2"] ; see clojurewb
-
                  [com.taoensso/timbre "4.10.0"]  ; clojurescript logging
                  [com.taoensso/encore "2.122.0"]
                  [com.taoensso/sente "1.15.0"
@@ -48,14 +42,9 @@
                                info.sunng/ring-jetty9-adapter]] ;  websocket
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
-                 ;[org.clojure/java.classpath "1.0.0"]
                  [org.pinkgorilla/pinkie "0.2.10"]
                  [org.pinkgorilla/picasso "3.1.18"]
-                 [org.pinkgorilla/nrepl-middleware "0.3.11"]
                  [org.pinkgorilla/gorilla-ui "0.2.28"
-                  :exclusions [org.clojure/clojurescript]]
-                 [org.pinkgorilla/notebook-ui "0.0.70"]
-                 [org.pinkgorilla/gorilla-plot "1.2.2"
                   :exclusions [org.clojure/clojurescript]]
                  ]
 
@@ -83,8 +72,7 @@
                                    [cider/orchard "0.5.8"]
                                    [etaoin "0.3.6"]]}
 
-             :dev {:source-paths ["profiles/demo/src"
-                                  "test"]
+             :dev {:source-paths ["test"]
                    :dependencies [[clj-kondo "2020.06.21"]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
@@ -132,14 +120,13 @@
              ;; APP
 
             "build-dev"  ^{:doc "compiles bundle-dev"}
-            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+cljs" "goldly.app/handler" "goldly.app"]
+            ["run" "-m" "webly.build-cli" "compile" "+cljs" "goldly.app/handler" "goldly.app"]
 
             "build-prod"  ^{:doc "compiles bundle-prod"}
-            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+cljs" "goldly.app/handler" "goldly.app"]
-
-            "goldly-tidy"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "goldly.app"]
+            ["run" "-m" "webly.build-cli" "release" "+cljs" "goldly.app/handler" "goldly.app"]
 
             "goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "goldly.app"  "profiles/demo/src/systems/"]})
+            ["run" "-m" "goldly.app"]
+
+            })
 

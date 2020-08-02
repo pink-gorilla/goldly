@@ -34,8 +34,11 @@
          ;app-systems-dir "./src/systems/"
          app-systems-ns '[systems.help
                           systems.components
-                          systems.snippets
-                          systems.login]}}]
+                          ;systems.snippets
+                          systems.login
+                          systems.greeter
+                          systems.click-counter
+                          ]}}]
 
   (swap! webly-config assoc :timbre-loglevel timbre-loglevel)
   (swap! webly-config assoc :title "goldly")

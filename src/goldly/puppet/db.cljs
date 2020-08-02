@@ -8,7 +8,7 @@
                                               error errorf]]))
 
 (def initial-db
-  {; :route {:route-params {} :handler :ui/main}
+  {; :route {:route-params {} :handler :ui/system-list}
           ;{:route-params {:item-id "1"} :handler :a-item}
    :systems []
    :id nil

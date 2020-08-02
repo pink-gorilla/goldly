@@ -18,7 +18,7 @@
 (deftest app-routes []
   ;(is (= #'goldly.web.handler/app-handler (handler GET "app")))
   ;(is (= #'goldly.web.handler/app-handler (handler GET "app/")))
-  (is (= :ui/main (handler GET "/")))
+  (is (= :ui/system-list (handler GET "/")))
   #_(is (= #'goldly.web.handler/app-handler (handler GET "/app/"))))
 
 ;(get-handler "/app/system/15")

@@ -3,7 +3,7 @@
    [webly.web.resources :refer [resource-handler]]))
 
 (def goldly-routes-app
-  {"" :ui/main
+  {"" :ui/system-list
    ["system/" :system-id] :ui/system})
 
 (def goldly-routes-api
