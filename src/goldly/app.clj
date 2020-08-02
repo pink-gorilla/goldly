@@ -29,7 +29,7 @@
            port
            app-systems-ns
            user-systems-dir]
-    :or {timbre-loglevel :info
+    :or {timbre-loglevel :debug ;  :info
          port 9000
          ;app-systems-dir "./src/systems/"
          app-systems-ns '[systems.help
@@ -37,8 +37,7 @@
                           ;systems.snippets
                           systems.login
                           systems.greeter
-                          systems.click-counter
-                          ]}}]
+                          systems.click-counter]}}]
 
   (swap! webly-config assoc :timbre-loglevel timbre-loglevel)
   (swap! webly-config assoc :title "goldly")

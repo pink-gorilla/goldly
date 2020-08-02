@@ -16,8 +16,8 @@
 
 ; app is now greedy.
 (deftest resource-not-existing []
-    (is (= nil
-           (-> "alice/in/wonderland/x.ico" GET))))
+  (is (= nil
+         (-> "alice/in/wonderland/x.ico" GET))))
 
 ; resources added by goldly 
 (deftest resource-favicon []

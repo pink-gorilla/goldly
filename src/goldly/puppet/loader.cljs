@@ -35,14 +35,14 @@
    [:p id]])
 
 (defn systems-menu []
-  [:a.pr-2.text-right.text-blue-600.text-bold.tracking-wide.font-bold.border.border-blue-300.rounded
+  [:a.pr-2.text-right.text-blue-600.text-bold.tracking-wide.font-bold.border.border-blue-300.rounded.cursor-pointer
    {:on-click #(dispatch [:bidi/goto :ui/system-list])
     :style {:position "absolute"
             :z-index 200 ; dialog is 1040 (we have to be lower)
             :top "10px"
             :right "10px"
             :width "80px"
-            :height "22px"}} "Systems"])
+            :height "30px"}} "Systems"])
 
 (defn system
   "requests system with id from server
@@ -56,7 +56,7 @@
       [:<>
        [systems-menu]
        #_[:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
-            :href (bidi/path-for goldly-routes-frontend :ui/system-list)} "Systems"] ; "#/info"
+              :href (bidi/path-for goldly-routes-frontend :ui/system-list)} "Systems"] ; "#/info"
        (case @system
          :g/system-nil [system-nil id]
          :g/system-loading [system-loading id]

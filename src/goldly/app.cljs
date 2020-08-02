@@ -1,9 +1,6 @@
 (ns goldly.app
   (:require
    [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf info]]
-   [pinkie.default-setup] ; side-effecs pinkie
-   [picasso.default-config] ; side-efects picasso
-   [pinkgorilla.ui.default-renderer] ; side-effects gorilla-ui 
    [webly.web.app]
    [webly.config :refer [webly-config]]
    [goldly.web.ws :refer [start-router!]]
@@ -13,6 +10,11 @@
    [goldly.puppet.subs] ; side-effects
    [goldly.puppet.db] ; side-effects
    [goldly.web.routes :refer [goldly-routes-backend]]
+
+   ; dependencies 
+   [pinkie.default-setup] ; side-effecs pinkie
+   ;[picasso.default-config] ; side-efects picasso
+   [pinkgorilla.ui.default-renderer] ; side-effects gorilla-ui 
    ))
 
 (defn ^:export start []
