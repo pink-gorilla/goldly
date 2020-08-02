@@ -61,4 +61,3 @@ Add [org.pinkgorilla/goldly "0.0.3"] to your project as a plugin
   lein shadow-compile
   lein goldly
 ```
-
