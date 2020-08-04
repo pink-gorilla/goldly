@@ -1,12 +1,12 @@
 (ns goldly.web.views
   (:require
-   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf info]]
+   [taoensso.timbre :as timbre :refer-macros [info]]
    [re-frame.core :refer [subscribe]]
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
    [goldly.web.routes :refer [goldly-routes-frontend]]))
 
-(defn main-page []
+(defn systems-list-page []
   (let [systems (subscribe [:systems])
         _ (info "main-page showing: systems: " @systems)]
     [:<>
@@ -19,7 +19,7 @@
               :href (bidi/path-for goldly-routes-frontend :ui/system :system-id id)} name]])]])) ; (str "/system/" id) "#/system/"
 
 (defmethod reagent-page :ui/system-list [& args]
-  [main-page])
+  [systems-list-page])
 
 
 

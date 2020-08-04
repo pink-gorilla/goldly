@@ -3,7 +3,7 @@
   (:require
    [clojure.string :as str]
    [clojure.java.io]
-   [taoensso.timbre :refer [tracef debugf info infof warnf errorf]]))
+   [taoensso.timbre :refer [info]]))
 
 (defn- ends-with
   [string ending]

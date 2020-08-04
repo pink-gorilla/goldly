@@ -3,24 +3,18 @@
    [goldly.runner :refer [system-start!]]
    [goldly.system :as goldly :refer [def-ui]]))
 
-(def-ui panther
-  [:p "Pink panther is here!"])
+(def-ui pink-panther
+  [:p "Pink panther is here (demonstates ui components via def-ui)!"])
 
 (system-start!
  (goldly/system
-  {:name "click counter"
+  {:name "click-counter"
    :route "/route"
    :state 42
    :html  [:div "Clicked "
-           panther
+           pink-panther
            [:button {:class "border m-2 p-3 border-pink-500"
                      :on-click ?incr} @state]
            " times"]
    :fns {:incr (fn [_ s] (inc s))}}
   {:fns {}}))
-
-(comment
-
-  (println click-counter)
-  ;
-  )

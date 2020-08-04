@@ -2,12 +2,8 @@
   (:require
    [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
    [clojure.java.io :as io]
-   ;[ring.middleware.defaults :refer [wrap-defaults site-defaults]]
-   ;[ring.middleware.gzip :refer [wrap-gzip]]
    [ring.middleware.keyword-params]
    [ring.middleware.params]
-;   [ring.middleware.cljsjs :refer [wrap-cljsjs]]
-  ; [ring.middleware.anti-forgery :as af :refer :all]
    [ring.util.response :as response]
    [taoensso.encore :as encore :refer [have have?]]
    [taoensso.timbre :as log :refer [tracef debugf info infof warnf error errorf]]

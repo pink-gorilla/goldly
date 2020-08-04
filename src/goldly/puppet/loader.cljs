@@ -64,7 +64,7 @@
          :g/system-nil [system-nil id]
          :g/system-loading [system-loading id]
          (if (nil? @system)
-           [:h1 "something is broken"]
+           [:h1 "something is broken (the system is nil)"]
            [:<>
             ;[systems-header system id]
             [error-boundary

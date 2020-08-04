@@ -1,6 +1,6 @@
 (ns goldly.app
   (:require
-   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf info]]
+   [taoensso.timbre :as timbre :refer-macros [info]]
    [webly.web.app]
    [webly.config :refer [webly-config]]
    [goldly.web.ws :refer [start-router!]]
@@ -20,5 +20,3 @@
   (webly.web.app/start goldly-routes-backend)
   (webly.web.app/mount-app)
   (start-router!))
-
-;(start)

@@ -7,10 +7,10 @@
 (reg-sub
  :systems
  (fn [db _]
-   (:systems db)))
+   (get-in db [:goldly :systems])))
 
 (reg-sub
  :system
  (fn [db _]
-   (:system db)))
+   (get-in db [:goldly :system])))
 
