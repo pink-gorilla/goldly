@@ -12,11 +12,13 @@
    [re-frame.core :refer [dispatch]]
    [cljs-uuid-utils.core :as uuid]
    [com.rpl.specter :refer [transform setval END]]
-   [pinkie.pinkie :as pinkie]
-   ;[pinkgorilla.ui.gorilla-plot.pinkie :refer [sin]]
-   ))
+   [pinkie.pinkie :as pinkie]))
 
-(defn sin [x] 0.5)
+;(defn sin [x] 0.5)
+
+
+(defn sin [x]
+  (.sin js/Math x))
 
 ;; cljs compile
 

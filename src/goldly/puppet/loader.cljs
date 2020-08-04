@@ -44,6 +44,9 @@
             :width "80px"
             :height "30px"}} "Systems"])
 
+(defn systems-header [system id]
+  [:h1.bg-orange-300 (str (:name @system) " " id)])
+
 (defn system
   "requests system with id from server
    and displays it."
@@ -63,7 +66,7 @@
          (if (nil? @system)
            [:h1 "something is broken"]
            [:<>
-            [:h1.bg-orange-300 (str (:name @system) " " id)]
+            ;[systems-header system id]
             [error-boundary
              [render-system (merge {:id (:id @system)}
                                    (:cljs @system)

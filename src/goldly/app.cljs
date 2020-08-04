@@ -10,11 +10,8 @@
    [goldly.puppet.subs] ; side-effects
    [goldly.puppet.db] ; side-effects
    [goldly.web.routes :refer [goldly-routes-backend]]
-
-   ; dependencies 
-   [pinkie.default-setup] ; side-effecs pinkie
-   ;[picasso.default-config] ; side-efects picasso
-   [pinkgorilla.ui.default-renderer] ; side-effects gorilla-ui 
+   ; pinkie is a necessary dependency, because goldly systems use it for frontend description   
+   [pinkie.default-setup] ; side-effecs
    ))
 
 (defn ^:export start []

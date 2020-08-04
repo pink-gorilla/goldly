@@ -33,7 +33,7 @@
          port 9000
          ;app-systems-dir "./src/systems/"
          app-systems-ns '[systems.help
-                          systems.components
+                          ;systems.components
                           ;systems.snippets
                           systems.login
                           systems.greeter

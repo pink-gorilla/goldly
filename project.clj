@@ -52,11 +52,8 @@
                  [org.rksm/suitable "0.3.2"  :exclusions [org.clojure/clojurescript]]
                  [cider/orchard "0.5.8"]
                  [etaoin "0.3.6"]
-
-                 [org.pinkgorilla/pinkie "0.2.10"]
-                 ;[org.pinkgorilla/picasso "3.1.18"]
-                 [org.pinkgorilla/gorilla-ui "0.2.28"
-                  :exclusions [org.clojure/clojurescript]]]
+                 [org.pinkgorilla/pinkie "0.2.10"] ; frontend ui layout
+                 ]
 
   :source-paths ["src"]
 
