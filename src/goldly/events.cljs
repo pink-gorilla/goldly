@@ -61,10 +61,10 @@
 (reg-event-db
  :goldly/clj-result
  (fn [db [_ {:keys [run-id system-id fun result error where] :as data}]]
-   (let [_ (debug "running systems: " (get-in db [:running-systems]))
+   (let [_ (debug "running systems: " (get-in db [:goldly :running-systems]))
          system (if (nil? run-id)
                   (find-system-by-id db system-id)
-                  (get-in db [:running-systems run-id]))
+                  (get-in db [:goldly :running-systems run-id]))
          update-state (:update-state system)]
      (debug "rcvd clj result: " data) ; " for system: " system
      (if system
