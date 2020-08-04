@@ -13,7 +13,7 @@
   (get @systems id))
 
 (defn add-system [system]
-  (swap! systems assoc (keyword (:id system)) system))
+  (swap! systems assoc  (:id system) system))
 
 (defn systems-response []
   (let [;_ (println "systems-response: " @systems)

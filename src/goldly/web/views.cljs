@@ -12,11 +12,11 @@
     [:<>
      [:h1 "running systems: " (count @systems)]
      [:ul
-      (for [{:keys [id name]} @systems]
+      (for [{:keys [id]} @systems]
         ^{:key id}
         [:li.m-3
          [:a {:class "m-3 bg-yellow-300"
-              :href (bidi/path-for goldly-routes-frontend :ui/system :system-id id)} name]])]])) ; (str "/system/" id) "#/system/"
+              :href (bidi/path-for goldly-routes-frontend :ui/system :system-id id)} id]])]])) ; (str "/system/" id) "#/system/"
 
 (defmethod reagent-page :ui/system-list [& args]
   [systems-list-page])

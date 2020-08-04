@@ -5,8 +5,7 @@
 
 (system-start!
  (goldly/system
-  {:name "help"
-   :route "/help"
+  {:id :help
    :state 42
    :html  [:div
            [:h1 "Goldly"]
