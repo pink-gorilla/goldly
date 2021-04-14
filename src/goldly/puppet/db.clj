@@ -4,8 +4,30 @@
    [clojure.string]
    [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
    [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
-   [goldly.web.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids send-ws-response]]
+   [webly.ws.core :refer [send-all! send! on-conn-chg]]
+   [webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.system :refer [system->cljs]]))
+
+
+;; helper fns
+
+
+(defn send-ws-response [{:as ev-msg :keys [id ?data ring-req ?reply-fn send-fn]}
+                        goldly-tag
+                        response]
+  (let [session (:session ring-req)
+        uid (:uid session)]
+    (when (nil? ?reply-fn)
+      (error "reply-fn is nil. this should not happen."))
+    (if (nil? uid)
+      (error "uid is nil. this should not happen.")
+      (info "uid: " uid))
+    (if response
+      (cond
+        ?reply-fn (?reply-fn [:goldly/system response])
+        uid (send! uid [:goldly/system response])
+        :else (error "Cannot send ws-response: neither ?reply-fn nor uid was set!"))
+      (error "Can not send ws-response for nil response. " goldly-tag))))
 
 (def systems (atom {}))
 
@@ -47,14 +69,14 @@
           _ (info "sending system-response: " response)]
       (send-ws-response ev-msg :goldly/system response))))
 
-(add-watch connected-uids :connected-uids
-           (fn [_ _ old new]
-             (when (not= old new)
-               (let [uids (:any new)]
-                 (info "uids connected: " uids)
-                 (doseq [uid uids]
-                   (info "sending systems info to: " uid)
-                   (chsk-send! uid (systems-response)))))))
+(defn on-connect-send-systems [old new]
+  (let [uids (:any new)]
+    (info "uids connected: " uids)
+    (doseq [uid uids]
+      (info "sending systems info to: " uid)
+      (send! uid (systems-response)))))
+
+(reset! on-conn-chg on-connect-send-systems)
 
 ; heartbeats on ws
 

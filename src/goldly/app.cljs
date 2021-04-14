@@ -1,22 +1,10 @@
 (ns goldly.app
   (:require
-   [taoensso.timbre :as timbre :refer-macros [info]]
-   [webly.web.app]
-   [webly.config :refer [webly-config]]
-   [goldly.web.ws :refer [start-router!]]
-   [goldly.web.views] ; side-effects
-   [goldly.puppet.loader] ; side-effects
-   [goldly.events] ; side-effects
-   [goldly.puppet.subs] ; side-effects
-   [goldly.puppet.db] ; side-effects
-   [goldly.web.routes :refer [goldly-routes-backend]]
-   ; pinkie is a necessary dependency, because goldly systems use it for frontend description   
-   [pinkie.default-setup] ; side-effecs
-   ))
+   ; side-effecs
+   [pinkie.default-setup] ; pinkie is a necessary dependency, because goldly systems use it for frontend description   
 
-(defn ^:export start []
-  (swap! webly-config assoc :timbre-loglevel :info)
-  (info "goldly starting ..")
-  (webly.web.app/start goldly-routes-backend)
-  (webly.web.app/mount-app)
-  (start-router!))
+   [goldly.puppet.loader]
+   [goldly.puppet.subs]
+   [goldly.puppet.db]
+   [goldly.puppet.views]
+   [goldly.events]))

@@ -4,9 +4,7 @@
    [taoensso.timbre :as timbre :refer-macros [info]]
    [reagent.core :as r]
    [re-frame.core :refer [dispatch dispatch-sync subscribe]]
-   [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
-   [goldly.web.routes :refer [goldly-routes-frontend]]
    [goldly.system :refer [render-system]]))
 
 (defn error-boundary [_ #_comp]
@@ -59,7 +57,7 @@
       [:<>
        [systems-menu]
        #_[:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
-              :href (bidi/path-for goldly-routes-frontend :ui/system-list)} "Systems"] ; "#/info"
+              :on-click #(dispatch [:bidi/goto :ui/system-list])} "Systems"] ; "#/info"
        (case @system
          :g/system-nil [system-nil id]
          :g/system-loading [system-loading id]

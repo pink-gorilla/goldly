@@ -3,7 +3,8 @@
   (:require
    [clojure.string]
    [taoensso.timbre :as log :refer [debug info infof error errorf]]
-   [goldly.web.ws :refer [send-all! chsk-send! -event-msg-handler connected-uids]]
+   [webly.ws.core :refer [send-all! send!]]
+   [webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.puppet.db :refer [get-system add-system]]
    [goldly.system :refer [system->cljs]]))
 
@@ -56,7 +57,7 @@
           _ (debug "response: " response)]
       (if ?reply-fn
         (?reply-fn response)
-        (chsk-send! uid [:goldly/dispatch response])))))
+        (send! uid [:goldly/dispatch response])))))
 
 (defn update-state! [system-id {:keys [result where] :as update-spec}]
   (let [response (merge {:run-id nil

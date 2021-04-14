@@ -3,8 +3,15 @@
   (:require
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
-   [goldly.web.ws :refer [chsk-send! send! start-router! -event-msg-handler]]
+   [webly.ws.msg-handler :refer [-event-msg-handler]]
+   [webly.ws.core :refer [send!]]
    [goldly.puppet.db :refer [find-system-by-id]]))
+
+(reg-event-db
+ :goldly/init
+ (fn [db [_]]
+   (info "goldly starting ..")
+   db))
 
 (reg-event-fx
  :goldly/send ; send data to clj. used by get-system + clj fn dispatch
@@ -16,9 +23,9 @@
          goldly-tag (first data-v)]
      (infof "goldly/send %s " data-v)
      (try
-       (chsk-send! data-v 5000 (fn [data] ; [event-type data]]
-                                 (info "send data:" data)
-                                 (dispatch [:goldly/event goldly-tag data])))
+       (send! data-v) ; 5000 (fn [data] ; [event-type data]]
+                      ;           (info "send data:" data)
+                      ;           (dispatch [:goldly/event goldly-tag data])))
        (catch :default e
          (error "exception sending to clj: " e)))
      (info "goldly/send done.")
@@ -27,12 +34,34 @@
 (defn request-systems []
   (try
     (infof "goldly/send %s "  [:goldly/systems])
-    (chsk-send! [:goldly/systems]
-                5000
-                (fn [[event-type data]]
-                  (info "systems data:" data)
-                  (dispatch [:goldly/systems-store data])))
+    (send! [:goldly/systems]
+           ;     5000
+           ;     (fn [[event-type data]]
+           ;       (info "systems data:" data)
+           ;       (dispatch [:goldly/systems-store data]))
+           )
     (catch js/Error e (error "send event to server ex: " e))))
+
+(reg-event-db
+ :goldly/systems
+ (fn [db [_ data]]
+   (let [_ (debugf "rcvd :goldly/systems: %s" data)]
+     (dispatch [:goldly/systems-store data])
+     db)))
+
+(reg-event-db
+ :goldly/system
+ (fn [db [_ data]]
+   (let [_ (debugf "rcvd :goldly/systems: %s" data)]
+     (dispatch [:goldly/system-store data])
+     db)))
+
+(reg-event-db
+ :goldly/dispatch
+ (fn [db [_ data]]
+   (let [_ (debugf "rcvd :goldly/systems: %s" data)]
+     (dispatch [:goldly/clj-result data])
+     db)))
 
 (reg-event-fx
  :goldly/ws-open

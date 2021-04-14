@@ -19,3 +19,5 @@ nrepl.txt
 nrepl-published.txt
 creds.edn
 .calva
+.lsp
+shadow-cljs.edn

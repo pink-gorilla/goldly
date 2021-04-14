@@ -1,4 +1,4 @@
-(ns goldly.route-test
+(ns goldly.route-test-bad
   (:require
    [clojure.test :refer [deftest is testing]]
    [ring.mock.request :refer [request] :rename {request mock-request}]
