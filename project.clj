@@ -8,10 +8,6 @@
   :min-lein-version "2.9.3"
   ;:min-java-version "1.11"
 
-  :prep-tasks [; "compile"
-               ;"resource"
-               ]
-
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
                   ["vcs" "commit" "Release %s"]
@@ -42,9 +38,7 @@
                  ]
 
   :source-paths ["src"]
-
   :resource-paths ["target/webly"] ; js bundle
-
   :target-path  "target/jar"
   :clean-targets ^{:protect false} [:target-path
                                     [:goldly :builds :app :compiler :output-dir]
