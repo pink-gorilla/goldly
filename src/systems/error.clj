@@ -5,7 +5,7 @@
 
 (system-start!
  (goldly/system
-  {:id :login
+  {:id :error
    :state 42
    :html  [:div
            [:p "This demo shows what happens if you use components that are not available."]
