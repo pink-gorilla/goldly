@@ -1,7 +1,7 @@
 (ns goldly.system
   "defines reagent-component render-system, that displays a fully defined system"
   (:require
-   [clojure.string :as str]
+
    [taoensso.timbre :as timbre :refer-macros [debug debugf info infof error]]
    [clojure.walk :as walk]
    [sci.core :as sci]
@@ -12,17 +12,11 @@
    [re-frame.core :refer [dispatch]]
    [cljs-uuid-utils.core :as uuid]
    [pinkie.pinkie :as pinkie]
-
-   [goldly.runner.clj-fn :refer [update-state-from-clj-result]]))
-
-;(defn sin [x] 0.5)
-
-
-(defn sin [x]
-  (.sin js/Math x))
+   [goldly.sci.bindings-default :refer [bindings-default]]
+   [goldly.runner.eventhandler :refer [eventhandler-fn]]
+   [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]))
 
 ;; cljs compile
-
 
 (def ^:private walk-ns {'postwalk walk/postwalk
                         'prewalk walk/prewalk
@@ -32,9 +26,6 @@
                         'prewalk-replace walk/prewalk-replace
                         'stringify-keys walk/stringify-keys})
 
-;(def bindings-default {'println println})
-
-
 (defn compile [code bindings]
   (sci/eval-string code {:bindings bindings
                          :preset {:termination-safe true}
@@ -42,74 +33,25 @@
 
 ;; compile system
 
-(defn- edn? [obj]
-  (or (number? obj)
-      (string? obj)
-      (coll? obj)
-      (boolean? obj)
-      (nil? obj)
-      (regexp? obj)
-      (symbol? obj)
-      (keyword? obj)))
-
-(defn- norm-evt [obj]
-  (->> obj
-       js/Object.getPrototypeOf
-       js/Object.getOwnPropertyNames
-       (map #(let [norm (-> %
-                            (str/replace #"[A-Z]" (fn [r] (str "-" (str/lower-case r))))
-                            keyword)]
-               [norm (aget obj %)]))
-       (filter (comp edn? second))
-       (into {})))
-
-(defn- eventhandler-fn [state fun]
-  (fn [e & args]
-    (try
-      (info "running eventhandler fn: " fun "e:" e " args: " args)
-      ;(println "running eventhandler with state: " @state)
-      (.preventDefault e)
-      (.stopPropagation e)
-      (let [e-norm (norm-evt (.-target e))
-            _   (println "eventhandler e-norm: " e-norm)
-            _ (println "args: " args)
-            fun-args [e-norm @state]
-            fun-args (if (nil? args)
-                       fun-args
-                       (into [] (concat fun-args args)))
-            _ (println "fun-args: " fun-args)]
-        (->> (apply fun fun-args)
-             (reset! state))
-        (println "new state: " @state))
-      (catch :default e
-        (.log js/console "eventhandler-fn exception: " e)))))
 
 (defn no-op-fun [f-name]
   (fn [state e-norm]
-    (println "running function " f-name " (no-fun) ..")))
+    (info "running function " f-name " (no-fun) ..")))
 
 (defn compile-fn
   "compiles a system/fns. 
    On compile error returns no-op-fun"
   [bindings f-name f-body]
-  (let [_ (println "compile-fn " f-name " bindings: " (keys bindings) " code: " f-body)
+  (let [_ (info "compile-fn " f-name " bindings: " (keys bindings) " code: " f-body)
         f-body (cljs.reader/read-string f-body)
-        _ (println "fbody: " f-body)
+        _ (info "fbody: " f-body)
         fun (compile f-body bindings)
-        _ (println "fun: " fun)
+        _ (info "fun: " fun)
         fun (if fun
               fun
-              (do (println "compile error in system/fn " f-name)
+              (do (info "compile error in system/fn " f-name)
                   (no-op-fun f-name)))]
     fun))
-
-(defn clj-fun [run-id system-id fn-clj]
-  (fn [& args]
-    (infof "runner %s : system %s calling fn-clj %s" run-id system-id fn-clj)
-    (let [fn-vec [run-id system-id fn-clj]
-          fn-vec (if args (into fn-vec args) fn-vec)]
-      (dispatch [:goldly/send :goldly/dispatch fn-vec])
-      nil)))
 
 (defn binding-symbol [f-name]
   (->> f-name name (str "?") symbol))
@@ -118,23 +60,22 @@
   (let [fns-clj (or fns-clj [])
         fns-keys (map binding-symbol fns-clj)
         bindings-clj  (zipmap fns-keys (map (partial clj-fun run-id system-id) fns-clj))]
-    (println "bindings-clj: " bindings-clj)
+    (info "bindings-clj: " bindings-clj)
     bindings-clj))
 
 (defn- ->bindings-cljs [state fns]
-  (let [bindings {'state state
-                  'sin sin}
+  (let [bindings {'state state}
         bindings-cljs (->> fns
                            (map (fn [[f-name f-body]]
                                   [(binding-symbol f-name)
                                    (->> (compile-fn bindings f-name f-body)
                                         (eventhandler-fn state))]))
                            (into bindings))]
-    (println "bindings-cljs: " bindings-cljs)
+    (info "bindings-cljs: " bindings-cljs)
     bindings-cljs))
 
 (defn tap [x]
-  (println "tap:" x)
+  (info "tap:" x)
   x)
 
 (defn compile-error [s b e]
@@ -156,11 +97,11 @@
   (info "compiling system: " system)
   (if (nil? html)
     (fn [_] [:h1 "Error: system html is nil!"])
-    (let [_ (println "compile-system ..")
+    (let [_ (info "compile-system ..")
           bindings-cljs (->bindings-cljs state-a fns)
           bindings-clj  (->bindings-clj run-id id fns-clj)
-          bindings (merge bindings-clj bindings-cljs)
-          _ (println "bindings-system: " bindings)
+          bindings (merge bindings-default bindings-clj bindings-cljs)
+          _ (info "bindings-system: " bindings)
           component (fn [state-a]
                       (try
                         (-> (compile html bindings)

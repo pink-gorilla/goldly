@@ -6,6 +6,7 @@
    [webly.config :refer [load-config! get-in-config]]
    [webly.user.app.app :refer [webly-run!]]
 
+   [goldly.runner.clj-fn] ; sude-efects
    [goldly.puppet.loader :refer [load-components-namespaces require-components]]
    [goldly.puppet.db :refer [systems-response]]))
 

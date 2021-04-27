@@ -2,32 +2,11 @@
   "runs goldly systems"
   (:require
    [clojure.string]
-
    [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
    [webly.ws.core :refer [send-all! send! on-conn-chg]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
+   [goldly.helper :refer [send-ws-response]]
    [goldly.system :refer [system->cljs]]))
-
-
-;; helper fns
-
-
-(defn send-ws-response [{:as ev-msg :keys [id ?data ring-req ?reply-fn send-fn]}
-                        goldly-tag
-                        response]
-  (let [session (:session ring-req)
-        uid (:uid session)]
-    (when (nil? ?reply-fn)
-      (error "reply-fn is nil. this should not happen."))
-    (if (nil? uid)
-      (error "uid is nil. this should not happen.")
-      (info "uid: " uid))
-    (if response
-      (cond
-        ?reply-fn (?reply-fn [:goldly/system response])
-        uid (send! uid [:goldly/system response])
-        :else (error "Cannot send ws-response: neither ?reply-fn nor uid was set!"))
-      (error "Can not send ws-response for nil response. " goldly-tag))))
 
 (def systems (atom {}))
 
@@ -51,7 +30,7 @@
 (defmethod -event-msg-handler :goldly/systems
   [ev-msg]
   (let [response (systems-response)]
-    (send-ws-response ev-msg :goldly/system response)))
+    (send-ws-response ev-msg :goldly/systems response)))
 
 (defn system-response
   "gets system to be sent to clj"

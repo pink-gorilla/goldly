@@ -2,6 +2,9 @@
   (:require
    [clojure.string]
    [taoensso.timbre :as log :refer [debug info infof error errorf]]
+   [webly.ws.core :refer [send!]]
+   [webly.ws.msg-handler :refer [-event-msg-handler]]
+   [goldly.helper :refer [send-ws-response]]
    [goldly.puppet.db :refer [get-system]]))
 
 (defn run-system-fn-clj [id fun-kw args]
@@ -32,3 +35,11 @@
     (merge {:run-id run-id
             :system-id id
             :fun fun-kw} result)))
+
+(defmethod -event-msg-handler :goldly/dispatch
+  [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
+  (let [[event-name [run-id system-id fun & args]] event]
+    (infof "rcvd %s runner: %s system: %s fun: %s args: %s" event-name run-id system-id fun args)
+    (let [response (create-clj-run-response run-id system-id fun args)]
+      (debug "sending clj response: " response)
+      (send-ws-response ev-msg :goldly/dispatch response))))

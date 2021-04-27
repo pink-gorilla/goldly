@@ -23,10 +23,10 @@
             :use-localstorage  false}
  
  :goldly {;:app-systems-dir "./src/systems/"
-          :app-systems-ns [systems.help
+          :app-systems-ns [systems.fortune
                            ;systems.components
                            ;systems.snippets
-                           systems.time
+                           ;systems.time
                            systems.login
                            systems.greeter
                            systems.click-counter]

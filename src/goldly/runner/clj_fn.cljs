@@ -6,6 +6,16 @@
    [com.rpl.specter :refer [transform setval END]]
    [goldly.runner.db :refer [find-system-by-id]]))
 
+(defn clj-fun [run-id system-id fn-clj]
+  (infof "wrapping clj-fn run-id:%s system-id:%s fn:%s" run-id system-id fn-clj)
+  (fn [& args]
+    (let [fn-vec [run-id system-id fn-clj]
+          fn-vec (if args (into fn-vec args) fn-vec)]
+      (infof "runner %s : system %s calling fn-clj %s args:" run-id system-id fn-clj fn-vec)
+      (dispatch [:goldly/send :goldly/dispatch fn-vec])
+      nil)
+    nil))
+
 (defn specter-resolve
   [specter-vector]
   (walk/prewalk
