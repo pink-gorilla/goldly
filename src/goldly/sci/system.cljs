@@ -1,22 +1,26 @@
-(ns goldly.system
+(ns goldly.sci.system
   "defines reagent-component render-system, that displays a fully defined system"
   (:require
-
    [taoensso.timbre :as timbre :refer-macros [debug debugf info infof error]]
-   [clojure.walk :as walk]
-   [sci.core :as sci]
-   ;[cljs.tools.reader :as reader]
-   [cljs.reader]
    [reagent.core :as r]
    [reagent.dom]
    [re-frame.core :refer [dispatch]]
    [cljs-uuid-utils.core :as uuid]
+   [clojure.walk :as walk]
+ ;[cljs.tools.reader :as reader]
+   [cljs.reader]
+   [sci.core :as sci]
    [pinkie.pinkie :as pinkie]
-   [goldly.sci.bindings-default :refer [bindings-default]]
    [goldly.runner.eventhandler :refer [eventhandler-fn]]
-   [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]))
+   [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
+   [goldly.sci.bindings-default :refer [bindings-default]]))
+
+
+;; https://github.com/borkdude/sci
+;; ClojureScript, even when compiled with :advanced, and (as a consequence) JavaScript
 
 ;; cljs compile
+
 
 (def ^:private walk-ns {'postwalk walk/postwalk
                         'prewalk walk/prewalk

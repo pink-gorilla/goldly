@@ -24,7 +24,7 @@
        (filter (comp edn? second))
        (into {})))
 
-(defn- eventhandler-fn [state fun]
+(defn eventhandler-fn [state fun]
   (fn [e & args]
     (try
       (info "running eventhandler fn: " fun "e:" e " args: " args)

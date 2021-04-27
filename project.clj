@@ -18,9 +18,9 @@
                   ["vcs" "push"]]
 
 
-  :dependencies [ [org.pinkgorilla/webly "0.2.14"] 
+  :dependencies [ [org.pinkgorilla/webly "0.2.17"] 
                  [org.clojure/clojure "1.10.3"]
-                 [org.clojure/core.async "1.3.610"]
+                 [org.clojure/core.async "1.3.618"]
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
                  [thi.ng/strf "0.2.2"]

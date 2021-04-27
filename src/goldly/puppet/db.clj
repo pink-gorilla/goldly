@@ -3,9 +3,8 @@
   (:require
    [clojure.string]
    [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
-   [webly.ws.core :refer [send-all! send! on-conn-chg]]
+   [webly.ws.core :refer [send-all! send! send-response on-conn-chg]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
-   [goldly.helper :refer [send-ws-response]]
    [goldly.system :refer [system->cljs]]))
 
 (def systems (atom {}))
@@ -30,7 +29,7 @@
 (defmethod -event-msg-handler :goldly/systems
   [ev-msg]
   (let [response (systems-response)]
-    (send-ws-response ev-msg :goldly/systems response)))
+    (send-response ev-msg :goldly/systems response)))
 
 (defn system-response
   "gets system to be sent to clj"
@@ -46,7 +45,7 @@
   (let [[event-name system-id] event]
     (let [response (or (system-response system-id) :g/system-nil)
           _ (info "sending system-response: " response)]
-      (send-ws-response ev-msg :goldly/system response))))
+      (send-response ev-msg :goldly/system response))))
 
 (defn on-connect-send-systems [old new]
   (let [uids (:any new)]

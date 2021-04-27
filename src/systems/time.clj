@@ -5,7 +5,8 @@
    [webly.date :refer [now-str]]
    [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
    [goldly.runner :refer [system-start!]]
-   [goldly.system :as goldly]))
+   [goldly.system :as goldly]
+   [goldly.runner.clj-fn :refer [broadcast-to-system]]))
 
 (system-start!
  (goldly/system
@@ -13,7 +14,7 @@
    :state {:time "waiting for server time"
            :msg "Type Something..."}
    :html  [:div.rows
-           [:h1 "Time:"]
+           [:p.text-xl.text-blue-700 "This demo shows how to push data from the server."]
            [:div (:time @state)]]
    :fns   {}}
 
@@ -23,12 +24,10 @@
   (go-loop []
     (<! (async/timeout 10000)) ; 10 seconds
     (let [snow (now-str)]
-      (warn "demo-system-time sending time: " snow)
-      (send-all! [:goldly/dispatch {:run-id 1
-                                    :system-id 1
-                                    :fun :f
-                                    :result snow
-                                    :where [:time]}]))
+      (info "demo-system-time sending time: " snow)
+      (broadcast-to-system :time snow [:time]))
     (recur)))
 
 (start-time-pusher!)
+
+; ws rcvd: id: :chsk/recv ?data: [:goldly/dispatch {:run-id nil, :system-id :time, :fun nil, :result "2021-04-27 05:26:53", :where [:time]}] taoensso.timbre.appenders.core.js:158:15

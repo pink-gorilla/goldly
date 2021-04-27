@@ -4,7 +4,7 @@
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
    [goldly.views.site :refer [header-splash]]
-   [goldly.template :as t]))
+   [webly.user.template :as t]))
 
 (defn link-fn [fun text]
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1

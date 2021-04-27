@@ -3,19 +3,6 @@
    [re-frame.core :refer [reg-event-db]]
    [taoensso.timbre :as timbre :refer-macros [info]]))
 
-(def initial-db
-  {:systems []
-   :id nil
-   ; system ui
-   :running-systems {}})
-
-(reg-event-db
- :db-init
- (fn [db _]
-   (let [db (or db {})]
-     (info "initializing goldly app-db ..")
-     (assoc-in db [:goldly] initial-db))))
-
 (reg-event-db
  :goldly/systems-store
  (fn [db [_ data]]

@@ -8,7 +8,7 @@
   {:id :login
    :state 42
    :html  [:div
-           [:h1 "Goldly Login"]
+           [:p "This demo shows what happens if you use components that are not available."]
            [:p/login]]
    :fns {}}
   {:fns {}}))

@@ -4,11 +4,8 @@
    [clojure.java.io]
    [taoensso.timbre :as timbre :refer [info]]
    [webly.config :refer [load-config! get-in-config]]
-   [webly.user.app.app :refer [webly-run!]]
-
    [goldly.runner.clj-fn] ; sude-efects
-   [goldly.puppet.loader :refer [load-components-namespaces require-components]]
-   [goldly.puppet.db :refer [systems-response]]))
+   [goldly.puppet.loader :refer [load-components-namespaces require-components]]))
 
 (defn goldly-run! []
   (let [{:keys [app-systems-ns user-systems-dir]

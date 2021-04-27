@@ -1,6 +1,6 @@
 (ns goldly.views.site
   (:require
-   [goldly.template :as template]))
+   [webly.user.template :as template]))
 
 (def h-splash
   {:nav {:brand "Goldly"

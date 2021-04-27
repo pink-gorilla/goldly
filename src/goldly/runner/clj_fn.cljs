@@ -30,9 +30,9 @@
   (debugf "updating state from clj result: %s where: %s" result where)
   (try
    ;(com.rpl.specter/setval [:a] 1 m) set key a to 1 in m
-    (let [_ (info "specter where: " where)
+    (let [_ (debug "specter where: " where)
           where-resolved (specter-resolve where)
-          _ (info "specter resolved: " where-resolved)]
+          _ (debug "specter resolved: " where-resolved)]
       (reset! state (setval where-resolved result @state))
       (debug "update state from clj success!")
       (debug "system state after clj-update: " (pr-str state)))
@@ -41,11 +41,12 @@
 
 (reg-event-db
  :goldly/clj-result
- (fn [db [_ {:keys [run-id system-id fun result error where] :as data}]]
+ (fn [db [_ {:keys [run-id system-id result error where] :as data}]]
+   (info ":goldly/clj-result run-id:" run-id)
    (let [system (if (nil? run-id)
                   (find-system-by-id db system-id)
                   (get-in db [:goldly :running-systems run-id]))
-         update-state (:update-state system)]
+         update-state (get-in system [:update-state])]
      (debug "rcvd clj result: " data)
      (if system
        (if (and result where update-state)

@@ -10,4 +10,7 @@
    [goldly.views.system-list]
    [goldly.views.system]
 
+   [goldly.runner.ws]
+   [goldly.runner.db] ; side-effects
+   [goldly.runner.clj-fn] ; side-effects
    [goldly.events]))

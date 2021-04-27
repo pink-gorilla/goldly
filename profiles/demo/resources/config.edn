@@ -10,10 +10,11 @@
  :google-analytics {:enabled true} ; set to false to disable google-analytics tracking.
 
 
-  :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
-                    [#{"webly.ws.*"} :debug]
-                    [#{"webly.user.*"} :info]
-                    [#{"*"} :debug]]
+ :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
+                   [#{"webly.ws.*"} :debug]
+                   [#{"webly.user.*"} :info]
+                   [#{"goldly.*"} :info]
+                   [#{"*"} :debug]]
 
 ; :keybindings "pinkgorilla.notebook-ui.keybindings/keybindings-default"
 
@@ -21,16 +22,14 @@
             ; :use-localstorage is true: load settings from localstorage, and only use
             ; config-settings to initialize the app when localstorage is empty
             :use-localstorage  false}
- 
+
  :goldly {;:app-systems-dir "./src/systems/"
-          :app-systems-ns [systems.fortune
+          :app-systems-ns [systems.click-counter
+                           systems.greeter
+                           systems.fortune
+                           systems.time
+                           systems.login
                            ;systems.components
                            ;systems.snippets
-                           ;systems.time
-                           systems.login
-                           systems.greeter
-                           systems.click-counter]
-          :user-systems-dir nil
-          }
-
-}
+                           ]
+          :user-systems-dir nil}}
