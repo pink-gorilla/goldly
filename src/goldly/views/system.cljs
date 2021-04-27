@@ -5,7 +5,8 @@
    [reagent.core :as r]
    [re-frame.core :refer [dispatch dispatch-sync subscribe]]
    [webly.web.handler :refer [reagent-page]]
-   [goldly.system :refer [render-system]]))
+   [goldly.system :refer [render-system]]
+   [goldly.views.site :refer [header]]))
 
 (defn error-boundary [_ #_comp]
   (let [error (r/atom nil)
@@ -32,16 +33,6 @@
    [:h1 "system does not exist!"]
    [:p id]])
 
-(defn systems-menu []
-  [:a.pr-2.text-right.text-blue-600.text-bold.tracking-wide.font-bold.border.border-blue-300.rounded.cursor-pointer
-   {:on-click #(dispatch [:bidi/goto :goldly/system-list])
-    :style {:position "absolute"
-            :z-index 200 ; dialog is 1040 (we have to be lower)
-            :top "10px"
-            :right "10px"
-            :width "80px"
-            :height "30px"}} "Systems"])
-
 (defn systems-header [system id]
   [:h1.bg-orange-300 (str (:name @system) " " id)])
 
@@ -55,9 +46,7 @@
   (let [system (subscribe [:system])]
     (fn []
       [:<>
-       [systems-menu]
-       #_[:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
-              :on-click #(dispatch [:bidi/goto :ui/system-list])} "Systems"] ; "#/info"
+
        (case @system
          :g/system-nil [system-nil id]
          :g/system-loading [system-loading id]
@@ -70,6 +59,16 @@
                                    (:cljs @system)
                                    {:fns-clj (:fns-clj @system)})]]]))])))
 
-(defmethod reagent-page :ui/system [{:keys [route-params handler]}]
+(defn system-themed [id]
+  [:div
+     ;[systems-menu]
+     ; #[:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
+     ;        :on-click #(dispatch [:bidi/goto :ui/system-list])} "Systems"] ; "#/info"
+   [header]
+   [:div.container.mx-auto ; tailwind containers are not ventered by default; mx-auto does this
+    [:p.mt-5.mb-5.text-purple-600.text-3xl id]
+    [system id]]])
+
+(defmethod reagent-page :goldly/system [{:keys [route-params query-params handler] :as route}]
   (info "loading system" route-params)
-  [system (:system-id route-params)])
+  [system-themed (:system-id route-params)])
