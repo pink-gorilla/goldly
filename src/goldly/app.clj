@@ -10,12 +10,14 @@
 (defn goldly-run! []
   (let [{:keys [app-systems-ns user-systems-dir]
          :or {;app-systems-dir "./src/systems/"
-              app-systems-ns '[systems.help
-                              ;systems.components
-                              ;systems.snippets
-                               systems.login
+              app-systems-ns '[systems.click-counter
                                systems.greeter
-                               systems.click-counter]}}
+                               systems.fortune
+                               systems.time
+                               systems.error
+                               ;systems.components
+                               ;systems.snippets
+                               ]}}
         (get-in-config [:goldly])]
   ;(system-start! components)
     (when app-systems-ns

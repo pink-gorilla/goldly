@@ -28,7 +28,7 @@
                            systems.greeter
                            systems.fortune
                            systems.time
-                           systems.login
+                           systems.error
                            ;systems.components
                            ;systems.snippets
                            ]

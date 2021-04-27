@@ -1,4 +1,4 @@
-(ns systems.help
+(ns systems.error
   (:require
    [goldly.system :as goldly]
    [goldly.runner :refer [system-start!]]))
