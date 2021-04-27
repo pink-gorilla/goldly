@@ -6,9 +6,11 @@
    [webly.ws.core :refer [send-all! send!]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.puppet.db :refer [get-system add-system]]
-   [goldly.system :refer [system->cljs]]))
+   [goldly.system :refer [system->cljs]]
+   [goldly.runner.clj-fn :refer [create-clj-run-response]]))
 
 ;; system
+
 
 (defn send-event [system-id event-name & args]
   (let [message  {:system system-id :type event-name :args args}]
@@ -17,35 +19,6 @@
 (defn dispatch [system-id event-name & args]
   (println "dispatching " system-id event-name)
   (send-event system-id event-name args))
-
-(defn run-system-fn-clj [id fun-kw args]
-  (infof "run-system-fn-clj system %s fun: %s" id fun-kw)
-  (let [system (get-system (keyword id))]
-    (if system
-      (let [fun-vec (get-in system [:clj :fns fun-kw])]
-        (if fun-vec
-          (let [[fun where] fun-vec]
-            (infof "system %s executing fun: %s args: %s" id fun-kw args)
-            {:result (if args
-                       (apply fun args)
-                       (fun))
-             :where where})
-          (do (errorf "system %s : fn not found: %s" id fun-kw)
-              (error "system: " system)
-              {:error (str "function not found: " fun-kw)})))
-      (do (infof "system %s : system not found. fn: %s" id fun-kw)
-
-          {:error (str "system " id "not found, cannot execute function: " fun-kw)}))))
-
-(defn create-clj-run-response [run-id id fun-kw args]
-  (let [result (try (run-system-fn-clj id fun-kw args)
-                    (catch clojure.lang.ExceptionInfo e
-                      {:error (str "Exception: " (pr-str e))})
-                    (catch Exception e
-                      {:error (str "Exception: " (pr-str e))}))]
-    (merge {:run-id run-id
-            :system-id id
-            :fun fun-kw} result)))
 
 (defmethod -event-msg-handler :goldly/dispatch
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]

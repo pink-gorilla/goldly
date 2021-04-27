@@ -9,8 +9,11 @@
 
  :google-analytics {:enabled true} ; set to false to disable google-analytics tracking.
 
- :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
-                   [#{"*"} :debug]]
+
+  :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
+                    [#{"webly.ws.*"} :debug]
+                    [#{"webly.user.*"} :info]
+                    [#{"*"} :debug]]
 
 ; :keybindings "pinkgorilla.notebook-ui.keybindings/keybindings-default"
 
@@ -23,6 +26,7 @@
           :app-systems-ns [systems.help
                            ;systems.components
                            ;systems.snippets
+                           systems.time
                            systems.login
                            systems.greeter
                            systems.click-counter]

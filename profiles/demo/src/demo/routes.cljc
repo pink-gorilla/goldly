@@ -4,7 +4,8 @@
 
 (def routes-app
   (assoc goldly.routes/routes-app
-         "demo" :demo/main))
+         "" :goldly/about ; so / route goes also to :goldly/about
+         ))
 
 (def routes-api
   goldly.routes/routes-api)

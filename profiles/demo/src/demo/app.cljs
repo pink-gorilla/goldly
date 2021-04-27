@@ -1,11 +1,9 @@
 (ns demo.app
   (:require
-   [taoensso.timbre :as timbre :refer-macros [info]]
    [webly.user.app.app :refer [webly-run!]]
    ;[goldly.routes :refer [routes-api routes-app]]
    ; side-effects
-   [goldly.app] 
-   [demo.views]
+   [goldly.app]
    [demo.routes :refer [routes-api routes-app]]
    [demo.events]
    ))

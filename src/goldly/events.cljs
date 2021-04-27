@@ -5,7 +5,9 @@
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
    [webly.ws.core :refer [send!]]
-   [goldly.puppet.db :refer [find-system-by-id]]))
+   [goldly.runner.db] ; side-effects
+   [goldly.runner.clj-fn] ; side-effects
+   ))
 
 (reg-event-db
  :goldly/init
@@ -75,7 +77,7 @@
  (fn [db [_ event-type data]]
    (let [_ (debugf "rcvd :goldly/event: %s %s" event-type data)]
      (case event-type
-       :chsk/ws-ping (trace "goldly ping rcvd")
+       ;:chsk/ws-ping (trace "goldly ping rcvd")
        :goldly/systems (dispatch [:goldly/systems-store data])
        :goldly/system (dispatch [:goldly/system-store data])
        :goldly/dispatch (dispatch [:goldly/clj-result data])
@@ -86,19 +88,3 @@
   [{:keys [?data] :as ev-msg}]
   (debugf "systems received: %s" ev-msg)) ; ?data)))
 
-
-(reg-event-db
- :goldly/clj-result
- (fn [db [_ {:keys [run-id system-id fun result error where] :as data}]]
-   (let [_ (debug "running systems: " (get-in db [:goldly :running-systems]))
-         system (if (nil? run-id)
-                  (find-system-by-id db system-id)
-                  (get-in db [:goldly :running-systems run-id]))
-         update-state (:update-state system)]
-     (debug "rcvd clj result: " data) ; " for system: " system
-     (if system
-       (if (and result where update-state)
-         (update-state result where)
-         (error "clj result update requirements not met."))
-       (error "received clj result for unknown system-id " system-id))
-     db)))

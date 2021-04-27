@@ -1,4 +1,4 @@
-(ns goldly.puppet.loader
+(ns goldly.views.system
   (:require
    [cljs.pprint]
    [taoensso.timbre :as timbre :refer-macros [info]]
@@ -34,7 +34,7 @@
 
 (defn systems-menu []
   [:a.pr-2.text-right.text-blue-600.text-bold.tracking-wide.font-bold.border.border-blue-300.rounded.cursor-pointer
-   {:on-click #(dispatch [:bidi/goto :ui/system-list])
+   {:on-click #(dispatch [:bidi/goto :goldly/system-list])
     :style {:position "absolute"
             :z-index 200 ; dialog is 1040 (we have to be lower)
             :top "10px"

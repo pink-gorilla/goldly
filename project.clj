@@ -18,8 +18,8 @@
                   ["vcs" "push"]]
 
 
-  :dependencies [ [org.pinkgorilla/webly "0.1.17"] ; brings shadow
-                 [org.clojure/clojure "1.10.1"]
+  :dependencies [ [org.pinkgorilla/webly "0.2.14"] 
+                 [org.clojure/clojure "1.10.3"]
                  [org.clojure/core.async "1.3.610"]
                  [org.clojure/data.json "1.0.0"]
                  [com.rpl/specter "1.1.3"]
@@ -34,7 +34,7 @@
                  [cider/orchard "0.5.8"]
                  [etaoin "0.3.6"]
 
-                 [org.pinkgorilla/pinkie "0.2.10"] ; frontend ui layout
+                 [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
                  ]
 
   :source-paths ["src"]
@@ -79,12 +79,7 @@
                                             try-if-let          [[:block 1]]}}}}
 
 
-  :aliases {; shadow-compile is only needed to update package.json with transitive dependencies
-            ;"shadow-compile"
-            ;["run" "-m" "shadow.cljs.devtools.cli" "compile" ":webly"]
-
-            "goldly"  ^{:doc "runs compiled bundle on shadow dev server"}      
+  :aliases {"goldly"  ^{:doc "runs compiled bundle on shadow dev server"}      
              ["with-profile" "+demo" "run" "-m" "demo.app"]
-
             })
 

@@ -2,7 +2,7 @@
   "runs goldly systems"
   (:require
    [clojure.string]
-   [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
+
    [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
    [webly.ws.core :refer [send-all! send! on-conn-chg]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
@@ -77,18 +77,3 @@
       (send! uid (systems-response)))))
 
 (reset! on-conn-chg on-connect-send-systems)
-
-; heartbeats on ws
-
-(def broadcast-enabled?_ (atom true))
-
-(defn start-heartbeats!
-  "setup a loop to broadcast an event to all connected users every second"
-  []
-  (go-loop [i 0]
-    (<! (async/timeout 60000))
-    (when @broadcast-enabled?_ (send-all! (systems-response)))
-    (recur (inc i))))
-
-;(start-heartbeats!)
-;
