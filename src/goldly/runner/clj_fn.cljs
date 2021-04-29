@@ -39,20 +39,30 @@
     (catch :default e
       (error "exception in updating state after clj result call:" e))))
 
+(defn clj-response-valid? [{:keys [system-id where]}]
+  (and (vector? where)
+       (keyword? system-id)))
+
+(defn get-running-system [db {:keys [run-id system-id result error where] :as data}]
+  (if (nil? run-id)
+    (find-system-by-id db system-id)
+    (get-in db [:goldly :running-systems run-id])))
+
+(defn safe [update-state result where]
+  (try
+    (update-state result where)
+    (catch :default e
+      (error "exception in updating state:" e))))
+
 (reg-event-db
  :goldly/clj-result
  (fn [db [_ {:keys [run-id system-id result error where] :as data}]]
    (info ":goldly/clj-result run-id:" run-id)
-   (let [system (if (nil? run-id)
-                  (find-system-by-id db system-id)
-                  (get-in db [:goldly :running-systems run-id]))
-         update-state (get-in system [:update-state])]
-     (debug "rcvd clj result: " data)
-     (if system
-       (if (and result where update-state)
-         (if update-state
-           (update-state result where)
-           (error "clj-result update-state missing. data: " data))
-         (error "clj-result failed requirement: {:result :where :update-state}"))
-       (error "received clj result for unknown system-id " system-id))
-     db)))
+   (if (clj-response-valid? data)
+     (if-let [system (get-running-system db data)]
+       (if-let [update-state (get-in system [:update-state])]
+         (safe update-state result where)
+         (taoensso.timbre/error "clj-result update-state missing. data: " data))
+       (taoensso.timbre/debug "received clj result for unknown system-id " system-id))
+     (taoensso.timbre/error "clj-result failed requirement: {:system-id :where}"))
+   db))

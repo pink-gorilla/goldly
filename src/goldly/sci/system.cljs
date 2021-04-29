@@ -1,7 +1,7 @@
 (ns goldly.sci.system
   "defines reagent-component render-system, that displays a fully defined system"
   (:require
-   [taoensso.timbre :as timbre :refer-macros [debug debugf info infof error]]
+   [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
    [reagent.core :as r]
    [reagent.dom]
    [re-frame.core :refer [dispatch]]
@@ -50,7 +50,7 @@
         f-body (cljs.reader/read-string f-body)
         _ (info "fbody: " f-body)
         fun (compile f-body bindings)
-        _ (info "fun: " fun)
+        _ (trace "fun: " fun)
         fun (if fun
               fun
               (do (info "compile error in system/fn " f-name)
@@ -64,7 +64,7 @@
   (let [fns-clj (or fns-clj [])
         fns-keys (map binding-symbol fns-clj)
         bindings-clj  (zipmap fns-keys (map (partial clj-fun run-id system-id) fns-clj))]
-    (info "bindings-clj: " bindings-clj)
+    (debug "bindings-clj: " bindings-clj)
     bindings-clj))
 
 (defn- ->bindings-cljs [state fns]
@@ -75,7 +75,7 @@
                                    (->> (compile-fn bindings f-name f-body)
                                         (eventhandler-fn state))]))
                            (into bindings))]
-    (info "bindings-cljs: " bindings-cljs)
+    (debug "bindings-cljs: " bindings-cljs)
     bindings-cljs))
 
 (defn tap [x]
@@ -101,11 +101,10 @@
   (info "compiling system: " system)
   (if (nil? html)
     (fn [_] [:h1 "Error: system html is nil!"])
-    (let [_ (info "compile-system ..")
-          bindings-cljs (->bindings-cljs state-a fns)
+    (let [bindings-cljs (->bindings-cljs state-a fns)
           bindings-clj  (->bindings-clj run-id id fns-clj)
           bindings (merge bindings-default bindings-clj bindings-cljs)
-          _ (info "bindings-system: " bindings)
+          _ (debug "bindings-system: " bindings)
           component (fn [state-a]
                       (try
                         (-> (compile html bindings)

@@ -11,9 +11,10 @@
 
 
  :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
-                   [#{"webly.ws.*"} :debug]
+                   [#{"webly.ws.*"} :info]
                    [#{"webly.user.*"} :info]
                    [#{"goldly.*"} :info]
+                   [#{"systems.time"} :warn]
                    [#{"*"} :debug]]
 
 ; :keybindings "pinkgorilla.notebook-ui.keybindings/keybindings-default"
