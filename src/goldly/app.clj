@@ -4,28 +4,19 @@
    [clojure.java.io]
    [taoensso.timbre :as timbre :refer [info]]
    [webly.config :refer [load-config! get-in-config]]
-   [goldly.runner.clj-fn] ; sude-efects
+   [goldly.runner.clj-fn] ; side-efects
+   [goldly.notebook.picasso] ; side-efects
    [goldly.puppet.loader :refer [load-components-namespaces require-components]]))
 
 (defn goldly-run! []
-  (let [{:keys [app-systems-ns user-systems-dir]
-         :or {;app-systems-dir "./src/systems/"
-              app-systems-ns '[systems.click-counter
-                               systems.greeter
-                               systems.fortune
-                               systems.time
-                               systems.error
-                               ;systems.components
-                               ;systems.snippets
-                               ]}}
+  (let [{:keys [systems-ns systems-dir]}
         (get-in-config [:goldly])]
   ;(system-start! components)
-    (when app-systems-ns
-      (println "loading app systems from: " app-systems-ns)
-    ;(load "address_book/core") ; this works with classpath
-      (load-components-namespaces app-systems-ns))
-    (when user-systems-dir
-      (println "loading user systems from: " user-systems-dir)
-      (require-components user-systems-dir))))
+    (when systems-ns
+      (info "loading systems from ns: " systems-ns)
+      (load-components-namespaces systems-ns))
+    (when systems-dir
+      (info "loading systems from path: " systems-dir)
+      (require-components systems-dir))))
 
 

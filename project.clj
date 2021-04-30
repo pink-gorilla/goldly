@@ -18,22 +18,22 @@
                   ["vcs" "push"]]
 
 
-  :dependencies [ [org.pinkgorilla/webly "0.2.17"] 
+  :dependencies [[org.pinkgorilla/webly "0.2.20"]
                  [org.clojure/clojure "1.10.3"]
                  [org.clojure/core.async "1.3.618"]
                  [org.clojure/data.json "2.1.0"]
                  [com.rpl/specter "1.1.3"]
                  [thi.ng/strf "0.2.2"]
                  [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
-                 [borkdude/sci "0.2.4"] ; sci compiler   0.0.13-alpha.17
+                 [borkdude/sci "0.2.5"] ; sci compiler  
                  ;[funcool/promesa "4.0.2"] promise library for cljs
                  ;[paprika "0.1.3"] ; mauricio helper functions 
                  ;[rewrite-cljs "0.4.4"] ; code reformatting
                  ;[org.rksm/suitable "0.3.2"  :exclusions [org.clojure/clojurescript]] ; cljs code completion
                  ; [cider/orchard "0.5.8"] ; repl tools code completion, clojuredocs, ...
                  ;[etaoin "0.3.6"] browser automation
-
                  [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
+                 [org.pinkgorilla/picasso "3.1.21"] ; type rendering
                  ]
 
   :source-paths ["src"]
@@ -44,11 +44,10 @@
                                     [:goldly :builds :app :compiler :output-to]]
 
   :profiles {:demo {:source-paths ["profiles/demo/src"]
-                    :resource-paths ["profiles/demo/resources"]
-                    }
-             
+                    :resource-paths ["profiles/demo/resources"]}
+
              :dev {:source-paths ["test"]
-                   :dependencies [[clj-kondo "2020.06.21"]
+                   :dependencies [[clj-kondo "2021.04.23"]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
@@ -78,7 +77,6 @@
                                             try-if-let          [[:block 1]]}}}}
 
 
-  :aliases {"goldly"  ^{:doc "runs compiled bundle on shadow dev server"}      
-             ["with-profile" "+demo" "run" "-m" "demo.app"]
-            })
+  :aliases {"goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
+            ["with-profile" "+demo" "run" "-m" "demo.app"]})
 
