@@ -37,7 +37,8 @@
                  ]
 
   :source-paths ["src"]
-  :resource-paths ["target/webly"] ; js bundle
+  :resource-paths ["resources" ; notebooks
+                   "target/webly"] ; js bundle
   :target-path  "target/jar"
   :clean-targets ^{:protect false} [:target-path
                                     [:goldly :builds :app :compiler :output-dir]
