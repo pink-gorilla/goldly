@@ -44,9 +44,7 @@
                                     [:goldly :builds :app :compiler :output-dir]
                                     [:goldly :builds :app :compiler :output-to]]
 
-  :profiles {:demo {:source-paths ["profiles/demo/src"]
-                    :resource-paths ["profiles/demo/resources"]}
-
+  :profiles {:demo {:resource-paths ["profiles/demo/resources"]}
              :dev {:source-paths ["test"]
                    :dependencies [[clj-kondo "2021.04.23"]
                                   [ring/ring-mock "0.4.0"]]
@@ -79,5 +77,5 @@
 
 
   :aliases {"goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "demo.app"]})
+            ["with-profile" "+demo" "run" "-m" "goldly-server.app"]})
 

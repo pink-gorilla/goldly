@@ -6,7 +6,6 @@
    [goldly.puppet.subs]
    [goldly.puppet.db]
 
-   [goldly.views.about]
    [goldly.views.system-list]
    [goldly.views.system]
 

@@ -1,4 +1,4 @@
-(ns demo.routes
+(ns goldly-server.routes
   (:require
    [goldly.routes]))
 

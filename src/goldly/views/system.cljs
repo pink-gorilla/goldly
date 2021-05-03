@@ -5,8 +5,8 @@
    [reagent.core :as r]
    [re-frame.core :refer [dispatch dispatch-sync subscribe]]
    [webly.web.handler :refer [reagent-page]]
-   [goldly.views.site :refer [header]]
-   [goldly.sci.system :refer [render-system]]))
+   [goldly.sci.system :refer [render-system]]
+   [goldly.views.site :refer [header]]))
 
 (defn error-boundary [_ #_comp]
   (let [error (r/atom nil)

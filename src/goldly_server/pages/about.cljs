@@ -1,10 +1,10 @@
-(ns goldly.views.about
+(ns goldly-server.pages.about
   (:require
    [re-frame.core :refer [dispatch subscribe]]
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
-   [goldly.views.site :refer [header-splash]]
-   [webly.user.template :as t]))
+   [webly.user.template :as t]
+   [goldly.views.site :refer [header-splash]]))
 
 (defn link-fn [fun text]
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
@@ -33,26 +33,26 @@
                                {:title "Notebook" :text "In a notebook you can use it for data exploration."}
                                {:title "Embedded" :text "Embed it to another website"}]}]
 
-         [t/message-button
-          {:tile  "Lorem ipsum dolor sit amet"
-           :text "Lorem ipsum dolor sit amet, consectetur adipiscing Ac aliquam ac\n                        volutpat, viverra magna risus aliquam massa."
-           :link-text "Get In Touch"
-           :link-href "#"}]
+         #_[t/message-button
+            {:tile  "Lorem ipsum dolor sit amet"
+             :text "Lorem ipsum dolor sit amet, consectetur adipiscing Ac aliquam ac\n                        volutpat, viverra magna risus aliquam massa."
+             :link-text "Get In Touch"
+             :link-href "#"}]
 
-         [t/foto-bottom
-          {:title ["Lorem ipsum dolor sit amet, "
-                   [:br] " consectetur adipiscing"]
-           :text "Duis aute irure dolor in reprehenderit in voluptate velit esse\n                cillum\n                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia\n                deserunt mollit anim id est laborum."
-           :img-url "https://images.unsplash.com/photo-1600069226367-412873fb0637?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"}]
+         #_[t/foto-bottom
+            {:title ["Lorem ipsum dolor sit amet, "
+                     [:br] " consectetur adipiscing"]
+             :text "Duis aute irure dolor in reprehenderit in voluptate velit esse\n                cillum\n                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia\n                deserunt mollit anim id est laborum."
+             :img-url "https://images.unsplash.com/photo-1600069226367-412873fb0637?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"}]
 
-         [t/people]
-         [t/foto-right]
-         [t/fotos-with-text]
-         [t/bullet-points]
-         [t/foto-left]
+         ;[t/people]
+         ;[t/foto-right]
+         ;[t/fotos-with-text]
+         ;[t/bullet-points]
+         ;[t/foto-left]
 
-         [t/footer {:copyright "© 2019-2021 Gorilla Labs."
-                    :right "Terms of Service"}]
+         [t/footer {:copyright "© 2019-2021 Pink Gorilla"
+                    :right "Served by Goldly"}]
 
          #_[:div
             [:h1 "goldly demo"]
