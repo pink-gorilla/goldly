@@ -11,10 +11,10 @@
 (system-start!
  (goldly/system
   {:id :time
-   :state {:time "waiting for server time"
-           :msg "Type Something..."}
+   :state {:time "waiting for server time"}
    :html  [:div.rows
            [:p.text-xl.text-blue-700 "This demo shows how to push data from the server."]
+           [:p.text-xl.text-blue-700 "time is pushed every 10 seconds."]
            [:div (:time @state)]]
    :fns   {}}
 

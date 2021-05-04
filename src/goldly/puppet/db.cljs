@@ -12,6 +12,6 @@
 (reg-event-db
  :goldly/system-store
  (fn [db [_ system]]
-   (info "running goldly system: " system)
-   (assoc-in db [:goldly :system] system)))
+   (info "rcvd system definition: " system)
+   (assoc-in db [:goldly :system (:id system)] system)))
 

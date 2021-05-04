@@ -18,7 +18,7 @@
                   ["vcs" "push"]]
 
 
-  :dependencies [[org.pinkgorilla/webly "0.2.25"]
+  :dependencies [[org.pinkgorilla/webly "0.2.26"]
                  [org.clojure/clojure "1.10.3"]
                  [org.clojure/core.async "1.3.618"]
                  [org.clojure/data.json "2.1.0"]

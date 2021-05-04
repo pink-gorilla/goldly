@@ -10,7 +10,7 @@
    (get-in db [:goldly :systems])))
 
 (reg-sub
- :system
- (fn [db _]
-   (get-in db [:goldly :system])))
+ :goldly/system
+ (fn [db [_ id]]
+   (get-in db [:goldly :system id])))
 

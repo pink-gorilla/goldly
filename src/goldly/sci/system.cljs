@@ -6,14 +6,14 @@
    [reagent.dom]
    [re-frame.core :refer [dispatch]]
    [cljs-uuid-utils.core :as uuid]
-   [clojure.walk :as walk]
+
  ;[cljs.tools.reader :as reader]
    [cljs.reader]
    [sci.core :as sci]
    [pinkie.pinkie :as pinkie]
    [goldly.runner.eventhandler :refer [eventhandler-fn]]
    [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
-   [goldly.sci.bindings-default :refer [bindings-default]]))
+   [goldly.sci.bindings-default :refer [bindings-default ns-default]]))
 
 
 ;; https://github.com/borkdude/sci
@@ -22,21 +22,12 @@
 ;; cljs compile
 
 
-(def ^:private walk-ns {'postwalk walk/postwalk
-                        'prewalk walk/prewalk
-                        'keywordize-keys walk/keywordize-keys
-                        'walk walk/walk
-                        'postwalk-replace walk/postwalk-replace
-                        'prewalk-replace walk/prewalk-replace
-                        'stringify-keys walk/stringify-keys})
-
 (defn compile [code bindings]
   (sci/eval-string code {:bindings bindings
                          :preset {:termination-safe true}
-                         :namespaces {'walk walk-ns}}))
+                         :namespaces ns-default}))
 
 ;; compile system
-
 
 (defn no-op-fun [f-name]
   (fn [state e-norm]
@@ -67,8 +58,9 @@
     (debug "bindings-clj: " bindings-clj)
     bindings-clj))
 
-(defn- ->bindings-cljs [state fns]
-  (let [bindings {'state state}
+(defn- ->bindings-cljs [state ext fns]
+  (let [bindings {'state state
+                  'ext ext}
         bindings-cljs (->> fns
                            (map (fn [[f-name f-body]]
                                   [(binding-symbol f-name)
@@ -97,11 +89,11 @@
    or that displays a compile error
    returns: component
             component expects system state as parameter as atom"
-  [run-id state-a {:keys [id state html fns fns-clj] :as system}]
+  [run-id state-a ext {:keys [id state html fns fns-clj] :as system}]
   (info "compiling system: " system)
   (if (nil? html)
     (fn [_] [:h1 "Error: system html is nil!"])
-    (let [bindings-cljs (->bindings-cljs state-a fns)
+    (let [bindings-cljs (->bindings-cljs state-a ext fns)
           bindings-clj  (->bindings-clj run-id id fns-clj)
           bindings (merge bindings-default bindings-clj bindings-cljs)
           _ (debug "bindings-system: " bindings)
@@ -117,29 +109,60 @@
                                                         :fns-clj fns-clj} bindings e]))))]
       component)))
 
-(defn render-system-impl [run-id]
-  (fn [{:keys [state html fns fns-clj] :as system}]
-    (if (nil? html)
-      [:h1 "Error: system html is nil!"]
-      (let [state-a (r/atom state)
-            component (compile-system run-id state-a system)
-            update-state (partial update-state-from-clj-result state-a)]
-        (dispatch [:goldly/add-running-system run-id (merge system {:update-state update-state})])
-        (fn []
-          [component state-a])))))
+(defn make-component [run-id ext {:keys [state html fns fns-clj] :as system}]
+  (if (nil? html)
+    nil
+    (let [state-a (r/atom state)
+          component (compile-system run-id state-a ext system)
+          update-state (partial update-state-from-clj-result state-a)]
+      (dispatch [:goldly/add-running-system run-id (merge system {:update-state update-state})])
+      (fn []
+        [component state-a]))))
 
 ; note that splitting render-system and render-system-impl has the reason
 ; to not recompile the code at each rerender of the data that the system
 ; is displaying. 
 
-(defn render-system [{:keys [state html fns fns-clj id] :as system}]
-  (let [id (uuid/uuid-string (uuid/make-random-uuid))]
-    (r/create-class
-     {:display-name          "goldly-render-system"
-      :reagent-render        (render-system-impl id)
-      :component-will-unmount (fn [this] ;  just before the component is unmounted from the DOM.
-                                (infof "render-system id: %s - will unmount" id)
-                                (dispatch [:goldly/remove-running-system id]))})))
+(defn render-system [system ext]
+  (let [run-id (uuid/uuid-string (uuid/make-random-uuid))
+        compiled-system (r/atom nil)
+        component (r/atom nil)
+        make! (fn [system ext]
+                (let [new-c [ext system]]
+                  (when-not (= new-c @compiled-system)
+                    (info "comiling ext:" ext)
+                    (reset! component (make-component run-id ext system))
+                    (reset! compiled-system new-c))))]
 
+    (r/create-class
+     {:display-name "goldly-render-system"
+
+      :reagent-render
+      (fn [system] ;; remember to repeat parameters
+        (if @component
+          [@component]
+          [:h1 "compiling.."]))
+
+      :component-did-mount
+      (fn [this] ; oldprops oldstate snapshot
+        (info "c-d-m: " system)
+        (make! system ext))
+
+      :component-did-update
+      (fn [this old-argv]
+        (let [new-argv (rest (r/argv this))
+              [system ext] new-argv
+                                   ;{:keys [f data]} arg1
+              ]
+          ;(println "c-did-update: " new-argv)
+          ;(println "c-did-update:argv " (r/argv this))
+          ;(println "c-did-update:argv-old " old-argv)
+          (info "c-did-update: system " system "ext:" ext)
+          (make! system ext)))
+
+      :component-will-unmount
+      (fn [this] ;  just before the component is unmounted from the DOM.
+        (infof "render-system id: %s - will unmount" run-id)
+        (dispatch [:goldly/remove-running-system run-id]))})))
 
 

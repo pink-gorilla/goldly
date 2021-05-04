@@ -36,30 +36,31 @@
 (defn systems-header [system id]
   [:h1.bg-orange-300 (str (:name @system) " " id)])
 
-(defn system
-  "requests system with id from server
-   and displays it."
-  [id]
-  (info "showing system: " id)
-  (dispatch-sync [:goldly/system-store :g/system-loading])
-  (dispatch [:goldly/send :goldly/system id])
-  (let [system (subscribe [:system])]
-    (fn []
-      [:<>
+(defn system-shower [id ext system]
+  (cond
+    (nil? @system) [system-loading id]
+    (= :g/system-nil (:status @system))  [system-nil id]
+    :else
+    [:<>
+     ;[:p "id:" id]
+     ;[:p "system" (pr-str @system)]
+     [error-boundary
+      [render-system (merge {:id (:id @system)
+                             :fns-clj (:fns-clj @system)}
+                            (:cljs @system)) ext]]]))
 
-       (case @system
-         :g/system-nil [system-nil id]
-         :g/system-loading [system-loading id]
-         (if (nil? @system)
-           [:h1 "something is broken (the system is nil)"]
-           [:<>
-            ;[systems-header system id]
-            [error-boundary
-             [render-system (merge {:id (:id @system)}
-                                   (:cljs @system)
-                                   {:fns-clj (:fns-clj @system)})]]]))])))
+(defn system-ext
+  "requests system with id from server and displays it."
+  [id ext]
+  (let [id-kw (if (string? id) (keyword id) id)
+        system (subscribe [:goldly/system id-kw])]
+    (dispatch [:goldly/send :goldly/system id-kw])
+    [system-shower id ext system]))
 
-(defn system-themed [id]
+(defn system [id]
+  [system-ext id ""])
+
+(defn system-themed [id ext]
   [:div
      ;[systems-menu]
      ; #[:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
@@ -67,8 +68,12 @@
    [header]
    [:div.container.mx-auto ; tailwind containers are not ventered by default; mx-auto does this
     [:p.mt-5.mb-5.text-purple-600.text-3xl id]
-    [system id]]])
+    [system-ext id ext]]])
 
 (defmethod reagent-page :goldly/system [{:keys [route-params query-params handler] :as route}]
   (info "loading system" route-params)
-  [system-themed (:system-id route-params)])
+  [system-themed (:system-id route-params) ""])
+
+(defmethod reagent-page :goldly/system-ext [{:keys [route-params query-params handler] :as route}]
+  (info "loading system-ext" route-params)
+  [system-themed (:system-id route-params) (:system-ext route-params)])

@@ -26,6 +26,7 @@
 
  :goldly {:systems-ns [systems.click-counter
                        systems.greeter
+                       systems.greeter-details
                        systems.fortune
                        systems.time
                        systems.error
