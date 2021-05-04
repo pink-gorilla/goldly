@@ -23,4 +23,4 @@ creds.edn
 shadow-cljs.edn
 package.json
 package-lock.json
-karma-conf.js
+karma.conf.js

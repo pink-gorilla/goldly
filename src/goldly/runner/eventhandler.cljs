@@ -27,18 +27,17 @@
 (defn eventhandler-fn [state fun]
   (fn [e & args]
     (try
-      (info "running eventhandler fn: " fun "e:" e " args: " args)
+      (info "running eventhandler fn with args: " args) ; fun  - fun displays source
       ;(info "running eventhandler with state: " @state)
       (.preventDefault e)
       (.stopPropagation e)
       (let [e-norm (norm-evt (.-target e))
-            _   (info "eventhandler e-norm: " e-norm)
-            _ (info "args: " args)
+            _   (debug "eventhandler e-norm: " e-norm "args: " args)
             fun-args [e-norm @state]
             fun-args (if (nil? args)
                        fun-args
                        (into [] (concat fun-args args)))
-            _ (info "fun-args: " fun-args)]
+            _ (debug "fun-args: " fun-args)]
         (->> (apply fun fun-args)
              (reset! state))
         (info "new state: " @state))
