@@ -18,12 +18,12 @@
                   ["vcs" "push"]]
 
 
-  :dependencies [[org.pinkgorilla/webly "0.2.26"]
-                 [org.clojure/clojure "1.10.3"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/core.async "1.3.618"]
                  [org.clojure/data.json "2.1.0"]
                  [com.rpl/specter "1.1.3"]
-                 [thi.ng/strf "0.2.2"]
+                 [thi.ng/strf "0.2.2"
+                  :exclusions [org.clojure/clojurescript]]
                  [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
                  [borkdude/sci "0.2.5"] ; sci compiler  
                  ;[funcool/promesa "4.0.2"] promise library for cljs
@@ -34,6 +34,8 @@
                  ;[etaoin "0.3.6"] browser automation
                  [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
+[org.pinkgorilla/webly "0.2.27"]
+
                  ]
 
   :source-paths ["src"]
@@ -47,7 +49,8 @@
   :profiles {:demo {:resource-paths ["profiles/demo/resources"]}
              :dev {:source-paths ["test"]
                    :dependencies [[clj-kondo "2021.04.23"]
-                                  [ring/ring-mock "0.4.0"]]
+                                  ;[ring/ring-mock "0.4.0"]
+                                  ]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
                                   [lein-codox "0.10.7"]
