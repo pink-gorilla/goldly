@@ -20,6 +20,7 @@
         summary (into []
                       (map (fn [[k v]]
                              {:id (name k)
+                              :hidden (or (:hidden v) false)
                               :name (or (:name v) "")}) @systems))
         ;ids (keys @systems)
         ;ids (into [] (map name ids))
