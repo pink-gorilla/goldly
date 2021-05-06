@@ -36,8 +36,8 @@
       ;[:div.bg-blue-200.h-screen.w-screen
       [:div
        [header]
-       [:div.container.mx-auto ; tailwind containers are not ventered by default; mx-auto does this
-        [:p.text-3xl.text-purple-600.mt-5.mb-5 "running systems: " (count @systems)]
+       [:div.container.mx-auto ; tailwind containers are not centered by default; mx-auto does this
+        [:p.text-3xl.text-purple-600.mt-5.mb-5 "available systems: " (count @systems)]
         [systems-list @routes @systems]]])))
 
 (defmethod reagent-page :goldly/system-list [{:keys [route-params query-params handler] :as route}]

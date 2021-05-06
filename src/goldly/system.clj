@@ -60,10 +60,11 @@
   [f m]
   (into (empty m) (for [[k v] m] [k (f v)])))
 
-(defmacro system [{:keys [id state html fns] :as system-cljs} system-clj]
+(defmacro system [{:keys [id hidden state html fns] :as system-cljs} system-clj]
   (let [fns (zipmap (keys fns)
                     (map #(pr-str %) (vals fns)))]
     {:id id ;(unique-id)
+     :hidden hidden
      ;:name name
      :cljs {:state state
             :html (escape-html2 html) ;(pr-str html)
