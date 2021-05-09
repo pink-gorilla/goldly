@@ -34,9 +34,7 @@
                  ;[etaoin "0.3.6"] browser automation
                  [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
-[org.pinkgorilla/webly "0.2.27"]
-
-                 ]
+                 [org.pinkgorilla/webly "0.2.30"]]
 
   :source-paths ["src"]
   :resource-paths ["resources" ; notebooks
@@ -80,5 +78,5 @@
 
 
   :aliases {"goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "goldly-server.app"]})
+            ["with-profile" "+demo" "run" "-m" "goldly-server.app" "goldly-demo.edn"]})
 

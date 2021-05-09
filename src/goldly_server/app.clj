@@ -10,13 +10,13 @@
   (:gen-class))
 
 (defn goldly-server-run!
-  [profile-name user-config]
-  (load-config! (or user-config {}))
-  (let [profile (setup-profile profile-name)]
+  [user-config profile-name]
+  (let [config ["goldly.edn" user-config]
+        profile (setup-profile profile-name config)]
     (when (:server profile)
       (goldly-run!))
-    (webly-run! profile-name)))
+    (webly-run! profile-name config)))
 
 (defn -main
-  [profile-name]
-  (goldly-server-run! profile-name {}))
+  [user-config profile-name]
+  (goldly-server-run! user-config profile-name))
