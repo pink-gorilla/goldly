@@ -34,7 +34,7 @@
                  ;[etaoin "0.3.6"] browser automation
                  [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
-                 [org.pinkgorilla/webly "0.2.30"]]
+                 [org.pinkgorilla/webly "0.2.31"]]
 
   :source-paths ["src"]
   :resource-paths ["resources" ; notebooks
@@ -44,8 +44,7 @@
                                     [:goldly :builds :app :compiler :output-dir]
                                     [:goldly :builds :app :compiler :output-to]]
 
-  :profiles {:demo {:resource-paths ["profiles/demo/resources"]}
-             :dev {:source-paths ["test"]
+  :profiles {:dev {:source-paths ["test"]
                    :dependencies [[clj-kondo "2021.04.23"]
                                   ;[ring/ring-mock "0.4.0"]
                                   ]
@@ -78,5 +77,5 @@
 
 
   :aliases {"goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "goldly-server.app" "goldly-demo.edn"]})
+            ["run" "-m" "goldly-server.app"]})
 

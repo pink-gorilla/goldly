@@ -1,4 +1,0 @@
-{:webly {:title "Goldly Demo"
-         :lein-cljs-profile "+demo"
-
-}}
