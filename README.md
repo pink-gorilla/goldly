@@ -12,7 +12,13 @@ To run goldly with some demonstration systems
 lein goldly watch    ; runs a webserver on port 8000.
 ```
 
-The source code of the demo systems is in `src/systems`.
+- Then open browser `http://localhost:8000`
+- In the browser window click on `running systems` and then `snippet registry`
+- You are able to click on all the systems in he registry.
+
+The source code of the registry systems is in `src/systems`.
+The snippets are in `resources/snippets/`
+
 
 # datamining example
 
