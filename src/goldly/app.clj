@@ -3,7 +3,7 @@
   (:require
    [clojure.java.io]
    [taoensso.timbre :as timbre :refer [info]]
-   [webly.config :refer [load-config! get-in-config]]
+   [webly.config :refer [get-in-config]]
    [goldly.runner.clj-fn] ; side-efects
    [goldly.notebook.picasso] ; side-efects
    [goldly.puppet.loader :refer [load-components-namespaces require-components]]))

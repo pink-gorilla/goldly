@@ -71,6 +71,16 @@
             :fns (into-mapper pr-str fns)}
      :clj system-clj}))
 
+(defn system-html [{:keys [id hidden state html fns] :as system-cljs} system-clj]
+  (let [fns (zipmap (keys fns)
+                    (map #(pr-str %) (vals fns)))]
+    {:id id
+     :hidden hidden
+     :cljs {:state state
+            :html (escape-html2 html) ;(pr-str html)
+            :fns (into-mapper pr-str fns)}
+     :clj system-clj}))
+
 (comment
 
   (def y (defn add [a b] (+ a b)))

@@ -30,6 +30,7 @@
                        systems.fortune
                        systems.time
                        systems.error
+                       systems.snippet-registry
                        ]
           :systems-dir nil ; "./src/systems/"
           }}
