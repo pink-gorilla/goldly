@@ -13,4 +13,6 @@
    [goldly.runner.db] ; side-effects
    [goldly.runner.clj-fn] ; side-effects
    [goldly.events]
-   [goldly.notebook.pinkie]))
+   [goldly.notebook.pinkie]
+   [goldly.code.core] ; side-effecte
+   ))

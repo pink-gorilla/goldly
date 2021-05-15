@@ -128,8 +128,8 @@
             [:a {:href "/system/snippet-registry/"}
              "snippet-registry"]]
            (let [src (get-in @state [:snippet :src])]
-             [:p.bg-yellow-500.italic.text-xl.text-blue-700
-              src])
+             [:div.border.border-round.m-2.p-2
+              [:p/code src]])
            (if ext
              [:p/goldly (keyword ext)]
              [:h1.bg-red-500.m-2 "no goldly system defined ext: " ext])]

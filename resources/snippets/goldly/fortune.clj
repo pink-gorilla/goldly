@@ -1,12 +1,7 @@
-
-
 (require '[taoensso.timbre :as timbre :refer [trace debug debugf info infof error]])
-
 (info "compiled snippet fortune!")
-
 (require '[goldly.system :as goldly])
 (require '[goldly.runner :refer [system-start!]])
-
 (require '[systems.fortune-db :as db])
 
 (system-start!

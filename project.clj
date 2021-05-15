@@ -26,12 +26,6 @@
                   :exclusions [org.clojure/clojurescript]]
                  [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
                  [borkdude/sci "0.2.5"] ; sci compiler  
-                 ;[funcool/promesa "4.0.2"] promise library for cljs
-                 ;[paprika "0.1.3"] ; mauricio helper functions 
-                 ;[rewrite-cljs "0.4.4"] ; code reformatting
-                 ;[org.rksm/suitable "0.3.2"  :exclusions [org.clojure/clojurescript]] ; cljs code completion
-                 ; [cider/orchard "0.5.8"] ; repl tools code completion, clojuredocs, ...
-                 ;[etaoin "0.3.6"] browser automation
                  [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
                  [org.pinkgorilla/webly "0.2.31"]]
@@ -54,8 +48,8 @@
                                   [lein-shell "0.5.0"]
                                   [lein-ancient "0.6.15"]
                                   ;[min-java-version "0.1.0"]
-                                  [lein-resource "17.06.1"]
-                                  ;[lein-environ "1.1.0"] ;; TODO Will likely be axed soon
+                                  ;[lein-resource "17.06.1"]
+                                  
                                   ]
                    :aliases      {"lint" ^{:doc "Runs code linter"}
                                   ["run" "-m" "clj-kondo.main" "--lint" "src"]
