@@ -9,7 +9,6 @@
 
  :google-analytics {:enabled true} ; set to false to disable google-analytics tracking.
 
-
  :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
                    [#{"webly.ws.*"} :info]
                    [#{"webly.user.*"} :info]
@@ -32,6 +31,5 @@
                        ;systems.error
                        systems.snippet-registry
                        ]
-          :systems-dir nil ; "./src/systems/"
           }}
 

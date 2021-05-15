@@ -1,26 +1,27 @@
 (ns goldly-server.app
   (:require
+   [taoensso.timbre :as timbre :refer [info warn]]
    [webly.config :refer [load-config! add-config]]
    [webly.user.app.app :refer [webly-run!]]
-   [webly.profile :refer [setup-profile server?]]
-   ; side-effects
-   [goldly.routes]
+   [webly.profile :refer [server?]]
    [goldly.app :refer [goldly-run!]]
+   ; side-effects
    [goldly-server.routes])
   (:gen-class))
 
 (defn goldly-server-run!
-  ([profile-name]
-   (goldly-server-run! nil profile-name))
-  ([user-config profile-name]
-   (let [config (add-config "goldly.edn" user-config)
-         profile (setup-profile profile-name config)]
-     (when (:server profile)
-       (goldly-run!))
-     (webly-run! profile-name config))))
+  [{:keys [config profile] ; a map so it can be consumed by tools deps -X
+    :or {profile "jetty"
+         config {}}}]
+  (let [config (add-config "goldly.edn" config)]
+    (if (server? profile)
+      (do (load-config! config)
+          (goldly-run!))
+      (warn "no server mode. not running goldly"))
+    (webly-run! profile config)))
 
-(defn -main
-  ([profile-name]
-   (goldly-server-run! profile-name))
-  ([user-config profile-name]
-   (goldly-server-run! user-config profile-name)))
+(defn -main ; for lein alias
+  ([]
+   (goldly-server-run! {}))
+  ([profile]
+   (goldly-server-run! {:profile profile})))
