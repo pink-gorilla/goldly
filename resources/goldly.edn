@@ -24,12 +24,12 @@
             ; config-settings to initialize the app when localstorage is empty
             :use-localstorage  false}
 
- :goldly {:systems-ns [systems.click-counter
-                       systems.greeter
-                       systems.greeter-details
-                       systems.fortune
-                       systems.time
-                       systems.error
+ :goldly {:systems-ns [;systems.click-counter
+                       ;systems.greeter
+                       ;systems.greeter-details
+                       ;systems.fortune
+                       ;systems.time
+                       ;systems.error
                        systems.snippet-registry
                        ]
           :systems-dir nil ; "./src/systems/"

@@ -141,6 +141,11 @@
               :id :hello-world
               :filename "snippets/goldly/hello.edn"})
 
+(add-snippet {:type :pinkie
+              :category :goldly
+              :id :error-snippet
+              :filename "snippets/goldly/error.edn"})
+
 (add-snippet {:type :goldly
               :category :goldly
               :id :click-counter-snippet
@@ -150,5 +155,15 @@
               :category :goldly
               :id :fortune-snippet
               :filename "snippets/goldly/fortune.clj"})
+
+(add-snippet {:type :goldly-clj
+              :category :goldly
+              :id :time-snippet
+              :filename "snippets/goldly/time.clj"})
+
+(add-snippet {:type :goldly-clj
+              :category :goldly
+              :id :greeter-snippet
+              :filename "snippets/goldly/greeter.clj"})
 
 (info "snippets: " (snippets-by-category))
