@@ -23,13 +23,5 @@
             ; config-settings to initialize the app when localstorage is empty
             :use-localstorage  false}
 
- :goldly {:systems [systems.snippet-registry
-                    ;systems.click-counter
-                       ;systems.greeter
-                       ;systems.greeter-details
-                       ;systems.fortune
-                       ;systems.time
-                       ;systems.error
-                    ]
-          }}
+ :goldly {:systems [systems.snippet-registry]}}
 
