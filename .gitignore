@@ -24,3 +24,4 @@ shadow-cljs.edn
 package.json
 package-lock.json
 karma.conf.js
+goldly_bindings_generated.cljs

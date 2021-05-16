@@ -13,7 +13,7 @@
                    [#{"webly.ws.*"} :info]
                    [#{"webly.user.*"} :info]
                    [#{"goldly.*"} :info]
-                   [#{"systems.time"} :warn]
+                   [#{"user.*"} :warn] ; time sender
                    [#{"*"} :debug]]
 
 ; :keybindings "pinkgorilla.notebook-ui.keybindings/keybindings-default"
@@ -23,13 +23,13 @@
             ; config-settings to initialize the app when localstorage is empty
             :use-localstorage  false}
 
- :goldly {:systems-ns [;systems.click-counter
+ :goldly {:systems [systems.snippet-registry
+                    ;systems.click-counter
                        ;systems.greeter
                        ;systems.greeter-details
                        ;systems.fortune
                        ;systems.time
                        ;systems.error
-                       systems.snippet-registry
-                       ]
+                    ]
           }}
 

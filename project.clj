@@ -26,9 +26,10 @@
                   :exclusions [org.clojure/clojurescript]]
                  [com.lucasbradstreet/cljs-uuid-utils "1.0.2"]
                  [borkdude/sci "0.2.5"] ; sci compiler  
+                 [fipp "0.6.23"] ; edn pretty printing
                  [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
-                 [org.pinkgorilla/webly "0.2.31"]]
+                 [org.pinkgorilla/webly "0.2.36"]]
 
   :source-paths ["src"]
   :resource-paths ["resources" ; notebooks

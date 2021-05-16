@@ -1,14 +1,14 @@
-(ns goldly.puppet.loader
+(ns goldly.puppet.require
   "loads systems from namespaces"
   (:require
    [clojure.string :as str]
    [taoensso.timbre :refer [info]]))
 
-(defn load-components-namespaces [namespace-symbols]
-  (doall (for [s namespace-symbols]
-           (do (info "loading system in ns: " s)
+(defn require-namespaces [namespaces]
+  (doall (for [s namespaces]
+           (do (info "loading ns: " s)
                (require s))))
-  namespace-symbols)
+  namespaces)
 
 (comment
   (require 'systems.components 'clojure.string)

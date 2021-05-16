@@ -3,8 +3,8 @@
    [taoensso.timbre :as timbre :refer [info warn]]
    [webly.config :refer [load-config! add-config]]
    [webly.user.app.app :refer [webly-run!]]
-   [webly.profile :refer [server?]]
-   [goldly.app :refer [goldly-run!]]
+   [webly.profile :refer [compile? server?]]
+   [goldly.app :refer [goldly-compile! goldly-run!]]
    ; side-effects
    [goldly-server.routes])
   (:gen-class))
@@ -14,10 +14,11 @@
     :or {profile "jetty"
          config {}}}]
   (let [config (add-config "goldly.edn" config)]
-    (if (server? profile)
-      (do (load-config! config)
-          (goldly-run!))
-      (warn "no server mode. not running goldly"))
+    (load-config! config)
+    (when (compile? profile)
+      (goldly-compile!))
+    (when (server? profile)
+      (goldly-run!))
     (webly-run! profile config)))
 
 (defn -main ; for lein alias

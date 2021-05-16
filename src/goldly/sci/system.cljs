@@ -13,7 +13,8 @@
    [pinkie.pinkie :as pinkie]
    [goldly.runner.eventhandler :refer [eventhandler-fn]]
    [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
-   [goldly.sci.bindings-default :refer [bindings-default ns-default]]))
+   [goldly.sci.bindings-static :refer [bindings-static ns-static]]
+   [goldly-bindings-generated :refer [bindings-generated]]))
 
 
 ;; https://github.com/borkdude/sci
@@ -25,7 +26,7 @@
 (defn compile [code bindings]
   (sci/eval-string code {:bindings bindings
                          :preset {:termination-safe true}
-                         :namespaces ns-default}))
+                         :namespaces ns-static}))
 
 ;; compile system
 
@@ -95,7 +96,7 @@
     (fn [_] [:h1 "Error: system html is nil!"])
     (let [bindings-cljs (->bindings-cljs state-a ext fns)
           bindings-clj  (->bindings-clj run-id id fns-clj)
-          bindings (merge bindings-default bindings-clj bindings-cljs)
+          bindings (merge bindings-generated bindings-clj bindings-cljs)
           _ (debug "bindings-system: " bindings)
           component (fn [state-a]
                       (try

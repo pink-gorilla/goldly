@@ -1,11 +1,9 @@
-(ns goldly.sci.bindings-default
+(ns goldly.sci.bindings-static
   (:require
-   [clojure.walk :as walk]))
+   [clojure.walk :as walk]
+   [goldly.sci.bindings-goldly :refer [sin]]))
 
-(defn sin [x]
-  (.sin js/Math x))
-
-(def bindings-default
+(def bindings-static
   {'sin sin
    'println println})
 
@@ -17,5 +15,5 @@
                         'prewalk-replace walk/prewalk-replace
                         'stringify-keys walk/stringify-keys})
 
-(def ns-default
+(def ns-static
   {'walk walk-ns})
