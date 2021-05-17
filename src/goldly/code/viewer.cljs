@@ -27,9 +27,8 @@
 (defn code-viewer [code]
   [:pre.clojure
    [:code {:class "clojure"
-           :ref #(when % (.highlightBlock hljs %))
-           ;:ref #(when % (.lineNumbersBlock hlln %))
-           }
+           ;:ref #(when % (.highlightBlock hljs %))
+           :ref #(when % (.highlightElement hljs %))}
     ;.w-full.font-mono
     ;[:p
     code

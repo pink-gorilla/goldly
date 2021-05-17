@@ -9,45 +9,19 @@
 
  ;[cljs.tools.reader :as reader]
    [cljs.reader]
-   [sci.core :as sci]
    [pinkie.pinkie :as pinkie]
    [goldly.runner.eventhandler :refer [eventhandler-fn]]
    [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
-   [goldly.sci.bindings-static :refer [bindings-static ns-static]]
-   [goldly-bindings-generated :refer [bindings-generated]]))
-
+   [goldly-bindings-generated :refer [bindings-generated]]
+   [goldly.sci.compile :refer [compile-code compile-fn compile-fn-raw]]))
 
 ;; https://github.com/borkdude/sci
 ;; ClojureScript, even when compiled with :advanced, and (as a consequence) JavaScript
 
-;; cljs compile
 
-
-(defn compile [code bindings]
-  (sci/eval-string code {:bindings bindings
-                         :preset {:termination-safe true}
-                         :namespaces ns-static}))
 
 ;; compile system
 
-(defn no-op-fun [f-name]
-  (fn [state e-norm]
-    (info "running function " f-name " (no-fun) ..")))
-
-(defn compile-fn
-  "compiles a system/fns. 
-   On compile error returns no-op-fun"
-  [bindings f-name f-body]
-  (let [_ (info "compile-fn " f-name " bindings: " (keys bindings) " code: " f-body)
-        f-body (cljs.reader/read-string f-body)
-        _ (info "fbody: " f-body)
-        fun (compile f-body bindings)
-        _ (trace "fun: " fun)
-        fun (if fun
-              fun
-              (do (info "compile error in system/fn " f-name)
-                  (no-op-fun f-name)))]
-    fun))
 
 (defn binding-symbol [f-name]
   (->> f-name name (str "?") symbol))
@@ -62,13 +36,26 @@
 (defn- ->bindings-cljs [state ext fns]
   (let [bindings {'state state
                   'ext ext}
+        bindings-fun (merge bindings-generated bindings)
         bindings-cljs (->> fns
                            (map (fn [[f-name f-body]]
                                   [(binding-symbol f-name)
-                                   (->> (compile-fn bindings f-name f-body)
+                                   (->> (compile-fn bindings-fun f-name f-body)
                                         (eventhandler-fn state))]))
                            (into bindings))]
     (debug "bindings-cljs: " bindings-cljs)
+    bindings-cljs))
+
+(defn- ->bindings-cljs-raw [state ext fns]
+  (let [bindings {'state state
+                  'ext ext}
+        bindings-fun (merge bindings-generated bindings)
+        bindings-cljs (->> fns
+                           (map (fn [[f-name f-body]]
+                                  [(binding-symbol f-name)
+                                   (compile-fn-raw bindings-fun f-name f-body)]))
+                           (into bindings))]
+    (debug "bindings-cljs-raw: " bindings-cljs)
     bindings-cljs))
 
 (defn tap [x]
@@ -90,20 +77,21 @@
    or that displays a compile error
    returns: component
             component expects system state as parameter as atom"
-  [run-id state-a ext {:keys [id state html fns fns-clj] :as system}]
+  [run-id state-a ext {:keys [id state html fns fns-raw fns-clj] :as system}]
   (info "compiling system: " system)
   (if (nil? html)
     (fn [_] [:h1 "Error: system html is nil!"])
     (let [bindings-cljs (->bindings-cljs state-a ext fns)
+          bindings-cljs-raw (->bindings-cljs-raw state-a ext fns-raw)
           bindings-clj  (->bindings-clj run-id id fns-clj)
-          bindings (merge bindings-generated bindings-clj bindings-cljs)
+          bindings (merge bindings-generated bindings-clj bindings-cljs bindings-cljs-raw)
           _ (debug "bindings-system: " bindings)
           component (fn [state-a]
                       (try
-                        (-> (compile html bindings)
+                        (-> (compile-code html bindings)
                             pinkie/tag-inject)
                         (catch :default e
-                          (.log js/console e)
+                          (error "compile system error ex: " e)
                           (fn [state-a] [compile-error {:state @state-a
                                                         :html html
                                                         :fns fns
@@ -131,7 +119,6 @@
         make! (fn [system ext]
                 (let [new-c [ext system]]
                   (when-not (= new-c @compiled-system)
-                    (info "comiling ext:" ext)
                     (reset! component (make-component run-id ext system))
                     (reset! compiled-system new-c))))]
 

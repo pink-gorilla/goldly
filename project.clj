@@ -29,7 +29,7 @@
                  [fipp "0.6.23"] ; edn pretty printing
                  [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
-                 [org.pinkgorilla/webly "0.2.36"]]
+                 [org.pinkgorilla/webly "0.2.38"]]
 
   :source-paths ["src"]
   :resource-paths ["resources" ; notebooks

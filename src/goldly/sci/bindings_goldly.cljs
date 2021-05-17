@@ -1,4 +1,6 @@
-(ns goldly.sci.bindings-goldly)
+(ns goldly.sci.bindings-goldly
+  (:require
+   [taoensso.timbre :as timbre]))
 
 ; why is this here?
 
@@ -9,3 +11,17 @@
 
 (defn sin [x]
   (.sin js/Math x))
+
+(defn log! [l & args]
+   ;(timbre/log! l :p args {:?line 77})
+  (println l args))
+
+(defn info [& args]
+  (apply log! :info args))
+
+(defn warn  [& args]
+  (apply log! :warn args))
+
+(defn error  [& args]
+  (apply log! :error args))
+

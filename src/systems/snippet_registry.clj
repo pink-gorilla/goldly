@@ -166,4 +166,9 @@
               :id :greeter-snippet
               :filename "snippets/goldly/greeter.clj"})
 
+(add-snippet {:type :goldly-clj
+              :category :goldly
+              :id :binding-test
+              :filename "snippets/goldly/binding_test.clj"})
+
 (info "snippets: " (snippets-by-category))
