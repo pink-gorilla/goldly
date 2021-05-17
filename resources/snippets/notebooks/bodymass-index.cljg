@@ -1,0 +1,166 @@
+;; gorilla-repl.fileformat = 2
+
+;; @@ [meta]
+{:name "body mass calculator", :tags "cljs, demo, cool, reagent", :tagline "bodymass indicator (using only cljs reagent)"}
+
+;; @@
+
+;; **
+;;; # Body Mass Indicator Demo 
+;;; 
+;;; Uses cljs kernel with reagent.
+;;; There are two versions of this bmi calculator. 
+;;; This sheet: client only
+;;; The other sheet : calculation happens on the server.
+;; **
+
+;; @@ [cljs]
+; define the state
+(def bmi-data (reagent.core/atom {:height 180 :weight 80}))
+;; @@
+;; =>
+;;; ["^ ","~:type","~:html","~:content",["~:span",["^ ","~:class","clj-unknown"],"#'cljs.user/bmi-data"],"~:value","#'cljs.user/bmi-data"]
+;; <=
+
+;; @@ [cljs]
+; show the state
+@bmi-data
+;; @@
+;; =>
+;;; ["^ ","~:type","~:list-like","~:open",["~:span",["^ ","~:class","clj-map"],"{"],"~:close",["^3",["^ ","^4","clj-map"],"}"],"~:separator",["^3",", "],"~:items",["~#list",[["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","~:html","~:content",["^3",["^ ","^4","clj-keyword"],":height"],"~:value",":height"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"180"],"^;","180"]]],"^;","[:height 180]"],["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","^9","^:",["^3",["^ ","^4","clj-keyword"],":weight"],"^;",":weight"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"80"],"^;","80"]]],"^;","[:weight 80]"]]],"^;","{:height 180, :weight 80}"]
+;; <=
+
+;; @@ [cljs]
+; define the calculation function. Note that 
+; 1. a change in the atom will trigger re-rendering
+; 2. setting :bmi to nil will calculate bmi; otherwise the weight will be adjusted. 
+(defn calc-bmi []
+  (let [{:keys [height weight bmi] :as data} @bmi-data
+        h (/ height 100)]
+    (if (nil? bmi)
+      (assoc data :bmi (/ weight (* h h)))
+      (assoc data :weight (* bmi h h)))))
+;; @@
+;; =>
+;;; ["^ ","~:type","~:html","~:content",["~:span",["^ ","~:class","clj-unknown"],"#'cljs.user/calc-bmi"],"~:value","#'cljs.user/calc-bmi"]
+;; <=
+
+;; @@ [cljs]
+; calculate for fun
+(calc-bmi)
+;; @@
+;; =>
+;;; ["^ ","~:type","~:list-like","~:open",["~:span",["^ ","~:class","clj-map"],"{"],"~:close",["^3",["^ ","^4","clj-map"],"}"],"~:separator",["^3",", "],"~:items",["~#list",[["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","~:html","~:content",["^3",["^ ","^4","clj-keyword"],":height"],"~:value",":height"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"180"],"^;","180"]]],"^;","[:height 180]"],["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","^9","^:",["^3",["^ ","^4","clj-keyword"],":weight"],"^;",":weight"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"80"],"^;","80"]]],"^;","[:weight 80]"],["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","^9","^:",["^3",["^ ","^4","clj-keyword"],":bmi"],"^;",":bmi"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"24.691358024691358"],"^;","24.691358024691358"]]],"^;","[:bmi 24.691358024691358]"]]],"^;","{:height 180, :weight 80, :bmi 24.691358024691358}"]
+;; <=
+
+;; @@ [cljs]
+; the slider is used for all 3 elements.
+; however, the non-bmi sliders will reset :bmi property!
+(defn slider [param value min max]
+  [:input {:type "range" :value value :min min :max max
+           :style {:width "100%"}
+           :on-change (fn [e]
+                        (println "slider has changed!")
+                        (swap! bmi-data assoc param (.. e -target -value))
+                        (when (not= param :bmi)
+                          (swap! bmi-data assoc :bmi nil)))}])
+;; @@
+;; =>
+;;; ["^ ","~:type","~:html","~:content",["~:span",["^ ","~:class","clj-unknown"],"#'cljs.user/slider"],"~:value","#'cljs.user/slider"]
+;; <=
+
+;; @@ [cljs]
+; show only one slider
+(pinkgorilla.notebook.repl/r! 
+ (fn []
+ [:div 
+  [:p(str  "height: " (:height @bmi-data))]
+  [cljs.user/slider :height (:height @bmi-data) 100 220]
+  ]))
+
+;; @@
+;; =>
+;;; {}
+;; <=
+
+;; @@ [cljs]
+; lets change the height manually (the slider above adjusts)
+(swap! bmi-data assoc :height 150)
+;; @@
+;; =>
+;;; ["^ ","~:type","~:list-like","~:open",["~:span",["^ ","~:class","clj-map"],"{"],"~:close",["^3",["^ ","^4","clj-map"],"}"],"~:separator",["^3",", "],"~:items",["~#list",[["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","~:html","~:content",["^3",["^ ","^4","clj-keyword"],":height"],"~:value",":height"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"150"],"^;","150"]]],"^;","[:height 150]"],["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","^9","^:",["^3",["^ ","^4","clj-keyword"],":weight"],"^;",":weight"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"80"],"^;","80"]]],"^;","[:weight 80]"]]],"^;","{:height 150, :weight 80}"]
+;; <=
+
+;; @@ [cljs]
+; one more time.
+(swap! bmi-data assoc :height 180)
+;; @@
+;; =>
+;;; ["^ ","~:type","~:list-like","~:open",["~:span",["^ ","~:class","clj-map"],"{"],"~:close",["^3",["^ ","^4","clj-map"],"}"],"~:separator",["^3",", "],"~:items",["~#list",[["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","~:html","~:content",["^3",["^ ","^4","clj-keyword"],":height"],"~:value",":height"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"180"],"^;","180"]]],"^;","[:height 180]"],["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","^9","^:",["^3",["^ ","^4","clj-keyword"],":weight"],"^;",":weight"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"80"],"^;","80"]]],"^;","[:weight 80]"]]],"^;","{:height 180, :weight 80}"]
+;; <=
+
+;; @@ [cljs]
+; the atom also changes the value
+@bmi-data
+;; @@
+;; =>
+;;; ["^ ","~:type","~:list-like","~:open",["~:span",["^ ","~:class","clj-map"],"{"],"~:close",["^3",["^ ","^4","clj-map"],"}"],"~:separator",["^3",", "],"~:items",["~#list",[["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","~:html","~:content",["^3",["^ ","^4","clj-keyword"],":height"],"~:value",":height"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"180"],"^;","180"]]],"^;","[:height 180]"],["^ ","^0","^1","^2",null,"^5",null,"^6",["^3"," "],"^7",["^8",[["^ ","^0","^9","^:",["^3",["^ ","^4","clj-keyword"],":weight"],"^;",":weight"],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-long"],"80"],"^;","80"]]],"^;","[:weight 80]"]]],"^;","{:height 180, :weight 80}"]
+;; <=
+
+;; @@ [cljs]
+; visualiyation of bmi component.
+;note how (calc-bmi is called.). This triggers the feedback loop essentially.
+
+(defn bmi-component []
+  (let [{:keys [weight height bmi]} (calc-bmi)
+        [color diagnose] (cond
+                          (< bmi 18.5) ["orange" "underweight"]
+                          (< bmi 25) ["inherit" "normal"]
+                          (< bmi 30) ["orange" "overweight"]
+                          :else ["red" "obese"])]
+    [:div
+     [:h3 "BMI calculator"]
+     [:div
+      "Height: " (int height) "cm"
+      [slider :height height 100 220]]
+     [:div
+      "Weight: " (int weight) "kg"
+      [slider :weight weight 30 150]]
+     [:div
+      "BMI: " (int bmi) " "
+      [:span {:style {:color color}} diagnose]
+      [slider :bmi bmi 10 50]]]))
+;; @@
+;; =>
+;;; ["^ ","~:type","~:html","~:content",["~:span",["^ ","~:class","clj-unknown"],"#'cljs.user/bmi-component"],"~:value","#'cljs.user/bmi-component"]
+;; <=
+
+;; @@ [cljs]
+; trigger rendering of reagent hiccup via function
+(pinkgorilla.notebook.repl/r! bmi-component)
+;; @@
+;; =>
+;;; {}
+;; <=
+
+;; @@ [cljs]
+; meta data to trigger rendering of reagent hiccup
+^:r [bmi-component]
+;; @@
+;; =>
+;;; {}
+;; <=
+
+;; @@ [clj]
+
+;; @@
+
+;; @@ [clj]
+
+;; @@
+;; ->
+;;; 
+;; <-
+;; =>
+;;; ["^ ","~:type","html","~:value",["~:span"]]
+;; <=
