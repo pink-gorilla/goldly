@@ -127,14 +127,19 @@
            [:h1.m-2.bg-blue-300
             [:a {:href "/system/snippet-registry/"}
              "snippet-registry"]]
-           (let [src (get-in @state [:snippet :src])]
-             [:div.border.border-round.m-2.p-2
-              [:p/code src]])
-           (if ext
-             [:p/goldly (keyword ext)]
-             [:h1.bg-red-500.m-2 "no goldly system defined ext: " ext])]
+           [:div.grid.grid-cols-2.w-full.h-full.min-h-full.bg-yellow-200 ;.flex.flex-row..items-stretch
+            (let [src (get-in @state [:snippet :src])]
+              [:div.h-full ; .flex-grow ; border.border-round.m-2.p-2.bg-yellow-500
+                [:p/code src]])
+            [:div.bg-blue-100.h-full ; .flex-grow  ; flex-grow scales the element to remaining space
+             {:style {:overflow-y "auto"}}
+             (if ext
+               [:p/goldly (keyword ext)]
+               [:h1.bg-red-500.m-2 "no goldly system defined ext: " ext])]]]
    :fns {}}
   {:fns {:load-snippet [load-snippet [:snippet]]}}))
+
+
 
 (add-snippet {:type :pinkie
               :category :goldly
