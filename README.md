@@ -43,6 +43,7 @@ add the ui extensions to the javascript bundle.
 
 This example adds gorilla-ui to goldly:
 
+**for tools.deps**
 Add this alias to your deps.edn:
 
 ```
@@ -53,6 +54,19 @@ Add this alias to your deps.edn:
    :exec-args {:profile "watch"
                :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
                                               ]}}}}
+```
+
+**for leiningen**
+Add the alias to project.clj
+```
+{:alias
+   "goldly"
+   ["with-profile" "+goldly" "run" "-m" "goldly-server.app" "watch" "goldly-gorillaui.edn"]}
+
+```
+Add a goldly-gorillaui.edn:
+```
+{:goldly {:extensions [[pinkgorilla.ui.goldly]]}}
 ```
 
 
