@@ -1,13 +1,11 @@
 (ns ui.goldly.fun
   (:require
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info warn error]]
-   [re-frame.core :as rf]))
-
-; why is this here?
+   [re-frame.core :as rf]
+   [pinkie.pinkie :refer-macros [register-component]]))
 
 ; this is a clojurescript namespace
-; this functions have to go to the bundel
-; goldly has a system to add code to bundels, and this needs to be tested.
+; functions that should be available to all goldly systems
 
 
 (defn nav [& args]
@@ -60,3 +58,12 @@
 (defn error  [& args]
   (apply log! :error args))
 
+(defn ^{:category :pinkie
+        :hidden true}
+  exception-component
+  "a component that throws exceptions for testing."
+  []
+  (throw {:type :custom-error
+          :message "Something unpleasant occurred"}))
+
+(register-component :p/exc exception-component)
