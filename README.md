@@ -11,7 +11,7 @@
 - uses the sci clojurescript interpreter for dynamic ui interactions at runtime
 - load data from clojure (from the frontend app)
 
-usecases
+**usecases**
 - visualize edn datastructures (either from a repl or in the web-app (via sratchpad) 
 - quickly write a web dashboards (by using only clojure). 
   - [EDGAR](https://github.com/clojure-quant/edgar) uses it to vizualise mutual fund holdings
@@ -22,16 +22,24 @@ usecases
 # How to setup goldly
 
 You have two options:
+- use [goldly bundel](https://github.com/pink-gorilla/goldly-bundel) which ships
+  a pre-built javascript budle and already includes many ui-renderers. 
 - use goldly to build javascript bundle from scratch. 
   This takes more time (everything needs to be compiled), 
-  but it allows ou to add custom ui renderers to your goldly app
-- use [goldly bundel](https://github.com/pink-gorilla/goldly-bundel) which ships
-  a pre-built javascript budle and already includes many ui-renderers.
+  but it allows uou to add custom ui renderers to your goldly app
 
+## Setup Goldly-Bundel
 
-## Goldly with custom ui-renderers in your project:
+Please refer to the [goldly bundel](https://github.com/pink-gorilla/goldly-bundel) readme for setup.
+
+## Setup Goldly with custom ui-renderers:
 
 This configures goldly with your set of ui-renderers.
+
+You have to include the goldly and ui-renderer dependencies, and then add the
+namespace of the ui-renderer to goldly/extensions. This allows goldly to 
+add the ui extensions to the javascript bundle.
+
 This example adds gorilla-ui to goldly:
 
 Add this alias to your deps.edn:
@@ -46,9 +54,7 @@ Add this alias to your deps.edn:
                                               ]}}}}
 ```
 
-You have to include the ui-renderer dependencies, and then add the
-namespace of the ui-renderer to goldly/extensions. This allows goldly to 
-add the ui extensions to the javascript bundle.
+
 
 # run the demo (in this project)
 
