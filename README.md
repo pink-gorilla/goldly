@@ -69,14 +69,12 @@ Add a goldly-gorillaui.edn:
 {:goldly {:extensions [[pinkgorilla.ui.goldly]]}}
 ```
 
-
-
 # run the demo (in this project)
 
-To run goldly with some demonstration systems
+**run goldly without ui-extensions**
 
 ```
-lein goldly watch    ; runs a webserver on port 8000.
+lein goldly    ; runs a webserver on port 8000.
 ```
 
 - Then open browser `http://localhost:8000`
@@ -93,6 +91,15 @@ The snippets are primitive, but demonstrate certain features of goldly:
   used for master-detail type of navigation.
 - fortune: demonstrates how to load data from clojure (could be a database)
 - time: demonstrates to push data from clojure
+
+
+**run goldly with ui-extensions**
+
+```
+lein goldly-bundel
+```
+
+This is the same config as in goldly-bundel, but we do not auto-generate a javascript bundel. 
 
 
 # send data from the repl

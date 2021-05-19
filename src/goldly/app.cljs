@@ -5,14 +5,9 @@
 
    [goldly.puppet.subs]
    [goldly.puppet.db]
-
-   [goldly.views.system-list]
-   [goldly.views.system]
-
+   [goldly.system]
    [goldly.runner.ws]
    [goldly.runner.db] ; side-effects
    [goldly.runner.clj-fn] ; side-effects
    [goldly.events]
-   [goldly.notebook.pinkie]
-   ;[goldly.code.core] ; side-effecte
-   ))
+   [goldly.notebook.pinkie]))

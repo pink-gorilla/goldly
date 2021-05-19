@@ -16,11 +16,9 @@
                      :type :pinkie
                      :src "[:h1.color-red \"hello, world!\"]"}}
    :html  [:div
-           (when-let [v (clipboard-pop)
-                      v (when v (assoc v :id :scratchpad-system))]
+           (when-let [v (clipboard-pop)]
              (info "received snippet from clipboard: " v)
-             (swap! state assoc :snippet v)
-             (swap! state assoc :snippet2 v))
+             (swap! state assoc :snippet (assoc v :id :scratchpad-system)))
            [:h1.m-2.bg-blue-300
             [:span "type: " (get-in @state [:snippet :type])]
             [:button.border.border-round.m-1
@@ -37,8 +35,10 @@
              {:style {:overflow-y "auto"}}
              (if (:new-system @state)
                (do (swap! state assoc :new-system false)
-                   [:p "reloading system.."])
-               [:p/goldly :scratchpad-system])]]]
+                   [:p "no system is running"])
+               [:<>
+                [:p/goldly :scratchpad-system]
+                [:p/frisk @state]])]]]
    :fns {:eval (fn []
                  (info "eval:" @state)
                  @state)}}

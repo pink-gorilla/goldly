@@ -31,8 +31,7 @@
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
                  [org.pinkgorilla/webly "0.2.38"]
                  [org.pinkgorilla/ui-codemirror "0.0.4"]
-                 [cljs-ajax "0.8.3"]
-                 ]
+                 [cljs-ajax "0.8.3"]]
 
   :source-paths ["src"]
   :resource-paths ["resources" ; notebooks
@@ -42,7 +41,13 @@
                                     [:goldly :builds :app :compiler :output-dir]
                                     [:goldly :builds :app :compiler :output-to]]
 
-  :profiles {:dev {:source-paths ["test"]
+  :profiles {:bundel {:dependencies [; bundled dependencies
+                                     [org.pinkgorilla/gorilla-ui "0.3.22" :exclusions [org.clojure/clojurescript]]
+                                     [org.pinkgorilla/gorilla-plot "1.2.8" :exclusions [org.clojure/clojurescript]]
+                                     [org.pinkgorilla/ui-binaryclock "0.0.4"]
+                                     [org.pinkgorilla/ui-quil "0.1.5"]]}
+
+             :dev {:source-paths ["test"]
                    :dependencies [[clj-kondo "2021.04.23"]
                                   ;[ring/ring-mock "0.4.0"]
                                   ]
@@ -53,7 +58,6 @@
                                   [lein-ancient "0.6.15"]
                                   ;[min-java-version "0.1.0"]
                                   ;[lein-resource "17.06.1"]
-                                  
                                   ]
                    :aliases      {"lint" ^{:doc "Runs code linter"}
                                   ["run" "-m" "clj-kondo.main" "--lint" "src"]
@@ -73,7 +77,12 @@
                                             merge-meta          [[:inner 0]]
                                             try-if-let          [[:block 1]]}}}}
 
-
   :aliases {"goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["run" "-m" "goldly-server.app"]})
+            ["run" "-m" "goldly-server.app" "watch"]
+            
+            "goldly-bundel" 
+            ["with-profile" "+bundel"
+             "run" "-m" "goldly-server.app" "watch" "goldly-bundel.edn"]
+            
+            })
 

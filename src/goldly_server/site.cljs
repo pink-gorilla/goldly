@@ -1,4 +1,4 @@
-(ns goldly.views.site
+(ns goldly-server.site
   (:require
    [webly.user.template :as template]))
 

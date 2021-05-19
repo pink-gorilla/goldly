@@ -1,11 +1,9 @@
 (ns goldly.puppet.subs
-  (:require-macros
-   [reagent.ratom])
   (:require
    [re-frame.core :refer [reg-sub]]))
 
 (reg-sub
- :systems
+ :goldly/systems
  (fn [db _]
    (get-in db [:goldly :systems])))
 

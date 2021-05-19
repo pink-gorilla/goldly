@@ -1,12 +1,13 @@
-(ns goldly.views.system-list
+(ns goldly-server.pages.system-list
   (:require
-   [taoensso.timbre :as timbre :refer-macros [info]]
-   [re-frame.core :as rf :refer [subscribe reg-sub]]
+   [reagent.core :as r]
+   [re-frame.core :as rf]
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
-   [goldly.views.site :refer [header]]))
+   [goldly.runner.ws :refer [request-systems]]
+   [goldly-server.site :refer [header]]))
 
-(reg-sub
+(rf/reg-sub
  :webly/routes
  (fn [db _]
    (get-in db [:bidi])))
@@ -30,10 +31,15 @@
                   :href (bidi/path-for (:client routes) :goldly/system :system-id id)} id]]))))
 
 (defn systems-list-page []
-  (let [routes (subscribe [:webly/routes])
-        systems (subscribe [:systems])]
+  (let [routes (rf/subscribe [:webly/routes])
+        systems (rf/subscribe [:goldly/systems])
+        first (r/atom true)]
     (fn []
       ;[:div.bg-blue-200.h-screen.w-screen
+      (when @first
+        (reset! first false)
+        ;(request-systems)
+        nil)
       [:div
        [header]
        [:div.container.mx-auto ; tailwind containers are not centered by default; mx-auto does this
