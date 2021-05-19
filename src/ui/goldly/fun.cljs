@@ -18,8 +18,16 @@
                                           :result result
                                           :where where}]))
 
+(defn modal [f & [size]]
+  (if size
+    (rf/dispatch [:modal/open [f] :small])
+    (rf/dispatch [:modal/open [f]])))
+
 (defn timeout [f ms]
   (js/setTimeout f ms))
+
+(defn alert [s]
+  (js/alert s))
 
 (defn evt-val [e]
   (.. e -target -value))

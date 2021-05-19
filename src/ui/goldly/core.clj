@@ -19,7 +19,9 @@
                     'clipboard-set ui.goldly.fun/clipboard-set
                     'clipboard-pop ui.goldly.fun/clipboard-pop
                     'timeout ui.goldly.fun/timeout
+                    'alert ui.goldly.fun/alert
                     'evt-val ui.goldly.fun/evt-val
+                    'modal ui.goldly.fun/modal
                     ; logging
                     'println println
                     'info ui.goldly.fun/info
