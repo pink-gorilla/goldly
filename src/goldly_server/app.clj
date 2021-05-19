@@ -25,4 +25,7 @@
   ([]
    (goldly-server-run! {}))
   ([profile]
-   (goldly-server-run! {:profile profile})))
+   (goldly-server-run! {:profile profile}))
+  ([profile config]
+   (goldly-server-run! {:profile profile
+                        :config config})))
