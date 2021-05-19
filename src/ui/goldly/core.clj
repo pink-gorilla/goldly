@@ -4,13 +4,11 @@
    [goldly.sci.bindings :refer [add-cljs-namespace add-cljs-bindings generate-bindings]]))
 
 ; cljs ui
-
-
 (add-cljs-namespace [ui.goldly.code.core]) ; for code viewer bundle inclusion
 (add-cljs-namespace [ui.codemirror.goldly.core]) ; codemirror
 
-
 ; cljs functions
+(add-cljs-namespace [ajax.core]) ; http library
 (add-cljs-namespace [ui.goldly.fun]) ; test if bindings generation works
 
 (add-cljs-bindings {; goldly
@@ -18,6 +16,7 @@
                     'nav ui.goldly.fun/nav
                     'clipboard-set ui.goldly.fun/clipboard-set
                     'clipboard-pop ui.goldly.fun/clipboard-pop
+                    'parse-float ui.goldly.fun/parse-float
                     'timeout ui.goldly.fun/timeout
                     'alert ui.goldly.fun/alert
                     'evt-val ui.goldly.fun/evt-val
@@ -29,5 +28,8 @@
                     'error ui.goldly.fun/error
                     ; math
                     'sin ui.goldly.fun/sin ; test bindings
+                    ; http
+                    'GET ajax.core/GET
+                    'POST ajax.core/POST
                 ;
                     })

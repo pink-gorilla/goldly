@@ -31,6 +31,7 @@
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
                  [org.pinkgorilla/webly "0.2.38"]
                  [org.pinkgorilla/ui-codemirror "0.0.4"]
+                 [cljs-ajax "0.8.3"]
                  ]
 
   :source-paths ["src"]

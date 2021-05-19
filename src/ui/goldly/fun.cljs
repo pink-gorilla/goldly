@@ -24,6 +24,17 @@
 (defn timeout [f ms]
   (js/setTimeout f ms))
 
+#_(defn repeat [f ms]
+    (.setTimeout
+     js/window
+     (fn []
+       (f)
+       (repeat f ms))
+     ms))
+
+(defn parse-float [s]
+  (js/parseFloat s))
+
 (defn alert [s]
   (js/alert s))
 
