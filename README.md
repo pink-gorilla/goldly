@@ -8,6 +8,7 @@
   - leaflet for geographic map
   - quil for 2d dynamic animations
   - vizualizers can be easily extended. you can access the entire npm + clojurescript ecosystem.
+    An example for a simple ui extension is [ui-binaryclock](https://github.com/pink-gorilla/ui-binary-clock)
 - uses the sci clojurescript interpreter for dynamic ui interactions at runtime
 - load data from clojure (from the frontend app)
 
