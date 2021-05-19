@@ -1,7 +1,7 @@
-(ns goldly.code.css
+(ns ui.goldly.code.css
   (:require
    [webly.user.css.helper :refer [add-themes]]
-   [goldly.code.themes :refer [themes]]))
+   [ui.goldly.code.themes :refer [themes]]))
 
 (def components
   {:highlight (add-themes

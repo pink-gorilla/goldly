@@ -1,4 +1,4 @@
-(ns goldly.code.viewer
+(ns ui.goldly.code.viewer
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    ["highlight.js/lib/core" :as hljs]

@@ -1,12 +1,9 @@
 (ns goldly.sci.bindings-static
   (:require
-   [clojure.walk :as walk]
-  ; [goldly.sci.bindings-goldly :refer [sin]]
-   ))
+   [clojure.walk :as walk]))
 
 #_(def bindings-static
-    {'sin sin
-     'println println})
+    {'println println})
 
 (def ns-static
   {'walk {'postwalk walk/postwalk

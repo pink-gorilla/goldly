@@ -66,3 +66,15 @@
        (taoensso.timbre/debug "received clj result for unknown system-id " system-id))
      (taoensso.timbre/error "clj-result failed requirement: {:system-id :where}"))
    db))
+
+(reg-event-db
+ :goldly/set-system-state
+ (fn [db [_ {:keys [system-id result where] :as data}]]
+   (if (clj-response-valid? data)
+     (if-let [system (get-running-system db data)]
+       (if-let [update-state (get-in system [:update-state])]
+         (safe update-state result where)
+         (taoensso.timbre/error "set-system-state update-state missing. data: " data))
+       (taoensso.timbre/debug "set-system-state result for unknown system-id " system-id))
+     (taoensso.timbre/error "set-system-state failed requirement: {:system-id :where}"))
+   db))

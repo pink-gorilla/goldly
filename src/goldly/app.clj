@@ -7,16 +7,10 @@
    [goldly.runner.clj-fn] ; side-efects
    [goldly.notebook.picasso] ; side-efects
    [goldly.puppet.require :refer [require-namespaces]]
-   [goldly.sci.bindings :refer [add-cljs-namespace add-cljs-bindings generate-bindings]]))
-
-(add-cljs-namespace [goldly.code.core]) ; for code viewer bundle inclusion
-;(add-cljs-namespace [clojure.walk :as walk])
-(add-cljs-namespace [goldly.sci.bindings-goldly]) ; test if bindings generation works
-(add-cljs-bindings {'sin goldly.sci.bindings-goldly/sin ; test bindings
-                    'println println
-                    'info goldly.sci.bindings-goldly/info
-                    'warn goldly.sci.bindings-goldly/warn
-                    'error goldly.sci.bindings-goldly/error})
+   [goldly.sci.bindings :refer [generate-bindings]]
+   [ui.goldly.core] ; side-effects 
+   [ui.goldly.snippets] ; side-effects
+   ))
 
 (defn goldly-compile! []
   (let [{:keys [systems extensions]}

@@ -1,8 +1,5 @@
 # R - shiny
 
-The design of goldly was inspired by R/shiny.
-
-
 https://react-r.github.io/reactR/articles/intro_htmlwidgets.html
 https://www.htmlwidgets.org/
 

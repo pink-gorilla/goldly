@@ -4,7 +4,8 @@
    [clojure.java.io :as io]
    [clojure.core :refer [read-string load-string]]
    [goldly.system :as goldly]
-   [goldly.runner :refer [system-start!]])
+   [goldly.runner :refer [system-start!]]
+   [systems.snippet-runner :refer [start-snippet]])
   (:import
    [java.util UUID]))
 
@@ -39,41 +40,6 @@
                first)]
     (when s
       (assoc s :src (slurp-res-or-file (:filename s))))))
-
-(defn html->system [id src]
-  {:id id
-   :state {}
-   :html (read-string src)
-   :fns {}})
-
-(defn start-pinkie [{:keys [src id] :as snippet}]
-  (system-start!
-   (goldly/system-html
-    (html->system id src)
-    {:fns {}})))
-
-(defn goldly->system [id src]
-  (let [s (read-string src)]
-    (assoc s :id id)))
-
-(defn start-goldly [{:keys [src id] :as snippet}]
-  (system-start!
-   (goldly/system-html
-    (goldly->system id src)
-    {:fns {}})))
-
-(defn start-goldly-clj [{:keys [src id] :as snippet}]
-  (let [;s (read-string src)
-        ;x (eval s)
-        x (load-string src)]
-    snippet))
-
-(defn start-snippet [{:keys [type] :as s}]
-  (case type
-    :pinkie (start-pinkie s)
-    :goldly (start-goldly s)
-    :goldly-clj (start-goldly-clj s)
-    (error "cannot start snippet of unknown type: " s)))
 
 (defn load-snippet [id]
   (let [id-kw (keyword id)
@@ -123,57 +89,25 @@
            (when (:first @state)
              (swap! state assoc :first false)
              (?load-snippet ext))
-           [:h1 "Goldly Snippet Viewer"]
            [:h1.m-2.bg-blue-300
-            [:a {:href "/system/snippet-registry/"}
-             "snippet-registry"]]
+            [:span "type: " (get-in @state [:snippet :type])]
+            [:a.border.border-round.m-1 {:on-click ?edit} "edit"]
+            [:a.border.border-round.m-1 {:href "/system/snippet-registry"} "snippet-registry"]]
            [:div.grid.grid-cols-2.w-full.h-full.min-h-full.bg-yellow-200 ;.flex.flex-row..items-stretch
             (let [src (get-in @state [:snippet :src])]
               [:div.h-full ; .flex-grow ; border.border-round.m-2.p-2.bg-yellow-500
-                [:p/code src]])
+               [:p/code src]])
             [:div.bg-blue-100.h-full ; .flex-grow  ; flex-grow scales the element to remaining space
              {:style {:overflow-y "auto"}}
              (if ext
                [:p/goldly (keyword ext)]
                [:h1.bg-red-500.m-2 "no goldly system defined ext: " ext])]]]
-   :fns {}}
+   :fns {:edit (fn []
+                 ;(set-system-state :scratchpad (:snippet @state) [:snippet])
+                 (clipboard-set (:snippet @state))
+                 (nav :goldly/system :system-id :scratchpad)
+                 @state)}}
+
   {:fns {:load-snippet [load-snippet [:snippet]]}}))
 
 
-
-(add-snippet {:type :pinkie
-              :category :goldly
-              :id :hello-world
-              :filename "snippets/goldly/hello.edn"})
-
-(add-snippet {:type :pinkie
-              :category :goldly
-              :id :error-snippet
-              :filename "snippets/goldly/error.edn"})
-
-(add-snippet {:type :goldly
-              :category :goldly
-              :id :click-counter-snippet
-              :filename "snippets/goldly/click_counter.clj"})
-
-(add-snippet {:type :goldly-clj
-              :category :goldly
-              :id :fortune-snippet
-              :filename "snippets/goldly/fortune.clj"})
-
-(add-snippet {:type :goldly-clj
-              :category :goldly
-              :id :time-snippet
-              :filename "snippets/goldly/time.clj"})
-
-(add-snippet {:type :goldly-clj
-              :category :goldly
-              :id :greeter-snippet
-              :filename "snippets/goldly/greeter.clj"})
-
-(add-snippet {:type :goldly-clj
-              :category :goldly
-              :id :binding-test
-              :filename "snippets/goldly/binding_test.clj"})
-
-(info "snippets: " (snippets-by-category))

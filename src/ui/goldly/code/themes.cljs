@@ -1,4 +1,4 @@
-(ns goldly.code.themes)
+(ns ui.goldly.code.themes)
 
 (def themes-main
   ["default"

@@ -2,8 +2,7 @@
   "process-instructions from goldly clj server"
   (:require
    [re-frame.core :as rf]
-   [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
-   [goldly.code.css :as code-viewer]))
+   [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]))
 
 (def initial-db
   {:systems []
@@ -16,7 +15,7 @@
  (fn [db _]
    (let [db (or db {})]
      (info "goldly starting ..")
-     (rf/dispatch [:css/add-components code-viewer/components code-viewer/config])
+
      (rf/dispatch [:ga/event {:category "goldly" :action "started" :label 77 :value 13}])
      (assoc-in db [:goldly] initial-db))))
 

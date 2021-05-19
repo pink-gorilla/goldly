@@ -1,12 +1,11 @@
 (require '[taoensso.timbre :as timbre :refer [trace debug debugf info infof error]])
-(info "compiled snippet fortune!")
 (require '[goldly.system :as goldly])
 (require '[goldly.runner :refer [system-start!]])
 (require '[systems.fortune-db :as db])
 
 (system-start!
  (goldly/system
-  {:id :fortune-snippet
+  {:id :fortune
    :state {:cookie nil}
    :html  [:div
            [:h1 "Fortune Cookies (Snippet)"]
