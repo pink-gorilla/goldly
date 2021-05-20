@@ -29,7 +29,7 @@
                  [fipp "0.6.23"] ; edn pretty printing
                  [org.pinkgorilla/pinkie "0.3.3"] ; frontend ui layout
                  [org.pinkgorilla/picasso "3.1.21"] ; type rendering
-                 [org.pinkgorilla/webly "0.2.38"]
+                 [org.pinkgorilla/webly "0.2.39"]
                  [org.pinkgorilla/ui-codemirror "0.0.4"]
                  [cljs-ajax "0.8.3"]]
 
@@ -42,8 +42,8 @@
                                     [:goldly :builds :app :compiler :output-to]]
 
   :profiles {:bundel {:dependencies [; bundled dependencies
-                                     [org.pinkgorilla/gorilla-ui "0.3.22" :exclusions [org.clojure/clojurescript]]
-                                     [org.pinkgorilla/gorilla-plot "1.2.8" :exclusions [org.clojure/clojurescript]]
+                                     [org.pinkgorilla/gorilla-ui "0.3.23" :exclusions [org.clojure/clojurescript]]
+                                     [org.pinkgorilla/gorilla-plot "1.2.9" :exclusions [org.clojure/clojurescript]]
                                      [org.pinkgorilla/ui-binaryclock "0.0.4"]
                                      [org.pinkgorilla/ui-quil "0.1.5"]]}
 
