@@ -38,7 +38,7 @@ goldly-bundel is identical to goldly, it only brings the compiled javascript bun
 To start the goldly via goldly-bundel:
 
 ```
-clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "0.2.35"}}}' -m goldly-server-bundel.app
+clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}}' -m goldly-server.app
 ```
 
 ## Setup Goldly with custom ui-renderers:
@@ -56,8 +56,8 @@ Add this alias to your deps.edn:
 
 ```
  :goldly
-  {:extra-deps {org.pinkgorilla/goldly {:mvn/version "0.2.39"}
-                org.pinkgorilla/gorilla-ui {:mvn/version "0.3.21"}}
+  {:extra-deps {org.pinkgorilla/goldly {:mvn/version "RELEASE"}
+                org.pinkgorilla/gorilla-ui {:mvn/version "RELEASE"}}
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"
                :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
@@ -110,5 +110,8 @@ clojure -X:goldly-bundel
 This is the same config as in goldly-bundel, but the javascript bundel is generated on the fly. 
 
 
-# send data from the repl
+# API
+
+You can get and set the scratchpad data via http api.
+Please execute `./script/scratchpad-get.sh` or `./script/scratchpad-set.sh`
 

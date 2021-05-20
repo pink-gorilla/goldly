@@ -46,7 +46,7 @@
 (defn get-running-system [db {:keys [run-id system-id result error where] :as data}]
   (if (nil? run-id)
     (find-system-by-id db system-id)
-    (get-in db [:goldly :running-systems run-id])))
+    (get-in db [:goldly :running run-id])))
 
 (defn safe [update-state result where]
   (try

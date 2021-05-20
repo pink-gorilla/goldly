@@ -6,19 +6,13 @@
    [reagent.dom]
    [re-frame.core :refer [dispatch]]
    [cljs-uuid-utils.core :as uuid]
-
- ;[cljs.tools.reader :as reader]
+  ;[cljs.tools.reader :as reader]
    [cljs.reader]
    [pinkie.pinkie :as pinkie]
    [goldly.runner.eventhandler :refer [eventhandler-fn]]
    [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
    [goldly-bindings-generated :refer [bindings-generated]]
    [goldly.sci.compile :refer [compile-code compile-fn compile-fn-raw]]))
-
-;; https://github.com/borkdude/sci
-;; ClojureScript, even when compiled with :advanced, and (as a consequence) JavaScript
-
-
 
 ;; compile system
 
@@ -98,12 +92,15 @@
                                                         :fns-clj fns-clj} bindings e]))))]
       component)))
 
+(defonce run-state (r/atom {}))
+
 (defn make-component [run-id ext {:keys [state html fns fns-clj] :as system}]
   (if (nil? html)
     nil
     (let [state-a (r/atom state)
           component (compile-system run-id state-a ext system)
           update-state (partial update-state-from-clj-result state-a)]
+      (swap! run-state assoc run-id state-a)
       (dispatch [:goldly/add-running-system run-id (merge system {:update-state update-state})])
       (fn []
         [component state-a]))))

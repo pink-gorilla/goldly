@@ -8,9 +8,10 @@
    [goldly.notebook.picasso] ; side-efects
    [goldly.puppet.require :refer [require-namespaces]]
    [goldly.sci.bindings :refer [generate-bindings]]
+   [goldly.ws]
    [ui.goldly.core] ; side-effects 
    [ui.goldly.snippets] ; side-effects
-   ))
+   [goldly.api.handler]))
 
 (defn goldly-compile! []
   (let [{:keys [systems extensions]}
