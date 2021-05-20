@@ -1,5 +1,0 @@
-{:goldly {:enabled true
-          :extensions [[pinkgorilla.ui.goldly]
-                       [ui.binaryclock.goldly]
-                       [ui.quil.goldly]
-                       [pinkgorilla.gorilla-plot.goldly]]}}

@@ -1,4 +1,7 @@
-# Goldly [![GitHub Actions status |pink-gorilla/goldly](https://github.com/pink-gorilla/goldly/workflows/CI/badge.svg)](https://github.com/pink-gorilla/goldly/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly.svg)](https://clojars.org/org.pinkgorilla/goldly)
+# Goldly 
+[![GitHub Actions status |pink-gorilla/goldly](https://github.com/pink-gorilla/goldly/workflows/CI/badge.svg)](https://github.com/pink-gorilla/goldly/actions?workflow=CI)
+[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly.svg)](https://clojars.org/org.pinkgorilla/goldly)
+[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly-bundel.svg)](https://clojars.org/org.pinkgorilla/goldly-bundel)
 
 - goldly is a vizualization tool for clojure
 - inspired by [R/shiny](https://shiny.rstudio.com/)
@@ -23,15 +26,20 @@
 # How to setup goldly
 
 You have two options:
-- use [goldly bundel](https://github.com/pink-gorilla/goldly-bundel) which ships
-  a pre-built javascript budle and already includes many ui-renderers. 
+- use goldly-bundel dependency, which ships a pre-built javascript budle and already includes many ui-renderers. 
 - use goldly to build javascript bundle from scratch. 
   This takes more time (everything needs to be compiled), 
-  but it allows uou to add custom ui renderers to your goldly app
+  but it allows you to add custom ui renderers to your goldly app
 
 ## Setup Goldly-Bundel
 
-Please refer to the [goldly bundel](https://github.com/pink-gorilla/goldly-bundel) readme for setup.
+goldly-bundel is identical to goldly, it only brings the compiled javascript bundel as resources.
+
+To start the goldly via goldly-bundel:
+
+```
+clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "0.2.35"}}}' -m goldly-server-bundel.app
+```
 
 ## Setup Goldly with custom ui-renderers:
 
@@ -74,7 +82,7 @@ Add a goldly-gorillaui.edn:
 **run goldly without ui-extensions**
 
 ```
-lein goldly    ; runs a webserver on port 8000.
+clojure -X:goldly
 ```
 
 - Then open browser `http://localhost:8000`
@@ -93,13 +101,13 @@ The snippets are primitive, but demonstrate certain features of goldly:
 - time: demonstrates to push data from clojure
 
 
-**run goldly with ui-extensions**
+**run goldly with bundel ui-extensions**
 
 ```
-lein goldly-bundel
+clojure -X:goldly-bundel
 ```
 
-This is the same config as in goldly-bundel, but we do not auto-generate a javascript bundel. 
+This is the same config as in goldly-bundel, but the javascript bundel is generated on the fly. 
 
 
 # send data from the repl
