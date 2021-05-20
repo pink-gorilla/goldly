@@ -15,18 +15,24 @@
 
 (defonce snippets (atom []))
 
+(defn snippet-found? [filename]
+  (or (io/resource filename)
+      (.exists (io/file filename))))
+
 (defn add-snippet [{:keys [type category filename id]
                     :or {category :unsorted
                          id (unique-id)} :as snippet}]
   (if (and type filename)
-    (->> (assoc snippet :id id :category category)
-         (swap! snippets conj))
+    (if (snippet-found? filename)
+      (->> (assoc snippet :id id :category category)
+           (swap! snippets conj))
+      (error "snippet id: " id " file " filename " not found!"))
     (error "snippets need to have type and filename")))
 
 (defn snippets-by-category []
-  (info "snc..")
+  (info "s-b-c..")
   (let [sc (group-by :category @snippets)]
-    (info "sbc..done.")
+    (info "s-b-c..done.")
     sc))
 
 (defn slurp-res-or-file [filename]
