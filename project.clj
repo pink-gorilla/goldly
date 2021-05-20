@@ -17,7 +17,6 @@
                   ["vcs" "commit" "Begin %s"]
                   ["vcs" "push"]]
 
-
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/core.async "1.3.618"]
                  [org.clojure/data.json "2.1.0"]
@@ -79,10 +78,8 @@
 
   :aliases {"goldly"  ^{:doc "runs compiled bundle on shadow dev server"}
             ["run" "-m" "goldly-server.app" "watch"]
-            
-            "goldly-bundel" 
+
+            "goldly-bundel"
             ["with-profile" "+bundel"
-             "run" "-m" "goldly-server.app" "watch" "goldly-bundel.edn"]
-            
-            })
+             "run" "-m" "goldly-server.app" "watch" "goldly-bundel.edn"]})
 
