@@ -62,3 +62,14 @@ jobs:
       # clojure -M:release deploy
       # lein release
       # bash <(curl -s https://codecov.io/bash)
+    - name: Release-Bundel
+      env:
+        CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
+        CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
+      run: |
+        git config --global user.email "ci@pinkgorilla.org"
+        git config --global user.name "CI/CD"
+        clojure -X:bundle-npm-install
+        clojure -X:bundle-release
+        clojure -M:bundle-publish
+
