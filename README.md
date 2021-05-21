@@ -15,25 +15,58 @@
 - uses the sci clojurescript interpreter for dynamic ui interactions at runtime
 - load data from clojure (from the frontend app)
 
-**usecases**
+**use cases**
 - visualize edn datastructures (either from a repl or in the web-app (via sratchpad) 
 - quickly write a web dashboards (by using only clojure). 
   - [EDGAR](https://github.com/clojure-quant/edgar) uses it to vizualise mutual fund holdings
   - [trateg](https://github.com/clojure-quant/trateg) uses it to vizualize swing charts
 - goldly systems can be used in a [Notebook](https://github.com/pink-gorilla/gorilla-notebook).
 
+# run the demo (in this project)
 
-# How to setup goldly
+**run goldly without ui-extensions**
 
-You have two options:
-- use goldly-bundel dependency, which ships a pre-built javascript budle and already includes many ui-renderers. 
-- use goldly to build javascript bundle from scratch. 
-  This takes more time (everything needs to be compiled), 
-  but it allows you to add custom ui renderers to your goldly app
+```
+clojure -X:goldly
+```
+
+- Then open browser `http://localhost:8000`
+- In the browser window click on `running systems` and then `snippet registry`
+- You are able to click on all the systems in he registry.
+
+The source code of the registry systems is in `src/systems`.
+The snippets are in `resources/snippets/`
+
+The snippets are primitive, but demonstrate certain features of goldly:
+- hello: demonstrates the simplest hiccup rendering usecase
+- click-counter demonstrates dynamic ui intteractions.
+- greeter: shows how to create links from one system to another; this can be 
+  used for master-detail type of navigation.
+- fortune: demonstrates how to load data from clojure (could be a database)
+- time: demonstrates to push data from clojure
+
+**run goldly with bundel ui-extensions**
+
+```
+clojure -X:goldly-bundel
+```
+
+This is the same config as in goldly-bundel, but the javascript bundel is generated on the fly. 
+It gives you a lot more snippets.
+
+
+
+# Use goldly in your project
+
+You can include one of two artefacts:
+- **goldly-bundel** dependency, which ships a pre-built javascript bundle and already includes many ui-renderers. 
+- **goldly** to build javascript bundle from scratch. 
+  This takes more time (npm dependencies have to be downloaded, javascript bundle needs to be compiled), 
+  but it allows you to add custom ui renderers to your goldly app.
+
+The two artefacts are completely identical to use.
 
 ## Setup Goldly-Bundel
-
-goldly-bundel is identical to goldly, it only brings the compiled javascript bundel as resources.
 
 To start the goldly via goldly-bundel:
 
@@ -65,6 +98,8 @@ Add this alias to your deps.edn:
 ```
 
 **for leiningen**
+
+See [demo-goldly-bundel](https://github.com/pink-gorilla/demo-goldly-bundel) for the complete project-
 Add the alias to project.clj
 ```
 {:alias
@@ -76,39 +111,6 @@ Add a goldly-gorillaui.edn:
 ```
 {:goldly {:extensions [[pinkgorilla.ui.goldly]]}}
 ```
-
-# run the demo (in this project)
-
-**run goldly without ui-extensions**
-
-```
-clojure -X:goldly
-```
-
-- Then open browser `http://localhost:8000`
-- In the browser window click on `running systems` and then `snippet registry`
-- You are able to click on all the systems in he registry.
-
-The source code of the registry systems is in `src/systems`.
-The snippets are in `resources/snippets/`
-
-The snippets are primitive, but demonstrate certain features of goldly:
-- hello: demonstrates the simplest hiccup rendering usecase
-- click-counter demonstrates dynamic ui intteractions.
-- greeter: shows how to create links from one system to another; this can be 
-  used for master-detail type of navigation.
-- fortune: demonstrates how to load data from clojure (could be a database)
-- time: demonstrates to push data from clojure
-
-
-**run goldly with bundel ui-extensions**
-
-```
-clojure -X:goldly-bundel
-```
-
-This is the same config as in goldly-bundel, but the javascript bundel is generated on the fly. 
-
 
 # API
 
