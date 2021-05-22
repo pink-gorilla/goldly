@@ -4,8 +4,7 @@
    [goldly.sci.bindings :refer [add-cljs-namespace add-cljs-bindings generate-bindings]]))
 
 ; cljs ui
-(add-cljs-namespace [ui.goldly.code.core]) ; for code viewer bundle inclusion
-(add-cljs-namespace [ui.codemirror.goldly.core]) ; codemirror
+(add-cljs-namespace [ui.code.goldly.core]) ; codemirror
 
 ; cljs functions
 (add-cljs-namespace [ajax.core]) ; http library
