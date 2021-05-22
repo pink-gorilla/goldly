@@ -12,10 +12,10 @@
   borkdude/sci {:mvn/version "0.2.5"} ; sci compiler  
   fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing
   cljs-ajax/cljs-ajax {:mvn/version "0.8.3"}
-  org.pinkgorilla/pinkie {:mvn/version "RELEASE"} ; frontend ui layout
+  org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
   org.pinkgorilla/picasso {:mvn/version "3.1.21"} ; type rendering
-  org.pinkgorilla/webly {:mvn/version "RELEASE"}
-  org.pinkgorilla/ui-codemirror {:mvn/version "RELEASE"}
+  org.pinkgorilla/webly {:mvn/version "0.2.39"}
+  org.pinkgorilla/ui-codemirror {:mvn/version "0.0.4"}
   }
  :aliases
  {;https://github.com/applied-science/deps-library
@@ -57,10 +57,10 @@
   :goldly-bundel
   {:extra-deps {;org.pinkgorilla/goldly {:mvn/version "RELEASE"}
                 ; bundled dependencies
-                org.pinkgorilla/gorilla-ui  {:mvn/version "RELEASE"}
-                org.pinkgorilla/gorilla-plot  {:mvn/version "RELEASE"}
-                org.pinkgorilla/ui-binaryclock  {:mvn/version "RELEASE"}
-                org.pinkgorilla/ui-quil  {:mvn/version "RELEASE"}}
+                org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.24"}
+                org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}
+                org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
+                org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"
                :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
@@ -71,10 +71,10 @@
   :bundel-npm-install ;npm-install is needed because shadww-cljs release does not build a package.json
   {:extra-deps {;org.pinkgorilla/goldly {:mvn/version "0.2.39"}
                 ; bundled dependencies
-                org.pinkgorilla/gorilla-ui  {:mvn/version "RELEASE"}
-                org.pinkgorilla/gorilla-plot  {:mvn/version "RELEASE"}
-                org.pinkgorilla/ui-binaryclock  {:mvn/version "RELEASE"}
-                org.pinkgorilla/ui-quil  {:mvn/version "RELEASE"}}
+                org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.24"}
+                org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}
+                org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
+                org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "npm-install"
                :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
@@ -85,10 +85,10 @@
   :bundel-release
   {:extra-deps {;org.pinkgorilla/goldly {:mvn/version "RELEASE"}
                 ; bundled dependencies
-                org.pinkgorilla/gorilla-ui  {:mvn/version "RELEASE"}
-                org.pinkgorilla/gorilla-plot  {:mvn/version "RELEASE"}
-                org.pinkgorilla/ui-binaryclock  {:mvn/version "RELEASE"}
-                org.pinkgorilla/ui-quil  {:mvn/version "RELEASE"}}
+                org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.24"}
+                org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}
+                org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
+                org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "release"
                :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
