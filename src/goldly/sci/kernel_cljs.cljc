@@ -13,13 +13,15 @@
    [picasso.protocols :refer [Renderable render]]
    [picasso.render.span :refer [span-render]]))
 
+(def ctx (sci/init {:bindings bindings-generated
+                    :preset {:termination-safe true}
+                    :namespaces ns-static}))
+
 (defn compile-code [code]
   (try
-    {:result (sci/eval-string code {:bindings bindings-generated
-                                    :preset {:termination-safe true}
-                                    :namespaces ns-static})}
+    {:result (sci/eval-string code ctx)}
     (catch :default e
-      (error "compile-code --]" code "[-- ex: " e)
+      (error "sci compile-code --]" code "[-- ex: " e)
       {:error #?(:clj e
                  :cljs {:root-ex (.-data e)
                         :err (.-message e)})})))
