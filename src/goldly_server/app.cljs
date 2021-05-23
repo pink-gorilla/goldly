@@ -7,7 +7,8 @@
    [goldly-server.events]
    [goldly-server.pages.about]
    [goldly-server.pages.system]
-   [goldly-server.pages.system-list]))
+   [goldly-server.pages.system-list]
+   [goldly-server.pages.notebook]))
 
 (defn ^:export start []
   (webly-run! routes-api routes-app))

@@ -7,7 +7,8 @@
    [goldly.puppet.db]
    [goldly.system]
    [goldly.runner.ws]
-   [goldly.runner.db] ; side-effects
-   [goldly.runner.clj-fn] ; side-effects
+   [goldly.runner.db]
+   [goldly.runner.clj-fn]
    [goldly.events]
+   [goldly.sci.kernel-cljs]
    [goldly.notebook.pinkie]))

@@ -6,6 +6,7 @@
   {:nav {:brand "Goldly"
          :brand-link "/"
          :items [{:text "running systems" :link "/goldly"}
+                 {:text "notebook" :link "/notebook"}
                  {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special true}]}
    :splash {:link-text "On Github"
             :link-url "https://github.com/pink-gorilla/goldly"
