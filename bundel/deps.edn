@@ -1,0 +1,92 @@
+{:paths ["src"
+         "resources" ; snippets
+         "target/webly" ; webly bundel
+         ]
+ :deps
+ {org.clojure/clojure    {:mvn/version "1.10.3"}
+  org.clojure/core.async {:mvn/version "1.3.618"}
+  org.clojure/data.json {:mvn/version "2.1.0"}
+  thi.ng/strf {:mvn/version "0.2.2"}
+  com.rpl/specter {:mvn/version "1.1.3"}
+  com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"}
+  borkdude/sci {:mvn/version "0.2.5"} ; sci compiler  
+  fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing
+  cljs-ajax/cljs-ajax {:mvn/version "0.8.3"}
+  org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
+  org.pinkgorilla/picasso {:mvn/version "3.1.30"} ; type rendering
+  org.pinkgorilla/webly {:mvn/version "0.2.40"}
+  org.pinkgorilla/ui-code {:mvn/version "0.0.6"}
+  org.pinkgorilla/ui-markdown {:mvn/version "0.0.7"}
+  ; bundel
+  org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.27"}
+  org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}
+  org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
+  org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
+ :aliases
+ {;https://github.com/applied-science/deps-library
+  :release
+  {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
+   :main-opts ["-m" "applied-science.deps-library"]}
+
+  ; https://github.com/weavejester/cljfmt
+  :cljfmt
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "0.7.0"}}
+   :main-opts ["-m" "cljfmt.main" "check" "--indents" "cljfmt.edn"]}
+  :cljfmt-fix
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "0.7.0"}}
+   :main-opts ["-m" "cljfmt.main" "fix" "--indents" "cljfmt.edn"]}
+
+ ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
+  :lint
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "clj-kondo.main" "--lint" "src"]}
+
+  :outdated ; name equals npm outdated
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "antq.core"]}
+
+  :check
+  {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
+                                 :sha "0ca84df1357d71429243b99908303f45a934654c"}}
+   :main-opts ["-m" "clj-check.check"]}
+
+  :garamond
+  {:main-opts ["-m" "garamond.main"]
+   :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
+
+
+  :goldly
+  {:exec-fn goldly-server.app/goldly-server-run!
+   :exec-args {:profile "watch"}}
+
+  :goldly-bundel
+  {:exec-fn goldly-server.app/goldly-server-run!
+   :exec-args {:profile "watch"
+               :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
+                                              [ui.binaryclock.goldly]
+                                              [ui.quil.goldly]
+                                              [pinkgorilla.gorilla-plot.goldly]]}}}}
+
+  :bundel-npm-install ;npm-install is needed because shadww-cljs release does not build a package.json
+  {:exec-fn goldly-server.app/goldly-server-run!
+   :exec-args {:profile "npm-install"
+               :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
+                                              [ui.binaryclock.goldly]
+                                              [ui.quil.goldly]
+                                              [pinkgorilla.gorilla-plot.goldly]]}}}}
+
+  :bundel-release
+  {:exec-fn goldly-server.app/goldly-server-run!
+   :exec-args {:profile "release"
+               :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
+                                              [ui.binaryclock.goldly]
+                                              [ui.quil.goldly]
+                                              [pinkgorilla.gorilla-plot.goldly]]}}}}
+  :bundel-publish
+  {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
+   :main-opts ["-m" "applied-science.deps-library"
+               "--config" "release-bundel.edn"]}
+
+
+;
+  }}
