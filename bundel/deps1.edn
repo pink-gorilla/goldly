@@ -3,7 +3,10 @@
          "target/webly" ; webly bundel
          ]
  :deps
- {org.pinkgorilla/goldly {:local/root ".."}
+ {; the :local/root dependency works to build the bundel.
+  ; however applied-science/deps-library does not add the goldly dependencies
+  ; so we need to add them all again.
+  org.pinkgorilla/goldly {:local/root ".."}
   ; bundel
   org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.27"}
   org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}

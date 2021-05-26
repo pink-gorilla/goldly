@@ -15,7 +15,7 @@
   org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
   org.pinkgorilla/picasso {:mvn/version "3.1.30"} ; type rendering
   org.pinkgorilla/webly {:mvn/version "0.2.40"}
-  org.pinkgorilla/ui-code {:mvn/version "0.0.7"}
+  org.pinkgorilla/ui-code {:mvn/version "0.0.8"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.8"}
   ; bundel
   org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.27"}
