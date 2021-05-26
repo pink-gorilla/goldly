@@ -16,8 +16,7 @@
   org.pinkgorilla/picasso {:mvn/version "3.1.30"} ; type rendering
   org.pinkgorilla/webly {:mvn/version "0.2.40"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.6"}
-  org.pinkgorilla/ui-markdown {:mvn/version "0.0.7"}
-  }
+  org.pinkgorilla/ui-markdown {:mvn/version "0.0.7"}}
  :aliases
  {;https://github.com/applied-science/deps-library
   :release
@@ -96,18 +95,17 @@
                                               [ui.binaryclock.goldly]
                                               [ui.quil.goldly]
                                               [pinkgorilla.gorilla-plot.goldly]]}}}}
-:bundel-publish
-{;:paths ["target/webly"] ; js bundle]
- :extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}
-              org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.27"}
-              org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}
-              org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
-              org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
-              
- :main-opts ["-m" "applied-science.deps-library"
-              "--config" "release-bundel.edn"
-             ]}
-  
- 
+  :bundel-publish
+  {;:paths ["target/webly"] ; js bundle]
+   :override-deps {org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.27"}
+                   org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}
+                   org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
+                   org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
+   :extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
+
+   :main-opts ["-m" "applied-science.deps-library"
+               "--config" "release-bundel.edn"]}
+
+
 ;
   }}
