@@ -13,10 +13,10 @@
   fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing
   cljs-ajax/cljs-ajax {:mvn/version "0.8.3"}
   org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
-  org.pinkgorilla/picasso {:mvn/version "3.1.24"} ; type rendering
+  org.pinkgorilla/picasso {:mvn/version "3.1.30"} ; type rendering
   org.pinkgorilla/webly {:mvn/version "0.2.40"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.6"}
-  org.pinkgorilla/ui-markdown {:mvn/version "0.0.6"}
+  org.pinkgorilla/ui-markdown {:mvn/version "0.0.7"}
   }
  :aliases
  {;https://github.com/applied-science/deps-library
@@ -37,7 +37,7 @@
   {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
    :main-opts ["-m" "clj-kondo.main" "--lint" "src"]}
 
-  :ancient
+  :outdated ; name equals npm outdated
   {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
    :main-opts ["-m" "antq.core"]}
 
@@ -103,7 +103,7 @@
               org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}
               org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
               org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
-              }
+              
  :main-opts ["-m" "applied-science.deps-library"
               "--config" "release-bundel.edn"
              ]}
