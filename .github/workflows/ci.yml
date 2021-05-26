@@ -40,8 +40,8 @@ jobs:
     #  run: clojure -M:garamond
     #- name: clj-kondo
     #  run: clojure -M:lint
-    #- name: test-clj
-    #  run: clojure -M:test-clj
+    - name: test-clj
+      run: clojure -M:test
     #- name: cloverage
     #  run: clojure -M:cloverage
     - name: Release
