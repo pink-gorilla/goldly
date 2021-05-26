@@ -71,7 +71,7 @@ The two artefacts are completely identical to use.
 To start the goldly via goldly-bundel:
 
 ```
-clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}}' -m goldly-server.app
+clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}}' -m bundel.run
 ```
 
 ## Setup Goldly with custom ui-renderers:
