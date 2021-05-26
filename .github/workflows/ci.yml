@@ -36,8 +36,8 @@ jobs:
       if: ${{ matrix.os != 'windows-latest' }}
       run: clojure -M:cljfmt
       shell: bash
-    - name: show git tag
-      run: clojure -M:garamond
+    #- name: show git tag
+    #  run: clojure -M:garamond
     #- name: clj-kondo
     #  run: clojure -M:lint
     #- name: test-clj
@@ -67,9 +67,10 @@ jobs:
         CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
         CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
       run: |
+        
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        clojure -X:bundel-npm-install
-        clojure -X:bundel-release
-        clojure -M:bundel-publish
+        cd bundel && clojure -X:bundel-npm-install
+        cd bundel && clojure -X:bundel-release
+        cd bundel && clojure -M:bundel-publish
 
