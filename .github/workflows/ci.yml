@@ -71,7 +71,7 @@ jobs:
         git config --global user.name "CI/CD"
         cd bundel
         echo "pwd: $PWD"
-        cd bundel && clojure -X:bundel-npm-install
-        cd bundel && clojure -X:bundel-release
-        cd bundel && clojure -M:bundel-publish
+        clojure -X:bundel-npm-install
+        clojure -X:bundel-release
+        clojure -M:bundel-publish
 
