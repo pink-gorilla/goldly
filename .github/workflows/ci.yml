@@ -67,9 +67,10 @@ jobs:
         CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
         CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
       run: |
-        
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
+        cd bundel
+        echo "pwd: $PWD"
         cd bundel && clojure -X:bundel-npm-install
         cd bundel && clojure -X:bundel-release
         cd bundel && clojure -M:bundel-publish
