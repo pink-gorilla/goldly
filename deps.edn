@@ -66,7 +66,7 @@
   {:extra-deps {;org.pinkgorilla/goldly {:mvn/version "RELEASE"}
                 ; bundled dependencies
                 org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.27"}
-                org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.9"}
+                org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.10"}
                 org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
                 org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
    :exec-fn goldly-server.app/goldly-server-run!
