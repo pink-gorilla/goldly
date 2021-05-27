@@ -27,3 +27,4 @@ karma.conf.js
 goldly_bindings_generated.cljs
 bundel/node_modules/
 bundel/target/
+webly-routes.edn

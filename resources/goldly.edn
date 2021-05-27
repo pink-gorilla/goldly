@@ -11,7 +11,7 @@
 
  :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
                    [#{"webly.ws.*"} :info]
-                   [#{"webly.user.*"} :info]
+                   [#{"webly.*"} :info]
                    [#{"goldly.*"} :info]
                    [#{"user"} :warn] ; time sender
                    [#{"*"} :debug]]
