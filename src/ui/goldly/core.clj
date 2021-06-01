@@ -4,6 +4,7 @@
    [goldly.sci.bindings :refer [add-cljs-namespace add-cljs-bindings generate-bindings]]))
 
 ; cljs ui
+(add-cljs-namespace [ui.site.goldly.core]) ; web-site templates
 (add-cljs-namespace [ui.code.goldly.core]) ; codemirror
 
 ; cljs functions

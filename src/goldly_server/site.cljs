@@ -1,27 +1,21 @@
 (ns goldly-server.site
   (:require
-   [webly.user.template :as template]))
+   [ui.site.template :as template]))
 
-(def h-splash
-  {:nav {:brand "Goldly"
-         :brand-link "/"
-         :items [{:text "running systems" :link "/goldly"}
-                 {:text "notebook" :link "/notebook"}
-                 {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special true}]}
-   :splash {:link-text "On Github"
-            :link-url "https://github.com/pink-gorilla/goldly"
-            :title ["Goldly lets you create "
-                    [:br]
-                    "realtime dashboards powered by clojure"]
-            :title-small "open source"}})
-
-(def h (dissoc h-splash :splash))
-
-(defn header-splash []
-  [template/header h-splash])
+(defn splash []
+  [template/splash-message {:link-text "On Github"
+                            :link-url "https://github.com/pink-gorilla/goldly"
+                            :title ["Goldly lets you create "
+                                    [:br]
+                                    "realtime dashboards powered by clojure"]
+                            :title-small "open source"}])
 
 (defn header []
-  [template/header h])
+  [template/header-menu {:brand "Goldly"
+                         :brand-link "/"
+                         :items [{:text "running systems" :link "/goldly"}
+                 ;{:text "notebook" :link "/notebook"}
+                                 {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special? true}]}])
 
 #_(defn systems-menu []
     [:a.pr-2.text-right.text-blue-600.text-bold.tracking-wide.font-bold.border.border-blue-300.rounded.cursor-pointer

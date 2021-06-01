@@ -7,6 +7,10 @@
    [ui.notebook.core :refer [notebook-view]]
    [ui.notebook.menu]))
 
+
+; here for debugging of cljs kernel 
+
+
 (rf/dispatch [:doc/load data/notebook])
 
 (def opts
