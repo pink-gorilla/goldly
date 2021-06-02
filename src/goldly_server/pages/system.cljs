@@ -10,9 +10,6 @@
 
 (defn system-themed [id ext]
   [:div
-     ;[systems-menu]
-     ; #[:a {:class "m-2 bg-blue-200 border-dotted border-orange-400"
-     ;        :on-click #(dispatch [:bidi/goto :ui/system-list])} "Systems"] ; "#/info"
    [header]
    [:div.container.mx-auto ; tailwind containers are not centered by default; mx-auto does this
     [:p.mt-5.mb-5.text-purple-600.text-3xl id]
