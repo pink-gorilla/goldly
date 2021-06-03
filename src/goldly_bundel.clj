@@ -4,8 +4,8 @@
   (:gen-class))
 
 (defn run [{:keys [profile config]
-             :or {profile "jetty"
-                  config "goldly-bundel.edn"}}]
+            :or {profile "jetty"
+                 config "goldly-bundel.edn"}}]
   (goldly-server.app/goldly-server-run!
    {:profile profile
     :config config}))

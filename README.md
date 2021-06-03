@@ -3,24 +3,25 @@
 [![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly.svg)](https://clojars.org/org.pinkgorilla/goldly)
 [![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly-bundel.svg)](https://clojars.org/org.pinkgorilla/goldly-bundel)
 
-- goldly is a vizualization tool for clojure
+- goldly lets you create interactive visualization in a webbrowser in clojure
+- visualizations can interact with the clojure server.
 - inspired by [R/shiny](https://shiny.rstudio.com/)
-- brings many vizualizers 
+- uses the sci clojurescript interpreter
+- brings many visualizers 
   - vega and highcharts for 2d plotting
   - aggrid for tables/ grids
   - leaflet for geographic map
   - quil for 2d dynamic animations
-  - vizualizers can be easily extended. you can access the entire npm + clojurescript ecosystem.
-    An example for a simple ui extension is [ui-binaryclock](https://github.com/pink-gorilla/ui-binary-clock)
-- uses the sci clojurescript interpreter for dynamic ui interactions at runtime
-- load data from clojure (from the frontend app)
+- visualizers can be easily extended. you can access the entire npm + clojurescript ecosystem.
+  An example for a simple ui extension is [ui-binaryclock](https://github.com/pink-gorilla/ui-binary-clock)
+- provides a clojurescript kernel (via sci)
+- goldly systems and the clojurescript kernel can be developed/used in a [Pinkgorilla Notebook](https://github.com/pink-gorilla/notebook)
 
 ### use cases
-- visualize edn datastructures (either from a repl or in the web-app (via sratchpad) 
 - quickly write a web dashboards (by using only clojure). 
   - [EDGAR](https://github.com/clojure-quant/edgar) uses it to vizualise mutual fund holdings
   - [trateg](https://github.com/clojure-quant/trateg) uses it to vizualize swing charts
-- goldly systems can be developed/used in a [Pinkgorilla Notebook](https://github.com/pink-gorilla/notebook).
+- visualize edn datastructures (either from a repl or in the web-app (via scratchpad) 
 
 
 ### Web Interface
@@ -53,9 +54,11 @@ This lets you see many snippets that you might like.
 You need to include the **goldly-bundel** artefact, which ships a pre-built javascript 
 bundle and already includes many ui-renderers. 
 
-**for tools.deps**
+You can:
+- add custom systems to goldly easily.
+- use your clj functions to render ui visualizations.
 
-You can add custom systems to goldly easily.
+**for tools.deps**
 
 Add this alias to your deps.edn:
 ```
@@ -123,7 +126,7 @@ Add this alias to your deps.edn:
 
 **for leiningen**
 
-See [demo-goldly-bundel](https://github.com/pink-gorilla/demo-goldly-bundel) for the complete project-
+See [demo-goldly-bundel](https://github.com/pink-gorilla/demo-goldly-bundel) for the complete project.
 Add the alias to project.clj
 ```
 {:alias
