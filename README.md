@@ -153,13 +153,24 @@ run goldly **without ui-extensions** `clojure -X:goldly-core`
 The source code of the registry systems is in `src/systems`.
 The snippets are in `resources/snippets/`
 
-To test the bundel:
+
+Compile and run:
+
+```
+clojure -X:goldly :profile '"release"'
+clojure -X:goldly :profile '"jetty"'
+```
+
+To test the bundel creation:
 ```
 clojure -X:bundel-config
 cd bundel
 ./bundel-compile.sh
 clojure -X:run
 ```
+
+
+
 
 # API
 

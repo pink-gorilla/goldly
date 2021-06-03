@@ -81,11 +81,8 @@
                 org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"
-               :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
-                                              [pinkgorilla.gorilla-plot.goldly]
-                                              [ui.binaryclock.goldly]
-                                              [ui.quil.goldly]]}}}}
-
+               :config "goldly-bundel.edn" ; this edn file needs modification with added deps
+               }}
 
   :bundel-config {:exec-fn goldly.bconfig/generate-bundle-config}
 
