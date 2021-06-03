@@ -6,13 +6,14 @@
    [reagent.dom]
    [re-frame.core :refer [dispatch]]
    [cljs-uuid-utils.core :as uuid]
+   [sci.core :as sci]
   ;[cljs.tools.reader :as reader]
    [cljs.reader]
    [pinkie.pinkie :as pinkie]
    [goldly.runner.eventhandler :refer [eventhandler-fn]]
    [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
-   [goldly-bindings-generated :refer [bindings-generated]]
-   [goldly.sci.compile :refer [compile-code compile-fn compile-fn-raw]]))
+   [goldly.sci.compile :refer [compile-code compile-fn compile-fn-raw]]
+   [goldly.sci.kernel-cljs :as kernel]))
 
 ;; compile system
 
@@ -27,28 +28,22 @@
     (debug "bindings-clj: " bindings-clj)
     bindings-clj))
 
-(defn- ->bindings-cljs [state ext fns]
-  (let [bindings {'state state
-                  'ext ext}
-        bindings-fun (merge bindings-generated bindings)
-        bindings-cljs (->> fns
+(defn- ->bindings-cljs [ctx fns state-a]
+  (let [bindings-cljs (->> fns
                            (map (fn [[f-name f-body]]
                                   [(binding-symbol f-name)
-                                   (->> (compile-fn bindings-fun f-name f-body)
-                                        (eventhandler-fn state))]))
-                           (into bindings))]
+                                   (->> (compile-fn ctx f-name f-body)
+                                        (eventhandler-fn state-a))]))
+                           (into {}))]
     (debug "bindings-cljs: " bindings-cljs)
     bindings-cljs))
 
-(defn- ->bindings-cljs-raw [state ext fns]
-  (let [bindings {'state state
-                  'ext ext}
-        bindings-fun (merge bindings-generated bindings)
-        bindings-cljs (->> fns
+(defn- ->bindings-cljs-raw [ctx fns]
+  (let [bindings-cljs (->> fns
                            (map (fn [[f-name f-body]]
                                   [(binding-symbol f-name)
-                                   (compile-fn-raw bindings-fun f-name f-body)]))
-                           (into bindings))]
+                                   (compile-fn-raw ctx f-name f-body)]))
+                           (into {}))]
     (debug "bindings-cljs-raw: " bindings-cljs)
     bindings-cljs))
 
@@ -56,13 +51,13 @@
   (info "tap:" x)
   x)
 
-(defn compile-error [s b e]
+(defn compile-error [s ctx e]
   [:div.border.border-red-500.m-5.p-3
    [:h3.text-purple-700-w-full.bg-pink-300.mb-5 "Error compiling system"]
    [:h1.text-blue-300 "system"]
    [:p (pr-str s)]
-   [:h1.text-blue-300 "bindings"]
-   [:p (pr-str b)]
+   ;[:h1.text-blue-300 "ctx"]
+   ;[:p (pr-str ctx)]
    [:h1.text-blue-300 "Error"]
    [:p (pr-str e)]])
 
@@ -75,21 +70,25 @@
   (info "compiling system: " system)
   (if (nil? html)
     (fn [_] [:h1 "Error: system html is nil!"])
-    (let [bindings-cljs (->bindings-cljs state-a ext fns)
-          bindings-cljs-raw (->bindings-cljs-raw state-a ext fns-raw)
-          bindings-clj  (->bindings-clj run-id id fns-clj)
-          bindings (merge bindings-generated bindings-clj bindings-cljs bindings-cljs-raw)
-          _ (debug "bindings-system: " bindings)
+    (let [bindings-clj  (->bindings-clj run-id id fns-clj)
+          bindings-system {'state state-a
+                           'ext ext}
+          ctx (sci/fork kernel/ctx-repl)
+          ctx (sci/merge-opts ctx {:bindings (merge bindings-clj bindings-system)})
+          bindings-cljs (->bindings-cljs ctx fns state-a)
+          bindings-cljs-raw (->bindings-cljs-raw ctx fns-raw)
+          ctx (sci/merge-opts ctx {:bindings (merge bindings-cljs bindings-cljs-raw)})
+          ;_ (debug "bindings-system: " bindings)
           component (fn [state-a]
                       (try
-                        (-> (compile-code html bindings)
+                        (-> (compile-code html ctx)
                             pinkie/tag-inject)
                         (catch :default e
                           (error "compile system error ex: " e)
                           (fn [state-a] [compile-error {:state @state-a
                                                         :html html
                                                         :fns fns
-                                                        :fns-clj fns-clj} bindings e]))))]
+                                                        :fns-clj fns-clj} ctx e]))))]
       component)))
 
 (defonce run-state (r/atom {}))

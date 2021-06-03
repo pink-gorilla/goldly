@@ -6,7 +6,7 @@
 - goldly lets you create interactive visualization in a webbrowser in clojure
 - visualizations can interact with the clojure server.
 - inspired by [R/shiny](https://shiny.rstudio.com/)
-- uses the sci clojurescript interpreter
+- uses the sci clojurescript interpreter for a clojurescript kernel
 - brings many visualizers 
   - vega and highcharts for 2d plotting
   - aggrid for tables/ grids
@@ -14,7 +14,6 @@
   - quil for 2d dynamic animations
 - visualizers can be easily extended. you can access the entire npm + clojurescript ecosystem.
   An example for a simple ui extension is [ui-binaryclock](https://github.com/pink-gorilla/ui-binary-clock)
-- provides a clojurescript kernel (via sci)
 - goldly systems and the clojurescript kernel can be developed/used in a [Pinkgorilla Notebook](https://github.com/pink-gorilla/notebook)
 
 ### use cases
@@ -168,9 +167,6 @@ cd bundel
 ./bundel-compile.sh
 clojure -X:run
 ```
-
-
-
 
 # API
 

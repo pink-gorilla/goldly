@@ -4,6 +4,7 @@
    [reagent.dom]
    [cljs.reader :refer [read-string]]
    [sci.core :as sci]
+
    [goldly.sci.bindings-static :refer [ns-static]]))
 
 ;; https://github.com/borkdude/sci
@@ -12,13 +13,11 @@
 
 ; compile code (system/html)
 
-(defn compile-code [code bindings]
+(defn compile-code [code ctx]
   (try
-    (sci/eval-string code {:bindings bindings
-                           :preset {:termination-safe true}
-                           :namespaces ns-static})
+    (sci/eval-string code ctx)
     (catch :default e
-      (error "compile-code --]" code "[-- ex: " e "bindings: " bindings)
+      (error "compile-code --]" code "[-- ex: " e)
       nil)))
 
 ;; compile cljs function
@@ -37,10 +36,10 @@
 (defn compile-fn
   "compiles a system/fns. 
    On compile error returns no-op-fun"
-  [bindings f-name f-body]
-  (info "compile-fn " f-name " bindings: " (keys bindings) " code: " f-body)
+  [ctx f-name f-body]
+  (info "compile-fn " f-name " code: " f-body)
   (let [f-body (read-string f-body)
-        fun (compile-code f-body bindings)
+        fun (compile-code f-body ctx)
         _ (trace "fun: " fun)
         fun (if fun
               fun
@@ -52,10 +51,10 @@
 (defn compile-fn-raw
   "compiles a system/fns. 
    On compile error returns no-op-fun"
-  [bindings f-name f-body]
-  (info "compile-fn " f-name " bindings: " (keys bindings) " code: " f-body)
+  [ctx f-name f-body]
+  (info "compile-fn " f-name  " code: " f-body)
   (let [;f-body (read-string f-body)
-        fun (compile-code f-body bindings)
+        fun (compile-code f-body ctx)
         _ (trace "fun: " fun)
         fun (if fun
               fun
