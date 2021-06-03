@@ -14,7 +14,7 @@
   [template/header-menu {:brand "Goldly"
                          :brand-link "/"
                          :items [{:text "running systems" :link "/goldly"}
-                 ;{:text "notebook" :link "/notebook"}
+                 ;{:text "notebook" :link "/notebook-test"}
                                  {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special? true}]}])
 
 #_(defn systems-menu []

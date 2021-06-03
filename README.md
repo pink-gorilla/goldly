@@ -15,27 +15,20 @@
 - uses the sci clojurescript interpreter for dynamic ui interactions at runtime
 - load data from clojure (from the frontend app)
 
-**use cases**
+### use cases
 - visualize edn datastructures (either from a repl or in the web-app (via sratchpad) 
 - quickly write a web dashboards (by using only clojure). 
   - [EDGAR](https://github.com/clojure-quant/edgar) uses it to vizualise mutual fund holdings
   - [trateg](https://github.com/clojure-quant/trateg) uses it to vizualize swing charts
-- goldly systems can be used in a [Notebook](https://github.com/pink-gorilla/gorilla-notebook).
+- goldly systems can be developed/used in a [Pinkgorilla Notebook](https://github.com/pink-gorilla/notebook).
 
-# run the demo (in this project)
 
-**run goldly without ui-extensions**
+### Web Interface
 
-```
-clojure -X:goldly
-```
+Whichever method you use to start goldly, you should reach it at [`http://localhost:8000/`](http://localhost:8000/).
 
-- Then open browser `http://localhost:8000`
 - In the browser window click on `running systems` and then `snippet registry`
 - You are able to click on all the systems in he registry.
-
-The source code of the registry systems is in `src/systems`.
-The snippets are in `resources/snippets/`
 
 The snippets are primitive, but demonstrate certain features of goldly:
 - hello: demonstrates the simplest hiccup rendering usecase
@@ -45,36 +38,67 @@ The snippets are primitive, but demonstrate certain features of goldly:
 - fortune: demonstrates how to load data from clojure (could be a database)
 - time: demonstrates to push data from clojure
 
-**run goldly with bundel ui-extensions**
+## Run - standalone 
 
-```
-clojure -X:goldly-bundel
-```
-
-This is the same config as in goldly-bundel, but the javascript bundel is generated on the fly. 
-It gives you a lot more snippets.
-
-
-
-# Use goldly in your project
-
-You can include one of two artefacts:
-- **goldly-bundel** dependency, which ships a pre-built javascript bundle and already includes many ui-renderers. 
-- **goldly** to build javascript bundle from scratch. 
-  This takes more time (npm dependencies have to be downloaded, javascript bundle needs to be compiled), 
-  but it allows you to add custom ui renderers to your goldly app.
-
-The two artefacts are completely identical to use.
-
-## Setup Goldly-Bundel
-
-To start the goldly via goldly-bundel:
+The easiest way to run the notebook locally is leveraging the `clojure` cli
 
 ```
 clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}}' -m bundel.run
 ```
 
-## Setup Goldly with custom ui-renderers:
+This lets you see many snippets that you might like.
+
+## Run - in your deps.edn project **using readymade default ui renderers**
+
+You need to include the **goldly-bundel** artefact, which ships a pre-built javascript 
+bundle and already includes many ui-renderers. 
+
+**for tools.deps**
+
+You can add custom systems to goldly easily.
+
+Add this alias to your deps.edn:
+```
+ :goldly
+  {:extra-deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}
+   :exec-fn goldly-bundel/run
+   :exec-args {:config {:goldly {:systems [systems.snippet-registry  ; if you want snippet browser started
+                                           systems.snippet-scratchpad
+                                           demo.hello-user
+                                              ]}}}}
+```
+then run it with `clojure -X:goldly`.
+
+The source to the demo.hello-user system is in `src/demo`
+
+An example of project that uses goldly this way is: [trateg](https://github.com/clojure-quant/trateg)
+
+
+**for leiningen**
+
+In project.clj add the goldly-bundel dependency: `[org.pinkgorilla/goldly "0.2.78"]`
+then add a goldly alias:
+
+```
+{:alias
+   "goldly"
+   ["run" "-m" "goldly-bundel.run" "goldly-user.edn"]}
+
+```
+Add a goldly-user.edn file:
+```
+{:goldly {:systems [systems.snippet-registry  ; if you want snippet browser started
+                    systems.snippet-scratchpad
+                    demo.hello-user]}}
+```
+
+run with: `lein goldly`
+
+## Run - in your deps.edn project **with custom ui-renderers**
+
+You need to add the **goldly** artefact to build javascript bundle from scratch. 
+This takes more time (npm dependencies have to be downloaded, javascript bundle needs to be compiled), 
+but it allows you to add custom ui renderers to your goldly app.
 
 This configures goldly with your set of ui-renderers.
 
@@ -110,6 +134,28 @@ Add the alias to project.clj
 Add a goldly-gorillaui.edn:
 ```
 {:goldly {:extensions [[pinkgorilla.ui.goldly]]}}
+```
+
+## Run - cloned git repo
+
+This option is mainly there for development of goldly. 
+For regular use, the long compile-times are not really sensible.
+
+Clone this repo, then:
+
+run goldly **with bundel ui-extensions**: `clojure -X:goldly`
+
+run goldly **without ui-extensions** `clojure -X:goldly-core`
+
+The source code of the registry systems is in `src/systems`.
+The snippets are in `resources/snippets/`
+
+To test the bundel:
+```
+clojure -X:bundel-config
+cd bundel
+./bundel-compile.sh
+clojure -X:run
 ```
 
 # API

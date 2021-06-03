@@ -69,9 +69,9 @@ jobs:
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
+        clojure -X:bundel-config
         cd bundel
         echo "pwd: $PWD"
-        clojure -X:bundel-npm-install
-        clojure -X:bundel-release
-        clojure -M:bundel-publish
+        ./bundel-compile.sh
+        clojure -M:release
 

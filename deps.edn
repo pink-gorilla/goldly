@@ -11,19 +11,19 @@
   com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"}
   borkdude/sci {:mvn/version "0.2.5"} ; sci compiler  
   fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing
-  
-  org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
-  org.pinkgorilla/picasso {:mvn/version "3.1.39"} ; type rendering
-  org.pinkgorilla/webly {:mvn/version "0.2.43"}
   ; core 
+  org.pinkgorilla/picasso {:mvn/version "3.1.39"} ; cljs kernel type rendering
+  org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
   org.pinkgorilla/ui-repl {:mvn/version "0.0.3"}
   org.pinkgorilla/ui-site {:mvn/version "0.0.3"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.11"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.8"}
-  
+  org.pinkgorilla/webly {:mvn/version "0.2.43"} ; web app build tool
   }
  :aliases
- {;https://github.com/applied-science/deps-library
+ {;; developer tooling
+
+  ;https://github.com/applied-science/deps-library
   :release
   {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
    :main-opts ["-m" "applied-science.deps-library"]}
@@ -57,19 +57,24 @@
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
 
-
   :garamond
   {:main-opts ["-m" "garamond.main"]
    :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
 
+  ;; goldly
 
-  :goldly
+  :ci {:extra-paths ["test"]
+       :exec-fn goldly-server.app/goldly-server-run!
+       :exec-args {:profile "ci"
+                   :config nil}}
+
+  :goldly-core
   {:exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"}}
 
-  :goldly-bundel
-  {:extra-deps {;org.pinkgorilla/goldly {:mvn/version "RELEASE"}
-                ; bundled dependencies
+  :goldly ; goldly with bundeled dependencies
+  {:extra-deps {; bundled dependencies
+                ; extra-deps get added to bundel/deps.edn for artefact goldly-bundel
                 org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.27"}
                 org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.10"}
                 org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
@@ -77,10 +82,27 @@
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"
                :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
+                                              [pinkgorilla.gorilla-plot.goldly]
                                               [ui.binaryclock.goldly]
-                                              [ui.quil.goldly]
-                                              [pinkgorilla.gorilla-plot.goldly]]}}}}
+                                              [ui.quil.goldly]]}}}}
 
+
+  :bundel-config {:exec-fn goldly.bconfig/generate-bundle-config}
+
+  ;; different ways to start the bundel
+  ;; needs to be run from bundel directory
+
+  :run {:exec-fn goldly-bundel/run
+        :exec-args {:config {:goldly {;:enabled true
+                                      :systems [systems.snippet-registry  ; if you want snippet browser started
+                                                systems.snippet-scratchpad
+                                                demo.hello-user]}}}}
+
+  :runm {:main-opts ["-m" "goldly-bundel"]}
+
+
+
+;
 
 
 ;
