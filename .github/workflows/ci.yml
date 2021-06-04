@@ -22,11 +22,11 @@ jobs:
       with:
         java-version: 1.14
     - name: Install clojure tools
-      uses: DeLaGuardo/setup-clojure@3.2
+      uses: DeLaGuardo/setup-clojure@3.5
       with:
         # Install just one or all simultaneously
-        cli: 1.10.1.693 # Clojure CLI based on tools.deps
-        lein: 2.9.1     # or use 'latest' to always provision latest version of leiningen
+        cli: 1.10.3.855 # Clojure CLI based on tools.deps
+        #lein: 2.9.1     # or use 'latest' to always provision latest version of leiningen
         #boot: 2.8.3     # or use 'latest' to always provision latest version of boot
     - name: Execute clojure code on Linux and MacOS
       if: ${{ matrix.os != 'windows-latest' }}
@@ -72,6 +72,6 @@ jobs:
         clojure -X:bundel-config
         cd bundel
         echo "pwd: $PWD"
-        ./bundel-compile.sh
+        ./bundel-compile-adv.sh
         clojure -M:release
 

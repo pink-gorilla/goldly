@@ -28,4 +28,4 @@ goldly_bindings_generated.cljs
 bundel/node_modules/
 bundel/target/
 bundel/deps.edn
-webly-routes.edn
+.webly
