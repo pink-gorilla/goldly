@@ -75,8 +75,8 @@
   :goldly ; goldly with bundeled dependencies
   {:extra-deps {; bundled dependencies
                 ; extra-deps get added to bundel/deps.edn for artefact goldly-bundel
-                org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.31"}
-                org.pinkgorilla/gorilla-plot  {:mvn/version "1.2.12"}
+                org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.32"}
+                org.pinkgorilla/ui-vega  {:mvn/version "0.0.2"}
                 org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.4"}
                 org.pinkgorilla/ui-quil  {:mvn/version "0.1.5"}}
    :exec-fn goldly-server.app/goldly-server-run!

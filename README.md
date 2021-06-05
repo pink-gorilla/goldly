@@ -138,6 +138,9 @@ Add a goldly-gorillaui.edn:
 {:goldly {:extensions [[pinkgorilla.ui.goldly]]}}
 ```
 
+UI Extension [ui-vega](https://github.com/pink-gorilla/ui-vega) uses leiningen to run
+goldly with a custom build bundel.
+
 ## Run - cloned git repo
 
 This option is mainly there for development of goldly. 
