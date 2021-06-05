@@ -26,6 +26,6 @@
    (goldly-server-run! {}))
   ([profile]
    (goldly-server-run! {:profile profile}))
-  ([profile config]
+  ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
    (goldly-server-run! {:profile profile
                         :config config})))

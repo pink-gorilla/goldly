@@ -48,7 +48,7 @@ clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}}
 
 This lets you see many snippets that you might like.
 
-## Run - in your deps.edn project **using readymade default ui renderers**
+## Run - in your project **using readymade default ui renderers**
 
 You need to include the **goldly-bundel** artefact, which ships a pre-built javascript 
 bundle and already includes many ui-renderers. 
@@ -57,7 +57,7 @@ You can:
 - add custom systems to goldly easily.
 - use your clj functions to render ui visualizations.
 
-**for tools.deps**
+### with tools.deps
 
 Add this alias to your deps.edn:
 ```
@@ -76,7 +76,7 @@ The source to the demo.hello-user system is in `src/demo`
 An example of project that uses goldly this way is: [trateg](https://github.com/clojure-quant/trateg)
 
 
-**for leiningen**
+### with leiningen
 
 In project.clj add the goldly-bundel dependency: `[org.pinkgorilla/goldly "0.2.78"]`
 then add a goldly alias:
@@ -96,7 +96,7 @@ Add a goldly-user.edn file:
 
 run with: `lein goldly`
 
-## Run - in your deps.edn project **with custom ui-renderers**
+## Run - in your  project **with custom ui-renderers**
 
 You need to add the **goldly** artefact to build javascript bundle from scratch. 
 This takes more time (npm dependencies have to be downloaded, javascript bundle needs to be compiled), 
@@ -110,7 +110,7 @@ add the ui extensions to the javascript bundle.
 
 This example adds gorilla-ui to goldly:
 
-**for tools.deps**
+### for tools.deps
 Add this alias to your deps.edn:
 
 ```
@@ -123,14 +123,14 @@ Add this alias to your deps.edn:
                                               ]}}}}
 ```
 
-**for leiningen**
+### for leiningen
 
 See [demo-goldly-bundel](https://github.com/pink-gorilla/demo-goldly-bundel) for the complete project.
 Add the alias to project.clj
 ```
 {:alias
    "goldly"
-   ["with-profile" "+goldly" "run" "-m" "goldly-server.app" "watch" "goldly-gorillaui.edn"]}
+   ["with-profile" "+goldly" "run" "-m" "goldly-server.app" "goldly-gorillaui.edn" "watch"]}
 
 ```
 Add a goldly-gorillaui.edn:
