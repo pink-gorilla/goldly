@@ -7,8 +7,8 @@
    [picasso.kernel.protocol :refer [kernel-eval]]
    [picasso.converter :refer [->picasso]]
    [sci.core :as sci]
-   [goldly-bindings-generated :refer [bindings-generated]]
-   [goldly.sci.bindings-static :refer [ns-static]]
+   [goldly-bindings-generated :refer [bindings-generated ns-generated]]
+   ;[goldly.sci.bindings-static :refer [ns-static]]
    [sci.impl.vars]
    [picasso.protocols :refer [Renderable render]]
    [picasso.render.span :refer [span-render]]))
@@ -16,7 +16,8 @@
 (def ctx-static
   {:bindings bindings-generated
    :preset {:termination-safe true}
-   :namespaces ns-static})
+   :namespaces ns-generated ; ns-static
+   })
 
 (def ctx-repl (sci/init ctx-static))
 

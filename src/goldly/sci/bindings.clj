@@ -11,11 +11,18 @@
 (defonce goldly-namespaces (atom []))
 (defonce goldly-bindings (atom {}))
 
+(defonce goldly-ns-bindings (atom {}))
+
 (defmacro add-cljs-namespace [n]
   `(swap! goldly-namespaces conj '~n))
 
 (defmacro add-cljs-bindings [b]
   `(swap! goldly-bindings merge '~b))
+
+(defmacro add-cljs-ns-bindings [n b]
+  `(swap! goldly-ns-bindings assoc '~n '~b))
+
+;In fact {:bindings ...} is just shorthand for {:namespaces {'user ...}} .
 
 ; generate forms
 
@@ -24,15 +31,18 @@
 
 (defn make-forms []
   (let [bindings @goldly-bindings
+        ns-bindings @goldly-ns-bindings
         namespaces @goldly-namespaces
         nsl '(ns goldly-bindings-generated)
         r (generate-require namespaces)
         rl (list r)
         nslr (concat nsl rl)]
     [nslr ; (concat nsl (generate-require))
-     (list 'def 'bindings-generated bindings)]))
+     (list 'def 'bindings-generated bindings)
+     (list 'def 'ns-generated ns-bindings)]))
 
 ; write forms to cljs 
+
 
 (defn form->str [f]
   (with-out-str
