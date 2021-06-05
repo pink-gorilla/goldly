@@ -123,6 +123,10 @@ Add this alias to your deps.edn:
                                               ]}}}}
 ```
 
+[ui-binary-clock](https://github.com/pink-gorilla/ui-binary-clock) and
+[ui-quil](https://github.com/pink-gorilla/ui-quil)
+both use deps.edn to build a custom goldly bundel (that includes the library that gets built).
+
 ### for leiningen
 
 See [demo-goldly-bundel](https://github.com/pink-gorilla/demo-goldly-bundel) for the complete project.
