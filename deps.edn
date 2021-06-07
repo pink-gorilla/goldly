@@ -18,7 +18,7 @@
   org.pinkgorilla/ui-site {:mvn/version "0.0.5"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.12"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.8"}
-  org.pinkgorilla/webly {:mvn/version "0.2.46"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.1"} ; web app build tool
   }
  :aliases
  {;; developer tooling
