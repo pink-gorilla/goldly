@@ -1,6 +1,7 @@
  
 {:goldly {:enabled true
-          :extensions [[pinkgorilla.ui.goldly] ; gorilla-ui
+          :extensions [[pinkgorilla.input.goldly]
+                       [pinkgorilla.ui.goldly] ; gorilla-ui
                        [pinkgorilla.vega.goldly]
                        [pinkgorilla.vega.snippets]
                        [ui.binaryclock.goldly]

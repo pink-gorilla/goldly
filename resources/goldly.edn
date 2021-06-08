@@ -7,7 +7,9 @@
                    goldly-server.pages.about
                    goldly-server.pages.system
                    goldly-server.pages.system-list
-                   goldly-server.pages.notebook]
+                   goldly-server.pages.notebook
+                   pinkgorilla.input.goldly
+                   ]
          :routes goldly-server.routes/routes
          :start-user-app [:goldly-server/init]}
 
