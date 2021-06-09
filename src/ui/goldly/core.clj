@@ -3,6 +3,7 @@
    [taoensso.timbre :as timbre :refer [info warn error]]
    [goldly.sci.bindings :refer [add-cljs-namespace add-cljs-bindings add-cljs-ns-bindings generate-bindings]]
    [pinkgorilla.repl.goldly.core] ; side-effects
+   [pinkgorilla.repl.goldly.snippets] ; side-effects
    ))
 
 ; cljs ui

@@ -101,7 +101,7 @@
         system-cljs (-> system
                         (dissoc :clj)
                         (assoc :fns-clj (into [] (keys clj))))]
-    (println "system-cljs: " system-cljs)
+    ;(println "system-cljs: " system-cljs)
     system-cljs))
 
 (defn function?

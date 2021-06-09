@@ -44,22 +44,3 @@
               :category :goldly
               :id :bodymass-index
               :filename "snippets/goldly/bodymass_index.clj"})
-
-; goldly test
-
-(add-snippet {:type :pinkie
-              :category :goldly-test
-              :id :error-test
-              :filename "snippets/goldly_test/error.edn"})
-
-(add-snippet {:type :pinkie
-              :category :goldly-test
-              :id :exception-test
-              :filename "snippets/goldly_test/exception.edn"})
-
-(add-snippet {:type :goldly-clj
-              :category :goldly-test
-              :id :binding-test
-              :filename "snippets/goldly_test/binding.clj"})
-
-(info "snippets: " (snippets-by-category))
