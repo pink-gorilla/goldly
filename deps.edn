@@ -12,13 +12,13 @@
   borkdude/sci {:mvn/version "0.2.5"} ; sci compiler  
   fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing
   ; core 
-  org.pinkgorilla/picasso {:mvn/version "3.1.43"} ; kernel type rendering - used in cljs kernel
+  org.pinkgorilla/picasso {:mvn/version "3.1.44"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.1"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.2"} ; web app build tool
 
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.5"}
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.6"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.9"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.12"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.8"}}
  :aliases
@@ -78,9 +78,9 @@
   :goldly ; goldly with bundeled dependencies
   {:extra-deps {; bundled dependencies
                 ; extra-deps get added to bundel/deps.edn for artefact goldly-bundel
-                org.pinkgorilla/ui-input {:mvn/version "0.0.2"}
+                org.pinkgorilla/ui-input {:mvn/version "0.0.3"}
                 org.pinkgorilla/ui-vega  {:mvn/version "0.0.5"}
-                org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.33"}
+                org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.34"}
                 org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.5"}
                 org.pinkgorilla/ui-quil  {:mvn/version "0.1.6"}}
    :exec-fn goldly-server.app/goldly-server-run!
