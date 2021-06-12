@@ -30,5 +30,8 @@
             :use-localstorage  false}
 
  :goldly {:systems [systems.snippet-registry
-                    systems.snippet-scratchpad]}}
+                    systems.snippet-scratchpad]
+         ; :routes {:app {"bongo" [:system-id :hello-world :goldly/system] }}
+          
+          }}
 

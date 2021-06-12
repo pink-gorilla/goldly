@@ -3,7 +3,7 @@
    [clojure.string]
    [clojure.core.async :refer [go chan >!]]
    [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
-   [webly.ws.core :refer [send-all! send! send-response on-conn-chg]]
+   [webly.ws.core :refer [send-all! send! send-response watch-conn]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.puppet.db :refer [system-response systems-response]]))
 
@@ -17,7 +17,7 @@
   (let [[event-name system-id] event]
     (let [response (or (system-response system-id) {:id system-id
                                                     :status :g/system-nil})
-          _ (info "sending system-response: " response)]
+          _ (debug "sending system-response: " response)]
       (send-response ev-msg :goldly/system response))))
 
 ; on connection
@@ -29,7 +29,7 @@
       (info "sending systems info to: " uid)
       (send! uid (systems-response)))))
 
-(reset! on-conn-chg on-connect-send-systems)
+(watch-conn on-connect-send-systems)
 
 (defn scratchpad-get []
   (send-all! [:goldly/scratchpad-get]))
