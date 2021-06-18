@@ -10,7 +10,6 @@
 ;; https://github.com/borkdude/sci
 ;; ClojureScript, even when compiled with :advanced, and (as a consequence) JavaScript
 
-
 ; compile code (system/html)
 
 (defn compile-code [code ctx]

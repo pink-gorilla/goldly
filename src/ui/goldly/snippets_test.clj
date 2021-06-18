@@ -3,9 +3,7 @@
    [taoensso.timbre :as timbre :refer [trace debug debugf info infof error]]
    [systems.snippet-registry :refer [add-snippet snippets-by-category]]))
 
-
 ; goldly test
-
 
 (add-snippet {:type :pinkie
               :category :goldly-test

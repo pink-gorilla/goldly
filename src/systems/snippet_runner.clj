@@ -7,9 +7,7 @@
    [goldly.runner :refer [system-start!]])
   (:import [goldly.runner GoldlySystem]))
 
-
 ; pinkie
-
 
 (defn html->system [id src]
   {:id id

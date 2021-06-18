@@ -26,8 +26,5 @@
             :request-method :get}
            (get-url "/system/6/8")))
 
-
-
-
-    ;
+;
     ))

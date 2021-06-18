@@ -17,7 +17,6 @@
 
 ;; compile system
 
-
 (defn binding-symbol [f-name]
   (->> f-name name (str "?") symbol))
 

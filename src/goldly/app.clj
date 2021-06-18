@@ -11,13 +11,15 @@
    [goldly.ws]
    [ui.goldly.core] ; side-effects 
    [ui.goldly.snippets] ; side-effects
-   [goldly.api.handler]))
+   [goldly.api.handler]
+   [goldly.discover :as d]))
 
 (defn goldly-compile! []
   (let [{:keys [systems extensions]}
         (get-in-config [:goldly])]
     ; extensions can add to cljs namespaces. therefore extensions have to
     ; be included at compile time.
+    (d/discover)
     (if extensions
       (do (info "loading extensions from ns: " extensions)
           (require-namespaces extensions))
