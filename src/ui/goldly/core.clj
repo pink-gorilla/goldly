@@ -5,11 +5,6 @@
    ;[pinkgorilla.repl.goldly.core] ; side-effects
    ;[pinkgorilla.repl.goldly.snippets] ; side-effects
    ))
-
-; cljs ui
-;(add-cljs-namespace [ui.site.goldly.core]) ; web-site templates
-;(add-cljs-namespace [ui.code.goldly.core]) ; codemirror
-
 (add-cljs-namespace [clojure.walk])
 (add-cljs-ns-bindings
  'walk {'postwalk clojure.walk/postwalk
