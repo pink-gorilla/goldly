@@ -1,10 +1,11 @@
  
 {:goldly {:enabled true
-          :extensions [[pinkgorilla.repl.goldly.core]
-                       [pinkgorilla.repl.goldly.snippets]
+          :extensions [;[pinkgorilla.repl.goldly.core]
+                       ;[pinkgorilla.repl.goldly.snippets]
                        ;[pinkgorilla.input.goldly]
                        ;[pinkgorilla.vega.goldly]
                        ;[pinkgorilla.vega.snippets]
                        ;[pinkgorilla.ui.goldly] ; gorilla-ui
                       ; [ui.binaryclock.goldly]
-                       [ui.quil.goldly]]}}
+                       ;[ui.quil.goldly]
+                       ]}}
