@@ -9,20 +9,20 @@
    [systems.snippet-registry :refer [add-snippet]]
    [pinkgorilla.repl :refer [add-require]]))
 
-(defn resource-dir-paths [path]
-  (let [parents (map str (rs/resources path))]
+#_(defn resource-dir-paths [path]
+    (let [parents (map str (rs/resources path))]
     ;(warn "parents: " (pr-str parents))
-    (for [url (rs/resource-dir path)]
-      (let [prefix (first (filter (partial str/starts-with? url) parents))]
-        (str path (subs (str url) (count (str prefix))))))))
+      (for [url (rs/resource-dir path)]
+        (let [prefix (first (filter (partial str/starts-with? url) parents))]
+          (str path (subs (str url) (count (str prefix))))))))
 
-(defn resource-dir [path]
-  (if (not (= path "module-info.class")) ; (rs/directory? path))
-    (rs/resource-dir path)
-    []))
+#_(defn resource-dir [path]
+    (if (not (= path "module-info.class")) ; (rs/directory? path))
+      (rs/resource-dir path)
+      []))
 
-(defn recursive-resource-paths [path]
-  (tree-seq (comp seq resource-dir) resource-dir-paths path))
+#_(defn recursive-resource-paths [path]
+    (tree-seq (comp seq resource-dir) resource-dir-paths path))
 
 (defn add-extension [{:keys [name snippets
                              cljs-namespace
@@ -58,21 +58,27 @@
            (add-snippet s))))
 
 (defn discover []
-  (let [r (->> (recursive-resource-paths "ext")
+  (let [r (->> (rs/resource-dir "ext")
                ;(rs/resources "")
-               (filter #(str/ends-with? % "/gorilla-ext.edn"))
-               doall)]
+               ;(filter #(str/ends-with? % "/gorilla-ext.edn"))
+               ;doall
+               )]
     (warn "discovered extensions: " (pr-str r))
     (doall (for [f r]
-             (let [ext  (-> f io/resource slurp edn/read-string)]
+             (let [ext  (-> f slurp edn/read-string)] ; io/resource
                (add-extension ext))))))
 
 (comment
 
-  (rs/resources "pinkgorilla")
+  (rs/resources "ext")
   (rs/resources "")
 
-  (recursive-resource-paths "pinkgorilla")
+  (-> (rs/resource-dir "ext")
+      ;first
+      last
+      ;slurp
+      )
+  (recursive-resource-paths "ext")
   (recursive-resource-paths "")
 
   (map str [])
