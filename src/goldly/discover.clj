@@ -1,8 +1,9 @@
 (ns goldly.discover
   (:require
-   [taoensso.timbre :as timbre :refer [info warn error]]
+   [taoensso.timbre :as timbre :refer [debug info warn error]]
    [clojure.string :as str]
    [clojure.java.io :as io]
+   [fipp.clojure]
    [clojure.edn :as edn]
    [resauce.core :as rs]
    [goldly.sci.bindings :refer [add-cljs-namespace goldly-namespaces goldly-bindings goldly-ns-bindings add-cljs-bindings add-cljs-ns-bindings]]
@@ -36,37 +37,43 @@
                       :as extension}]
   (info "adding extension: " name)
 
-  (info "cljs ns: " cljs-namespace)
+  (debug "cljs ns: " cljs-namespace)
   (doall (for [n cljs-namespace]
            ;(add-cljs-namespace [n])
            (swap! goldly-namespaces conj [n])))
 
-  (info "cljs bindings: " cljs-bindings)
+  (debug "cljs bindings: " cljs-bindings)
   ;(add-cljs-bindings cljs-bindings)
   (swap! goldly-bindings merge cljs-bindings)
 
-  (info "cljs ns-bindings: " cljs-ns-bindings)
+  (debug "cljs ns-bindings: " cljs-ns-bindings)
   ;(doall (for [[k v] cljs-ns-bindings]
   ;         (add-cljs-ns-bindings k v)))
   (swap! goldly-ns-bindings merge cljs-ns-bindings)
 
-  (info "clj require: " clj-require)
+  (debug "clj require: " clj-require)
   (doall (for [r clj-require]
            (add-require r)))
 
   (doall (for [s snippets]
            (add-snippet s))))
 
+(defn pr-str-fipp [config]
+  (with-out-str
+    (fipp.clojure/pprint config {:width 40})))
+
+(defn save-extensions [extensions]
+  (->> (pr-str-fipp extensions)
+       (spit ".webly/extensions.edn")))
+
 (defn discover []
-  (let [r (->> (rs/resource-dir "ext")
-               ;(rs/resources "")
-               ;(filter #(str/ends-with? % "/gorilla-ext.edn"))
-               ;doall
-               )]
+  (let [r  (rs/resource-dir "ext")
+        extensions (for [f r]
+                     (-> f slurp edn/read-string))]
     (warn "discovered extensions: " (pr-str r))
-    (doall (for [f r]
-             (let [ext  (-> f slurp edn/read-string)] ; io/resource
-               (add-extension ext))))))
+    (save-extensions extensions)
+    (doall (for [ext extensions]
+             (add-extension ext)))))
 
 (comment
 

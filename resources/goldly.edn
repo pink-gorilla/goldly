@@ -7,8 +7,7 @@
                    goldly-server.pages.about
                    goldly-server.pages.system
                    goldly-server.pages.system-list
-                   goldly-server.pages.notebook
-                   ]
+                   goldly-server.pages.repl]
          :routes goldly-server.routes/routes
          :start-user-app [:goldly-server/init]}
 
@@ -21,7 +20,13 @@
                    [#{"user"} :warn] ; time sender
                    [#{"*"} :debug]]
 
-; :keybindings "pinkgorilla.notebook-ui.keybindings/keybindings-default"
+ :keybindings  [{:kb "alt-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+                {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
+                {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}
+                ; goldly:
+                {:kb "alt-g m" :handler [:bidi/goto :goldly/about]  :desc "goto main"}
+                {:kb "alt-g r" :handler [:bidi/goto :goldly/repl]  :desc "goto repl"}]
+
 
  :settings {; settings can be changed by user (via dialog)
             ; :use-localstorage is true: load settings from localstorage, and only use
@@ -31,6 +36,5 @@
  :goldly {:systems [systems.snippet-registry
                     systems.snippet-scratchpad]
          ; :routes {:app {"bongo" [:system-id :hello-world :goldly/system] }}
-          
           }}
 
