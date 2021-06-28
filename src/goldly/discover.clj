@@ -6,6 +6,7 @@
    [fipp.clojure]
    [clojure.edn :as edn]
    [resauce.core :as rs]
+   [webly.writer]
    [goldly.sci.bindings :refer [add-cljs-namespace goldly-namespaces goldly-bindings goldly-ns-bindings add-cljs-bindings add-cljs-ns-bindings]]
    [systems.snippet-registry :refer [add-snippet]]
    [pinkgorilla.repl :refer [add-require]]))
@@ -63,6 +64,7 @@
     (fipp.clojure/pprint config {:width 40})))
 
 (defn save-extensions [extensions]
+  (webly.writer/ensure-directory-webly)
   (->> (pr-str-fipp extensions)
        (spit ".webly/extensions.edn")))
 
