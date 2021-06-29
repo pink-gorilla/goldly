@@ -11,4 +11,5 @@
    [goldly.runner.clj-fn]
    [goldly.events]
    [goldly.sci.kernel-cljs]
-   [goldly.notebook.pinkie]))
+   [goldly.notebook.pinkie]
+   [goldly.service.core]))

@@ -1,0 +1,23 @@
+{:name "goldly-test"
+ :clj-require []
+ :cljs-namespace []
+ :cljs-bindings {}
+ :cljs-ns-bindings {}
+ :snippets [{:type :pinkie
+              :category :goldly-test
+              :id :error-test
+              :filename "snippets/goldly_test/error.edn"}
+            {:type :pinkie
+              :category :goldly-test
+              :id :exception-test
+              :filename "snippets/goldly_test/exception.edn"}
+            {:type :goldly-clj
+              :category :goldly-test
+              :id :binding-test
+              :filename "snippets/goldly_test/binding.clj"}
+            {:type :goldly-clj
+             :category :goldly-test
+             :id :service-test
+             :filename "snippets/goldly_test/service.clj"}
+]}
+

@@ -7,11 +7,6 @@
    [goldly.runner.ws :refer [request-systems]]
    [goldly-server.site :refer [header]]))
 
-(rf/reg-sub
- :webly/routes
- (fn [db _]
-   (get-in db [:bidi])))
-
 (defn visible? [system]
   (not (:hidden system)))
 

@@ -9,10 +9,9 @@
    [goldly.puppet.require :refer [require-namespaces]]
    [goldly.sci.bindings :refer [generate-bindings]]
    [goldly.ws]
-   [ui.goldly.core] ; side-effects 
-   [ui.goldly.snippets] ; side-effects
    [goldly.api.handler]
-   [goldly.discover :as d]))
+   [goldly.discover :as d]
+   [goldly.service.core]))
 
 (defn goldly-compile! []
   (let [{:keys [systems extensions]}

@@ -1,0 +1,52 @@
+{:name "goldly"
+ :clj-require []
+
+ :cljs-namespace [clojure.walk
+                  goldly.service.core
+                  ]
+
+ :cljs-bindings {'run goldly.service.core/run
+                 'run-a goldly.service.core/run-a
+                 }
+
+ :cljs-ns-bindings {'walk {'postwalk clojure.walk/postwalk
+                           'prewalk clojure.walk/prewalk
+                           'keywordize-keys clojure.walk/keywordize-keys
+                           'walk clojure.walk/walk
+                           'postwalk-replace clojure.walk/postwalk-replace
+                           'prewalk-replace clojure.walk/prewalk-replace
+                           'stringify-keys clojure.walk/stringify-keys}}
+
+ :snippets [{:type :pinkie
+             :category :goldly
+             :id :hello-world
+             :filename "snippets/goldly/hello.edn"}
+            {:type :goldly
+             :category :goldly
+             :id :click-counter
+             :filename "snippets/goldly/click_counter.clj"}
+            {:type :goldly
+             :category :goldly
+             :id :countdown
+             :filename "snippets/goldly/countdown.edn"}
+            {:type :goldly-clj
+             :category :goldly
+             :id :fortune
+             :filename "snippets/goldly/fortune.clj"}
+            {:type :goldly-clj
+             :category :goldly
+             :id :greeter
+             :filename "snippets/goldly/greeter.clj"}
+            {:type :goldly-clj
+             :category :goldly
+             :id :greeter-details
+             :filename "snippets/goldly/greeter_details.clj"}
+            {:type :goldly-clj
+             :category :goldly
+             :id :time
+             :filename "snippets/goldly/time.clj"}
+            {:type :goldly-clj
+             :category :goldly
+             :id :bodymass-index
+             :filename "snippets/goldly/bodymass_index.clj"}]}
+

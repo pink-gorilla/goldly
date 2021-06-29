@@ -30,8 +30,9 @@
 
 (defn menu []
   [:div
-   [link-href "/" "main"]
-   [link-dispatch [:bidi/goto :goldly/about] "main"]
+   ;[link-href "/" "main"]
+   ;[link-dispatch [:bidi/goto :goldly/about] "main"]
+   [link-dispatch [:bidi/goto "/"] "main"]
    [ui.notebook.menu/menu]])
 
 (defmethod reagent-page :goldly/repl [{:keys [route-params query-params handler] :as route}]
