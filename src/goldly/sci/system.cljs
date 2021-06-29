@@ -11,7 +11,8 @@
    [cljs.reader]
    [pinkie.pinkie :as pinkie]
    [goldly.runner.eventhandler :refer [eventhandler-fn]]
-   [goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
+   [goldly.service.result :refer [update-atom-where]]
+   ;[goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
    [goldly.sci.compile :refer [compile-code compile-fn compile-fn-raw]]
    [goldly.sci.kernel-cljs :as kernel]))
 
@@ -19,13 +20,6 @@
 
 (defn binding-symbol [f-name]
   (->> f-name name (str "?") symbol))
-
-(defn- ->bindings-clj [run-id system-id fns-clj]
-  (let [fns-clj (or fns-clj [])
-        fns-keys (map binding-symbol fns-clj)
-        bindings-clj  (zipmap fns-keys (map (partial clj-fun run-id system-id) fns-clj))]
-    (debug "bindings-clj: " bindings-clj)
-    bindings-clj))
 
 (defn- ->bindings-cljs [ctx fns state-a]
   (let [bindings-cljs (->> fns
@@ -65,15 +59,14 @@
    or that displays a compile error
    returns: component
             component expects system state as parameter as atom"
-  [run-id state-a ext {:keys [id state html fns fns-raw fns-clj] :as system}]
+  [run-id state-a ext {:keys [id state html fns fns-raw] :as system}]
   (info "compiling system: " system)
   (if (nil? html)
     (fn [_] [:h1 "Error: system html is nil!"])
-    (let [bindings-clj  (->bindings-clj run-id id fns-clj)
-          bindings-system {'state state-a
+    (let [bindings-system {'state state-a
                            'ext ext}
           ctx (sci/fork kernel/ctx-repl)
-          ctx (sci/merge-opts ctx {:bindings (merge bindings-clj bindings-system)})
+          ctx (sci/merge-opts ctx {:bindings bindings-system})
           bindings-cljs (->bindings-cljs ctx fns state-a)
           bindings-cljs-raw (->bindings-cljs-raw ctx fns-raw)
           ctx (sci/merge-opts ctx {:bindings (merge bindings-cljs bindings-cljs-raw)})
@@ -86,18 +79,18 @@
                           (error "compile system error ex: " e)
                           (fn [state-a] [compile-error {:state @state-a
                                                         :html html
-                                                        :fns fns
-                                                        :fns-clj fns-clj} ctx e]))))]
+                                                        :fns fns} ctx e]))))]
       component)))
 
 (defonce run-state (r/atom {}))
 
-(defn make-component [run-id ext {:keys [state html fns fns-clj] :as system}]
+(defn make-component [run-id ext {:keys [state html fns] :as system}]
   (if (nil? html)
     nil
     (let [state-a (r/atom state)
           component (compile-system run-id state-a ext system)
-          update-state (partial update-state-from-clj-result state-a)]
+          update-state (fn [result where]
+                         (update-atom-where state-a where result))]
       (swap! run-state assoc run-id state-a)
       (dispatch [:goldly/add-running-system run-id (merge system {:update-state update-state})])
       (fn []

@@ -29,3 +29,5 @@ bundel/node_modules/
 bundel/target/
 bundel/deps.edn
 .webly
+profiles/bundel/node_modules/
+profiles/bundel/target/

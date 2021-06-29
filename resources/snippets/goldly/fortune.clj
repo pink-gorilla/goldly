@@ -3,6 +3,10 @@
 (require '[goldly.runner :refer [system-start!]])
 (require '[systems.fortune-db :as db])
 
+(require '[goldly.service.core :as s])
+
+(s/add {:cookie/get db/get-cookie})
+
 (system-start!
  (goldly/system
   {:id :fortune
@@ -14,13 +18,13 @@
            [:button {:class "border m-2 p-3 border-pink-500"
                      :on-click (fn [& _]
                                  (println "getting cookie")
-                                 (?cookie 3))} "get a specific cookie"]
+                                 (run-a state [:cookie] :cookie/get 3))} "get a specific cookie"]
            [:button {:class "border m-2 p-3 border-pink-500"
                      :on-click (fn [& _]
                                  (println "getting cookie")
-                                 (?cookie))} "get a random cookie"]
+                                 (run-a state [:cookie] :cookie/get))} "get a random cookie"]
            [:p.bg-yellow-500.italic.text-xl.text-blue-700
             (or (:cookie @state) "no cookie received!")]]
    :fns {}}
-  {:fns {:cookie [db/get-cookie [:cookie]]}}))
+  {}))
 

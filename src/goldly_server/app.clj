@@ -24,8 +24,8 @@
 (defn -main ; for lein alias
   ([]
    (goldly-server-run! {}))
-  ([profile]
-   (goldly-server-run! {:profile profile}))
+  ([config]
+   (goldly-server-run! {:config config}))
   ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
    (goldly-server-run! {:profile profile
                         :config config})))

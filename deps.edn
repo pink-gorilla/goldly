@@ -70,43 +70,12 @@
        :exec-args {:profile "ci"
                    :config nil}}
 
-  :goldly-core
+  :goldly
   {:extra-paths ["profiles/goldly_test/resources"]
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"
                :config {:goldly {:enabled true
                                  :extensions []}}}}
-
-  :goldly ; goldly with bundeled dependencies
-  {:extra-deps {; bundled dependencies
-                ; extra-deps get added to bundel/deps.edn for artefact goldly-bundel
-                org.pinkgorilla/ui-input {:mvn/version "0.0.4"}
-                org.pinkgorilla/ui-vega  {:mvn/version "0.0.8"}
-                org.pinkgorilla/ui-highcharts {:mvn/version "0.0.3"}
-                org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.39"}
-                org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.6"}
-                org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"}}
-   :exec-fn goldly-server.app/goldly-server-run!
-   :exec-args {:profile "watch"
-               :config "goldly-bundel.edn" ; this edn file needs modification with added deps
-               }}
-
-  :bundel-config {:exec-fn goldly.bconfig/generate-bundle-config}
-
-  ;; different ways to start the bundel
-  ;; needs to be run from bundel directory
-
-  :run {:exec-fn goldly-bundel/run
-        :exec-args {:config {:goldly {;:enabled true
-                                      :systems [systems.snippet-registry  ; if you want snippet browser started
-                                                systems.snippet-scratchpad
-                                                demo.hello-user]}}}}
-
-  :runm {:main-opts ["-m" "goldly-bundel"]}
-
-
-
-;
 
 
 ;

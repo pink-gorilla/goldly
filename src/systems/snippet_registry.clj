@@ -5,7 +5,8 @@
    [clojure.core :refer [read-string load-string]]
    [goldly.system :as goldly]
    [goldly.runner :refer [system-start!]]
-   [systems.snippet-runner :refer [start-snippet]])
+   [systems.snippet-runner :refer [start-snippet]]
+   [goldly.service.core :as s])
   (:import
    [java.util UUID]))
 
@@ -55,6 +56,9 @@
       (start-snippet s)
       s)))
 
+(s/add {:get-snippet-list snippets-by-category
+        :load-snippet load-snippet})
+
 (system-start!
  (goldly/system
   {:id :snippet-registry
@@ -63,7 +67,7 @@
    :html  [:div.prose
            (when (:first @state)
              (swap! state assoc :first false)
-             (?get-snippet-list)
+             (run-a state [:snippets] :get-snippet-list)
              nil)
            (if (= 0 (count  (:snippets @state)))
              [:p.bg-yellow-500.italic.text-xl.text-blue-700
@@ -84,7 +88,7 @@
             [:li [:b "goldly-clj"] " - a goldly system (stateful) with clj interaction"]]
            [:p "note: this snippet registry is also a normal goldly system :-)"]]
    :fns {}}
-  {:fns {:get-snippet-list [snippets-by-category [:snippets]]}}))
+  {}))
 
 (system-start!
  (goldly/system
@@ -95,7 +99,7 @@
    :html  [:div
            (when (:first @state)
              (swap! state assoc :first false)
-             (?load-snippet ext))
+             (run-a state [:snippet] :load-snippet ext))
            [:h1.m-2.bg-blue-300
             [:span "type: " (get-in @state [:snippet :type])]
             [:a.border.border-round.m-1 {:on-click ?edit} "edit"]
@@ -115,6 +119,6 @@
                  (nav :goldly/system :system-id :scratchpad)
                  @state)}}
 
-  {:fns {:load-snippet [load-snippet [:snippet]]}}))
+  {}))
 
 

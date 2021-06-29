@@ -5,7 +5,10 @@
    [clojure.core :refer [read-string load-string]]
    [goldly.system :as goldly]
    [goldly.runner :refer [system-start!]]
+   [goldly.service.core :as s]
    [systems.snippet-runner :refer [start-snippet]]))
+
+(s/add {:start-snippet start-snippet})
 
 (system-start!
  (goldly/system
@@ -25,7 +28,7 @@
             [:span "type: " (get-in @state [:snippet :type])]
             [:button.border.border-round.m-1
              {:on-click (fn [& _]
-                          (?start-snippet (:snippet @state))
+                          (run-a state [:running] :start-snippet (:snippet @state))
                           (swap! state assoc :new-system true))}
              "run"]
             [:a.border.border-round.m-1.right-0 {:href "/system/snippet-registry"} "snippet-registry"]]
@@ -44,4 +47,4 @@
    :fns {:eval (fn []
                  (info "eval:" @state)
                  @state)}}
-  {:fns {:start-snippet [start-snippet [:running]]}}))
+  {}))

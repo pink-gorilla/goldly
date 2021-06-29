@@ -4,7 +4,6 @@
    [clojure.string]
    [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
    [goldly.system :refer [system->cljs]]))
-
 (def systems (atom {}))
 
 (defn get-system [id]

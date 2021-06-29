@@ -36,5 +36,6 @@
  :goldly {:systems [systems.snippet-registry
                     systems.snippet-scratchpad]
          ; :routes {:app {"bongo" [:system-id :hello-world :goldly/system] }}
-          }}
+          :enabled true
+          :extensions []}}
 

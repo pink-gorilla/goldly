@@ -4,14 +4,15 @@
    [clojure.java.io]
    [taoensso.timbre :as timbre :refer [info warn error]]
    [webly.config :refer [get-in-config]]
-   [goldly.runner.clj-fn] ; side-efects
+   ;[goldly.runner.clj-fn] ; side-efects
    [goldly.notebook.picasso] ; side-efects
    [goldly.puppet.require :refer [require-namespaces]]
    [goldly.sci.bindings :refer [generate-bindings]]
    [goldly.ws]
    [goldly.api.handler]
    [goldly.discover :as d]
-   [goldly.service.core]))
+   [goldly.service.core]
+   [goldly.broadcast.core]))
 
 (defn goldly-compile! []
   (let [{:keys [systems extensions]}

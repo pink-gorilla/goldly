@@ -43,16 +43,5 @@
       (debug "sending clj response: " response)
       (send-response ev-msg :goldly/dispatch response))))
 
-(defn broadcast-to-system [system-id data path]
-  (send-all! [:goldly/clj-result {:run-id nil
-                                  :system-id system-id
-                                  :fun nil
-                                  :result data
-                                  :where path}]))
 
-#_(defn update-state! [system-id {:keys [result where] :as update-spec}]
-    (let [response (merge {:run-id nil
-                           :system-id system-id
-                           :fun nil} update-spec)]
-      (info "sending " response)
-      (send-all! [:goldly/dispatch response])))
+
