@@ -1,4 +1,4 @@
-(ns goldly.sci.system
+(ns goldly.system.sci
   "defines reagent-component render-system, that displays a fully defined system"
   (:require
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
@@ -10,9 +10,8 @@
   ;[cljs.tools.reader :as reader]
    [cljs.reader]
    [pinkie.pinkie :as pinkie]
-   [goldly.runner.eventhandler :refer [eventhandler-fn]]
+   [goldly.system.eventhandler :refer [eventhandler-fn]]
    [goldly.service.result :refer [update-atom-where]]
-   ;[goldly.runner.clj-fn :refer [clj-fun update-state-from-clj-result]]
    [goldly.sci.compile :refer [compile-code compile-fn compile-fn-raw]]
    [goldly.sci.kernel-cljs :as kernel]))
 

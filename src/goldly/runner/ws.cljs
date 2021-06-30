@@ -5,7 +5,7 @@
    [webly.ws.core :refer [send!]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.runner.db :refer [find-system-by-id]]
-   [goldly.sci.system :refer [run-state]]
+   [goldly.system.sci :refer [run-state]]
    [pinkgorilla.repl.clipboard :refer [clipboard-set]]))
 
 (defmethod -event-msg-handler :goldly/systems

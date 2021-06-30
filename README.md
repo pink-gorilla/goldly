@@ -119,8 +119,7 @@ Add this alias to your deps.edn:
                 org.pinkgorilla/gorilla-ui {:mvn/version "RELEASE"}}
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"
-               :config {:goldly {:extensions [[pinkgorilla.ui.goldly]
-                                              ]}}}}
+               :config {:goldly {}}}}
 ```
 
 [ui-binary-clock](https://github.com/pink-gorilla/ui-binary-clock) and
@@ -139,7 +138,7 @@ Add the alias to project.clj
 ```
 Add a goldly-gorillaui.edn:
 ```
-{:goldly {:extensions [[pinkgorilla.ui.goldly]]}}
+{:goldly {}}
 ```
 
 UI Extension [ui-vega](https://github.com/pink-gorilla/ui-vega) uses leiningen to run

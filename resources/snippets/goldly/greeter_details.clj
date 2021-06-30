@@ -11,4 +11,4 @@
            [:p "Access this component only via greeter."]
            [:p.bg-blue-300.mg-3 "the best dad in the world is: " ext]]
    :fns {}}
-  {:fns {}}))
+  ))

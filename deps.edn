@@ -15,13 +15,13 @@
   ; core 
   org.pinkgorilla/picasso {:mvn/version "3.1.45"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.13"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.18"} ; web app build tool
 
   ; core-bundel
-  org.pinkgorilla/ui-site {:mvn/version "0.0.6"}
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.13"}
-  org.pinkgorilla/ui-code {:mvn/version "0.0.13"}
-  org.pinkgorilla/ui-markdown {:mvn/version "0.0.9"}}
+  org.pinkgorilla/ui-site {:mvn/version "0.0.8"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.15"}
+  org.pinkgorilla/ui-code {:mvn/version "0.0.14"}
+  org.pinkgorilla/ui-markdown {:mvn/version "0.0.10"}}
  :aliases
  {;; developer tooling
 
@@ -49,7 +49,7 @@
 
   :check
   {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
-                                 :sha "0ca84df1357d71429243b99908303f45a934654c"}}
+                                 :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
    :main-opts ["-m" "clj-check.check"]}
 
   :test {:extra-paths ["test"]
@@ -71,11 +71,12 @@
                    :config nil}}
 
   :goldly
-  {:extra-paths ["profiles/goldly_test/resources"]
+  {:extra-paths ["profiles/goldly_test/src"
+                 "profiles/goldly_test/resources"
+                 ]
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"
-               :config {:goldly {:enabled true
-                                 :extensions []}}}}
+               :config "demo.edn"}}
 
 
 ;

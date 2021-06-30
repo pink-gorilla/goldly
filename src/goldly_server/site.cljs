@@ -11,9 +11,11 @@
                             :title-small "open source"}])
 
 (defn header []
-  [template/header-menu {:brand "Goldly"
+  [template/header-menu {:brand "Your Application"
                          :brand-link "/"
-                         :items [{:text "running systems" :link "/goldly"}
+                         :items [{:text "goldly" :link "/goldly/about"}
+                                 {:text "repl" :link "/repl"}
+                                 {:text "running systems" :link "/goldly"}
                  ;{:text "notebook" :link "/notebook-test"}
                                  {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special? true}]}])
 

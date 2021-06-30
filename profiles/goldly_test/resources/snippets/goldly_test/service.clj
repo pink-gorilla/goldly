@@ -33,4 +33,4 @@
            [:p.bg-blue-300.mg-3 "state: " (pr-str @state)]]
    :fns {}
    :fns-raw {}}
-  {:fns {}}))
+  ))

@@ -53,6 +53,5 @@
                                            (swap! state assoc param (evt-val e))
                                            (when (not= param :bmi)
                                              (swap! state assoc :bmi nil)))}])}}
- {:fns {}}
  ))
 

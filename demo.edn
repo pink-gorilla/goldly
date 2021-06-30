@@ -1,0 +1,6 @@
+{:goldly {:enabled true
+          :systems [systems.snippet-registry
+                    systems.snippet-scratchpad
+                    demo.hello-user]
+          :routes {"" #bidi.bidi.TaggedMatch{:matched :goldly/system, :tag :hello-user}}
+          }}

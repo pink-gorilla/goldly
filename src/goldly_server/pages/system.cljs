@@ -15,9 +15,11 @@
     [:p.mt-5.mb-5.text-purple-600.text-3xl id]
     [system-ext id ext]]])
 
-(defmethod reagent-page :goldly/system [{:keys [route-params query-params handler] :as route}]
-  (info "loading system" route-params)
-  [system-themed (:system-id route-params) ""])
+(defmethod reagent-page :goldly/system [{:keys [handler route-params query-params tag] :as route}]
+  (info "loading system: " route)
+  (let [system-id (or (:system-id route-params)
+                      tag)]
+    [system-themed system-id ""]))
 
 (defmethod reagent-page :goldly/system-ext [{:keys [route-params query-params handler] :as route}]
   (info "loading system-ext" route-params)

@@ -4,7 +4,8 @@
    [clojure.string :as str]
    [taoensso.timbre :refer [trace debug debugf info infof error]]
    [fipp.clojure]
-   [webly.date :refer [now-str]]))
+   [webly.date :refer [now-str]]
+   [webly.writer :refer [write-status]]))
 
 ; config management
 
@@ -58,7 +59,11 @@
 ;; all together
 
 (defn generate-bindings []
-  (info "goldly is generating bindings.. namespaces: " @goldly-namespaces "bindings: " @goldly-bindings)
+  (info "goldly is generating bindings.. ")
+  ;      "namespaces: " @goldly-namespaces "bindings: " @goldly-bindings)
+  (write-status "sci-cljs-bindings" {:namespaces @goldly-namespaces
+                                     :bindings @goldly-bindings
+                                     :ns-bindings @goldly-ns-bindings})
   (let [forms (make-forms)]
     (write-forms forms)))
 

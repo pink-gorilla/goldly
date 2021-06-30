@@ -72,7 +72,7 @@
   (let [r  (rs/resource-dir "ext")
         extensions (for [f r]
                      (-> f slurp edn/read-string))]
-    (warn "discovered extensions: " (pr-str r))
+    (debug "discovered extensions: " (pr-str r))
     (save-extensions extensions)
     (doall (for [ext extensions]
              (add-extension ext)))))

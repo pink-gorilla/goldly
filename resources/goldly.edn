@@ -4,10 +4,7 @@
                   goldly-server.routes]
          :ns-cljs [goldly.app
                    goldly-server.events
-                   goldly-server.pages.about
-                   goldly-server.pages.system
-                   goldly-server.pages.system-list
-                   goldly-server.pages.repl]
+                   goldly-server.developer-tools]
          :routes goldly-server.routes/routes
          :start-user-app [:goldly-server/init]}
 
@@ -35,7 +32,5 @@
 
  :goldly {:systems [systems.snippet-registry
                     systems.snippet-scratchpad]
-         ; :routes {:app {"bongo" [:system-id :hello-world :goldly/system] }}
-          :enabled true
-          :extensions []}}
+          :enabled true}}
 

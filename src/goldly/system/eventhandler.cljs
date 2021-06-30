@@ -1,4 +1,4 @@
-(ns goldly.runner.eventhandler
+(ns goldly.system.eventhandler
   (:require
    [clojure.string :as str]
    [taoensso.timbre :as timbre :refer-macros [debug debugf info infof error]]))

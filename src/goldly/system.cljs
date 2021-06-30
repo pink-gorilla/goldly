@@ -3,7 +3,7 @@
    [cljs.pprint]
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [goldly.sci.system :refer [render-system]]))
+   [goldly.system.sci :refer [render-system]]))
 
 (defn error-boundary [_ #_comp]
   (let [error (r/atom nil)
@@ -27,7 +27,7 @@
 
 (defn system-nil [id]
   [:div.bg-red-500.m-16
-   [:h1 "system does not exist!"]
+   [:h1 (str "system [" id "] does not exist!")]
    [:p id]])
 
 (defn system-shower [id ext system]

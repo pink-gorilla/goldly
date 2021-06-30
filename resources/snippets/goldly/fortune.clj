@@ -26,5 +26,5 @@
            [:p.bg-yellow-500.italic.text-xl.text-blue-700
             (or (:cookie @state) "no cookie received!")]]
    :fns {}}
-  {}))
+  ))
 

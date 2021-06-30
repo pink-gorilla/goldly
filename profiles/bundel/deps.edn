@@ -3,11 +3,11 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
         ; bundel deps
-        org.pinkgorilla/ui-input {:mvn/version "0.0.4"}
+        org.pinkgorilla/ui-input {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.8"}
-        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.3"}
-        org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.39"}
-        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.6"}
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.5"}
+        org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.40"}
+        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.7"}
 
         ; not bundeled (too big)
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"}
@@ -45,7 +45,7 @@
                                     "cljfmt.edn"]}
            :test {:extra-paths ["test"]
                   :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                                                                     :sha "9e35c979860c75555adaff7600070c60004a0f44"}}
+                                                                     :sha "62ef1de18e076903374306060ac0e8a752e57c86"}}
                   :main-opts ["-m"
                               "cognitect.test-runner"]
                   :exec-fn cognitect.test-runner.api/test}
