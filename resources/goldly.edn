@@ -8,7 +8,7 @@
          :routes goldly-server.routes/routes
          :start-user-app [:goldly-server/init]}
 
- :google-analytics {:enabled true} ; set to false to disable google-analytics tracking.
+ :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
  :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
                    [#{"webly.ws.*"} :info]
@@ -21,8 +21,11 @@
                 {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
                 {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}
                 ; goldly:
+                {:kb "alt-g a" :handler [:bidi/goto "/"]  :desc "goto user app"}
                 {:kb "alt-g m" :handler [:bidi/goto :goldly/about]  :desc "goto main"}
-                {:kb "alt-g r" :handler [:bidi/goto :goldly/repl]  :desc "goto repl"}]
+                {:kb "alt-g r" :handler [:bidi/goto :goldly/repl]  :desc "goto repl"}
+                {:kb "alt-g s" :handler [:bidi/goto :goldly/system :system-id :snippet-registry] :desc "goto snippets"}
+                ]
 
 
  :settings {; settings can be changed by user (via dialog)

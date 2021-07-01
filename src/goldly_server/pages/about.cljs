@@ -35,14 +35,7 @@
                                {:title "Embedded" :text "Embed it to another website"}]}]
 
          [t/footer {:copyright "© 2019-2021 Pink Gorilla"
-                    :right "Served by Goldly"}]
-
-         #_[:div
-            [:h1 "goldly demo"]
-
-            [:p [link-dispatch [:bidi/goto :goldly/system-list] "goldly running systems"]]
-            [:p [link-dispatch [:bidi/goto :ui/markdown :file "webly.md"] "webly docs"]]
-            [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]]]))))
+                    :right "Served by Goldly"}]]))))
 
 (defmethod reagent-page :goldly/about [{:keys [route-params query-params handler] :as route}]
   [about])

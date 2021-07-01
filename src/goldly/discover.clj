@@ -7,6 +7,7 @@
    [clojure.edn :as edn]
    [resauce.core :as rs]
    [webly.writer]
+   [webly.config :refer [config-atom]]
    [goldly.sci.bindings :refer [add-cljs-namespace goldly-namespaces goldly-bindings goldly-ns-bindings add-cljs-bindings add-cljs-ns-bindings]]
    [systems.snippet-registry :refer [add-snippet]]
    [pinkgorilla.repl :refer [add-require]]))
@@ -26,17 +27,40 @@
 #_(defn recursive-resource-paths [path]
     (tree-seq (comp seq resource-dir) resource-dir-paths path))
 
+(defn theme-split [theme]
+  (let [theme (or theme {})
+        {:keys [available current]
+         :or {available {}
+              current {}}} theme]
+    [available current]))
+
+(defn merge-theme [global-theme module-theme]
+  (let [[available-g current-g] (theme-split global-theme)
+        [available-m current-m] (theme-split module-theme)]
+    {:available (merge available-g available-m)
+     :current (merge current-g current-m)}))
+
+(defn add-module-theme [theme-m]
+  (let [theme-g (get-in @config-atom [:webly :theme])
+        theme (merge-theme theme-g theme-m)]
+    (swap! config-atom assoc-in [:webly :theme] theme)))
+
 (defn add-extension [{:keys [name snippets
                              cljs-namespace
                              cljs-bindings cljs-ns-bindings
-                             clj-require]
+                             clj-require
+                             theme]
                       :or {snippets []
                            cljs-namespace []
                            cljs-bindings {}
                            cljs-ns-bindings {}
-                           clj-require []}
+                           clj-require []
+                           theme {:available {} :current {}}}
                       :as extension}]
   (info "adding extension: " name)
+
+  (debug "theme: " theme)
+  (add-module-theme theme)
 
   (debug "cljs ns: " cljs-namespace)
   (doall (for [n cljs-namespace]

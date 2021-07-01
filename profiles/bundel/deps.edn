@@ -3,21 +3,24 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
         ; bundel deps
-        org.pinkgorilla/ui-input {:mvn/version "0.0.5"}
-        org.pinkgorilla/ui-vega  {:mvn/version "0.0.8"}
-        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.5"}
-        org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.40"}
-        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.7"}
+        org.pinkgorilla/ui-input {:mvn/version "0.0.7"}
+        org.pinkgorilla/ui-vega  {:mvn/version "0.0.9"}
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.6"}
+        org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.44"}
+        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.9"}
 
         ; not bundeled (too big)
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"}
+        ;org.pinkgorilla/ui-math {:mvn/version "0.0.2"}
+        ;org.pinkgorilla/ui-leaflet {:mvn/version "0.0.3"}
+
         }
 
  :aliases {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
                       :main-opts ["-m"
                                   "antq.core"]}
            :check {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
-                                                 :sha "0ca84df1357d71429243b99908303f45a934654c"}}
+                                                 :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
                    :main-opts ["-m"
                                "clj-check.check"]}
            :release {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
@@ -58,6 +61,8 @@
 
            :goldly
            {:extra-deps {}
+            :extra-paths ["../goldly_test/src"
+                          "../goldly_test/resources"]
             :exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch"
                         :config {:goldly

@@ -13,14 +13,14 @@
   fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing
   resauce/resauce {:mvn/version  "0.2.0"}
   ; core 
-  org.pinkgorilla/picasso {:mvn/version "3.1.45"} ; kernel type rendering - used in cljs kernel
+  org.pinkgorilla/picasso {:mvn/version "3.1.47"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.18"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.23"} ; web app build tool
 
   ; core-bundel
-  org.pinkgorilla/ui-site {:mvn/version "0.0.8"}
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.15"}
-  org.pinkgorilla/ui-code {:mvn/version "0.0.14"}
+  org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.17"}
+  org.pinkgorilla/ui-code {:mvn/version "0.0.16"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.10"}}
  :aliases
  {;; developer tooling

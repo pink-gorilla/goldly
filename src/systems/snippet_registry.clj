@@ -87,8 +87,7 @@
             [:li [:b "goldly"] " - system (stateful) that only interacts on the client (cljs only)"]
             [:li [:b "goldly-clj"] " - a goldly system (stateful) with clj interaction"]]
            [:p "note: this snippet registry is also a normal goldly system :-)"]]
-   :fns {}}
-  {}))
+   :fns {}}))
 
 (system-start!
  (goldly/system
@@ -117,8 +116,6 @@
                  ;(set-system-state :scratchpad (:snippet @state) [:snippet])
                  (clipboard-set (:snippet @state))
                  (nav :goldly/system :system-id :scratchpad)
-                 @state)}}
-
-  {}))
+                 @state)}}))
 
 

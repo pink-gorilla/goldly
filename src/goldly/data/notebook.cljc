@@ -40,10 +40,16 @@
      :type :code
      :data {:kernel :cljs
             :code (str "; bidi route navigation ..\n"
-                       "(rf/dispatch [:bidi/goto :demo/main])\n")}}
+                       ";(rf/dispatch [:bidi/goto \"/\"])\n")}}
 
     {:id 8
      :type :code
      :data {:kernel :cljs
             :code (str "; bidi current route ..\n"
-                       "(current-route)")}}]})
+                       "(current-route)")}}
+
+    {:id 9
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; current reframe subscription ..\n"
+                       "@(rf/subscribe [:webly/status-show-app])")}}]})

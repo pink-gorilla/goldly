@@ -7,11 +7,11 @@
    [goldly-server.site :refer [header splash]]))
 
 (defn link-fn [fun text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
+  [:a.bg-blue-600.cursor-pointer.hover:bg-red-700.m-5.p-3
    {:on-click fun} text])
 
 (defn link-dispatch [rf-evt text]
-  (link-fn #(dispatch rf-evt) text))
+  [link-fn #(dispatch rf-evt) text])
 
 (defn link-href [href text]
   [:a.bg-blue-600.cursor-pointer.hover:bg-red-700.m-5.p-3
@@ -21,10 +21,14 @@
   (let [routes (subscribe [:webly/routes])]
     (fn []
       [:div.m-10.p-10.bg-blue-300.border.border-round.border-red-600
-       [:p.text-2xl.text-red-800.mb-10 "Here should be your app!"]
+       [:p.text-2xl.text-red-800.mb-10 "Here should be your app! (alt-g a)"]
        [:p
-        [link-href "/goldly" "developer help"]
-        [link-href "/bongo" "bongo"]]])))
+        [link-href "/goldly" "developer help (alt-g m)"]
+        [link-dispatch [:bidi/goto :goldly/system :system-id :snippet-registry] "snippets (alt-g s)"]
+        ;[link-href "/bongo" "bongo"]
+        ;
+        ]])))
 
 (defmethod reagent-page :goldly/no-app [{:keys [route-params query-params handler] :as route}]
   [no-app])
+
