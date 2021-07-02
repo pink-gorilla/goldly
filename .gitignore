@@ -25,9 +25,13 @@ package.json
 package-lock.json
 karma.conf.js
 goldly_bindings_generated.cljs
+.webly
+
 bundel/node_modules/
 bundel/target/
-bundel/deps.edn
-.webly
+
 profiles/bundel/node_modules/
 profiles/bundel/target/
+
+profiles/demo/node_modules/
+profiles/demo/target/

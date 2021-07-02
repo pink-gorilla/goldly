@@ -25,7 +25,7 @@
   (try
     {:result (sci/eval-string code ctx-repl)}
     (catch :default e
-      (error "sci compile-code --]" code "[-- ex: " e)
+      ;(error "sci compile-code --]" code "[-- ex: " e)
       {:error #?(:clj e
                  :cljs {:root-ex (.-data e)
                         :err (.-message e)})})))

@@ -12,6 +12,10 @@
   borkdude/sci {:mvn/version "0.2.5"} ; sci compiler  
   fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing
   resauce/resauce {:mvn/version  "0.2.0"}
+  hawk/hawk {:mvn/version "0.2.11" ; file watcher
+        ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
+       }
+  
   ; core 
   org.pinkgorilla/picasso {:mvn/version "3.1.47"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout

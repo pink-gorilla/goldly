@@ -8,6 +8,8 @@
    [goldly.sci.kernel-cljs]
    [goldly.notebook.pinkie]
 
+   [goldly.store.loader]
+
    [goldly.system]
    [goldly.system.db]
    [goldly.system.ws]

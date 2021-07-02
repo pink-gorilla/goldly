@@ -44,4 +44,4 @@
     nil))
 
 (defn scratchpad-set [type src]
-  (send-all! [:goldly/scratchpad-set {:type type :src src}]))
+  (send-all! [:-set {:type type :src src}]))

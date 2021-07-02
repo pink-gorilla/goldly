@@ -14,7 +14,8 @@
    [goldly.discover :as d]
    [goldly.service.core]
    [goldly.broadcast.core]
-   [goldly.store.file]))
+   [goldly.store.file]
+   [goldly.store.watch :refer [cljs-watch]]))
 
 (defn goldly-compile! []
   (let [{:keys [systems]}
@@ -53,6 +54,7 @@
           (require-namespaces systems))
       (warn "no goldly systems defined!"))
 
+    (cljs-watch)
     ;(if extensions
     ;  (do (info "loading extensions from ns: " extensions)
     ;      (require-namespaces extensions))
