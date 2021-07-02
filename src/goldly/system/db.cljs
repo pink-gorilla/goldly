@@ -1,4 +1,4 @@
-(ns goldly.runner.db
+(ns goldly.system.db
   (:require
    [re-frame.core :refer [reg-event-db]]
    [taoensso.timbre :as timbre :refer-macros [info]]))

@@ -1,8 +1,7 @@
 (ns goldly.routes)
 
 (def routes-app
-  {;"about"  :goldly/about
-   "goldly" :goldly/system-list
+  {"goldly/systems" :goldly/system-list
    ["system/" :system-id "/" :system-ext] :goldly/system-ext
    ["system/" :system-id] :goldly/system})
 

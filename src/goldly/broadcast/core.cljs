@@ -2,7 +2,7 @@
   (:require
    [re-frame.core :as rf]
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
-   [goldly.runner.db :refer [find-system-by-id]]))
+   [goldly.system.db :refer [find-system-by-id]]))
 
 (defn clj-response-valid? [{:keys [system-id where]}]
   (and (vector? where)

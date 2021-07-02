@@ -32,5 +32,6 @@
   [{:as ev-msg :keys [event id ?data]}]
   (let [[_ params] event ; _ is :goldly/service
         response (create-clj-run-response params)]
-    (info "sending service response: " response)
+    (info "sending service response: " (:fun response))
+    (debug "sending service response: " response)
     (send-response ev-msg :goldly/service response)))

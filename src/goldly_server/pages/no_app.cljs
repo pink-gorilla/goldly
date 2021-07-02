@@ -23,7 +23,7 @@
       [:div.m-10.p-10.bg-blue-300.border.border-round.border-red-600
        [:p.text-2xl.text-red-800.mb-10 "Here should be your app! (alt-g a)"]
        [:p
-        [link-href "/goldly" "developer help (alt-g m)"]
+        [link-href "/goldly/about" "developer help (alt-g m)"]
         [link-dispatch [:bidi/goto :goldly/system :system-id :snippet-registry] "snippets (alt-g s)"]
         ;[link-href "/bongo" "bongo"]
         ;

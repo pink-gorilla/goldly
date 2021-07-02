@@ -14,8 +14,10 @@
   [template/header-menu {:brand "Your Application"
                          :brand-link "/"
                          :items [{:text "goldly" :link "/goldly/about"}
+                                 {:text "status" :link "/goldly/status"}
                                  {:text "repl" :link "/repl"}
-                                 {:text "running systems" :link "/goldly"}
+                                 {:text "snippets" :link "/system/snippet-registry"}
+                                 {:text "running systems" :link "/goldly/systems"}
                  ;{:text "notebook" :link "/notebook-test"}
                                  {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special? true}]}])
 

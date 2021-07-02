@@ -13,7 +13,8 @@
    [goldly.api.handler]
    [goldly.discover :as d]
    [goldly.service.core]
-   [goldly.broadcast.core]))
+   [goldly.broadcast.core]
+   [goldly.store.file]))
 
 (defn goldly-compile! []
   (let [{:keys [systems]}

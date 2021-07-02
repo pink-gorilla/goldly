@@ -64,7 +64,7 @@
             :extra-paths ["../goldly_test/src"
                           "../goldly_test/resources"]
             :exec-fn goldly-server.app/goldly-server-run!
-            :exec-args {:profile "watch"
+            :exec-args {:profile "watch2"
                         :config {:goldly
                                  {:systems
                                   [systems.snippet-registry

@@ -10,8 +10,13 @@
 (defn visible? [system]
   (not (:hidden system)))
 
+(defn href-safe [routes id]
+  (if id
+    (bidi/path-for (:client routes) :goldly/system :system-id id)
+    ""))
 (defn systems-list [routes systems]
-  (let [systems (filter visible? systems)]
+  (let [systems (or systems [])
+        systems (filter visible? systems)]
     (into [:ul]
           (for [{:keys [id]} systems]
             ^{:key id}
@@ -23,7 +28,7 @@
                           :font-style "normal"
                           :line-height 1.17188}
                 ;:on-click  #(rf/dispatch [:bidi/goto :goldly/system :system-id id])
-                  :href (bidi/path-for (:client routes) :goldly/system :system-id id)} id]]))))
+                  :href (href-safe routes id)} id]]))))
 
 (defn systems-list-page []
   (let [routes (rf/subscribe [:webly/routes])

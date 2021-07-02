@@ -4,9 +4,10 @@
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
    [webly.ws.core :refer [send!]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
-   [goldly.runner.db :refer [find-system-by-id]]
+   [goldly.system.db :refer [find-system-by-id]]
    [goldly.system.sci :refer [run-state]]
-   [pinkgorilla.repl.clipboard :refer [clipboard-set]]))
+   [pinkgorilla.repl.clipboard :refer [clipboard-set]]
+   [goldly.store.loader :as loader]))
 
 (defmethod -event-msg-handler :goldly/systems
   [{:keys [?data] :as ev-msg}]
@@ -42,10 +43,11 @@
     (catch js/Error e (error "send event to server ex: " e))))
 
 (rf/reg-event-fx
- :goldly/ws-open
+ :ws/open-first
  (fn [cofx [_ new-state-map]]
-   (debugf "websocket successfully established!: %s" new-state-map)
-   (request-systems)
+   (infof "websocket successfully established!: %s" new-state-map)
+   ;(request-systems)
+   (loader/load-cljs)
    nil))
 
 (rf/reg-event-fx

@@ -4,4 +4,5 @@
    [goldly-server.pages.system]
    [goldly-server.pages.system-list]
    [goldly-server.pages.repl]
+   [goldly-server.pages.status]
    [goldly-server.pages.no-app]))
