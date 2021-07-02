@@ -2,11 +2,11 @@
 ; 1. a change in the atom will trigger re-rendering
 ; 2. setting :bmi to nil will calculate bmi; otherwise the weight will be adjusted. 
 
-(def state (r/atom {:height 180
+(def bmi-state (r/atom {:height 180
                     :weight 80}))
 
  (defn calc-bmi[]
-           (let [{:keys [height weight bmi] :as data} @state
+           (let [{:keys [height weight bmi] :as data} @bmi-state
                  h (/ height 100)]
              (if (nil? bmi)
                (assoc data :bmi (/ weight (* h h)))
@@ -19,9 +19,9 @@
                    :style {:width "100%"}
                    :on-change (fn [e]
                                 (println "slider has changed!")
-                                (swap! state assoc param (evt-val e))
+                                (swap! bmi-state assoc param (evt-val e))
                                 (when (not= param :bmi)
-                                  (swap! state assoc :bmi nil)))}])
+                                  (swap! bmi-state assoc :bmi nil)))}])
 
 (defn bmi-ui [] 
   (let [{:keys [weight height bmi]} (calc-bmi)

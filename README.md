@@ -38,6 +38,18 @@ The snippets are primitive, but demonstrate certain features of goldly:
 - fortune: demonstrates how to load data from clojure (could be a database)
 - time: demonstrates to push data from clojure
 
+## Run - demo
+
+Clone this repo, then:
+
+```
+cd profiles/demo
+clojure -X:goldly
+```
+
+Open web-browser on port 8000.
+
+
 ## Run - standalone 
 
 The easiest way to run the notebook locally is leveraging the `clojure` cli

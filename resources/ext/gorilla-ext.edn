@@ -29,7 +29,7 @@
              :category :goldly
              :id :countdown
              :filename "snippets/goldly/countdown.edn"}
-            {:type :goldly-clj
+            #_{:type :goldly-clj
              :category :goldly
              :id :fortune
              :filename "snippets/goldly/fortune.clj"}
@@ -45,8 +45,5 @@
              :category :goldly
              :id :time
              :filename "snippets/goldly/time.clj"}
-            {:type :goldly-clj
-             :category :goldly
-             :id :bodymass-index
-             :filename "snippets/goldly/bodymass_index.clj"}]}
+            ]}
 

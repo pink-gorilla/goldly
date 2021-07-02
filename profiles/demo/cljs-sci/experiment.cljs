@@ -12,4 +12,5 @@
    [link-href "/" "main"]
    [:div.text-green-300 "experiments..."]
    [:p "add code here..."]
+   [:p "adding" (+ 7 7)]
    ])

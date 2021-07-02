@@ -35,29 +35,46 @@
 (defn m [mod]
   [:span.m-1 (:name mod)])
 (defn modules [el]
-  [:div
+  [:div.mt-10
    [:h2.text-2xl.text-blue-700 "extensions"]
    [:p (map m el)]])
 
 (defn p [t]
   [:span.m-1 (pr-str t)])
 (defn pinkie []
-  [:div
+  [:div.mt-10
    [:h2.text-2xl.text-blue-700 "pinkie renderer"]
    [:p (map p (keys @pinkie.pinkie/component-registry))]])
 
+(defn services [ss]
+  [:div.mt-10
+   [:h2.text-2xl.text-blue-700 "services"]
+   [:p (map p ss)]])
+
 (defn status []
-  (let [state (r/atom {})]
-    (run-a state [:sci] :status/sci)
-    (run-a state [:extensions] :status/extensions)
+  (let [first (r/atom true)
+        state (r/atom {})]
+    (when @first
+      (reset! first false)
+      (run-a state [:sci] :status/sci)
+      (run-a state [:extensions] :status/extensions)
+      (run-a state [:version] :goldly/version "goldly")
+      (run-a state [:services] :goldly/services))
     (fn []
       (let [s (get-in @state [:sci :data])
-            x (get-in @state [:extensions :data])]
+            x (get-in @state [:extensions :data])
+            v (get @state :version)
+            ss (get @state :services)]
         [:div
          [header]
          ;[:p (pr-str x)]
+         [:h1.text-2xl.text-blue-700 "goldly"]
+         (when v
+           [:div (str "goldly " (:version v) " generated: " (:generated-at v))])
+         (when ss
+           [services ss])
          [modules x]
-         [:h2.text-2xl.text-blue-700 "bindings:"]
+         [:h2.text-2xl.text-blue-700.mt-10 "bindings"]
          [bl "user" (:bindings s)]
          [mbl (:ns-bindings s)]
 

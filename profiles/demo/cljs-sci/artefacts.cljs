@@ -32,7 +32,7 @@
 (defn artefacts []  
   ^:R
   [:div
-   [:h1.text.xl.text-blue-900 "PinkGorilla Artefacts (clojars)"]
+   [:h1.text-3xl.text-blue-900 "PinkGorilla Artefacts (clojars)"]
    (into [:div]
          (map project names))])
 

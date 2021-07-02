@@ -1,24 +1,15 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
-        ; bundel deps
-        org.pinkgorilla/ui-input {:mvn/version "0.0.7"}
-        org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.44"}
-        }
+ :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}}
 
- :aliases {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
-                      :main-opts ["-m"
-                                  "antq.core"]}
-           ;; goldly
-
-           :goldly
+ :aliases {:goldly
            {:exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch2"
                         :config {:webly {:ns-clj [goldly-server.app
                                                   fortune]}
                                  :goldly
-                                 {:routes {"" :user/main
+                                 {#_:routes #_{"" :user/main
                                            "artefacts" :user/artefacts
                                            "bmi" :user/bmi
                                            "fortune" :user/fortune
@@ -26,7 +17,8 @@
                                           }}
                                   :systems
                                   [systems.snippet-registry
-                                   systems.snippet-scratchpad]}}}
+                                   systems.snippet-scratchpad
+                                   demo.hello-user]}}}
 
 ;           
            }}

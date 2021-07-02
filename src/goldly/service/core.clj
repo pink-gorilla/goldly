@@ -10,6 +10,9 @@
 (defn add [m]
   (swap! services-atom merge m))
 
+(defn services-list []
+  (keys @services-atom))
+
 (defn run [kw & args]
   (if-let [fun (kw @services-atom)]
     (try {:result (if args
@@ -22,7 +25,7 @@
     {:error (str "service not found: " kw)}))
 
 (defn create-clj-run-response [{:keys [fun args] :as params}]
-  (infof "running: %s args: %s" fun args)
+  (infof "running: %s args: %s" fun (into [] args))
   (let [result (if args
                  (apply run fun args)
                  (run fun))]

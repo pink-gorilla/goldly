@@ -31,9 +31,7 @@
     (error "snippets need to have type and filename")))
 
 (defn snippets-by-category []
-  (info "s-b-c..")
   (let [sc (group-by :category @snippets)]
-    (info "s-b-c..done.")
     sc))
 
 (defn slurp-res-or-file [filename]
@@ -66,12 +64,14 @@
            :snippets []}
    :html  [:div.prose
            (when (:first @state)
-             (swap! state assoc :first false)
+             (println "*** loading snippet list ..")
              (run-a state [:snippets] :get-snippet-list)
+             (swap! state assoc :first false)
              nil)
            (if (= 0 (count  (:snippets @state)))
              [:p.bg-yellow-500.italic.text-xl.text-blue-700
-              "loading snippets .."]
+              "loading snippets .."
+              (pr-str @state)]
              (into [:div]
                    (map (fn [[cat items]]
                           [:div

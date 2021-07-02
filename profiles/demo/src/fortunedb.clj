@@ -1,4 +1,4 @@
-(ns systems.fortune-db)
+(ns fortunedb)
 
 (def db
   ["The early bird gets the worm, but the second mouse gets the cheese."

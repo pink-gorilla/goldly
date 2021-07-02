@@ -19,7 +19,7 @@
   ; core 
   org.pinkgorilla/picasso {:mvn/version "3.1.47"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.26"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.27"} ; web app build tool
 
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
@@ -68,6 +68,13 @@
    :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
 
   ;; goldly
+
+  ; https://github.com/jgrodziski/metav#spit-or-render-current-version-in-a-file
+  :spit {:extra-deps {metav/metav {:mvn/version "1.6.7"}}
+         :main-opts ["-m" "metav.spit"
+                     "--output-dir" "resources"
+                     "--namespace" "goldly-version"
+                     "--formats" "edn"]}
 
   :ci {:extra-paths ["test"]
        :exec-fn goldly-server.app/goldly-server-run!

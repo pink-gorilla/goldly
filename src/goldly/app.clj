@@ -15,7 +15,8 @@
    [goldly.service.core]
    [goldly.broadcast.core]
    [goldly.store.file]
-   [goldly.store.watch :refer [cljs-watch]]))
+   [goldly.store.watch :refer [cljs-watch]]
+   [goldly.version :refer [print-version]]))
 
 (defn goldly-compile! []
   (let [{:keys [systems]}
@@ -42,6 +43,8 @@
   (let [{:keys [systems routes]
          :or {routes {}}}
         (get-in-config [:goldly])]
+
+    (print-version "goldly")
 
     ; add goldly user-app routes
     (if (empty? routes)
