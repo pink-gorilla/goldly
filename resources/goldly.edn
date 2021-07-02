@@ -15,7 +15,7 @@
                    [#{"webly.*"} :info]
                    [#{"goldly.*"} :info]
                    [#{"user"} :warn] ; time sender
-                   [#{"*"} :debug]]
+                   [#{"*"} :info]]
 
  :keybindings  [{:kb "alt-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
                 {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!

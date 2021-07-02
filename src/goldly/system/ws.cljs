@@ -6,8 +6,7 @@
    [webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.system.db :refer [find-system-by-id]]
    [goldly.system.sci :refer [run-state]]
-   [pinkgorilla.repl.clipboard :refer [clipboard-set]]
-   [goldly.store.loader :as loader]))
+   [pinkgorilla.repl.clipboard :refer [clipboard-set]]))
 
 (defmethod -event-msg-handler :goldly/systems
   [{:keys [?data] :as ev-msg}]
@@ -41,14 +40,6 @@
            ;       (dispatch [:goldly/systems-store data]))
            )
     (catch js/Error e (error "send event to server ex: " e))))
-
-(rf/reg-event-fx
- :ws/open-first
- (fn [cofx [_ new-state-map]]
-   (infof "websocket successfully established!: %s" new-state-map)
-   ;(request-systems)
-   (loader/load-cljs)
-   nil))
 
 (rf/reg-event-fx
  :goldly/get-running-system

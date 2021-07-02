@@ -64,4 +64,17 @@
      :type :code
      :data {:kernel :cljs
             :code (str "; this version works too: \n"
-                       "^:R [artefacts]")}}]})
+                       "^:R [artefacts]")}}
+
+    {:id 12
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; create a custom render function and register it: \n"
+                       "(defn y [] ^:R [:p.text-red-400 \"yyy\"])"
+                       "(register-tag :p/y y)")}}
+
+    {:id 13
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; use custom renderer: \n"
+                       "^:R [:p/y]")}}]})

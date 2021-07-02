@@ -19,7 +19,7 @@
 
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.17"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.18"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.16"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.10"}}
  :aliases

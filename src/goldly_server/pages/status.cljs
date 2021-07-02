@@ -4,8 +4,8 @@
    [re-frame.core :refer [dispatch subscribe]]
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
+   [pinkie.pinkie]
    [goldly.service.core :refer [run-a]]
-   [ui.site.template :as t]
    [goldly-server.site :refer [header splash]]))
 
 (defn link-fn [fun text]
@@ -39,6 +39,13 @@
    [:h2.text-2xl.text-blue-700 "extensions"]
    [:p (map m el)]])
 
+(defn p [t]
+  [:span.m-1 (pr-str t)])
+(defn pinkie []
+  [:div
+   [:h2.text-2xl.text-blue-700 "pinkie renderer"]
+   [:p (map p (keys @pinkie.pinkie/component-registry))]])
+
 (defn status []
   (let [state (r/atom {})]
     (run-a state [:sci] :status/sci)
@@ -52,7 +59,9 @@
          [modules x]
          [:h2.text-2xl.text-blue-700 "bindings:"]
          [bl "user" (:bindings s)]
-         [mbl (:ns-bindings s)]]))))
+         [mbl (:ns-bindings s)]
+
+         [pinkie]]))))
 
 (defmethod reagent-page :goldly/status [{:keys [route-params query-params handler] :as route}]
   [status])

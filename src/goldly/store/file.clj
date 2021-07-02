@@ -19,7 +19,7 @@
 (defn cljs-explore []
   (let [files (.list (io/file "cljs-sci"))
         files (into [] files)]
-    (warn "explore: " files)
+    (info "cljs-sci explore: " files)
     files))
 
 (defn cljs-load [filename]

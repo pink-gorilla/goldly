@@ -25,7 +25,7 @@
             "picasso" "gorilla-ui"
             "ui-input" "ui-repl" "ui-vega" "ui-highcharts" 
             "ui-code" "ui-markdown" "ui-math" "ui-site"
-            "ui-quil" "ui-binaryclock"
+            "ui-quil" "ui-binaryclock" "ui-leaflet"
             "kernel-cljs-shadow"])
 
 ^:R 
@@ -35,3 +35,7 @@
    [:h1.text.xl.text-blue-900 "PinkGorilla Artefacts (clojars)"]
    (into [:div]
          (map project names))])
+
+
+(defmethod reagent-page :user/artefacts[{:keys [route-params query-params handler] :as route}]
+  [artefacts])
