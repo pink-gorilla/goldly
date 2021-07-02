@@ -4,7 +4,7 @@
    [re-frame.core :as rf]
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
-   [goldly.runner.ws :refer [request-systems]]
+   [goldly.system.ws :refer [request-systems]]
    [goldly-server.site :refer [header]]))
 
 (defn visible? [system]

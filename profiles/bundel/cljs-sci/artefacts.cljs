@@ -1,10 +1,8 @@
-
 (defn block [{:keys [name class]}  & children]
   (into [:div.bg-blue-400.m-5.inline-block
          {:class class}
          [:h1.text-2xl name]]
         children))
-
 (defn svg [url-link url-img p]
   [:a {:href (format url-link p)}
    [:img.inline-block
@@ -22,18 +20,18 @@
    [svg "https://clojars.org/org.pinkgorilla/%s"
     "https://img.shields.io/clojars/v/org.pinkgorilla/%s.svg" p]])
 
-
 (def names ["webly" "goldly" "notebook" "pinkie"
             "nrepl-middleware" "notebook-encoding" "gorilla-explore"
             "picasso" "gorilla-ui"
+            "ui-input" "ui-repl" "ui-vega" "ui-highcharts" 
+            "ui-code" "ui-markdown" "ui-math" "ui-site"
+            "ui-quil" "ui-binaryclock"
             "kernel-cljs-shadow"])
 
-(defn artefacts []
+^:R 
+(defn artefacts []  
+  ^:R
   [:div
-   [:h1.text.xl.text-blue-900 "PinkGorilla Artefacts Cookies (Snippet)"]
+   [:h1.text.xl.text-blue-900 "PinkGorilla Artefacts (clojars)"]
    (into [:div]
          (map project names))])
-
-
-(println "artefacts: " (artefacts))
-

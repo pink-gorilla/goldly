@@ -8,9 +8,9 @@
    [goldly.sci.kernel-cljs]
    [goldly.notebook.pinkie]
 
-   [goldly.puppet.subs]
-   [goldly.puppet.db]
-   [goldly.runner.ws]
    [goldly.system]
    [goldly.system.db]
+   [goldly.system.ws]
+   [goldly.system.subs]
+
    [goldly.events]))

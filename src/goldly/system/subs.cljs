@@ -1,4 +1,4 @@
-(ns goldly.puppet.subs
+(ns goldly.system.subs
   (:require
    [re-frame.core :refer [reg-sub]]))
 

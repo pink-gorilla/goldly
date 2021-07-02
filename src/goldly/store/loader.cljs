@@ -6,30 +6,27 @@
    [goldly.sci.kernel-cljs :refer [compile-code]]))
 
 (defn compile-cljs [{:keys [filename code]}]
-  (info "compiling" filename ": " code)
+  (info "compiling: " filename)
   (compile-code code))
 
-(defn load-cljs []
-  (warn "load-cljs")
+(defn load-cljs-file [filename]
+  (info "loading cljs file: " filename)
   (go
-    (let [sci-result  (<! (run {:fun :status/sci}))
-          extensions-result  (<! (run {:fun :status/extensions}))
-          files-result (<! (run {:fun :cljs/explore}))
-          sci (:result sci-result)
-          extensions (:result extensions-result)
+    (let [{:keys [error result] :as r} (<! (run {:fun :cljs/load :args [filename]}))]
+      (when error
+        (warn "error loading cljs: " r))
+      (when result
+        (compile-cljs result)))))
+; called from goldly.system.ws after ws connected:
+(defn load-cljs []
+  (info "load-cljs")
+  (go
+    (let [files-result (<! (run {:fun :cljs/explore}))
           files (:result files-result)]
-      (info "sci: " (pr-str sci))
-      (info "extensions: " (pr-str extensions))
       (info "cljs files: " (pr-str files))
       (doall
        (for [f files]
-         (go
-           (let [{:keys [error result] :as r} (<! (run {:fun :cljs/load :args [f]}))]
-             (when error
-               (warn "error loading cljs: " r))
-             (when result
-               (compile-cljs result))))))
-
+         (load-cljs-file f)))
 ;      
       )))
 

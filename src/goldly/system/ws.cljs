@@ -1,4 +1,4 @@
-(ns goldly.runner.ws
+(ns goldly.system.ws
   (:require
    [re-frame.core :as rf]
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]

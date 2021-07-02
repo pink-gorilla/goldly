@@ -52,4 +52,16 @@
      :type :code
      :data {:kernel :cljs
             :code (str "; current reframe subscription ..\n"
-                       "@(rf/subscribe [:webly/status-show-app])")}}]})
+                       "@(rf/subscribe [:webly/status-show-app])")}}
+
+    {:id 10
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; artefacts comes from cljs-sci/artefacts.cljs ..\n"
+                       "(artefacts)")}}
+
+    {:id 11
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; this version works too: \n"
+                       "^:R [artefacts]")}}]})
