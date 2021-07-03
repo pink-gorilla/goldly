@@ -6,13 +6,14 @@
         org.pinkgorilla/ui-input {:mvn/version "0.0.7"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.6"}
+        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.3"}
         org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.44"}
-        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.9"}
-
+      
         ; not bundeled (too big)
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"}
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.2"}
         ;org.pinkgorilla/ui-leaflet {:mvn/version "0.0.3"}
+        ;org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.9"}
 
         }
 
