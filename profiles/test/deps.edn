@@ -9,16 +9,15 @@
                         :config {:webly {:ns-clj [goldly-server.app
                                                   fortune]}
                                  :goldly
-                                 {#_:routes #_{"" :user/main
-                                           "artefacts" :user/artefacts
-                                           "bmi" :user/bmi
-                                           "fortune" :user/fortune
-                                           "experiment" :user/experiment
-                                          }}
+                                 {:routes {"" #bidi.bidi.TaggedMatch{:matched :goldly/system, :tag :hello-user}}
                                   :systems
                                   [systems.snippet-registry
                                    systems.snippet-scratchpad
-                                   demo.hello-user]}}}
+                                   demo.hello-user
+                                   ]}}}
 
-;           
+;            :routes {}}
+
            }}
+
+}

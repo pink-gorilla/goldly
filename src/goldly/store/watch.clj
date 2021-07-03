@@ -34,13 +34,14 @@
   ctx)
 
 (defn cljs-watch []
-  (let [root (to-canonical "cljs-sci")
+  (let [dir (io/file "cljs-sci")
+        root (to-canonical "cljs-sci")
         watch-paths ["cljs-sci"]]
-
-    (info "cljs-sci watch: " watch-paths)
-    (hawk/watch! {:watcher :polling}
-                 [{:paths watch-paths
-                   :handler (partial process-file-change root)}])))
+    (when (.exists dir)
+      (info "cljs-sci watch: " watch-paths)
+      (hawk/watch! {:watcher :polling}
+                   [{:paths watch-paths
+                     :handler (partial process-file-change root)}]))))
 
 
 

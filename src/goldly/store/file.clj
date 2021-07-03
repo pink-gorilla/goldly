@@ -18,8 +18,10 @@
   (edn-load ".webly/sci-cljs-bindings.edn"))
 
 (defn cljs-explore []
-  (let [files (.list (io/file "cljs-sci"))
-        files (into [] files)]
+  (let [dir (io/file "cljs-sci")
+        files (if (.exists dir)
+                (into [] (.list dir))
+                [])]
     (info "cljs-sci explore: " files)
     files))
 
