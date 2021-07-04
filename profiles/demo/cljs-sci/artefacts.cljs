@@ -20,27 +20,41 @@
    [svg "https://clojars.org/org.pinkgorilla/%s"
     "https://img.shields.io/clojars/v/org.pinkgorilla/%s.svg" p]])
 
-(def names ["webly" "goldly" "notebook" "pinkie"
-            "nrepl-middleware" "notebook-encoding" "gorilla-explore"
-            "picasso" "gorilla-ui"
-            "ui-input" "ui-repl" "ui-vega" "ui-highcharts" 
-            "ui-code" "ui-markdown" "ui-math" "ui-site"
-            "ui-quil" "ui-binaryclock" "ui-leaflet"
-            "kernel-cljs-shadow"])
+(def main ["webly" "goldly"  "pinkie"
+           "picasso"])
 
-^:R 
-(defn artefacts []  
-  ^:R
+(def notebook ["notebook"
+               "nrepl-middleware" "notebook-encoding" "gorilla-explore"
+               "kernel-cljs-shadow"])
+(def ui ["ui-repl"
+         "ui-input"
+         "ui-site"
+         "ui-vega"
+         "ui-highcharts"
+         "ui-math"
+         "gorilla-ui"
+         "ui-quil"
+         "ui-leaflet"
+         "ui-code"
+         "ui-markdown"
+         "ui-binaryclock"])
+
+; ^:R
+(defn artefacts [name list]
+  ^:R  ; this is needed, soartefacts function can be used in the repl
   [:div
-   [:h1.text-3xl.text-blue-900 "PinkGorilla Artefacts (clojars)"]
+   [:h1.text-3xl.text-blue-900 name]
    (into [:div]
-         (map project names))])
+         (map project list))])
 
 (defn link-href [href text]
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
    {:href href} text])
 
 (defmethod reagent-page :user/artefacts [{:keys [route-params query-params handler] :as route}]
-  [:div
-   [link-href "/" "main"]
-   [artefacts]])
+  [:div.bg-green-100
+   [link-href "/" "goto main page"]
+   [:h1.text-3xl.text-blue-900.mb-5.mt-5 "PinkGorilla Clojars Artefacts"]
+   [artefacts "misc" main]
+   [artefacts "ui extensions8" ui]
+   [artefacts "notebook" notebook]])

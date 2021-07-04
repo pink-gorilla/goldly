@@ -12,14 +12,13 @@
   borkdude/sci {:mvn/version "0.2.5"} ; sci compiler  
   fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing
   resauce/resauce {:mvn/version  "0.2.0"}
-  hawk/hawk {:mvn/version "0.2.11" ; file watcher
+  hawk/hawk {:mvn/version "0.2.11"} ; file watcher
         ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
-       }
-  
+
   ; core 
-  org.pinkgorilla/picasso {:mvn/version "3.1.47"} ; kernel type rendering - used in cljs kernel
+  org.pinkgorilla/picasso {:mvn/version "3.1.48"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.3"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.29"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.35"} ; web app build tool
 
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
@@ -56,12 +55,13 @@
                                  :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
    :main-opts ["-m" "clj-check.check"]}
 
-  :test {:extra-paths ["test"]
-         :extra-deps {io.github.cognitect-labs/test-runner
-                      {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                       :sha "f597341b6ca7bb4cf027e0a34a6710ca9cb969da"}}
-         :main-opts ["-m" "cognitect.test-runner"]
-         :exec-fn cognitect.test-runner.api/test}
+  :test
+  {:extra-paths ["test"]
+   :extra-deps {io.github.cognitect-labs/test-runner
+                {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                 :sha "f597341b6ca7bb4cf027e0a34a6710ca9cb969da"}}
+   :main-opts ["-m" "cognitect.test-runner"]
+   :exec-fn cognitect.test-runner.api/test}
 
   :garamond
   {:main-opts ["-m" "garamond.main"]
@@ -83,8 +83,7 @@
 
   :goldly
   {:extra-paths ["profiles/goldly_test/src"
-                 "profiles/goldly_test/resources"
-                 ]
+                 "profiles/goldly_test/resources"]
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch2"
                :config "demo.edn"}}

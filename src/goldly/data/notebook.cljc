@@ -58,13 +58,13 @@
      :type :code
      :data {:kernel :cljs
             :code (str "; artefacts comes from cljs-sci/artefacts.cljs ..\n"
-                       "(artefacts)")}}
+                       "(artefacts \"ui artefacts\" ui)")}}
 
     {:id 11
      :type :code
      :data {:kernel :cljs
             :code (str "; this version works too: \n"
-                       "^:R [artefacts]")}}
+                       "^:R [artefacts \"ui artefacts\" ui]")}}
 
     {:id 12
      :type :code

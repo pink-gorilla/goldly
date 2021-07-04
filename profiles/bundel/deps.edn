@@ -3,7 +3,7 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
         ; bundel deps
-        org.pinkgorilla/ui-input {:mvn/version "0.0.7"}
+        org.pinkgorilla/ui-input {:mvn/version "0.0.8"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.6"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.3"}

@@ -6,7 +6,8 @@
    [webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.service.core :refer [run]]
    [goldly.sci.kernel-cljs :refer [compile-code]]
-   [goldly.sci.error :refer [show-sci-error]]))
+   [goldly.sci.error :refer [show-sci-error]]
+   [goldly.store.reload :refer [reload-cljs]]))
 
 (defn compile-cljs [{:keys [filename code]}]
   (info "compiling: " filename)
@@ -51,4 +52,5 @@
  (fn [cofx [_ result]]
    (infof "cljs-sci-reload received: %s" (:filename result))
    (compile-cljs result)
+   (reload-cljs)
    nil))

@@ -59,7 +59,7 @@
    returns: component
             component expects system state as parameter as atom"
   [run-id state-a ext {:keys [id state html fns fns-raw] :as system}]
-  (info "compiling system: " system)
+  (info "compiling system: " (:id system))
   (if (nil? html)
     (fn [_] [:h1 "Error: system html is nil!"])
     (let [bindings-system {'state state-a
@@ -120,7 +120,7 @@
 
       :component-did-mount
       (fn [this] ; oldprops oldstate snapshot
-        (info "c-d-m: " system)
+        (info "c-d-m: " (:id system))
         (make! system ext))
 
       :component-did-update
@@ -132,7 +132,7 @@
           ;(println "c-did-update: " new-argv)
           ;(println "c-did-update:argv " (r/argv this))
           ;(println "c-did-update:argv-old " old-argv)
-          (info "c-did-update: system " system "ext:" ext)
+          (info "c-did-update: system " (:id system) "ext:" ext)
           (make! system ext)))
 
       :component-will-unmount

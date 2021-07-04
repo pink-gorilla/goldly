@@ -1,19 +1,19 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
-        ; bundel deps
-        org.pinkgorilla/ui-input {:mvn/version "0.0.7"}
-        org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.44"}
-        }
+ :deps {org.clojure/clojure    {:mvn/version "1.10.3"}}
 
  :aliases {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
                       :main-opts ["-m"
                                   "antq.core"]}
+
            ;; goldly
 
-           :goldly
-           {:exec-fn goldly-server.app/goldly-server-run!
+           :goldly ;; goldly - ui bundle custom build (takes more time)
+           {:extra-deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
+                         org.pinkgorilla/ui-input {:mvn/version "0.0.8"}
+                         org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.46"}}
+            :exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch2"
                         :config {:webly {:ns-clj [goldly-server.app
                                                   fortune]}
@@ -22,11 +22,29 @@
                                            "artefacts" :user/artefacts
                                            "bmi" :user/bmi
                                            "fortune" :user/fortune
-                                           "experiment" :user/experiment
-                                          }}
-                                  :systems
-                                  [systems.snippet-registry
-                                   systems.snippet-scratchpad]}}}
+                                           "experiment" :user/experiment}}
+                                 :systems
+                                 [systems.snippet-registry
+                                  systems.snippet-scratchpad]}}}
+
+           :goldly-bundel ;; goldly bundel- faster, but no extension config
+           {:extra-deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}
+                         org.pinkgorilla/ui-input {:mvn/version "0.0.8"}
+                         org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.46"}}
+            :exec-fn goldly-server.app/goldly-server-run!
+            :exec-args {:profile "watch2"
+                        :config {:webly {:ns-clj [goldly-server.app
+                                                  fortune]}
+                                 :goldly
+                                 {:routes {"" :user/main
+                                           "artefacts" :user/artefacts
+                                           "bmi" :user/bmi
+                                           "fortune" :user/fortune
+                                           "experiment" :user/experiment}}
+                                 :systems
+                                 [systems.snippet-registry
+                                  systems.snippet-scratchpad]}}}
+
 
 ;           
            }}

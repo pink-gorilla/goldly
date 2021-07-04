@@ -4,18 +4,8 @@
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
    [ui.site.template :as t]
-   [goldly-server.site :refer [header splash]]))
-
-(defn link-fn [fun text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:on-click fun} text])
-
-(defn link-dispatch [rf-evt text]
-  (link-fn #(dispatch rf-evt) text))
-
-(defn link-href [href text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:href href} text])
+   [goldly-server.site :refer [header splash]]
+   [goldly-server.helper.ui :refer [link-dispatch link-href]]))
 
 (defn about []
   (let [routes (subscribe [:webly/routes])]

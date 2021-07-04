@@ -1,5 +1,4 @@
 {:goldly {:enabled true
           :systems [systems.snippet-registry
-                    systems.snippet-scratchpad
-                    ]
+                    systems.snippet-scratchpad]
           }}

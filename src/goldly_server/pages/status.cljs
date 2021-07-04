@@ -6,18 +6,8 @@
    [webly.web.handler :refer [reagent-page]]
    [pinkie.pinkie]
    [goldly.service.core :refer [run-a]]
-   [goldly-server.site :refer [header splash]]))
-
-(defn link-fn [fun text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:on-click fun} text])
-
-(defn link-dispatch [rf-evt text]
-  (link-fn #(dispatch rf-evt) text))
-
-(defn link-href [href text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:href href} text])
+   [goldly-server.site :refer [header splash]]
+   [goldly-server.helper.ui :refer [link-dispatch link-href]]))
 
 (defn b [b]
   [:span.m-1 (key b)])
@@ -25,31 +15,31 @@
 (defn bl [name l]
   [:div
    [:h2.text-xl.text-blue-700 name]
-   [:p (map b l)]])
+   (into [:p] (map b l))])
 
 (defn mbl [ml]
-  [:div
-   (map (fn [[k v]]
-          (bl k v)) ml)])
+  (into [:div]
+        (map (fn [[k v]]
+               (bl k v)) ml)))
 
 (defn m [mod]
   [:span.m-1 (:name mod)])
 (defn modules [el]
   [:div.mt-10
    [:h2.text-2xl.text-blue-700 "extensions"]
-   [:p (map m el)]])
+   (into [:p] (map m el))])
 
 (defn p [t]
   [:span.m-1 (pr-str t)])
 (defn pinkie []
   [:div.mt-10
    [:h2.text-2xl.text-blue-700 "pinkie renderer"]
-   [:p (map p (keys @pinkie.pinkie/component-registry))]])
+   (into [:p] (map p (keys @pinkie.pinkie/component-registry)))])
 
 (defn services [ss]
   [:div.mt-10
    [:h2.text-2xl.text-blue-700 "services"]
-   [:p (map p ss)]])
+   (into [:p] (map p ss))])
 
 (defn status []
   (let [first (r/atom true)

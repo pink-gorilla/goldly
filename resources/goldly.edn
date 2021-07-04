@@ -27,7 +27,6 @@
                 {:kb "alt-g s" :handler [:bidi/goto :goldly/system :system-id :snippet-registry] :desc "goto snippets"}
                 ]
 
-
  :settings {; settings can be changed by user (via dialog)
             ; :use-localstorage is true: load settings from localstorage, and only use
             ; config-settings to initialize the app when localstorage is empty

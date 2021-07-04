@@ -191,3 +191,8 @@ clojure -X:run
 You can get and set the scratchpad data via http api.
 Please execute `./script/scratchpad-get.sh` or `./script/scratchpad-set.sh`
 
+# todo
+
+Add more widgets, and have syntax similar to shiny:
+http://gallery.htmlwidgets.org/
+
