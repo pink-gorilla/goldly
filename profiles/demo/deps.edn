@@ -12,7 +12,9 @@
            :goldly ;; goldly - ui bundle custom build (takes more time)
            {:extra-deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
                          org.pinkgorilla/ui-input {:mvn/version "0.0.8"}
-                         org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.46"}}
+                         org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.46"}
+                         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.4"}
+                         }
             :exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch2"
                         :config {:webly {:ns-clj [goldly-server.app

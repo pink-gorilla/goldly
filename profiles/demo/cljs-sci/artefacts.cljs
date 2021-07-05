@@ -52,9 +52,9 @@
    {:href href} text])
 
 (defmethod reagent-page :user/artefacts [{:keys [route-params query-params handler] :as route}]
-  [:div.bg-green-100
+  [:div.bg-green-100.h-screen
    [link-href "/" "goto main page"]
    [:h1.text-3xl.text-blue-900.mb-5.mt-5 "PinkGorilla Clojars Artefacts"]
    [artefacts "misc" main]
-   [artefacts "ui extensions8" ui]
+   [artefacts "ui extensions" ui]
    [artefacts "notebook" notebook]])

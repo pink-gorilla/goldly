@@ -1,4 +1,4 @@
-(ns goldly.puppet.db
+(ns goldly.system.db
   "runs goldly systems"
   (:require
    [clojure.string]

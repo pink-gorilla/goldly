@@ -2,16 +2,16 @@
   "the main goldly application"
   (:require
    [clojure.java.io]
-   [taoensso.timbre :as timbre :refer [info warn error]]
+   [taoensso.timbre :as timbre :refer [debug info warn error]]
    [com.rpl.specter :refer [transform setval END ALL]]
    [webly.config :refer [get-in-config config-atom]]
    [webly.writer :refer [write-status]]
    [goldly.notebook.picasso] ; side-efects
-   [goldly.puppet.require :refer [require-namespaces]]
+   [goldly.system.require :refer [require-namespaces]]
    [goldly.sci.bindings :refer [generate-bindings]]
    [goldly.ws]
    [goldly.api.handler]
-   [goldly.discover :as d]
+   [goldly.extension.discover :as d]
    [goldly.service.core]
    [goldly.broadcast.core]
    [goldly.store.file]
@@ -32,12 +32,13 @@
 
 (defn add-user-routes [routes]
   (let [m (fn [r]
-            (info "merging.." r)
+            (debug "merging.." r)
             (merge r routes))]
     (info "adding goldly user-app routes: " routes)
-    (write-status "goldly-routes1" @config-atom)
+    ;(write-status "goldly-routes1" @config-atom)
     (reset! config-atom (transform [:webly :routes :app] m @config-atom))
-    (write-status "goldly-routes2" @config-atom)))
+    ;(write-status "goldly-routes2" @config-atom)
+    ))
 
 (defn goldly-run! []
   (let [{:keys [systems routes]

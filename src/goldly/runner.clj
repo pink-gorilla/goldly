@@ -3,7 +3,7 @@
   (:require
    [clojure.string]
    [taoensso.timbre :as log :refer [info]]
-   [goldly.puppet.db :refer [add-system]]))
+   [goldly.system.db :refer [add-system]]))
 
 (defrecord GoldlySystem [id])
 

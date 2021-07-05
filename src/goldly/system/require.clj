@@ -1,4 +1,4 @@
-(ns goldly.puppet.require
+(ns goldly.system.require
   "loads systems from namespaces"
   (:require
    [clojure.string :as str]

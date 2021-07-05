@@ -24,21 +24,21 @@
 
 (defn m [mod]
   [:span.m-1 (:name mod)])
-(defn modules [el]
+(defn extensions [el]
   [:div.mt-10
-   [:h2.text-2xl.text-blue-700 "extensions"]
+   [:h2.text-2xl.text-blue-700.bg-blue-300 "extensions"]
    (into [:p] (map m el))])
 
 (defn p [t]
   [:span.m-1 (pr-str t)])
 (defn pinkie []
   [:div.mt-10
-   [:h2.text-2xl.text-blue-700 "pinkie renderer"]
+   [:h2.text-2xl.text-blue-700.bg-blue-300 "pinkie renderer"]
    (into [:p] (map p (keys @pinkie.pinkie/component-registry)))])
 
 (defn services [ss]
   [:div.mt-10
-   [:h2.text-2xl.text-blue-700 "services"]
+   [:h2.text-2xl.text-blue-700.bg-blue-300 "services"]
    (into [:p] (map p ss))])
 
 (defn status []
@@ -61,14 +61,15 @@
          [:h1.text-2xl.text-blue-700 "goldly"]
          (when v
            [:div (str "goldly " (:version v) " generated: " (:generated-at v))])
-         (when ss
-           [services ss])
-         [modules x]
-         [:h2.text-2xl.text-blue-700.mt-10 "bindings"]
+
+         [extensions x]
+         [:h2.text-2xl.text-blue-700.bg-blue-300.mt-10 "bindings"]
          [bl "user" (:bindings s)]
          [mbl (:ns-bindings s)]
 
-         [pinkie]]))))
+         [pinkie]
+         (when ss
+           [services ss])]))))
 
 (defmethod reagent-page :goldly/status [{:keys [route-params query-params handler] :as route}]
   [status])

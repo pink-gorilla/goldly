@@ -4,7 +4,7 @@
    [taoensso.timbre :as log :refer [debug info infof error errorf]]
    [webly.ws.core :refer [send! send-all! send-response]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
-   [goldly.puppet.db :refer [get-system]]))
+   [goldly.system.db :refer [get-system]]))
 
 (defn broadcast-to-system [system-id data path]
   (send-all! [:goldly/clj-result {:run-id nil

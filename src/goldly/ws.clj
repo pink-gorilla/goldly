@@ -5,7 +5,7 @@
    [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
    [webly.ws.core :refer [send-all! send! send-response watch-conn]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]
-   [goldly.puppet.db :refer [system-response systems-response]]))
+   [goldly.system.db :refer [system-response systems-response]]))
 
 (defmethod -event-msg-handler :goldly/systems
   [ev-msg]

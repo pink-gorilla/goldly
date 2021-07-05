@@ -91,4 +91,13 @@
             :code (str "; lazy loading: \n"
                        "snippets/add"
                        "(require '[snippets :as s]) \n"
-                       "(s/add 7 7) \n")}}]})
+                       "(s/add 7 7) \n")}}
+
+    {:id 16
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; aggrid: \n"
+                       "^:R [:p/aggrid \n"
+                       "{:data [{:make \"Toyota\" :model \"Celica\" :price 35000} \n"
+                       "        {:make \"Ford\" :model \"Mondeo\" :price 32000} \n"
+                       "        {:make \"Porsche\" :model \"Boxter\" :price 72000}]}]")}}]})
