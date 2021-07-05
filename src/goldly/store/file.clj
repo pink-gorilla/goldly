@@ -14,6 +14,12 @@
 
 (defn status-extensions []
   (edn-load ".webly/extensions.edn"))
+
+(defn load-extension [name]
+  (let [content (slurp ".webly/extensions.edn")
+        extensions (edn/read-string content)
+        e (first (filter #(= name (:name %)) extensions))]
+    e))
 (defn status-sci []
   (edn-load ".webly/sci-cljs-bindings.edn"))
 
@@ -36,6 +42,7 @@
         :status/sci status-sci
         :edn/load edn-load
         :cljs/explore cljs-explore
-        :cljs/load cljs-load})
+        :cljs/load cljs-load
+        :cljs/extension load-extension})
 
 

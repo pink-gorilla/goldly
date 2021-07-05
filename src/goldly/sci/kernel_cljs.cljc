@@ -6,18 +6,24 @@
    [picasso.id :refer [guuid]]
    [picasso.kernel.protocol :refer [kernel-eval]]
    [picasso.converter :refer [->picasso]]
+   [picasso.protocols :refer [Renderable render]]
+   [picasso.render.span :refer [span-render]]
    [sci.core :as sci]
+   [sci.impl.vars]
    [goldly-bindings-generated :refer [bindings-generated ns-generated]]
    ;[goldly.sci.bindings-static :refer [ns-static]]
-   [sci.impl.vars]
-   [picasso.protocols :refer [Renderable render]]
-   [picasso.render.span :refer [span-render]]))
+   [goldly.sci.lazy :refer [load-fn]]))
+
+(defn add-lazy [namespaces]
+  (assoc namespaces
+         'snippets
+         {'add (sci/new-var 'add :internal)}))
 
 (def ctx-static
   {:bindings bindings-generated
    :preset {:termination-safe true}
-   :namespaces ns-generated ; ns-static
-   })
+   :namespaces (add-lazy ns-generated) ; ns-static
+   :load-fn load-fn})
 
 (def ctx-repl (sci/init ctx-static))
 

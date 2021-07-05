@@ -29,6 +29,9 @@
  {;; developer tooling
 
   ;https://github.com/applied-science/deps-library
+  ; for new minor version:
+  ; clojure -M:release tag --minor
+  ; git push --tags
   :release
   {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
    :main-opts ["-m" "applied-science.deps-library"]}
@@ -88,6 +91,20 @@
    :exec-args {:profile "watch2"
                :config "demo.edn"}}
 
+  ; check bundel size on: https://bundlephobia.com/
+  ; gfonts      700
+  ; karma      1000
 
+  ; highlight   900 * 
+  ; prosemirror 800
+  ; codemirror  200
+  
+  ; aggrid     1000 *
+  ; vega        800 *
+  ; cytoscope   800 *
+  ; highcharts  300
+  ; video       100
+  
+ 
 ;
   }}

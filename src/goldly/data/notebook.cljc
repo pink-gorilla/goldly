@@ -77,4 +77,18 @@
      :type :code
      :data {:kernel :cljs
             :code (str "; use custom renderer: \n"
-                       "^:R [:p/y]")}}]})
+                       "^:R [:p/y]")}}
+
+    {:id 14
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; lazy load test:  (see console for result)\n"
+                       "(lazytest) \n")}}
+
+    {:id 15
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; lazy loading: \n"
+                       "snippets/add"
+                       "(require '[snippets :as s]) \n"
+                       "(s/add 7 7) \n")}}]})
