@@ -5,18 +5,21 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [com.rpl.specter :refer [transform setval END ALL]]
    [webly.config :refer [get-in-config config-atom]]
-   [webly.writer :refer [write-status]]
-   [goldly.notebook.picasso] ; side-efects
-   [goldly.system.require :refer [require-namespaces]]
-   [goldly.sci.bindings :refer [generate-bindings]]
-   [goldly.ws]
-   [goldly.api.handler]
+
+   [goldly.version :refer [print-version]]
    [goldly.extension.discover :as d]
    [goldly.service.core]
    [goldly.broadcast.core]
+
+   [goldly.sci.bindings :refer [generate-bindings]]
    [goldly.store.file]
    [goldly.store.watch :refer [cljs-watch]]
-   [goldly.version :refer [print-version]]))
+
+   [goldly.system.require :refer [require-namespaces]]
+   [goldly.notebook.picasso]
+   [goldly.system.ws]
+   [goldly.api.handler]
+   [goldly.scratchpad.core]))
 
 (defn goldly-compile! []
   (let [{:keys [systems]}

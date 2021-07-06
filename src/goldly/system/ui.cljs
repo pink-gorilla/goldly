@@ -1,4 +1,4 @@
-(ns goldly.system
+(ns goldly.system.ui
   (:require
    [cljs.pprint]
    [reagent.core :as r]

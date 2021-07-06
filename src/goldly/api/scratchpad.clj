@@ -4,7 +4,7 @@
    [taoensso.timbre :refer [trace debug info error]]
    [ring.util.response :as res]
    [ring.util.request :refer  [body-string]]
-   [goldly.ws :as ws]))
+   [goldly.scratchpad.core :as ws]))
 
 (defn scratchpad-get-handler
   [req]

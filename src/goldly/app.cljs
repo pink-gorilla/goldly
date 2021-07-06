@@ -6,13 +6,16 @@
    [goldly.service.core]
    [goldly.broadcast.core]
    [goldly.sci.kernel-cljs]
-   [goldly.notebook.pinkie]
 
    [goldly.store.loader]
 
-   [goldly.system]
+   [goldly.system.ui]
    [goldly.system.db]
    [goldly.system.ws]
    [goldly.system.subs]
+   [goldly.events]
+   [goldly.notebook.pinkie]
+   [goldly.scratchpad.core]
 
-   [goldly.events]))
+;
+   ))

@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer-macros [info]]
    [webly.web.handler :refer [reagent-page]]
-   [goldly.system :refer [system-ext]]
+   [goldly.system.ui :refer [system-ext]]
    [goldly-server.site :refer [header]]))
 
 (defn systems-header [system id]
