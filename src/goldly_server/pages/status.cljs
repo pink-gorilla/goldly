@@ -22,12 +22,14 @@
         (map (fn [[k v]]
                (bl k v)) ml)))
 
-(defn m [mod]
-  [:span.m-1 (:name mod)])
-(defn extensions [el]
-  [:div.mt-10
-   [:h2.text-2xl.text-blue-700.bg-blue-300 "extensions"]
-   (into [:p] (map m el))])
+(defn m [mod-name]
+  [:span.m-1 mod-name])
+(defn extensions [modules]
+  (let [names (-> (map :name modules)
+                  (sort))]
+    [:div.mt-10
+     [:h2.text-2xl.text-blue-700.bg-blue-300 "extensions"]
+     (into [:p] (map m names))]))
 
 (defn p [t]
   [:span.m-1 (pr-str t)])
@@ -62,6 +64,7 @@
          (when v
            [:div (str "goldly " (:version v) " generated: " (:generated-at v))])
 
+         ;[:p (pr-str x)]
          [extensions x]
          [:h2.text-2xl.text-blue-700.bg-blue-300.mt-10 "bindings"]
          [bl "user" (:bindings s)]

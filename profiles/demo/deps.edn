@@ -29,7 +29,7 @@
                                            "fortune" :user/fortune
                                            "iss" :user/iss
                                            "vega" :user/vega
-                                           "experiment" :user/experiment}}
+                                           "aggrid" :user/aggrid}}
                                  :systems
                                  [systems.snippet-registry
                                   systems.snippet-scratchpad]}}}

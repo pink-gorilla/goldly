@@ -13,4 +13,4 @@
    [link-href "/bmi" "bmi"]
    [link-href "/fortune" "fortune cookies"]
    [link-href "/iss" "iss leaflet"]
-   [link-href "/experiment" "experiment"]])
+   [link-href "/aggrid" "aggrid"]])
