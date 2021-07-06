@@ -35,6 +35,7 @@
          "gorilla-ui"
          "ui-quil"
          "ui-leaflet"
+         "ui-cytoscape"
          "ui-code"
          "ui-markdown"
          "ui-binaryclock"])

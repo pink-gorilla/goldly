@@ -9,7 +9,7 @@
                              :as extension}]
 
   (when (not (empty? pinkie))
-    (warn "pinkie-add: " pinkie)
+    (debug "pinkie-add: " pinkie)
     (swap! pinkie-atom merge pinkie)))
 
 (defmacro registry []

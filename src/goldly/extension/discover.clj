@@ -1,8 +1,8 @@
 (ns goldly.extension.discover
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [clojure.string :as str]
-   [clojure.java.io :as io]
+   ;[clojure.string :as str]
+   ;[clojure.java.io :as io]
    [fipp.clojure]
    [clojure.edn :as edn]
    [resauce.core :as rs]
@@ -61,7 +61,7 @@
     (doall (for [ext extensions]
              (add-extension ext)))
     (save-pinkie)
-    (error "pinkie config: " @pinkie-atom)
+    (debug "pinkie config: " @pinkie-atom)
     (swap! config-atom assoc :pinkie @pinkie-atom)))
 
 (comment
