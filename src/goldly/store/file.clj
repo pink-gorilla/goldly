@@ -28,7 +28,7 @@
         files (if (.exists dir)
                 (into [] (.list dir))
                 [])]
-    (info "cljs-sci explore: " files)
+    (debug "cljs-sci explore: " files)
     files))
 
 (defn cljs-load [filename]

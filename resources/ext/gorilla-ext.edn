@@ -3,13 +3,12 @@
 
  :cljs-namespace [clojure.walk
                   goldly.service.core
-                  goldly.sci.lazy
-                  ]
+                  goldly.sci.lazy]
 
  :cljs-bindings {'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
-                 'lazytest goldly.sci.lazy/lazytest
-                 }
+                 'set-system-state goldly.broadcast.core/set-system-state
+                 'lazytest goldly.sci.lazy/lazytest}
 
  :cljs-ns-bindings {'walk {'postwalk clojure.walk/postwalk
                            'prewalk clojure.walk/prewalk
@@ -32,9 +31,9 @@
              :id :countdown
              :filename "snippets/goldly/countdown.edn"}
             #_{:type :goldly-clj
-             :category :goldly
-             :id :fortune
-             :filename "snippets/goldly/fortune.clj"}
+               :category :goldly
+               :id :fortune
+               :filename "snippets/goldly/fortune.clj"}
             {:type :goldly-clj
              :category :goldly
              :id :greeter
@@ -46,6 +45,5 @@
             {:type :goldly-clj
              :category :goldly
              :id :time
-             :filename "snippets/goldly/time.clj"}
-            ]}
+             :filename "snippets/goldly/time.clj"}]}
 

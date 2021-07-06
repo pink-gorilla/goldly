@@ -34,12 +34,12 @@
 (defn pinkie []
   [:div.mt-10
    [:h2.text-2xl.text-blue-700.bg-blue-300 "pinkie renderer"]
-   (into [:p] (map p (keys @pinkie.pinkie/component-registry)))])
+   (into [:p] (map p (sort (keys @pinkie.pinkie/component-registry))))])
 
 (defn services [ss]
   [:div.mt-10
    [:h2.text-2xl.text-blue-700.bg-blue-300 "services"]
-   (into [:p] (map p ss))])
+   (into [:p] (sort (map p ss)))])
 
 (defn status []
   (let [first (r/atom true)

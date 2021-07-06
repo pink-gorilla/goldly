@@ -100,4 +100,13 @@
                        "^:R [:p/aggrid \n"
                        "{:data [{:make \"Toyota\" :model \"Celica\" :price 35000} \n"
                        "        {:make \"Ford\" :model \"Mondeo\" :price 32000} \n"
-                       "        {:make \"Porsche\" :model \"Boxter\" :price 72000}]}]")}}]})
+                       "        {:make \"Porsche\" :model \"Boxter\" :price 72000}]}]")}}
+
+    {:id 17
+     :type :code
+     :data {:kernel :cljs
+            :code (str "; pinkie tag registry \n"
+                       "(pinkie/tags) \n")}}
+
+    ;
+    ]})

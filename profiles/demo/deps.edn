@@ -12,10 +12,11 @@
            :goldly ;; goldly - ui bundle custom build (takes more time)
            {:extra-deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
                          org.pinkgorilla/ui-input {:mvn/version "0.0.10"}
-                         ;org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.48"}
                          org.pinkgorilla/ui-aggrid {:mvn/version "0.0.6"}
                          org.pinkgorilla/ui-leaflet {:mvn/version "0.0.5"}
+                         org.pinkgorilla/ui-vega  {:mvn/version "0.0.10"}
                          ;org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.3"}
+                         ;org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.48"}
                          }
             :exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch2"
@@ -27,6 +28,7 @@
                                            "bmi" :user/bmi
                                            "fortune" :user/fortune
                                            "iss" :user/iss
+                                           "vega" :user/vega
                                            "experiment" :user/experiment}}
                                  :systems
                                  [systems.snippet-registry

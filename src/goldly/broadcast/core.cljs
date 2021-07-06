@@ -43,3 +43,8 @@
        (taoensso.timbre/debug "set-system-state result for unknown system-id " system-id))
      (taoensso.timbre/error "set-system-state failed requirement: {:system-id :where}"))
    db))
+
+(defn set-system-state [system-id result where]
+  (rf/dispatch [:goldly/set-system-state {:system-id system-id
+                                          :result result
+                                          :where where}]))

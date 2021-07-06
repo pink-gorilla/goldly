@@ -34,7 +34,7 @@
   (let [m (fn [r]
             (debug "merging.." r)
             (merge r routes))]
-    (info "adding goldly user-app routes: " routes)
+    (debug "adding goldly user-app routes: " routes)
     ;(write-status "goldly-routes1" @config-atom)
     (reset! config-atom (transform [:webly :routes :app] m @config-atom))
     ;(write-status "goldly-routes2" @config-atom)

@@ -2,7 +2,7 @@
   (:require-macros [goldly.extension.pinkie :as clj])
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug infof warn error]]
-   [pinkgorilla.repl.cljs.pinkie :refer [register-tag]]))
+   [pinkie.pinkie :refer [register-tag]]))
 
 ; this approach does not work. functions are not available at runtime.
 #_(defn add-extension-pinkie [pinkie]
