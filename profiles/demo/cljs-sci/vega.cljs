@@ -60,7 +60,8 @@
    
    [vegalite {:box :sm
               :spec s}]
-   [:div "spec: " (pr-str {:spec s2})]
+   ;[:div "spec: " (pr-str {:spec s2})]
+   [:div "cor matrix: " (pr-str cor-matrix)]
    [vegalite {:box :sm
               :spec s2}]
    ])
