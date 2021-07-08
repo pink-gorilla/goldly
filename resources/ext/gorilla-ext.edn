@@ -2,13 +2,11 @@
  :clj-require []
 
  :cljs-namespace [clojure.walk
-                  goldly.service.core
-                  goldly.sci.lazy]
+                  goldly.service.core]
 
  :cljs-bindings {'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
-                 'set-system-state goldly.broadcast.core/set-system-state
-                 'lazytest goldly.sci.lazy/lazytest}
+                 'set-system-state goldly.broadcast.core/set-system-state}
 
  :cljs-ns-bindings {'walk {'postwalk clojure.walk/postwalk
                            'prewalk clojure.walk/prewalk

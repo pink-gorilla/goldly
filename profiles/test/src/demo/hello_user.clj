@@ -13,5 +13,4 @@
    :html  [:div
            [:h1 "Hello!"]
            [:p "You are a User!."]]
-   :fns {}}
-  {:fns {}}))
+   :fns {}}))

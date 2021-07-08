@@ -66,7 +66,7 @@
        :source "(ns user) (def add :foo)"})))
 
 ; tis does not work. block times out before shadow load completes.
-(defn lazytest2 []
-  (let [add (-> (load-fn {:namespace 'snippets})
-                (:add))]
-    (add 7 7)))
+#_(defn lazytest2 []
+    (let [add (-> (load-fn {:namespace 'snippets})
+                  (:add))]
+      (add 7 7)))

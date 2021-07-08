@@ -64,7 +64,7 @@
            :snippets []}
    :html  [:div.prose
            (when (:first @state)
-             (println "*** loading snippet list ..")
+             (println "*** snippet registry is loading snippet list ..")
              (run-a state [:snippets] :get-snippet-list)
              (swap! state assoc :first false)
              nil)

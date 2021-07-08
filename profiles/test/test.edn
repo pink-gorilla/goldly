@@ -1,0 +1,10 @@
+{:webly {:ns-clj [goldly-server.app]}
+ :goldly
+ {:lazy true
+  ; taggedmatch cannot be read by normal clojure edn reader,
+  ; so if using taggedmatch, config needs to be in edn file.
+  :routes {"demo" #bidi.bidi.TaggedMatch{:matched :goldly/system, :tag :hello-user}}
+  :systems
+  [systems.snippet-registry
+   systems.snippet-scratchpad
+   demo.hello-user]}}

@@ -34,5 +34,7 @@
 
  :goldly {:systems [systems.snippet-registry
                     systems.snippet-scratchpad]
-          :enabled true}}
+          :enabled true
+          :lazy false
+          }}
 

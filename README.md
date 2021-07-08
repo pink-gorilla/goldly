@@ -186,6 +186,26 @@ cd bundel
 clojure -X:run
 ```
 
+# for goldly developers
+
+core
+```
+  clojure -X:goldly              - watch
+  ./script/clean.sh
+
+  ./script/compile_run.sh        - release
+  ./script/clean.sh
+
+  ./script/compile_adv_run.sh    - release-adv
+  ./script/clean.sh
+```
+
+test
+```
+  cd profiles/test
+  clojure -X:goldly              - watch
+```
+
 # API
 
 You can get and set the scratchpad data via http api.

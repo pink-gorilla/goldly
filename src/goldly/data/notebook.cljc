@@ -20,7 +20,8 @@
     {:id 4
      :type :code
      :data {:kernel :cljs
-            :code (str "(def a (atom {:a 12}))\n"
+            :code (str "; this works only in profiles/test\n"
+                       "(def a (atom {:a 12}))\n"
                        "(run-a a [:a] :demo/add 1 1)")}}
 
     {:id 5
@@ -57,7 +58,7 @@
     {:id 10
      :type :code
      :data {:kernel :cljs
-            :code (str "; artefacts comes from cljs-sci/artefacts.cljs ..\n"
+            :code (str "; only works in demo profile (profiles/demo/cljs-sci/artefacts.cljs ..\n"
                        "(artefacts \"ui artefacts\" ui)")}}
 
     {:id 11

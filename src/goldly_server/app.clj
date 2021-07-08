@@ -4,7 +4,7 @@
    [webly.config :refer [load-config! add-config]]
    [webly.user.app.app :refer [webly-run!]]
    [webly.profile :refer [compile? server?]]
-   [goldly.app :refer [goldly-compile! goldly-run!]]
+   [goldly.app :refer [goldly-init! goldly-compile! goldly-run!]]
    ; side-effects
    [goldly-server.routes])
   (:gen-class))
@@ -15,6 +15,7 @@
          config {}}}]
   (let [config (add-config "goldly.edn" config)]
     (load-config! config)
+    (goldly-init!)
     (when (compile? profile)
       (goldly-compile!))
     (when (server? profile)

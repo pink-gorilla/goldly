@@ -13,14 +13,32 @@
 
   (debug "cljs ns: " cljs-namespace)
   (doall (for [n cljs-namespace]
-           ;(add-cljs-namespace [n])
            (swap! goldly-namespaces conj [n])))
 
   (debug "cljs bindings: " cljs-bindings)
-  ;(add-cljs-bindings cljs-bindings)
   (swap! goldly-bindings merge cljs-bindings)
 
   (debug "cljs ns-bindings: " cljs-ns-bindings)
-  ;(doall (for [[k v] cljs-ns-bindings]
-  ;         (add-cljs-ns-bindings k v)))
   (swap! goldly-ns-bindings merge cljs-ns-bindings))
+
+(defn make-lazy [bindings]
+  (let [lazy-bindings (into {}
+                            (map (fn [[k v]]
+                                   [k (list 'wrap-lazy v)]) bindings))]
+    (error "lazy bindings: " lazy-bindings)
+    lazy-bindings))
+
+(defn add-extension-sci-lazy [{:keys [name
+                                      cljs-namespace
+                                      cljs-bindings cljs-ns-bindings]
+                               :or {cljs-namespace []
+                                    cljs-bindings {}
+                                    cljs-ns-bindings {}}
+                               :as extension}]
+
+  (debug "cljs lazy bindings: " cljs-bindings)
+  (swap! goldly-bindings merge (make-lazy cljs-bindings))
+
+  ;(debug "cljs ns-bindings: " cljs-ns-bindings)
+  ;(swap! goldly-ns-bindings merge cljs-ns-bindings)
+  )

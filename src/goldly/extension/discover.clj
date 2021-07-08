@@ -10,9 +10,9 @@
    [webly.config :refer [config-atom]]
    [goldly.extension.theme :refer [add-extension-theme]]
    [goldly.extension.snippets :refer [add-extension-snippets]]
-   [goldly.extension.sci :refer [add-extension-sci]]
+   [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
    [goldly.extension.clj :refer [add-extension-clj]]
-   [goldly.extension.pinkie :refer [add-extension-pinkie pinkie-atom]]))
+   [goldly.extension.pinkie :refer [pinkie-atom]]))
 
 #_(defn resource-dir-paths [path]
     (let [parents (map str (rs/resources path))]
@@ -31,12 +31,10 @@
 
 (defn add-extension [{:keys [name] :as extension}]
   (info "adding extension: " name)
-
   (add-extension-theme extension)
-  (add-extension-sci extension)
+  (add-extension-cljs extension)
   (add-extension-snippets extension)
-  (add-extension-clj extension)
-  (add-extension-pinkie extension))
+  (add-extension-clj extension))
 
 (defn pr-str-fipp [config]
   (with-out-str
@@ -58,6 +56,7 @@
                      (-> f slurp edn/read-string))]
     (debug "discovered extensions: " (pr-str r))
     (save-extensions extensions)
+    (cljs-init)
     (doall (for [ext extensions]
              (add-extension ext)))
     (save-pinkie)

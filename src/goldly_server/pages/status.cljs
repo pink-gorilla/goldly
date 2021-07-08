@@ -4,6 +4,7 @@
    [re-frame.core :refer [dispatch subscribe]]
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
+   [webly.build.lazy :as lazy]
    [pinkie.pinkie]
    [goldly.service.core :refer [run-a]]
    [goldly-server.site :refer [header splash]]
@@ -36,7 +37,9 @@
 (defn pinkie []
   [:div.mt-10
    [:h2.text-2xl.text-blue-700.bg-blue-300 "pinkie renderer"]
-   (into [:p] (map p (sort (keys @pinkie.pinkie/component-registry))))])
+   (into [:p] (map p (sort (keys @pinkie.pinkie/component-registry))))
+   [:h2.text-2xl.text-blue-700.bg-blue-300 "pinkie renderer - lazy"]
+   (into [:p] (map p (sort (lazy/available))))])
 
 (defn services [ss]
   [:div.mt-10

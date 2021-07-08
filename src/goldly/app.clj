@@ -19,14 +19,20 @@
    [goldly.notebook.picasso]
    [goldly.system.ws]
    [goldly.api.handler]
-   [goldly.scratchpad.core]))
+   [goldly.scratchpad.core]
+   [goldly.extension.pinkie :refer [available]]))
+
+(defn goldly-init! []
+    ; extensions can add to cljs namespaces. therefore extensions have to
+    ; be included at compile time. But extensions also are needed
+    ; for css and clj ns. Therefore put to init
+  (print-version "goldly")
+  (d/discover)
+  (info "pinkie renderer (clj): " (available)))
 
 (defn goldly-compile! []
   (let [{:keys [systems]}
         (get-in-config [:goldly])]
-    ; extensions can add to cljs namespaces. therefore extensions have to
-    ; be included at compile time.
-    (d/discover)
     ;(if extensions
     ;  (do (info "loading extensions from ns: " extensions)
     ;      (require-namespaces extensions))
@@ -47,8 +53,6 @@
   (let [{:keys [systems routes]
          :or {routes {}}}
         (get-in-config [:goldly])]
-
-    (print-version "goldly")
 
     ; add goldly user-app routes
     (if (empty? routes)

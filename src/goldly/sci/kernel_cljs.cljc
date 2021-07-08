@@ -12,7 +12,8 @@
    [sci.impl.vars]
    [goldly-bindings-generated :refer [bindings-generated ns-generated]]
    ;[goldly.sci.bindings-static :refer [ns-static]]
-   [goldly.sci.lazy :refer [load-fn]]))
+   ;[goldly.sci.lazy :refer [load-fn]]
+   ))
 
 (defn add-lazy [namespaces]
   (assoc namespaces
@@ -23,7 +24,8 @@
   {:bindings bindings-generated
    :preset {:termination-safe true}
    :namespaces (add-lazy ns-generated) ; ns-static
-   :load-fn load-fn})
+   ;:load-fn load-fn
+   })
 
 (def ctx-repl (sci/init ctx-static))
 

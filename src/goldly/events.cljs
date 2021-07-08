@@ -4,7 +4,7 @@
 
    [re-frame.core :as rf]
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
-   [goldly.extension.pinkie :refer [add-extension-pinkie-static #_add-extension-pinkie]]))
+   [goldly.extension.pinkie :refer [add-extension-pinkie-static]]))
 
 (def initial-db
   {:systems []
@@ -17,7 +17,6 @@
  (fn [db _]
    (let [db (or db {})]
      (info "goldly starting ..")
-     ;(add-extension-pinkie (get-in db [:config :pinkie]))
      (add-extension-pinkie-static)
      (rf/dispatch [:ga/event {:category "goldly" :action "started" :label 77 :value 13}])
      (assoc-in db [:goldly] initial-db))))

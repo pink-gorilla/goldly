@@ -17,13 +17,15 @@
                          org.pinkgorilla/ui-vega  {:mvn/version "0.0.10"}
                          ;org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.3"}
                          ;org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.48"}
+                         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.11"}
                          }
             :exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch2"
                         :config {:webly {:ns-clj [goldly-server.app
                                                   fortune]}
                                  :goldly
-                                 {:routes {"" :user/main
+                                 {:lazy true
+                                  :routes {"" :user/main
                                            "artefacts" :user/artefacts
                                            "bmi" :user/bmi
                                            "fortune" :user/fortune

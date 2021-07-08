@@ -15,14 +15,14 @@
 
   ; core 
   org.pinkgorilla/picasso {:mvn/version "3.1.50"} ; kernel type rendering - used in cljs kernel
-  org.pinkgorilla/pinkie {:mvn/version "0.3.9"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.35"} ; web app build tool
+  org.pinkgorilla/pinkie {:mvn/version "0.3.10"} ; frontend ui layout
+  org.pinkgorilla/webly {:mvn/version "0.3.38"} ; web app build tool
 
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.19"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.20"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.18"}
-  org.pinkgorilla/ui-markdown {:mvn/version "0.0.12"}}
+  org.pinkgorilla/ui-markdown {:mvn/version "0.0.14"}}
  :aliases
  {;; developer tooling
 
@@ -83,11 +83,28 @@
                    :config nil}}
 
   :goldly
-  {:extra-paths ["profiles/goldly_test/src"
-                 "profiles/goldly_test/resources"]
+  {:extra-paths []
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch2"
-               :config "demo.edn"}}
+               :config nil}}
+
+  ;            lazy      adv       size adv
+  ; main                           9000k   3000k
+  ; clock:     ok
+  ; cytoscape: ok                  520k    520k
+  ; aggrid:    ok                  1000k   996k
+  ; math:  missing fns
+  ; leaflet - not showing           200k   200k
+  ; markdown - used in app, not possible
+  ; highcharts                       408k  408k
+  ; vega - both ui rendere and util fns - cannot use yet.
+
+  ; goldly core (no modules)
+  ; watch:      15.0MB
+  ; compile:     7.5MB             (transit warning.)
+  ; compile-adv  2.5MB !!!!!
+
+  ; goldly test (modules+clock)
 
   ; check bundel size on: https://bundlephobia.com/
   ; gfonts      700

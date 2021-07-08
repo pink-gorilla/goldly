@@ -27,7 +27,7 @@
 
 (defn process-error [data]
   (error "error in clj-service: " data)
-  (n/add-notification :danger (pr-str data)))
+  (n/add-notification :error (pr-str data)))
 
 (defn run-a [a path fun & args]
   (let [on-result (fn [[_ data]] ;  _ = event-type
