@@ -3,6 +3,7 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [webly.config :refer [config-atom]]
    [goldly.sci.bindings :refer [goldly-namespaces]]
+   [goldly.extension.core :refer [lazy-enabled lazy-excluded?]]
    [goldly.extension.sci :refer [add-extension-sci add-extension-sci-lazy]]
    [goldly.extension.pinkie :refer [add-extension-pinkie add-extension-pinkie-lazy]]))
 
@@ -11,9 +12,6 @@
         module-m {(keyword name) (or cljs-namespace [])}
         modules (merge modules-g module-m)]
     (swap! config-atom assoc-in [:webly :modules] modules)))
-
-(defn lazy-enabled []
-  (or (get-in @config-atom [:goldly :lazy]) false))
 
 (defn cljs-init []
   (when (lazy-enabled)
@@ -24,7 +22,9 @@
                            :or {lazy false
                                 cljs-namespace []}
                            :as extension}]
-  (if (and (lazy-enabled) lazy)
+  (if (and (lazy-enabled)
+           (not (lazy-excluded? name))
+           lazy)
     (do (error "lazy extension: " name)
         (add-lazy-namespaces name cljs-namespace)
         (add-extension-sci-lazy extension)

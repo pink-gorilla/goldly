@@ -21,7 +21,8 @@
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
   org.pinkgorilla/ui-repl {:mvn/version "0.0.20"}
-  org.pinkgorilla/ui-code {:mvn/version "0.0.18"}
+  org.pinkgorilla/ui-code {:mvn/version "0.0.20"}
+  org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.1"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.14"}}
  :aliases
  {;; developer tooling
@@ -88,15 +89,18 @@
    :exec-args {:profile "watch2"
                :config nil}}
 
-  ;            lazy      adv       size adv
-  ; main                           9000k   3000k
-  ; clock:     ok
-  ; cytoscape: ok                  520k    520k
-  ; aggrid:    ok                  1000k   996k
-  ; math:  missing fns
+  ;            lazy adv watch  release advanced
+  ; goldly core         15000k 9000k   3000k
+  ; codemirror  ok
+  ; highlightjs ok                       26k
+  ; clock:      ok
+  ; cytoscape:  ok        520k         520k
+  ; aggrid:     ok       1000k         996k
+  ; highcharts  ok        408k         408k
+  ; quil - na, util fns
   ; leaflet - not showing           200k   200k
-  ; markdown - used in app, not possible
-  ; highcharts                       408k  408k
+  ; math:  missing fns
+  ; markdown - used in app, not possible 
   ; vega - both ui rendere and util fns - cannot use yet.
 
   ; goldly core (no modules)
@@ -119,7 +123,6 @@
   ; cytoscope   800 *
   ; highcharts  300
   ; video       100
-  
  
 ;
   }}

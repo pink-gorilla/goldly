@@ -1,9 +1,6 @@
 (ns goldly.extension.discover
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   ;[clojure.string :as str]
-   ;[clojure.java.io :as io]
-   [fipp.clojure]
    [clojure.edn :as edn]
    [resauce.core :as rs]
    [webly.writer]
@@ -12,7 +9,8 @@
    [goldly.extension.snippets :refer [add-extension-snippets]]
    [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
    [goldly.extension.clj :refer [add-extension-clj]]
-   [goldly.extension.pinkie :refer [pinkie-atom]]))
+   [goldly.extension.pinkie :refer [pinkie-atom]]
+   [goldly.extension.core :refer [save-extensions save-pinkie]]))
 
 #_(defn resource-dir-paths [path]
     (let [parents (map str (rs/resources path))]
@@ -35,20 +33,6 @@
   (add-extension-cljs extension)
   (add-extension-snippets extension)
   (add-extension-clj extension))
-
-(defn pr-str-fipp [config]
-  (with-out-str
-    (fipp.clojure/pprint config {:width 40})))
-
-(defn save-extensions [extensions]
-  (webly.writer/ensure-directory-webly)
-  (->> (pr-str-fipp extensions)
-       (spit ".webly/extensions.edn")))
-
-(defn save-pinkie []
-  (webly.writer/ensure-directory-webly)
-  (->> (pr-str-fipp @pinkie-atom)
-       (spit ".webly/pinkie.edn")))
 
 (defn discover []
   (let [r  (rs/resource-dir "ext")
