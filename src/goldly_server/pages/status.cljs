@@ -3,10 +3,13 @@
    [reagent.core :as r]
    [re-frame.core :refer [dispatch subscribe]]
    [bidi.bidi :as bidi]
+   [taoensso.timbre :refer-macros [trace debug debugf info infof warn warnf error errorf]]
+
    [webly.web.handler :refer [reagent-page]]
    [webly.build.lazy :as lazy]
    [pinkie.pinkie]
    [goldly.service.core :refer [run-a]]
+   [goldly.extension.lazy :refer [add-load-status]]
    [goldly-server.site :refer [header splash]]
    [goldly-server.helper.ui :refer [link-dispatch link-href]]))
 
@@ -23,15 +26,31 @@
         (map (fn [[k v]]
                (bl k v)) ml)))
 
-(defn m [mod-name]
-  [:span.m-1 mod-name])
-(defn extensions [modules]
-  (let [names (-> (map :name modules)
-                  (sort))]
+;; extensions
+
+(defn check [b]
+  (if b
+    [:i.far.fa-check-circle]
+    [:i.fas.fa-times-circle]))
+
+(defn ext [{:keys [name lazy loaded]}]
+  [:tr
+   [:td name]
+   [:td (check lazy)]
+   [:td (check loaded)]])
+
+(defn extensions [ext-seq]
+  (let [ext-seq-with-load (add-load-status ext-seq)]
     [:div.mt-10
      [:h2.text-2xl.text-blue-700.bg-blue-300 "extensions"]
-     (into [:p] (map m names))]))
+     [:table
+      (into [:tbody
+             [:tr
+              [:td "name"]
+              [:td "lazy"]
+              [:td "loaded"]]] (map ext ext-seq-with-load))]]))
 
+;; pinkie
 (defn p [t]
   [:span.m-1 (pr-str t)])
 (defn pinkie []
@@ -52,12 +71,13 @@
     (when @first
       (reset! first false)
       (run-a state [:sci] :status/sci)
-      (run-a state [:extensions] :status/extensions)
+      ;(run-a state [:extensions] :extension/all)
+      (run-a state [:extensions] :extension/summary)
       (run-a state [:version] :goldly/version "goldly")
       (run-a state [:services] :goldly/services))
     (fn []
       (let [s (get-in @state [:sci :data])
-            x (get-in @state [:extensions :data])
+            x (get-in @state [:extensions])
             v (get @state :version)
             ss (get @state :services)]
         [:div

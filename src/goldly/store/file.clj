@@ -4,16 +4,14 @@
    [clojure.edn :as edn]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [goldly.service.core :as s]
-   [goldly.version :refer [load-version]]))
+   [goldly.version :refer [load-version]]
+   [goldly.extension.core :refer [extension-summary extensions]]))
 
 (defn edn-load [filename]
   (let [content (slurp filename)
         data (edn/read-string content)]
     {:filename filename
      :data data}))
-
-(defn status-extensions []
-  (edn-load ".webly/extensions.edn"))
 
 (defn load-extension [name]
   (let [content (slurp ".webly/extensions.edn")
@@ -38,7 +36,8 @@
 
 (s/add {:goldly/version load-version
         :goldly/services s/services-list
-        :status/extensions status-extensions
+        :extension/all extensions
+        :extension/summary extension-summary
         :status/sci status-sci
         :edn/load edn-load
         :cljs/explore cljs-explore

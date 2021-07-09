@@ -39,10 +39,10 @@
         extensions (for [f r]
                      (-> f slurp edn/read-string))]
     (debug "discovered extensions: " (pr-str r))
-    (save-extensions extensions)
     (cljs-init)
     (doall (for [ext extensions]
              (add-extension ext)))
+    (save-extensions extensions)
     (save-pinkie)
     (debug "pinkie config: " @pinkie-atom)
     (swap! config-atom assoc :pinkie @pinkie-atom)))

@@ -6,8 +6,8 @@
    [goldly.service.core]
    [goldly.broadcast.core]
    [goldly.sci.kernel-cljs]
-
    [goldly.store.loader]
+   [goldly.extension.lazy]
 
    [goldly.system.ui]
    [goldly.system.db]
