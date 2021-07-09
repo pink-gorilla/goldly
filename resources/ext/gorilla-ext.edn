@@ -1,13 +1,10 @@
 {:name "goldly"
  :clj-require []
-
  :cljs-namespace [clojure.walk
                   goldly.service.core]
-
  :cljs-bindings {'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
                  'set-system-state goldly.broadcast.core/set-system-state}
-
  :cljs-ns-bindings {'walk {'postwalk clojure.walk/postwalk
                            'prewalk clojure.walk/prewalk
                            'keywordize-keys clojure.walk/keywordize-keys
@@ -15,7 +12,6 @@
                            'postwalk-replace clojure.walk/postwalk-replace
                            'prewalk-replace clojure.walk/prewalk-replace
                            'stringify-keys clojure.walk/stringify-keys}}
-
  :snippets [{:type :pinkie
              :category :goldly
              :id :hello-world

@@ -14,16 +14,16 @@
   hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
 
   ; core 
-  org.pinkgorilla/picasso {:mvn/version "3.1.50"} ; kernel type rendering - used in cljs kernel
-  org.pinkgorilla/pinkie {:mvn/version "0.3.10"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.38"} ; web app build tool
+  org.pinkgorilla/picasso {:mvn/version "3.1.51"} ; kernel type rendering - used in cljs kernel
+  org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
+  org.pinkgorilla/webly {:mvn/version "0.3.39"} ; web app build tool
 
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
   org.pinkgorilla/ui-repl {:mvn/version "0.0.20"}
-  org.pinkgorilla/ui-code {:mvn/version "0.0.20"}
+  org.pinkgorilla/ui-code {:mvn/version "0.0.24"}
   org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.1"}
-  org.pinkgorilla/ui-markdown {:mvn/version "0.0.14"}}
+  org.pinkgorilla/ui-markdown {:mvn/version "0.0.16"}}
  :aliases
  {;; developer tooling
 
@@ -89,18 +89,31 @@
    :exec-args {:profile "watch2"
                :config nil}}
 
-  ;            lazy adv watch  release advanced
-  ; goldly core         15000k 9000k   3000k
-  ; codemirror  ok
-  ; highlightjs ok                       26k
-  ; clock:      ok
-  ; cytoscape:  ok        520k         520k
-  ; aggrid:     ok       1000k         996k
-  ; highcharts  ok        408k         408k
+  ;            lazy watch release advanced
+  ; webly/picasso                 1300k
+  ; goldly core     15000k 9000k  3000k
+  ; goldly test                   2400k
+  ; goldly bundel                 3300k   [sci       543k 
+  ;                                        cljs      476k 
+  ;                                        vega      270k -> todo vega-lazy
+  ;                                        specter   200k
+  ;                                        jsjoda    180k  -> todo tick/repl
+  ;                                        react-dom 130k
+  ;                                        
+  ; -- modules lazy load ok
+  ; codemirror                     245k
+  ; markdown/prosemirror           404k 
+  ; highlightjs                     26k
+  ; clock:                           2k
+  ; cytoscape:            525k     525k
+  ; aggrid:              1000k     996k
+  ; highcharts            408k     402k
+  ; leaflet               200k     173k
+  ; gorilla-ui                     170k (player)
+  ; input                          286k (ionslider jquery)
+
   ; quil - na, util fns
-  ; leaflet - not showing           200k   200k
   ; math:  missing fns
-  ; markdown - used in app, not possible 
   ; vega - both ui rendere and util fns - cannot use yet.
 
   ; goldly core (no modules)
@@ -113,11 +126,9 @@
   ; check bundel size on: https://bundlephobia.com/
   ; gfonts      700
   ; karma      1000
-
   ; highlight   900 * 
   ; prosemirror 800
   ; codemirror  200
-  
   ; aggrid     1000 *
   ; vega        800 *
   ; cytoscope   800 *
