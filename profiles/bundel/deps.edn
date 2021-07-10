@@ -1,7 +1,9 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
+ :deps {org.pinkgorilla/goldly {:local/root "../.." 
+                                :deps/manifest :deps
+                                }
         ; bundel deps
         ;lazy deps:
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
@@ -68,9 +70,27 @@
                                  {:lazy true
                                   :systems
                                   [systems.snippet-registry
-                                   systems.snippet-scratchpad]}}}
+                                   systems.snippet-scratchpad]}}}}
 
-            :goldly-m {:main-opts ["-m" "goldly-server.app"]}}
+           :goldly-m
+           {:main-opts ["-m" "goldly-server.app"]}
 
+           :jar
+           {:extra-deps {com.github.seancorfield/depstar {:mvn/version "2.0.216"}}
+            :exec-fn hf.depstar/jar
+            :exec-args {;:pom-file "pom2.xml"
+                        :jar "target/goldly-bundel.jar"
+                        :group-id "org.pinkgorilla"
+                        :artifact-id "goldly-bundel"
+                        :sync-pom true
+                        :paths-only false
+                        :verbose true
+                        }}
+
+           :deploy-bundel
+           {:replace-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
+            :exec-fn deps-deploy.deps-deploy/deploy
+            :exec-args {:installer :remote
+                        :artifact "target/goldly-bundel.jar"}}
 ;           
            }}

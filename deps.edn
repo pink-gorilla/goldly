@@ -65,7 +65,7 @@
    :main-opts ["-m" "cognitect.test-runner"]
    :exec-fn cognitect.test-runner.api/test}
 
-  :garamond
+  :garamond ; https://github.com/workframers/garamond
   {:main-opts ["-m" "garamond.main"]
    :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
 
@@ -121,7 +121,7 @@
 
   ; quil - na, util fns
   ; TODO: add blueprintjs https://blueprintjs.com/docs/#select/multi-select + toast
- 
+
   ; check bundel size on: https://bundlephobia.com/
   ; gfonts      700
   ; karma      1000
@@ -133,6 +133,31 @@
   ; cytoscope   800 *
   ; highcharts  300
   ; video       100
- 
+
+  :bundel
+  {:extra-deps {org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
+                org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.4"}
+                org.pinkgorilla/ui-leaflet {:mvn/version "0.0.8"}
+                org.pinkgorilla/ui-highcharts {:mvn/version "0.0.9"}
+                org.pinkgorilla/ui-aggrid {:mvn/version "0.0.8"}
+                org.pinkgorilla/ui-input {:mvn/version "0.0.11"}
+                org.pinkgorilla/ui-gorilla {:mvn/version "0.3.50"}
+                org.pinkgorilla/ui-vega  {:mvn/version "0.0.12"}
+                org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
+                ; non lazy deps
+                ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
+                }}
+
+  :jar
+  {:extra-deps {com.github.seancorfield/depstar {:mvn/version "2.0.216"}}
+   :exec-fn hf.depstar/jar
+   :exec-args {;:pom-file "pom2.xml"
+               :jar "target/goldly-bundel.jar"
+               :group-id "org.pinkgorilla"
+               :artifact-id "goldly-bundel"
+               :sync-pom true
+               :paths-only false
+               :verbose true}}
+
 ;
   }}
