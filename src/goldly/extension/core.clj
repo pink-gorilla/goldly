@@ -16,12 +16,11 @@
   (let [excludes (lazy-excludes)]
     (contains? excludes module-name)))
 
-
 (defn ext-lazy? [{:keys [name lazy]
-                           :or {lazy false}}]
- (and (lazy-enabled)
-           (not (lazy-excluded? name))
-           lazy))
+                  :or {lazy false}}]
+  (and (lazy-enabled)
+       (not (lazy-excluded? name))
+       lazy))
 
 ;; pinkie
 (defn save-pinkie []

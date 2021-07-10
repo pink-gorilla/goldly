@@ -25,7 +25,6 @@
   (let [fn-name (name symbol-fn)]
     (get mapping-table fn-name)))
 
-
 (defn load-css [ext-name]
   (warn "loading css for: " ext-name)
   (go

@@ -29,7 +29,6 @@
                   (str o)])
                o))))
 
-
 (defn show-theme [{:keys [available current] :as theme}]
   [:table
    (into [:tbody

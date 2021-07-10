@@ -6,8 +6,7 @@
    [goldly.service.core :as s]
    [goldly.version :refer [load-version]]
    [goldly.extension.core :refer [extension-summary extensions]]
-   [goldly.extension.theme :refer [ext-theme]]
-   ))
+   [goldly.extension.theme :refer [ext-theme]]))
 
 (defn edn-load [filename]
   (let [content (slurp filename)
