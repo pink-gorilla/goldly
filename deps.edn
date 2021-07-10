@@ -99,28 +99,28 @@
   ; webly/picasso    1300k
   ; goldly core      3000k
   ; goldly test      2400k
-  ; goldly bundel    3400k   [sci       543k 
-  ;                           cljs      476k 
-  ;                           specter   200k
-  ;                           jsjoda    180k  -> todo tick/repl
-  ;                           react-dom 130k
-  ;                                        
+  ; goldly bundel    2400k
+  ;              cljs 497k    
+  ;           specter 215k
+  ;         react-dom 130k
+  ;               sci 590k 
+  ;            jsjoda 180k  -> todo tick/repl lazy loader
   ; -- modules (lazy loaded)
-  ; codemirror            247k
-  ; markdown/prosemirror  401k 
-  ; highlightjs            26k
-  ; clock:                  2k
-  ; cytoscape:            532k
-  ; aggrid:               999k
+  ; math                 1765k (from mathjax in resources)
+  ; vega                 1100k
+  ; aggrid                999k
+  ; cytoscape             532k
   ; highcharts            402k
+  ; markdown/prosemirror  401k
+  ; input                 286k (ionslider jquery)
+  ; codemirror            247k
   ; leaflet               173k
   ; ui-gorilla            169k (player)
-  ; input                  286k (ionslider jquery)
-  ; math 
-  ; vega 
+  ; highlightjs            26k
+  ; clock:                  2k
 
   ; quil - na, util fns
-
+  ; TODO: add blueprintjs https://blueprintjs.com/docs/#select/multi-select + toast
  
   ; check bundel size on: https://bundlephobia.com/
   ; gfonts      700

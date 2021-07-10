@@ -56,7 +56,12 @@
   [:div.bg-green-100.h-screen
    [link-href "/" "goto main page"]
    [:h1.text-3xl.text-blue-900.mb-5.mt-5 "PinkGorilla Clojars Artefacts"]
-   [:audio {:src "/demo/daddys-outta-town.mp3" :controls true}]
+   [:audio {:src "/r/demo/daddys-outta-town.mp3" 
+            :controls false
+            :auto-play true
+            :loop true
+            :preload "auto"
+            }]
    [artefacts "misc" main]
    [artefacts "ui extensions" ui]
    [artefacts "notebook" notebook]])
