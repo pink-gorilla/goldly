@@ -8,7 +8,7 @@
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.4"}
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.8"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.9"}
-        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.7"}
+        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.8"}
         org.pinkgorilla/ui-input {:mvn/version "0.0.11"}
         org.pinkgorilla/ui-gorilla {:mvn/version "0.3.50"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.12"}
@@ -62,8 +62,6 @@
 
            :goldly ; used to create bundle
            {:extra-deps {}
-            ;:extra-paths ["../goldly_test/src"
-            ;              "../goldly_test/resources"]
             :exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch2"
                         :config {:goldly

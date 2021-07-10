@@ -117,7 +117,8 @@
     ;(print-all)
     ;(error "ext fns:" (ext-fns))
     (info "extensions: " (extension-summary))
-    (write-status "extensions" ext-list)))
+    (write-status "extensions" ext-list)
+    (write-status "module-fn-maps" (map-fn-module ext-list))))
 
 
 
