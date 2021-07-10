@@ -25,7 +25,7 @@
     {:error (str "service not found: " kw)}))
 
 (defn create-clj-run-response [{:keys [fun args] :as params}]
-  (infof "running: %s args: %s" fun (into [] args))
+  (infof "%s %s" fun (into [] args))
   (let [result (if args
                  (apply run fun args)
                  (run fun))]

@@ -22,7 +22,7 @@
                            :or {cljs-namespace []}
                            :as ext}]
   (if (ext-lazy? ext)
-    (do (warn "lazy extension: " name)
+    (do (debug "lazy extension: " name)
         (add-lazy-namespaces name cljs-namespace)
         (add-extension-sci-lazy ext)
         (add-extension-pinkie-lazy ext))

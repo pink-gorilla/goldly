@@ -15,7 +15,7 @@
                          org.pinkgorilla/ui-input {:mvn/version "0.0.11"}
                          org.pinkgorilla/ui-aggrid {:mvn/version "0.0.7"}
                          org.pinkgorilla/ui-leaflet {:mvn/version "0.0.8"}
-                         org.pinkgorilla/ui-vega  {:mvn/version "0.0.11"}
+                         org.pinkgorilla/ui-vega  {:mvn/version "0.0.12"}
                          ;org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.3"}
                          org.pinkgorilla/ui-gorilla  {:mvn/version "0.3.50"}
                          org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}
@@ -26,6 +26,7 @@
                                                   fortune]}
                                  :goldly
                                  {:lazy true
+                                  :lazy-exclude #{"ui-math" "ui-vega"}
                                   :routes {"" :user/main
                                            ; will go togoldly dev tools
                                            "artefacts" :user/artefacts

@@ -3,7 +3,6 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
         ; bundel deps
-       
         ;lazy deps:
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.4"}
@@ -12,12 +11,10 @@
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.7"}
         org.pinkgorilla/ui-input {:mvn/version "0.0.11"}
         org.pinkgorilla/ui-gorilla {:mvn/version "0.3.50"}
-        
+        org.pinkgorilla/ui-vega  {:mvn/version "0.0.12"}
+        org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
-        org.pinkgorilla/ui-vega  {:mvn/version "0.0.11"} ; todo: lazy
-        ;org.pinkgorilla/ui-math {:mvn/version "0.0.26  ;todo: lazy ; not bundeled (too big)
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
-        
         }
 
  :aliases {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
@@ -65,8 +62,8 @@
 
            :goldly ; used to create bundle
            {:extra-deps {}
-            :extra-paths ["../goldly_test/src"
-                          "../goldly_test/resources"]
+            ;:extra-paths ["../goldly_test/src"
+            ;              "../goldly_test/resources"]
             :exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch2"
                         :config {:goldly
