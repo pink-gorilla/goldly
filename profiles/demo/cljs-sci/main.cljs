@@ -8,7 +8,13 @@
   [:div
    [:h1.text-2xl.text-red-600.m-5 "demo user app"]
    [link-href "/goldly/about" "goldly developer tools"]
-   [link-href "/artefacts" "artefacts"]
+
+   [:div.bg.green-300
+      [link-href "/artefacts" "artefacts"]
+      [link-href "/about" "goldly about"]
+    
+    ]
+  
    [link-href "/vega" "vega"]
    [link-href "/bmi" "bmi"]
    [link-href "/fortune" "fortune cookies"]

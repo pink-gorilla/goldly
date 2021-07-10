@@ -1,7 +1,8 @@
 (ns goldly.extension.theme
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [webly.config :refer [config-atom]]))
+   [webly.config :refer [config-atom]]
+   [goldly.extension.core :refer [ext-lazy? get-extension]]))
 
 (defn theme-split [theme]
   (let [theme (or theme {})
@@ -16,11 +17,19 @@
     {:available (merge available-g available-m)
      :current (merge current-g current-m)}))
 
-(defn add-extension-theme [{:keys [name
-                                   theme]
+(defn add-extension-theme [{:keys [name theme]
                             :or {theme {:available {} :current {}}}
-                            :as extension}]
-  (debug "theme: " theme)
-  (let [theme-g (get-in @config-atom [:webly :theme])
-        theme-m (merge-theme theme-g theme)]
-    (swap! config-atom assoc-in [:webly :theme] theme-m)))
+                            :as ext}]
+  (if (ext-lazy? ext)
+    (debug "not preloading css for lazy ext:" name)
+    (let [theme-g (get-in @config-atom [:webly :theme])
+          theme-m (merge-theme theme-g theme)]
+      (debug "preloading css for ext: " name)
+      (swap! config-atom assoc-in [:webly :theme] theme-m))))
+
+(defn ext-theme [name]
+  (if-let [ext (get-extension name)]
+    (:theme ext)
+    {:available {}
+     :current {}
+     :error (str "ext not found: " name)}))

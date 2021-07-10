@@ -16,14 +16,14 @@
   ; core 
   org.pinkgorilla/picasso {:mvn/version "3.1.51"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.41"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.44"} ; web app build tool
 
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
   org.pinkgorilla/ui-repl {:mvn/version "0.0.20"}
-  org.pinkgorilla/ui-code {:mvn/version "0.0.24"}
-  org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.1"}
-  org.pinkgorilla/ui-markdown {:mvn/version "0.0.16"}}
+  org.pinkgorilla/ui-code {:mvn/version "0.0.25"}
+  org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.2"}
+  org.pinkgorilla/ui-markdown {:mvn/version "0.0.17"}}
  :aliases
  {;; developer tooling
 

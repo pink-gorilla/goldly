@@ -10,15 +10,13 @@
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.8"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.7"}
-
-        ; non lazy deps
-        org.pinkgorilla/ui-vega  {:mvn/version "0.0.10"} ; todo: lazy
         org.pinkgorilla/ui-input {:mvn/version "0.0.11"}
-        org.pinkgorilla/gorilla-ui {:mvn/version "0.3.49"}
-
-        ; not bundeled (too big)
-        ;org.pinkgorilla/ui-math {:mvn/version "0.0.26  ;todo: lazy
-        ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"}
+        org.pinkgorilla/ui-gorilla {:mvn/version "0.3.50"}
+        
+        ; non lazy deps
+        org.pinkgorilla/ui-vega  {:mvn/version "0.0.11"} ; todo: lazy
+        ;org.pinkgorilla/ui-math {:mvn/version "0.0.26  ;todo: lazy ; not bundeled (too big)
+        ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
         
         }
 

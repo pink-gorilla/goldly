@@ -32,7 +32,7 @@
          "ui-vega"
          "ui-highcharts"
          "ui-math"
-         "gorilla-ui"
+         "ui-gorilla"
          "ui-quil"
          "ui-leaflet"
          "ui-cytoscape"

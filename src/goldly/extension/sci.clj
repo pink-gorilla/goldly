@@ -25,7 +25,7 @@
   (let [lazy-bindings (into {}
                             (map (fn [[k v]]
                                    [k (list 'wrap-lazy v)]) bindings))]
-    (error "lazy bindings: " lazy-bindings)
+    (info "lazy bindings: " lazy-bindings)
     lazy-bindings))
 
 (defn make-lazy-ns [ns-bindings]
@@ -44,5 +44,5 @@
   (debug "cljs lazy bindings: " cljs-bindings)
   (swap! goldly-bindings merge (make-lazy cljs-bindings))
 
-  (error "cljs lazy ns-bindings: " cljs-ns-bindings)
+  (debug "cljs lazy ns-bindings: " cljs-ns-bindings)
   (swap! goldly-ns-bindings merge (make-lazy-ns cljs-ns-bindings)))

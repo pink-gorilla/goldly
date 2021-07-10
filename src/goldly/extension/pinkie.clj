@@ -30,6 +30,6 @@
                                   :as extension}]
 
   (when (not (empty? pinkie))
-    (error "pinkie-add-lazy: " pinkie)
+    (info "pinkie-add-lazy: " pinkie)
     (swap! pinkie-atom merge (make-lazy pinkie))))
 

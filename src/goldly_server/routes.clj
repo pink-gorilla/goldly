@@ -8,6 +8,7 @@
                "" :goldly/no-app
                "goldly/about" :goldly/about ; so / route goes also to :goldly/about
                "goldly/status" :goldly/status
+               "goldly/theme" :goldly/theme
                "goldly/reload" :goldly/reload-cljs
                "repl" :goldly/repl
                ;"bongo" (bidi/tag :goldly/system :hello-user)

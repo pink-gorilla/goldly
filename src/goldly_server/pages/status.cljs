@@ -10,7 +10,7 @@
    [pinkie.pinkie]
    [goldly.service.core :refer [run-a]]
    [goldly.extension.lazy :refer [add-load-status]]
-   [goldly-server.site :refer [header splash]]
+   [goldly-server.helper.site :refer [header splash]]
    [goldly-server.helper.ui :refer [link-dispatch link-href]]))
 
 (defn b [b]

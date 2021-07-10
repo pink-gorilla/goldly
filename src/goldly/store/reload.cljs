@@ -6,8 +6,6 @@
    [bidi.bidi :as bidi]
    [webly.web.routes :refer [current]]
    [webly.web.handler :refer [reagent-page]]
-   [goldly-server.site :refer [header splash]]
-   [goldly-server.helper.ui :refer [link-dispatch link-href]]
    [webly.user.app.views :refer [refresh-page]]))
 
 (defn reloading-cljs-ui []

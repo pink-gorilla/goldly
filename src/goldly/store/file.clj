@@ -5,7 +5,9 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [goldly.service.core :as s]
    [goldly.version :refer [load-version]]
-   [goldly.extension.core :refer [extension-summary extensions]]))
+   [goldly.extension.core :refer [extension-summary extensions]]
+   [goldly.extension.theme :refer [ext-theme]]
+   ))
 
 (defn edn-load [filename]
   (let [content (slurp filename)
@@ -38,6 +40,7 @@
         :goldly/services s/services-list
         :extension/all extensions
         :extension/summary extension-summary
+        :extension/theme ext-theme
         :status/sci status-sci
         :edn/load edn-load
         :cljs/explore cljs-explore

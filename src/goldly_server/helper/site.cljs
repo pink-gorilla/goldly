@@ -1,4 +1,4 @@
-(ns goldly-server.site
+(ns goldly-server.helper.site
   (:require
    [ui.site.template :as template]))
 
@@ -15,6 +15,7 @@
                          :brand-link "/"
                          :items [{:text "goldly" :link "/goldly/about"}
                                  {:text "status" :link "/goldly/status"}
+                                 {:text "theme" :link "/goldly/theme"}
                                  {:text "repl" :link "/repl"}
                                  {:text "snippets" :link "/system/snippet-registry"}
                                  {:text "running systems" :link "/goldly/systems"}

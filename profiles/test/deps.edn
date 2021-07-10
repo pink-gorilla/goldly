@@ -22,7 +22,6 @@
                 org.pinkgorilla/ui-aggrid {:mvn/version "0.0.7"}
                 org.pinkgorilla/ui-highcharts {:mvn/version "0.0.9"}
                 org.pinkgorilla/ui-leaflet {:mvn/version "0.0.8"}
-
                 org.pinkgorilla/ui-math {:mvn/version "0.0.6"}}
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch2"

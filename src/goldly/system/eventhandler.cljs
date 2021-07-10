@@ -13,7 +13,7 @@
       (symbol? obj)
       (keyword? obj)))
 
-(defn- norm-evt [obj]
+(defn norm-evt [obj]
   (->> obj
        js/Object.getPrototypeOf
        js/Object.getOwnPropertyNames

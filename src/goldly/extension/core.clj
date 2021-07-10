@@ -16,6 +16,13 @@
   (let [excludes (lazy-excludes)]
     (contains? excludes module-name)))
 
+
+(defn ext-lazy? [{:keys [name lazy]
+                           :or {lazy false}}]
+ (and (lazy-enabled)
+           (not (lazy-excluded? name))
+           lazy))
+
 ;; pinkie
 (defn save-pinkie []
   (write-status "pinkie" @pinkie-atom))
@@ -103,15 +110,14 @@
 (defn save-extensions [ext-list]
   (let [ext-map (ext->map ext-list)]
     (reset! extension-atom ext-map)
-    (error "extensions loaded: " (extension-names))
-
+    (debug "extensions loaded: " (extension-names))
     ;todo: make unit tests of extension loader
     ;(error "ext: " @extension-atom)
     ;(error "ext list: " (extension-list))
     ;(error "ui-highlightjs: " (get-extension "ui-highlightjs"))
     ;(print-all)
-    (error "ext summary: " (extension-summary))
-    (error "ext fns:" (ext-fns))
+    ;(error "ext fns:" (ext-fns))
+    (info "extensions: " (extension-summary))
     (write-status "extensions" ext-list)))
 
 

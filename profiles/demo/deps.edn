@@ -10,14 +10,15 @@
            ;; goldly
 
            :goldly ;; goldly - ui bundle custom build (takes more time)
-           {:extra-deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
-                         org.pinkgorilla/ui-input {:mvn/version "0.0.10"}
-                         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.6"}
-                         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.5"}
-                         org.pinkgorilla/ui-vega  {:mvn/version "0.0.10"}
+           {:lazy true
+            :extra-deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
+                         org.pinkgorilla/ui-input {:mvn/version "0.0.11"}
+                         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.7"}
+                         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.8"}
+                         org.pinkgorilla/ui-vega  {:mvn/version "0.0.11"}
                          ;org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.3"}
-                         ;org.pinkgorilla/gorilla-ui  {:mvn/version "0.3.48"}
-                         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.11"}
+                         org.pinkgorilla/ui-gorilla  {:mvn/version "0.3.50"}
+                         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}
                          }
             :exec-fn goldly-server.app/goldly-server-run!
             :exec-args {:profile "watch2"
@@ -26,7 +27,10 @@
                                  :goldly
                                  {:lazy true
                                   :routes {"" :user/main
+                                           ; will go togoldly dev tools
                                            "artefacts" :user/artefacts
+                                           "about" :user/about
+                                           ; user
                                            "bmi" :user/bmi
                                            "fortune" :user/fortune
                                            "iss" :user/iss
@@ -45,6 +49,7 @@
                                  :goldly
                                  {:routes {"" :user/main
                                            "artefacts" :user/artefacts
+                                           "about" :user/about
                                            "bmi" :user/bmi
                                            "fortune" :user/fortune
                                            "iss" :user/iss

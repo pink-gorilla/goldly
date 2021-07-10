@@ -4,7 +4,7 @@
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
    [ui.site.template :as t]
-   [goldly-server.site :refer [header splash]]
+   [goldly-server.helper.site :refer [header splash]]
    [goldly-server.helper.ui :refer [link-dispatch link-href]]))
 
 (defn no-app []

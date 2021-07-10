@@ -1,7 +1,7 @@
 {:webly {:ns-clj [goldly-server.app]}
  :goldly
  {:lazy true
-  :lazy-exclude #{"ui-binaryclock" 
+  :lazy-exclude #{"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
                   "ui-math" 
                   ;"picasso"
                   }

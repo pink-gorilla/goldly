@@ -5,7 +5,7 @@
    [bidi.bidi :as bidi]
    [webly.web.handler :refer [reagent-page]]
    [goldly.system.ws :refer [request-systems]]
-   [goldly-server.site :refer [header]]))
+   [goldly-server.helper.site :refer [header]]))
 
 (defn visible? [system]
   (not (:hidden system)))
