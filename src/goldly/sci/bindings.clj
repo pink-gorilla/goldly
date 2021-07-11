@@ -5,7 +5,7 @@
    [taoensso.timbre :refer [trace debug debugf info infof error]]
    [fipp.clojure]
    [webly.date :refer [now-str]]
-   [webly.writer :refer [write-status]]))
+   [webly.writer :refer [write-target write-status]]))
 
 ; config management
 
@@ -61,9 +61,13 @@
 (defn generate-bindings []
   (info "goldly is generating bindings.. ")
   ;      "namespaces: " @goldly-namespaces "bindings: " @goldly-bindings)
-  (write-status "sci-cljs-bindings" {:namespaces @goldly-namespaces
+  #_(write-status "sci-cljs-bindings" {:namespaces @goldly-namespaces
+                                       :bindings @goldly-bindings
+                                       :ns-bindings @goldly-ns-bindings})
+  (write-target "sci-cljs-bindings" {:namespaces @goldly-namespaces
                                      :bindings @goldly-bindings
                                      :ns-bindings @goldly-ns-bindings})
+
   (let [forms (make-forms)]
     (write-forms forms)))
 

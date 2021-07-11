@@ -14,13 +14,22 @@
     {:filename filename
      :data data}))
 
+(defn edn-load-res [filename]
+  (if-let [r (io/resource filename)]
+    (let [content (slurp r)
+          data (edn/read-string content)]
+      {:filename filename
+       :data data})
+    {:error (str "resource not found: " filename)}))
+
 (defn load-extension [name]
   (let [content (slurp ".webly/extensions.edn")
         extensions (edn/read-string content)
         e (first (filter #(= name (:name %)) extensions))]
     e))
 (defn status-sci []
-  (edn-load ".webly/sci-cljs-bindings.edn"))
+  ;(edn-load ".webly/sci-cljs-bindings.edn")
+  (edn-load-res "target/webly/public/sci-cljs-bindings.edn"))
 
 (defn cljs-explore []
   (let [dir (io/file "cljs-sci")

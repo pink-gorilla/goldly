@@ -75,23 +75,6 @@
            :goldly-m
            {:main-opts ["-m" "goldly-server.app"]}
 
-           :jar
-           {:extra-deps {com.github.seancorfield/depstar {:mvn/version "2.0.216"}}
-            :exec-fn hf.depstar/jar
-            :exec-args {;:pom-file "pom2.xml"
-                        :jar "target/goldly-bundel.jar"
-                        :group-id "org.pinkgorilla"
-                        :artifact-id "goldly-bundel"
-                        :sync-pom true
-                        :paths-only false
-                        :verbose true
-                        :jar-type :uber
-                        }}
-
-           :deploy-bundel
-           {:replace-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
-            :exec-fn deps-deploy.deps-deploy/deploy
-            :exec-args {:installer :remote
-                        :artifact "target/goldly-bundel.jar"}}
+           
 ;           
            }}

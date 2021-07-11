@@ -25,7 +25,7 @@
   (let [lazy-bindings (into {}
                             (map (fn [[k v]]
                                    [k (list 'wrap-lazy v)]) bindings))]
-    (info "lazy bindings: " lazy-bindings)
+    (debug "lazy bindings: " lazy-bindings)
     lazy-bindings))
 
 (defn make-lazy-ns [ns-bindings]
