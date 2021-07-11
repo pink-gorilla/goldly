@@ -2,12 +2,14 @@
  :goldly
  {:lazy true
   :lazy-exclude #{"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
-                  "ui-math" 
-                  ;"picasso"
+                   "ui-math"
                   }
   ; taggedmatch cannot be read by normal clojure edn reader,
   ; so if using taggedmatch, config needs to be in edn file.
-  :routes {"demo" #bidi.bidi.TaggedMatch{:matched :goldly/system, :tag :hello-user}}
+  :routes {"demo" #bidi.bidi.TaggedMatch{:matched :goldly/system, :tag :hello-user}
+           "" :user/main
+           "info" :user/info
+           "error" :user/error}
   :systems
   [systems.snippet-registry
    systems.snippet-scratchpad

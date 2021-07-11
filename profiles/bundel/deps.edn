@@ -1,80 +1,88 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/goldly {:local/root "../.." 
-                                :deps/manifest :deps
-                                }
+ :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
         ; bundel deps
         ;lazy deps:
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
-        org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.4"}
-        org.pinkgorilla/ui-leaflet {:mvn/version "0.0.8"}
+        org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.5"}
+        org.pinkgorilla/ui-leaflet {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.9"}
-        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.8"}
+        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-input {:mvn/version "0.0.11"}
         org.pinkgorilla/ui-gorilla {:mvn/version "0.3.50"}
-        org.pinkgorilla/ui-vega  {:mvn/version "0.0.12"}
-        org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
+        org.pinkgorilla/ui-vega  {:mvn/version "0.0.13"}
+        ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
         }
 
- :aliases {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
-                      :main-opts ["-m"
-                                  "antq.core"]}
-           :check {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
-                                                 :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
-                   :main-opts ["-m"
-                               "clj-check.check"]}
-           :release {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
-                     :main-opts ["-m"
-                                 "applied-science.deps-library"]}
-           :garamond {:main-opts ["-m"
-                                  "garamond.main"]
-                      :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
-           :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
-                  :main-opts ["-m"
-                              "clj-kondo.main"
-                              "--lint"
-                              "src"]}
-           :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-                    :main-opts ["-m"
-                                "cljfmt.main"
-                                "check"
-                                "--indents"
-                                "cljfmt.edn"]}
-           :cljfmt-fix {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-                        :main-opts ["-m"
-                                    "cljfmt.main"
-                                    "fix"
-                                    "--indents"
-                                    "cljfmt.edn"]}
-           :test {:extra-paths ["test"]
-                  :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                                                                     :sha "62ef1de18e076903374306060ac0e8a752e57c86"}}
-                  :main-opts ["-m"
-                              "cognitect.test-runner"]
-                  :exec-fn cognitect.test-runner.api/test}
+ :aliases
+ {:outdated
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+   :main-opts ["-m"
+               "antq.core"]}
+  :check
+  {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
+                                 :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
+   :main-opts ["-m"
+               "clj-check.check"]}
+  :release
+  {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
+   :main-opts ["-m"
+               "applied-science.deps-library"]}
+  :garamond
+  {:main-opts ["-m"
+               "garamond.main"]
+   :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
+  :lint
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
+   :main-opts ["-m"
+               "clj-kondo.main"
+               "--lint"
+               "src"]}
+  :cljfmt
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
+   :main-opts ["-m"
+               "cljfmt.main"
+               "check"
+               "--indents"
+               "cljfmt.edn"]}
+  :cljfmt-fix
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
+   :main-opts ["-m"
+               "cljfmt.main"
+               "fix"
+               "--indents"
+               "cljfmt.edn"]}
+  :test
+  {:extra-paths ["test"]
+   :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                                                      :sha "62ef1de18e076903374306060ac0e8a752e57c86"}}
+   :main-opts ["-m"
+               "cognitect.test-runner"]
+   :exec-fn cognitect.test-runner.api/test}
 
-           ;; goldly
-           :ci {:extra-paths ["test"]
-                :exec-fn goldly-server.app/goldly-server-run!
-                :exec-args {:profile "ci"
-                            :config nil}}
+  ;; goldly
+  :ci
+  {:extra-paths ["test"]
+   :exec-fn goldly-server.app/goldly-server-run!
+   :exec-args {:profile "ci"
+               :config nil}}
 
-           :goldly ; used to create bundle
-           {:extra-deps {}
-            :exec-fn goldly-server.app/goldly-server-run!
-            :exec-args {:profile "watch2"
-                        :config {:goldly
-                                 {:lazy true
-                                  :systems
-                                  [systems.snippet-registry
-                                   systems.snippet-scratchpad]}}}}
+  :goldly ; used to create bundle
+  {:extra-deps {}
+   :exec-fn goldly-server.app/goldly-server-run!
+   :exec-args {:profile "watch2"
+               :config {:goldly
+                        {:lazy true
+                         :systems
+                         [systems.snippet-registry
+                          systems.snippet-scratchpad]}}}}
 
-           :goldly-m
-           {:main-opts ["-m" "goldly-server.app"]}
+  :goldly-m
+  {:main-opts ["-m" "goldly-server.app"]}
 
-           
+
 ;           
-           }}
+  }}

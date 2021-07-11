@@ -29,7 +29,7 @@
     e))
 (defn status-sci []
   ;(edn-load ".webly/sci-cljs-bindings.edn")
-  (edn-load-res "target/webly/public/sci-cljs-bindings.edn"))
+  (edn-load-res "public/sci-cljs-bindings.edn"))
 
 (defn cljs-explore []
   (let [dir (io/file "cljs-sci")

@@ -9,6 +9,7 @@
    [goldly.version :refer [print-version]]
    [goldly.extension.discover :as d]
    [goldly.service.core]
+   [goldly.service.handler]
    [goldly.broadcast.core]
 
    [goldly.sci.bindings :refer [generate-bindings]]

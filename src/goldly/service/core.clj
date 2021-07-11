@@ -31,11 +31,15 @@
                  (run fun))]
     (merge params result)))
 
-(defmethod -event-msg-handler :goldly/service
-  [{:as ev-msg :keys [event id ?data]}]
-  (let [[_ params] event ; _ is :goldly/service
-        response (create-clj-run-response params)]
+(defn run-service [{:keys [fun args] :as params}]
+  (let [response (create-clj-run-response params)]
     (if (:error response)
       (errorf "service fn: %s error: %s" (:fun response) (:error response))
       (debug "sending service response: " response))
+    response))
+
+(defmethod -event-msg-handler :goldly/service
+  [{:as ev-msg :keys [event id ?data]}]
+  (let [[_ params] event ; _ is :goldly/service
+        response (run-service params)]
     (send-response ev-msg :goldly/service response)))

@@ -6,7 +6,8 @@
    ["system/" :system-id] :goldly/system})
 
 (def routes-api
-  {"scratchpad" {:get  :goldly/scratchpad-get
+  {"service" {:post :goldly/service}
+   "scratchpad" {:get  :goldly/scratchpad-get
                  :post :goldly/scratchpad-set}})
 
 
