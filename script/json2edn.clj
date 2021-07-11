@@ -1,5 +1,8 @@
 
 
+; babashka script
+; bb -f script/json2edn.clj
+
 (def j "{\"foo\":\"bar\"}")
 
 (def j (slurp "/tmp/vega.json"))

@@ -85,6 +85,7 @@
                         :sync-pom true
                         :paths-only false
                         :verbose true
+                        :jar-type :uber
                         }}
 
            :deploy-bundel

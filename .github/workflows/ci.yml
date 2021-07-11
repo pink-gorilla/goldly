@@ -64,7 +64,6 @@ jobs:
       # clojure -M:release deploy
       # lein release
       # bash <(curl -s https://codecov.io/bash)
-      # clojure -X:bundel-config
     - name: Release-Bundel
       env:
         CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
@@ -72,8 +71,9 @@ jobs:
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        cd profiles/bundel
+        ./script/bundel-config.sh
+        cd profiles/bundelci
         echo "pwd: $PWD"
         ./bundel-compile-adv.sh
-        clojure -M:release
+        ./bundel-publish.sh
 

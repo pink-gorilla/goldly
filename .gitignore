@@ -11,7 +11,7 @@ node_modules/
 .nrepl-port
 .calva
 .lsp
-
+pom.xml
 .webly
 creds.edn
 *_version.edn
@@ -21,11 +21,15 @@ package-lock.json
 karma.conf.js
 goldly_bindings_generated.cljs
 
-profiles/bundel/node_modules/
-profiles/bundel/target/
-
 profiles/demo/node_modules/
 profiles/demo/target/
 
 profiles/test/node_modules/
 profiles/test/target/
+
+profiles/bundel/node_modules/
+profiles/bundel/target/
+
+profiles/bundelci/node_modules/
+profiles/bundelci/target/
+profiles/bundelci/deps.edn
