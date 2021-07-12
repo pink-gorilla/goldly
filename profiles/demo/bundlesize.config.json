@@ -1,9 +1,0 @@
-{
-    "files": [
-      {
-        "path": "./target/webly/main.js",
-        "maxSize": "3 kB",
-        "help": "npm install bundlesize --save-dev"
-      }
-    ]
-  }

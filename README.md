@@ -15,12 +15,14 @@
 - visualizers can be easily extended. you can access the entire npm + clojurescript ecosystem.
   An example for a simple ui extension is [ui-binaryclock](https://github.com/pink-gorilla/ui-binary-clock)
 - goldly systems and the clojurescript kernel can be developed/used in a [Pinkgorilla Notebook](https://github.com/pink-gorilla/notebook)
-
-### use cases
-- quickly write a web dashboards (by using only clojure). 
-  - [EDGAR](https://github.com/clojure-quant/edgar) uses it to vizualise mutual fund holdings
-  - [trateg](https://github.com/clojure-quant/trateg) uses it to vizualize swing charts
 - visualize edn datastructures (either from a repl or in the web-app (via scratchpad) 
+
+## demo apps
+
+- [demo goldly](https://github.com/pink-gorilla/demo-goldly)
+  NEWBEES: START WITH DEMO-GOLDLY!
+- [trateg](https://github.com/clojure-quant/trateg) financial market backtesting
+- [EDGAR](https://github.com/clojure-quant/edgar) visualise mutual fund holdings
 
 
 ### Web Interface
@@ -38,21 +40,10 @@ The snippets are primitive, but demonstrate certain features of goldly:
 - fortune: demonstrates how to load data from clojure (could be a database)
 - time: demonstrates to push data from clojure
 
-## Run - demo
-
-Clone this repo, then:
-
-```
-cd profiles/demo
-clojure -X:goldly
-```
-
-Open web-browser on port 8000.
-
 
 ## Run - standalone 
 
-The easiest way to run the notebook locally is leveraging the `clojure` cli
+The easiest way to run the goldly locally is leveraging the `clojure` cli
 
 ```
 clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}}' -m bundel.run

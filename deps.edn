@@ -14,16 +14,16 @@
   hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
 
   ; core 
-  org.pinkgorilla/picasso {:mvn/version "3.1.51"} ; kernel type rendering - used in cljs kernel
+  org.pinkgorilla/picasso {:mvn/version "3.1.52"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/webly {:mvn/version "0.3.45"} ; web app build tool
 
   ; core-bundel
-  org.pinkgorilla/ui-site {:mvn/version "0.0.10"}
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.20"} ; tick needs to be made lazy.
-  org.pinkgorilla/ui-code {:mvn/version "0.0.25"}
-  org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.2"}
-  org.pinkgorilla/ui-markdown {:mvn/version "0.0.17"}}
+  org.pinkgorilla/ui-site {:mvn/version "0.0.11"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.21"} ; tick needs to be made lazy.
+  org.pinkgorilla/ui-code {:mvn/version "0.0.26"}
+  org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.3"}
+  org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}}
  :aliases
  {;; developer tooling
 

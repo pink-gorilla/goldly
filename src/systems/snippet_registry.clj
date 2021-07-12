@@ -83,9 +83,9 @@
                                       items))]) (:snippets @state))))
            [:p.mt-5 "There are 3 types of snippets:"]
            [:ol
-            [:li [:b "pinkie"] " - static html (hiccup) - good to test pinkie renderers"]
-            [:li [:b "goldly"] " - system (stateful) that only interacts on the client (cljs only)"]
-            [:li [:b "goldly-clj"] " - a goldly system (stateful) with clj interaction"]]
+            [:li [:b "edn"] " - static html (hiccup) - good to test pinkie renderers"]
+            [:li [:b "cljs"] " - system (stateful) that only interacts on the client (cljs only)"]
+            [:li [:b "clj"] " - a goldly system (stateful) with clj interaction"]]
            [:p "note: this snippet registry is also a normal goldly system :-)"]]
    :fns {}}))
 
