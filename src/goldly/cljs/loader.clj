@@ -1,6 +1,5 @@
 (ns goldly.cljs.loader
   (:require
-   [clojure.java.io :as io]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [goldly.service.core :as s]
    [goldly.file.explore :refer [explore-dir load-file!]]

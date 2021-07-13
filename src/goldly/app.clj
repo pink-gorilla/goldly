@@ -16,8 +16,10 @@
 
    [goldly.broadcast.core]
    [goldly.cljs.loader :refer [cljs-watch]]
+   [goldly.component.type.notebook :refer [notebook-watch]]
    [goldly.sci.bindings :refer [generate-bindings]]
    [goldly.component.type.system]
+   [goldly.component.ws-connect :refer [start-ws-conn-watch]]
 
    [goldly.system.require :refer [require-namespaces]]
    [goldly.notebook.picasso]
@@ -69,6 +71,8 @@
       (warn "no goldly systems defined!"))
 
     (cljs-watch)
+    (notebook-watch)
+    (start-ws-conn-watch)
     ;(if extensions
     ;  (do (info "loading extensions from ns: " extensions)
     ;      (require-namespaces extensions))

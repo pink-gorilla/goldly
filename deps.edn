@@ -12,7 +12,8 @@
   fipp/fipp {:mvn/version "0.6.24"} ; edn pretty printing
   resauce/resauce {:mvn/version  "0.2.0"}
   hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
-
+  rewrite-clj/rewrite-clj {:mvn/version "1.0.644-alpha"}
+  
   ; core 
   org.pinkgorilla/picasso {:mvn/version "3.1.52"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout

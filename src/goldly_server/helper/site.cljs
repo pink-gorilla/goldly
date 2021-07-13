@@ -17,8 +17,10 @@
                                  {:text "status" :link "/goldly/status"}
                                  {:text "theme" :link "/goldly/theme"}
                                  {:text "repl" :link "/repl"}
+                                 {:text "notebooks" :link "/goldly/notebooks"}
                                  {:text "snippets" :link "/system/snippet-registry"}
                                  {:text "running systems" :link "/goldly/systems"}
+
                  ;{:text "notebook" :link "/notebook-test"}
                                  {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special? true}]}])
 

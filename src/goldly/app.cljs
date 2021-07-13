@@ -10,6 +10,7 @@
    [goldly.extension.lazy]
    [goldly.component.load]
    [goldly.component.type.system]
+   [goldly.component.type.notebook]
 
    [goldly.system.ui]
    [goldly.system.db]

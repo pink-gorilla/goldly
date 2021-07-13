@@ -12,7 +12,7 @@
   {:id id
    :error (str "type unknown: " type)})
 
-(defn index-response [type]
+(defn get-index [type]
   (infof "index/load type: %s " type)
   (let [data (load-index {:type type})
         response {:type type
@@ -23,21 +23,11 @@
 (defmethod -event-msg-handler :index/load
   [{:as ev-msg :keys [event]}]
   (let [[event-name {:keys [type id]}] event
-        data (index-response type)]
+        data (get-index type)]
     (send-response ev-msg :index/store data)))
 
-; on connection
-(defn on-connect-send-systems [old new]
-  (let [uids (:any new)
-        data (index-response :system)
-        response [:index/store data]]
-    (info "uids connected: " uids)
-    (doseq [uid uids]
-      (info "sending systems info to: " uid)
-      (debug "index response: " response)
-      (send! uid response))))
-
-(watch-conn on-connect-send-systems)
+(defn get-index-response [type]
+  [:index/store (get-index type)])
 
 ; component
 (defmulti load-component (fn [m] (:type m)))
