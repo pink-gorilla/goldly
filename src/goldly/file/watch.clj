@@ -1,10 +1,10 @@
-(ns goldly.store.watch
+(ns goldly.file.watch
   (:require
    [clojure.java.io :as io]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [hawk.core :as hawk]
    [webly.ws.core :refer [send! send-all! send-response]]
-   [goldly.store.file :refer [cljs-load]]))
+   [goldly.file.explore :refer [load-file!]]))
 
 (defn to-canonical [path]
   (->>
@@ -13,14 +13,15 @@
    (.getPath))
   path)
 
-(defn broadcast-file [file]
-  (info "broadcasting cljs-sci file: " file)
+(defn broadcast-file [event-name root file]
+  (infof "broadcasting root: %s file: %s" root file)
   (let [;p (.getPath file)
         name (.getName file)
-        result (cljs-load name)]
-    (send-all! [:goldly/cljs-sci-reload result])))
+        result (load-file! root name)]
+    (send-all! [event-name result])))
 
-(defn process-file-change [root ctx {:keys [kind file] :as e}]
+(defn process-file-change [event-name root
+                           ctx {:keys [kind file] :as e}]
   ;(info "watcher-action: event: " e) 
   ; {:kind :delete, 
   ;  :file #object[java.io.File 0x7ca1018 "/home/andreas/pinkgorilla/goldly/profiles/demo/cljs-sci/test.cljs"]}
@@ -28,20 +29,20 @@
   ;(info "watcher-action: context: " ctx) {}
   ;(info "root: " root)
   (case kind
-    :create (broadcast-file file)
-    :modify (broadcast-file file)
-    :delete (info "sci-cljs deleted: " file))
+    :create (broadcast-file event-name root file)
+    :modify (broadcast-file event-name root file)
+    :delete (info "file deleted: " root file))
   ctx)
 
-(defn cljs-watch []
-  (let [dir (io/file "cljs-sci")
-        root (to-canonical "cljs-sci")
-        watch-paths ["cljs-sci"]]
+(defn watch [path event-name]
+  (let [dir (io/file path)
+        root (to-canonical path)
+        watch-paths [path]]
     (when (.exists dir)
-      (info "cljs-sci watch: " watch-paths)
+      (info "watching: " watch-paths)
       (hawk/watch! {:watcher :polling}
                    [{:paths watch-paths
-                     :handler (partial process-file-change root)}]))))
+                     :handler (partial process-file-change event-name root)}]))))
 
 
 

@@ -1,4 +1,4 @@
-(ns goldly.store.reload
+(ns goldly.cljs.reload
   (:require
    [re-frame.core :as rf]
    [taoensso.timbre :refer-macros [trace debug debugf info infof warn warnf error errorf]]

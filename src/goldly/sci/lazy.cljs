@@ -17,7 +17,7 @@
 (defn load-extension [name]
   (info "loading extension: " name)
   (go
-    (let [{:keys [error result] :as r} (<! (run {:fun :cljs/extension :args [name]}))]
+    (let [{:keys [error result] :as r} (<! (run {:fun :extension/load :args [name]}))]
       (when error
         (warn "error loading extension: " r))
       (when result

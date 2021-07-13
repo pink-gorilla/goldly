@@ -46,5 +46,4 @@
                 [:p/frisk @state]])]]]
    :fns {:eval (fn []
                  (info "eval:" @state)
-                 @state)}}
-  {}))
+                 @state)}}))

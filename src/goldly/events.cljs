@@ -7,8 +7,7 @@
    [goldly.extension.pinkie :refer [add-extension-pinkie-static]]))
 
 (def initial-db
-  {:systems []
-   :id nil
+  {:id nil
    ; system ui
    :running-systems {}})
 

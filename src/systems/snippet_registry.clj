@@ -98,6 +98,7 @@
    :html  [:div
            (when (:first @state)
              (swap! state assoc :first false)
+             (info "loading snippet: " ext)
              (run-a state [:snippet] :load-snippet ext))
            [:h1.m-2.bg-blue-300
             [:span "type: " (get-in @state [:snippet :type])]
@@ -111,7 +112,7 @@
              {:style {:overflow-y "auto"}}
              (if ext
                [:p/goldly (keyword ext)]
-               [:h1.bg-red-500.m-2 "no goldly system defined ext: " ext])]]]
+               [:h1.bg-red-500.m-2 "no goldly system defined ext: state: " (pr-str @state)])]]]
    :fns {:edit (fn []
                  ;(set-system-state :scratchpad (:snippet @state) [:snippet])
                  (clipboard-set (:snippet @state))

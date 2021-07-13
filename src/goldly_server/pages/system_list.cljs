@@ -32,7 +32,7 @@
 
 (defn systems-list-page []
   (let [routes (rf/subscribe [:webly/routes])
-        systems (rf/subscribe [:goldly/systems])
+        systems (rf/subscribe [:index/show :system])
         first (r/atom true)]
     (fn []
       ;[:div.bg-blue-200.h-screen.w-screen

@@ -8,20 +8,22 @@
 
    [goldly.version :refer [print-version]]
    [goldly.extension.discover :as d]
+   [goldly.extension.pinkie :refer [available]]
+
    [goldly.service.core]
    [goldly.service.handler]
-   [goldly.broadcast.core]
+   [goldly.services]
 
+   [goldly.broadcast.core]
+   [goldly.cljs.loader :refer [cljs-watch]]
    [goldly.sci.bindings :refer [generate-bindings]]
-   [goldly.store.file]
-   [goldly.store.watch :refer [cljs-watch]]
+   [goldly.component.type.system]
 
    [goldly.system.require :refer [require-namespaces]]
    [goldly.notebook.picasso]
-   [goldly.system.ws]
-   [goldly.api.handler]
-   [goldly.scratchpad.core]
-   [goldly.extension.pinkie :refer [available]]))
+
+   [goldly.scratchpad.handler]
+   [goldly.scratchpad.core]))
 
 (defn goldly-init! []
     ; extensions can add to cljs namespaces. therefore extensions have to

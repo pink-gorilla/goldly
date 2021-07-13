@@ -1,4 +1,4 @@
-(ns goldly.store.file
+(ns goldly.services
   (:require
    [clojure.java.io :as io]
    [clojure.edn :as edn]
@@ -28,31 +28,17 @@
         e (first (filter #(= name (:name %)) extensions))]
     e))
 (defn status-sci []
-  ;(edn-load ".webly/sci-cljs-bindings.edn")
   (edn-load-res "public/sci-cljs-bindings.edn"))
-
-(defn cljs-explore []
-  (let [dir (io/file "cljs-sci")
-        files (if (.exists dir)
-                (into [] (.list dir))
-                [])]
-    (debug "cljs-sci explore: " files)
-    files))
-
-(defn cljs-load [filename]
-  (let [code (slurp (str "cljs-sci/" filename))]
-    {:filename filename
-     :code code}))
 
 (s/add {:goldly/version load-version
         :goldly/services s/services-list
+
         :extension/all extensions
         :extension/summary extension-summary
         :extension/theme ext-theme
+        :extension/load load-extension
+
         :status/sci status-sci
-        :edn/load edn-load
-        :cljs/explore cljs-explore
-        :cljs/load cljs-load
-        :cljs/extension load-extension})
+        :edn/load edn-load})
 
 

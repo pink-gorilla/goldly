@@ -1,13 +1,13 @@
-(ns goldly.store.loader
+(ns goldly.cljs.loader
   (:require
    [taoensso.timbre :refer-macros [trace debug debugf info infof warn warnf error errorf]]
    [cljs.core.async :refer [>! <! chan close! put!] :refer-macros [go]]
    [re-frame.core :as rf]
-   [webly.ws.msg-handler :refer [-event-msg-handler]]
+   ;[webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.service.core :refer [run]]
    [goldly.sci.kernel-cljs :refer [compile-code]]
    [goldly.sci.error :refer [show-sci-error]]
-   [goldly.store.reload :refer [reload-cljs]]))
+   [goldly.cljs.reload :refer [reload-cljs]]))
 
 (defn compile-cljs [{:keys [filename code]}]
   (info "compiling: " filename)
@@ -21,7 +21,7 @@
   (go
     (let [{:keys [error result] :as r} (<! (run {:fun :cljs/load :args [filename]}))]
       (when error
-        (warn "error loading cljs: " r))
+        (error "error loading cljs: " r))
       (when result
         (compile-cljs result)))))
 ; called from goldly.system.ws after ws connected:

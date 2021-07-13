@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [trace debug debugf info infof error]]
    [clojure.core :refer [read-string load-string]]
-   [goldly.system.db :refer [add-system]]
+   [goldly.component.type.system :refer [add-system]]
    [goldly.system :as goldly]
    [goldly.runner :refer [system-start!]])
   (:import [goldly.runner GoldlySystem]))

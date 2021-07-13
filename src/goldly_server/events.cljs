@@ -4,7 +4,7 @@
    [cljs.core.async :refer [>! <! chan close! put! timeout] :refer-macros [go]]
 
    [re-frame.core :as rf]
-   [goldly.store.loader :as loader]))
+   [goldly.cljs.loader :as loader]))
 
 (rf/reg-event-db
  :goldly-server/init

@@ -21,29 +21,3 @@
  (fn [db [_ id]]
    (info "removing running goldly system: " id)
    (update-in db [:goldly :running] dissoc id)))
-
-(rf/reg-event-db
- :goldly/systems-store
- (fn [db [_ data]]
-   (info "available goldly systems: " data)
-   (assoc-in db [:goldly :systems] data)))
-
-(rf/reg-event-db
- :goldly/system-store
- (fn [db [_ system]]
-   (info "rcvd system definition: " (:id system))
-   (assoc-in db [:goldly :system (:id system)] system)))
-
-(rf/reg-event-db
- :goldly/systems
- (fn [db [_ data]]
-   (let [_ (debugf "rcvd :goldly/systems: %s" data)]
-     (rf/dispatch [:goldly/systems-store data])
-     db)))
-
-(rf/reg-event-db
- :goldly/system
- (fn [db [_ data]]
-   (let [_ (debugf "rcvd :goldly/systems: %s" data)]
-     (rf/dispatch [:goldly/system-store data])
-     db)))

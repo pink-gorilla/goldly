@@ -6,6 +6,6 @@
    [:h1.text-2xl.text-red-600.m-5 "demo user app"]
    [link/href "/goldly/about" "goldly developer tools"]
 
-   [:div.bg.green-300
+   [:div.bg-green-300
     [link/href "/info" "info"]
     [link/href "/error" "error"]]])
