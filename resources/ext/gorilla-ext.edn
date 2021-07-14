@@ -2,16 +2,15 @@
  :clj-require []
  :cljs-namespace [clojure.walk
                   goldly.service.core
-                  goldly-server.helper.ui
+                  goldly.broadcast.core
                   goldly.page.page
-                  ]
+                  goldly-server.helper.ui]
  :cljs-bindings {'add-page goldly.page.page/add-page
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
                  'set-system-state goldly.broadcast.core/set-system-state}
- :cljs-ns-bindings {'link {'dispatch goldly-server.helper.ui/link-dispatch 
+ :cljs-ns-bindings {'link {'dispatch goldly-server.helper.ui/link-dispatch
                            'href goldly-server.helper.ui/link-href}
-                    
                     'walk {'postwalk clojure.walk/postwalk
                            'prewalk clojure.walk/prewalk
                            'keywordize-keys clojure.walk/keywordize-keys

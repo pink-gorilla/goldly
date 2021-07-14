@@ -14,10 +14,14 @@
   [template/header-menu {:brand "Your Application"
                          :brand-link "/"
                          :items [{:text "goldly" :link "/goldly/about"}
+
                                  {:text "status" :link "/goldly/status"}
                                  {:text "theme" :link "/goldly/theme"}
+
                                  {:text "repl" :link "/repl"}
                                  {:text "notebooks" :link "/goldly/notebooks"}
+                                 {:text "nrepl" :link "/goldly/nrepl"}
+
                                  {:text "snippets" :link "/system/snippet-registry"}
                                  {:text "running systems" :link "/goldly/systems"}
 

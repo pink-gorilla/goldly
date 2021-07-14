@@ -29,9 +29,15 @@
             ; config-settings to initialize the app when localstorage is empty
             :use-localstorage  false}
 
- :goldly {:systems [systems.snippet-registry
-                    systems.snippet-scratchpad]
-          :enabled true
-          :lazy true
-          }}
+ :nrepl {:enabled true
+         :bind "0.0.0.0"
+         :port 9100}
+ 
+  :goldly {:enabled true
+           :systems [systems.snippet-registry
+                     systems.snippet-scratchpad]
+           :lazy true}
+
+;
+ }
 

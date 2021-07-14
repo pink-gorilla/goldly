@@ -3,6 +3,7 @@
    [reagent.core :as r]
    [re-frame.core :as rf]
    [webly.web.handler :refer [reagent-page]]
+   [ui.notebook.menu]
    [goldly.component.ui :refer [component]]
    [goldly-server.helper.site :refer [header]]))
 
@@ -37,6 +38,7 @@
       [:div.h-full.w-full.flex.flex-cols
        [notebooks-list set-notebook @notebook-name @notebook-names]
        ;[:div @notebook-name]
+       [ui.notebook.menu/menu]
        [:div.w-full.h-full.bg-green-400
         (when @notebook-name
           [component :notebook @notebook-name {}])]])))

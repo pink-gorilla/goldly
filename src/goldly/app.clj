@@ -25,7 +25,9 @@
    [goldly.notebook.picasso]
 
    [goldly.scratchpad.handler]
-   [goldly.scratchpad.core]))
+   [goldly.scratchpad.core]
+
+   [pinkgorilla.nrepl.service]))
 
 (defn goldly-init! []
     ; extensions can add to cljs namespaces. therefore extensions have to
@@ -77,6 +79,6 @@
     ;  (do (info "loading extensions from ns: " extensions)
     ;      (require-namespaces extensions))
     ;  (warn "no goldly extensions defined!"))
-    ))
+    (pinkgorilla.nrepl.service/start-nrepl (get-in-config [:nrepl]))))
 
 

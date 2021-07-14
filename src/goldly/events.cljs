@@ -17,6 +17,7 @@
    (let [db (or db {})]
      (info "goldly starting ..")
      (add-extension-pinkie-static)
+     (rf/dispatch [:nrepl/init])
      (rf/dispatch [:ga/event {:category "goldly" :action "started" :label 77 :value 13}])
      (assoc-in db [:goldly] initial-db))))
 

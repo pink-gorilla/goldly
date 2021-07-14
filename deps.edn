@@ -18,7 +18,8 @@
   org.pinkgorilla/picasso {:mvn/version "3.1.52"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/webly {:mvn/version "0.3.45"} ; web app build tool
-
+  org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.52"}
+  
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.11"}
   org.pinkgorilla/ui-repl {:mvn/version "0.0.21"} ; tick needs to be made lazy.

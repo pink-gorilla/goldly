@@ -11,6 +11,7 @@
                "goldly/theme" :goldly/theme
                "goldly/reload" :goldly/reload-cljs
                "goldly/notebooks" :goldly/notebooks
+               "goldly/nrepl" :nrepl/info
                "repl" :goldly/repl
                ;"bongo" (bidi/tag :goldly/system :hello-user)
                ;"bongo/" (bidi/tag :goldly/system :hello-user)
