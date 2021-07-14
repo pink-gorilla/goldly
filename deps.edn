@@ -17,7 +17,7 @@
   ; core 
   org.pinkgorilla/picasso {:mvn/version "3.1.52"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.45"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.47"} ; web app build tool
   org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.52"}
   
   ; core-bundel
