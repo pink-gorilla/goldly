@@ -37,7 +37,7 @@
                     (:current result)]))))
 
 (defn goldly-on-load [symbol-fn]
-  (infof "goldly lazy loading %s" symbol-fn)
+  (debugf "goldly lazy loading %s" symbol-fn)
   (if-let [ext-name (lookup-module symbol-fn)]
     (when-not (contains? @lazy-loaded-atom ext-name)
       (swap! lazy-loaded-atom conj ext-name)

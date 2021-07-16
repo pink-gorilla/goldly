@@ -2,7 +2,6 @@
   (:require
    [taoensso.timbre :as timbre :refer-macros [info infof]]
    [cljs.core.async :refer [>! <! chan close! put! timeout] :refer-macros [go]]
-
    [re-frame.core :as rf]
    [goldly.cljs.loader :as loader]))
 

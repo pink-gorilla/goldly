@@ -15,15 +15,15 @@
   rewrite-clj/rewrite-clj {:mvn/version "1.0.644-alpha"}
   
   ; core 
-  org.pinkgorilla/picasso {:mvn/version "3.1.52"} ; kernel type rendering - used in cljs kernel
+  org.pinkgorilla/picasso {:mvn/version "3.1.56"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
-  org.pinkgorilla/webly {:mvn/version "0.3.47"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.3.48"} ; web app build tool
   org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.52"}
   
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.11"}
   org.pinkgorilla/ui-repl {:mvn/version "0.0.21"} ; tick needs to be made lazy.
-  org.pinkgorilla/ui-code {:mvn/version "0.0.26"}
+  org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
   org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.3"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}}
  :aliases
@@ -88,7 +88,7 @@
   :goldly
   {:extra-paths []
    :exec-fn goldly-server.app/goldly-server-run!
-   :exec-args {:profile "watch2"
+   :exec-args {:profile "watch"
                :config nil}}
 
   ; goldly core (no modules)

@@ -19,7 +19,7 @@
                                  {:text "theme" :link "/goldly/theme"}
 
                                  {:text "repl" :link "/repl"}
-                                 {:text "notebooks" :link "/goldly/notebooks"}
+                                 ;{:text "notebooks" :link "/goldly/notebooks"}
                                  {:text "nrepl" :link "/goldly/nrepl"}
 
                                  {:text "snippets" :link "/system/snippet-registry"}

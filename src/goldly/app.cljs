@@ -20,5 +20,9 @@
    [goldly.notebook.pinkie]
    [goldly.scratchpad.core]
 
+   [ui.notebook.loader.list]
+   [goldly.notebook-loader.clj-list]
+   [goldly.notebook-loader.clj-load]
+
 ;
    ))

@@ -4,19 +4,20 @@
    [rewrite-clj.parser :as p]
    [rewrite-clj.node :as n]
    [picasso.id :refer [guuid]]
+   [webly.config :refer [get-in-config]]
    [goldly.file.explore :refer [explore-dir load-file!]]
    [goldly.file.watch :refer [watch]]
    [goldly.component.load :refer [load-index load-component]]))
 
-(def notebook-dir "goldly/notebooks")
-
 ;; index
 
 (defn notebook-explore []
-  (explore-dir notebook-dir))
+  (let [dir  (get-in-config [:goldly :notebook-dir])]
+    (explore-dir dir)))
 
 (defn notebook-watch []
-  (watch notebook-dir :goldly/notebook-reload))
+  (let [dir  (get-in-config [:goldly :notebook-dir])]
+    (watch dir :goldly/notebook-reload)))
 
 (defmethod load-index :notebook [{:keys [type]}]
   {:notebooks (notebook-explore)})
@@ -55,7 +56,8 @@
                (into [] (map ->segment forms))))))
 
 (defn notebook-load [filename]
-  (let [s (load-file! notebook-dir filename)]
+  (let [dir  (get-in-config [:goldly :notebook-dir])
+        s (load-file! dir filename)]
     (text->notebook filename (:code s))))
 
 (comment

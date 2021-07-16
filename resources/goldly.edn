@@ -21,22 +21,26 @@
                 {:kb "alt-g a" :handler [:bidi/goto "/"]  :desc "goto user app"}
                 {:kb "alt-g m" :handler [:bidi/goto :goldly/about]  :desc "goto main"}
                 {:kb "alt-g r" :handler [:bidi/goto :goldly/repl]  :desc "goto repl"}
-                {:kb "alt-g s" :handler [:bidi/goto :goldly/system :system-id :snippet-registry] :desc "goto snippets"}
-                ]
+                {:kb "alt-g s" :handler [:bidi/goto :goldly/system :system-id :snippet-registry] :desc "goto snippets"}]
 
  :settings {; settings can be changed by user (via dialog)
             ; :use-localstorage is true: load settings from localstorage, and only use
             ; config-settings to initialize the app when localstorage is empty
-            :use-localstorage  false}
+            :use-localstorage  false
+
+            :notebook  {:layout :horizontal ; :vertical
+                        :view-only false}}
 
  :nrepl {:enabled true
          :bind "0.0.0.0"
          :port 9100}
- 
-  :goldly {:enabled true
-           :systems [systems.snippet-registry
-                     systems.snippet-scratchpad]
-           :lazy true}
+
+ :goldly {:enabled true
+          :systems [systems.snippet-registry
+                    systems.snippet-scratchpad]
+          :lazy true
+          :notebook-dir "goldly/notebooks"
+          }
 
 ;
  }
