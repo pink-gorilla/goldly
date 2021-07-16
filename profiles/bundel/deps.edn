@@ -7,11 +7,11 @@
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.6"}
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.10"}
-        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.10"}
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.13"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.11"}
-        org.pinkgorilla/ui-input {:mvn/version "0.0.12"}
+        org.pinkgorilla/ui-input {:mvn/version "0.0.13"}
         org.pinkgorilla/ui-gorilla {:mvn/version "0.3.50"}
-        org.pinkgorilla/ui-vega  {:mvn/version "0.0.15"}
+        org.pinkgorilla/ui-vega  {:mvn/version "0.0.16"}
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
