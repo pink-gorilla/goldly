@@ -1,19 +1,23 @@
 (ns goldly.cljs.loader
   (:require
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
+   [webly.config :refer [get-in-config]]
    [goldly.service.core :as s]
    [goldly.file.explore :refer [explore-dir load-file!]]
    [goldly.file.watch :refer [watch]]))
 
-(def cljs-dir "goldly/cljs")
+(defn autoload-dir []
+  (get-in-config [:goldly :autoload-dir]))
 (defn cljs-explore []
-  (explore-dir cljs-dir))
-
+  (let [dir (autoload-dir)]
+    (explore-dir dir "autoload-dir")))
 (defn cljs-watch []
-  (watch cljs-dir :goldly/cljs-sci-reload))
+  (let [dir (autoload-dir)]
+    (watch dir :goldly/cljs-sci-reload)))
 
 (defn cljs-load [filename]
-  (load-file! cljs-dir filename))
+  (let [dir (autoload-dir)]
+    (load-file! dir filename)))
 
 (s/add {:cljs/explore cljs-explore
         :cljs/load cljs-load})

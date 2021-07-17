@@ -17,7 +17,7 @@
    [goldly.system.ws]
    ;[goldly.system.subs]
    [goldly.events]
-   [goldly.notebook.pinkie]
+   ;[goldly.notebook.pinkie] ; moved to edn config
    [goldly.scratchpad.core]
 
    [ui.notebook.loader.list]

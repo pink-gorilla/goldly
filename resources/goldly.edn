@@ -40,6 +40,7 @@
                     systems.snippet-scratchpad]
           :lazy true
           :notebook-dir "goldly/notebooks"
+          :autoload-dir "goldly/cljs"  ; to load cljs files to repl state
           }
 
 ;

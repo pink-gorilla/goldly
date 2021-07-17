@@ -9,9 +9,9 @@
   (let [uids (:any new)
         system (get-index-response :system)
         notebook (get-index-response :notebook)]
-    (info "uids connected: " uids)
+    (infof "ws connected  uids: %s" uids)
     (doseq [uid uids]
-      (info "sending systems/notebooks  to: " uid)
+      (infof "sending systems/notebooks to uid: %s" uid)
       (debug "index response: " system)
       (send! uid system)
       (send! uid notebook))))

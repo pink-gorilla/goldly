@@ -21,7 +21,8 @@
    (infof "websocket successfully established!: %s" new-state-map)
    ;(request-systems)
    (loader/load-cljs)
-   (go (<! (timeout 1000))
-       (rf/dispatch [:webly/status :running]))
+   (rf/dispatch [:webly/status :running])
+   #_(go (<! (timeout 1000))
+         (rf/dispatch [:webly/status :running]))
 
    nil))

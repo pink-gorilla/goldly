@@ -24,7 +24,7 @@
   (when notebooks
     (let [nbs-clj (index->nb-list notebooks)]
       (rf/dispatch [:notebook-list/set nbs-clj])
-      (error "clj list: " nbs-clj))))
+      (debugf "clj list: %s" nbs-clj))))
 
 (defn start-watch-notebooks []
   (let [names (rf/subscribe [:index/show :notebook])]

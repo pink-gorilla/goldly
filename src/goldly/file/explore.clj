@@ -3,11 +3,13 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [clojure.java.io :as io]))
 
-(defn explore-dir [dir]
+(defn explore-dir [dir purpose]
   (let [dir (io/file dir)
         files (if (.exists dir)
                 (into [] (.list dir))
-                [])]
+                (do
+                  (warnf "path for: %s not found: %s" purpose dir)
+                  []))]
     (debug "explore-dir: " files)
     files))
 

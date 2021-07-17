@@ -20,8 +20,10 @@
 
 (defn run [params]
   (let [ch (chan)
-        cb (fn [[_ data]] ; _ = event-type ;goldly/service
-             (put! ch data))]
+        cb (fn [event] ; _ = event-type ;goldly/service
+             (infof "service/run cb: %s" event)
+             (let [[_ data] event] ; separate because was throwing exceptions
+               (put! ch data)))]
     (run-cb (assoc params :cb cb))
     ch))
 

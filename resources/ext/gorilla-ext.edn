@@ -4,7 +4,9 @@
                   goldly.service.core
                   goldly.broadcast.core
                   goldly.page.page
-                  goldly-server.helper.ui]
+                  goldly-server.helper.ui
+                  goldly.system.ui ; ui for goldly system
+                  ]
  :cljs-bindings {'add-page goldly.page.page/add-page
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
@@ -18,6 +20,8 @@
                            'postwalk-replace clojure.walk/postwalk-replace
                            'prewalk-replace clojure.walk/prewalk-replace
                            'stringify-keys clojure.walk/stringify-keys}}
+ :lazy false
+ :pinkie {:p/goldly goldly.system.ui/system}
  :snippets [{:type :pinkie
              :category :goldly
              :id :hello-world
