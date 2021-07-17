@@ -58,3 +58,8 @@
   Renderable
   (render [self]
     (span-render self "clj-symbol")))
+
+(extend-type sci.impl.vars.SciNamespace
+  Renderable
+  (render [self]
+    (span-render self "clj-namespace")))

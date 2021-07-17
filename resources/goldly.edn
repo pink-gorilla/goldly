@@ -11,6 +11,8 @@
                    [#{"webly.ws.*"} :info]
                    [#{"webly.*"} :info]
                    [#{"goldly.*"} :info]
+                   [#{"pinkgorilla.nrepl.*"} :info]
+                   [#{"ui.*"} :info]
                    [#{"user"} :warn] ; time sender
                    [#{"*"} :info]]
 

@@ -85,13 +85,15 @@
       (warnf "whitespace node str: " (or (n/string f) "xxx"))
       state)
 
+    (n/tag f)
+    (do (info "tag:" (n/tag f))
+        (-> state
+            (add-segment-md) ; add accumulated md (if any)
+            (add-segment-code kernel f)))
+
     :else
-    (case (n/tag f)
-      :list (-> state
-                (add-segment-md) ; add accumulated md (if any)
-                (add-segment-code kernel f))
-      (do (warnf "ignoring tag: %s form: %s" tag (pr-str f))
-          state))))
+    (do (warnf "ignoring form: %s" (pr-str f))
+        state)))
 
 (defn text->segments [kernel code]
   (debug "text: " code) ; newline :map :comment
