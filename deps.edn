@@ -15,7 +15,7 @@
   rewrite-clj/rewrite-clj {:mvn/version "1.0.644-alpha"}
   
   ; core 
-  org.pinkgorilla/picasso {:mvn/version "3.1.57"} ; kernel type rendering - used in cljs kernel
+  org.pinkgorilla/picasso {:mvn/version "3.1.58"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/webly {:mvn/version "0.3.49"} ; web app build tool
   org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.54"}
