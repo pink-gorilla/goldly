@@ -20,7 +20,7 @@
 ## demo apps
 
 - [demo goldly](https://github.com/pink-gorilla/demo-goldly)
-  NEWBEES: START WITH DEMO-GOLDLY!
+  **NEWBEES: START WITH DEMO-GOLDLY!**
 - [trateg](https://github.com/clojure-quant/trateg) financial market backtesting
 - [EDGAR](https://github.com/clojure-quant/edgar) visualise mutual fund holdings
 

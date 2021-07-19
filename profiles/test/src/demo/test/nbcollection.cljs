@@ -2,7 +2,7 @@
 
 (def nbdata (r/atom nil))
 
-(get-edn "/demo-notebook.edn" nbdata [])
+(get-edn "/r/notebook/demo-notebook.edn" nbdata [])
 
 (defn add-demo-notebook-collection [nb]
   (let [nb-list-embed {:name "cljs"
@@ -12,7 +12,6 @@
                                    {:name "t"
                                     :type :template}]}]
     (rf/dispatch [:notebook-list/set nb-list-embed]
-    (rf/dispatch [:doc/load nb]))))
-
+                 (rf/dispatch [:doc/load nb]))))
 
 @nbdata

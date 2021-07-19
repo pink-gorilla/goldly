@@ -14,7 +14,6 @@
 ; seven apples plus seven apples is:
 (+ 7 7)
 
-
 (ns bongo)
 
 (defn add2 [n] (+ 2 n))
