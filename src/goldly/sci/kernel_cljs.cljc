@@ -6,10 +6,8 @@
    [picasso.id :refer [guuid]]
    [picasso.kernel.protocol :refer [kernel-eval]]
    [picasso.converter :refer [->picasso]]
-   [picasso.protocols :refer [Renderable render]]
-   [picasso.render.span :refer [span-render]]
    [sci.core :as sci]
-   [sci.impl.vars]
+   [goldly.sci.sci-types]
    [goldly-bindings-generated :refer [bindings-generated ns-generated]]
    ;[goldly.sci.bindings-static :refer [ns-static]]
    ;[goldly.sci.lazy :refer [load-fn]]
@@ -53,13 +51,3 @@
                       :error e})))
         (close! c))
     c))
-
-(extend-type sci.impl.vars/SciVar
-  Renderable
-  (render [self]
-    (span-render self "clj-symbol")))
-
-(extend-type sci.impl.vars.SciNamespace
-  Renderable
-  (render [self]
-    (span-render self "clj-namespace")))

@@ -5,26 +5,17 @@
    [re-frame.core :as rf]
    [ui.notebook.loader.list] ; side effects
    ))
+;{:name "collection-demo1"
+; :notebooks [{:name "bananas.clj"
+;              :type :clj} 
+;             {:name "apple.clj"
+;              :type :clj}]}
 
-(defn nb [name]
-  {:name name
-   :type :clj})
-
-(defn index->nb-list [names]
-  {:name "clj"
-   :notebooks (map nb names)})
-
-;{:name "clj"
-; :notebooks ({:name [:notebooks ["bananas.clj" "apple.clj"]]
-;              :type :clj})}
-
-(defn on-index-change [{:keys [notebooks]
-                        :or {notebooks []}}]
-  (infof "clj nbs changed count: %s" (count notebooks))
-  (when notebooks
-    (let [nbs-clj (index->nb-list notebooks)]
-      (rf/dispatch [:notebook-list/set nbs-clj])
-      (debugf "clj list: %s" nbs-clj))))
+(defn on-index-change [nb-collections]
+  (infof "clj nbs changed count: %s" (count nb-collections))
+  (error "nb collections: " nb-collections)
+  (when nb-collections
+    (doall (map #(rf/dispatch [:notebook-list/set %]) nb-collections))))
 
 (defn start-watch-notebooks []
   (let [names (rf/subscribe [:index/show :notebook])]

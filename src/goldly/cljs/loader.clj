@@ -3,8 +3,8 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [webly.config :refer [get-in-config]]
    [goldly.service.core :as s]
-   [goldly.file.explore :refer [explore-dir load-file!]]
-   [goldly.file.watch :refer [watch]]))
+   [notebook.explore.explore :refer [explore-dir load-file!]]
+   [notebook.explore.watch :refer [watch]]))
 
 (defn autoload-dir []
   (get-in-config [:goldly :autoload-dir]))
@@ -16,6 +16,8 @@
     (watch dir :goldly/cljs-sci-reload)))
 
 (defn cljs-load [filename]
+  (assert (string? filename))
+  (warn "loading cljs file: " filename)
   (let [dir (autoload-dir)]
     (load-file! dir filename)))
 

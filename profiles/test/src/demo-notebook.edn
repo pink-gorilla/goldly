@@ -1,6 +1,4 @@
-(ns goldly.data.notebook)
-(def notebook
-  {:meta {:id :7c9ab23f-c32f-4879-b74c-de7835ca8ba4
+{:meta {:id :7c9ab23f-c32f-4879-b74c-de7835ca8ba4
           :title "sci cljs demo"
           :tags #{:demo :sci :cljs}}
    :segments
@@ -110,4 +108,4 @@
                        "(pinkie/tags) \n")}}
 
     ;
-    ]})
+    ]}

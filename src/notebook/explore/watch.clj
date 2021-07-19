@@ -1,10 +1,10 @@
-(ns goldly.file.watch
+(ns notebook.explore.watch
   (:require
    [clojure.java.io :as io]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [hawk.core :as hawk]
    [webly.ws.core :refer [send! send-all! send-response]]
-   [goldly.file.explore :refer [load-file!]]))
+   [notebook.explore.explore :refer [load-file!]]))
 
 (defn to-canonical [path]
   (->>

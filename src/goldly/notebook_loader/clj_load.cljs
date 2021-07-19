@@ -16,5 +16,5 @@
                  10000])
    nil))
 
-(defmethod load-notebook :clj [{:keys [name type data]}]
-  (rf/dispatch [:component/load :notebook name]))
+(defmethod load-notebook :clj [{:keys [id type]}]
+  (rf/dispatch [:component/load :notebook id]))

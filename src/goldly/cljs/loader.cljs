@@ -28,14 +28,19 @@
 (defn load-cljs []
   (info "load-cljs")
   (go
-    (let [files-result (<! (run {:fun :cljs/explore}))
-          files (:result files-result)]
-      (info "cljs files: " (pr-str files))
-      (doall
-       (for [f files]
-         (load-cljs-file f)))
-;      
-      )))
+    (let [{:keys [result error]} (<! (run {:fun :cljs/explore}))]
+      (if error
+        (error "error getting cljs files: " (pr-str error))
+        (if (empty? result)
+          (warn "no autoload cljs files available!")
+          (do
+            (info "cljs files: " (pr-str result))
+            (loop [f (first result)
+                   files (rest result)]
+              (<! (load-cljs-file f))
+              (when (seq files)
+                (recur (first files)
+                       (rest files))))))))))
 
 ; this does not trigger. I believe due to a bug in sente
 #_(defmethod -event-msg-handler :goldly/cljs-sci-reload
