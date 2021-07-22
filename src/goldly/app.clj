@@ -46,13 +46,17 @@
     ;  (warn "no goldly extensions defined!"))
     (generate-bindings)))
 
-(defn add-user-routes [routes]
+(defn add-routes [routes]
   (let [m (fn [r]
-            (debug "merging.." r)
-            (merge r routes))]
-    (debug "adding goldly user-app routes: " routes)
+            (let [{:keys [app api]
+                   :or {app {}
+                        api {}}} (or routes {})]
+              (debug "merging.." r)
+              {:app (merge (:app r) app)
+               :api (merge (:api r) api)}))]
+    (debug "adding goldly user routes: " routes)
     ;(write-status "goldly-routes1" @config-atom)
-    (reset! config-atom (transform [:webly :routes :app] m @config-atom))
+    (reset! config-atom (transform [:webly :routes] m @config-atom))
     ;(write-status "goldly-routes2" @config-atom)
     ))
 
@@ -64,7 +68,7 @@
     ; add goldly user-app routes
     (if (empty? routes)
       (warn "no goldly user routes defined - you will not see custom pages.")
-      (add-user-routes routes))
+      (add-routes routes))
 
     ; systems are stored in clj files
     (if systems

@@ -17,14 +17,14 @@
 
   :goldly
   {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}
-                org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.5"}
-                org.pinkgorilla/ui-aggrid {:mvn/version "0.0.9"}
-                org.pinkgorilla/ui-highcharts {:mvn/version "0.0.9"}
-                org.pinkgorilla/ui-leaflet {:mvn/version "0.0.9"}
+                org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.6"}
+                org.pinkgorilla/ui-aggrid {:mvn/version "0.0.11"}
+                org.pinkgorilla/ui-highcharts {:mvn/version "0.0.13"}
+                org.pinkgorilla/ui-leaflet {:mvn/version "0.0.10"}
                 org.pinkgorilla/ui-math {:mvn/version "0.0.8"}}
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch2"
-               :config "test.edn"}}
+               :config "goldly-test.edn"}}
 
 ;           
   }}

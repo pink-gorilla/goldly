@@ -6,7 +6,8 @@
    [webly.profile :refer [compile? server?]]
    [goldly.app :refer [goldly-init! goldly-compile! goldly-run!]]
    ; side-effects
-   [goldly-server.routes])
+   [goldly-server.routes]
+   [goldly-server.keybindings])
   (:gen-class))
 
 (defn goldly-server-run!
