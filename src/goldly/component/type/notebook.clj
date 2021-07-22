@@ -23,14 +23,14 @@
                                         :id (str dir "/" %)))
                            (into [])
                            (assoc {:name coll-name} :notebooks))]
-    (warn "nb collection: " nb-collection)
+    (debugf "dir %s: nb collection: %s " dir nb-collection)
     nb-collection))
 
 (defn notebook-explore []
   (let [dir (get-in-config [:goldly :notebook-dir])]
     (cond
       (string? dir)
-      (explore-dir-map dir)
+      [(explore-dir-map dir)]
 
       (or (seq? dir) (vector? dir))
       (->> (map explore-dir-map dir)

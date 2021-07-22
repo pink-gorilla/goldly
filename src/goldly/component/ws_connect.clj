@@ -1,6 +1,6 @@
 (ns goldly.component.ws-connect
   (:require
-   [taoensso.timbre :as log :refer [tracef debug debugf info infof warnf error errorf]]
+   [taoensso.timbre :as log :refer [tracef debug debugf info infof warn error errorf]]
    [webly.ws.core :refer [send! send-response watch-conn]]
    [goldly.component.load :refer [get-index-response]]))
 
@@ -12,7 +12,8 @@
     (infof "ws connected  uids: %s" uids)
     (doseq [uid uids]
       (infof "sending systems/notebooks to uid: %s" uid)
-      (debug "index response: " system)
+      (debug "system response: " system)
+      (warn "notebook response: " notebook)
       (send! uid system)
       (send! uid notebook))))
 

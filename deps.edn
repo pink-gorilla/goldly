@@ -13,13 +13,13 @@
   resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
   hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
   rewrite-clj/rewrite-clj {:mvn/version "1.0.644-alpha"}
-  
+
   ; core 
   org.pinkgorilla/picasso {:mvn/version "3.1.62"} ; kernel type rendering - used in cljs kernel
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/webly {:mvn/version "0.3.50"} ; web app build tool
   org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.54"}
-  
+
   ; core-bundel
   org.pinkgorilla/ui-site {:mvn/version "0.0.11"}
   org.pinkgorilla/ui-repl {:mvn/version "0.0.21"} ; tick needs to be made lazy.
@@ -40,7 +40,7 @@
   ; https://github.com/weavejester/cljfmt
   :cljfmt
   {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
-   :main-opts ["-m" "cljfmt.main" "check" 
+   :main-opts ["-m" "cljfmt.main" "check"
                "src" "profiles/test/src"
                "--indents" "cljfmt.edn"]}
   :cljfmt-fix
@@ -93,7 +93,9 @@
   {:extra-paths []
    :exec-fn goldly-server.app/goldly-server-run!
    :exec-args {:profile "watch"
-               :config nil}}
+               :config {:goldly {:notebook-dir "profiles/test/src/demo/test"
+                                 #_["profiles/test/src/demo/studies"
+                                                "profiles/test/src/demo/test"]}}}}
 
   ; goldly core (no modules)
   ; watch:      15.0MB
