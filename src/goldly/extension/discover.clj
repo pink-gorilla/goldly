@@ -9,8 +9,8 @@
    [goldly.extension.snippets :refer [add-extension-snippets]]
    [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
    [goldly.extension.clj :refer [add-extension-clj]]
-   [goldly.extension.pinkie :refer [pinkie-atom]]
-   [goldly.extension.core :refer [save-extensions save-pinkie]]))
+   [goldly.extension.pinkie :refer [pinkie-atom save-pinkie]]
+   [goldly.extension.core :refer [save-extensions]]))
 
 #_(defn resource-dir-paths [path]
     (let [parents (map str (rs/resources path))]
@@ -44,7 +44,6 @@
              (add-extension ext)))
     (save-extensions extensions)
     (save-pinkie)
-    (debug "pinkie config: " @pinkie-atom)
     (swap! config-atom assoc :pinkie @pinkie-atom)))
 
 (comment

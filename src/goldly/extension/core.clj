@@ -2,8 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error errorf]]
    [webly.writer :refer [write-status]]
-   [webly.config :refer [config-atom]]
-   [goldly.extension.pinkie :refer [pinkie-atom]]))
+   [webly.config :refer [config-atom]]))
 
 ;; config
 (defn lazy-enabled []
@@ -23,10 +22,6 @@
        lazy))
 
 ;; pinkie
-(defn save-pinkie []
-  (write-status "pinkie" @pinkie-atom))
-
-; (defn lazy? [ext-name])
 
 ;; extensions
 

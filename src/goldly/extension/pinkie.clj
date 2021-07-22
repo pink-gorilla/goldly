@@ -1,6 +1,7 @@
 (ns goldly.extension.pinkie
   (:require
-   [taoensso.timbre :as timbre :refer [debug info warn error]]))
+   [taoensso.timbre :as timbre :refer [debug info warn error]]
+   [webly.writer :refer [write-status]]))
 
 (defonce pinkie-atom (atom {}))
 
@@ -9,6 +10,10 @@
 
 (defmacro registry []
   @pinkie-atom)
+
+(defn save-pinkie []
+  (write-status "pinkie" @pinkie-atom))
+
 (defn add-extension-pinkie [{:keys [name
                                     pinkie]
                              :or {pinkie {}}
