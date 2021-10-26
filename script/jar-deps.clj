@@ -68,6 +68,11 @@
 (defn release-print [a]
   (println a ": " (release a)))
 
+(defn release-map [a]
+  {:name a
+   :version (release a)}
+  )
+
 (defn release-print-res 
   ([a]
   (let [v (release a)
@@ -82,17 +87,28 @@
   )
 
 
-(def alist ["webly" 
-            "goldly" "goldly-bundel"
+(def alist [;webly
+            "webly"
+            ; clj kernel
+            "picasso"
+            "pinkie"
+            "nrepl-middleware"
+            ; goldly core
+            "goldly"
+            "ui-site" "ui-repl"
+            "ui-code" "ui-highlightjs" "ui-markdown"
+            ; goldly bundel
+            "goldly-bundel"
+            "ui-binaryclock" "ui-cytoscape" "ui-leaflet"
+            "ui-highcharts" "ui-aggrid"
+            "ui-input" "ui-gorilla" "ui-vega"
+            ; unused
+            "ui-math"
+            ; "ui-quil"
+
+            ; notebook
             "notebook" "notebook-bundel"
-            "picasso" "pinkie"
-            "nrepl-middleware" "gorilla-explore" "notebook-encoding"
-            "ui-code" "ui-repl" "ui-markdown" "ui-highlightjs"
-            "ui-site" "ui-input"
-            "ui-vega" "ui-highcharts" "ui-aggrid" "ui-math"
-            "ui-cytoscape" "ui-leaflet"
-            "ui-gorilla"
-            "ui-binaryclock"
+            "gorilla-explore" "notebook-encoding"
             ])
 
 
@@ -109,6 +125,7 @@
 
 (println "\nartefact versions:")
 (doall (map release-print alist))
+(clojure.pprint/print-table (map release-map alist))
 
 (println "\nartefact js resources:")
 (doall (map (partial release-print-res (ext ".js")) alist))
@@ -121,3 +138,6 @@
 
 (println "\nartefact cljs-bindings resources [should be empty!]:")
 (doall (map (partial release-print-res (ext "goldly_bindings_generated.cljs")) alist))
+
+
+(clojure.pprint/print-table [{:a "a"} {:a "b"}])

@@ -11,7 +11,10 @@
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
                  'set-system-state goldly.broadcast.core/set-system-state}
- :cljs-ns-bindings {'link {'dispatch goldly-server.helper.ui/link-dispatch
+ :cljs-ns-bindings {'goldly {'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
+                             ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
+                             'compile-time compile-time}
+                    'link {'dispatch goldly-server.helper.ui/link-dispatch
                            'href goldly-server.helper.ui/link-href}
                     'walk {'postwalk clojure.walk/postwalk
                            'prewalk clojure.walk/prewalk

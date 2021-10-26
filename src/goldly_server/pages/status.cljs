@@ -11,7 +11,8 @@
    [goldly.service.core :refer [run-a]]
    [goldly.extension.lazy :refer [add-load-status]]
    [goldly-server.helper.site :refer [header splash]]
-   [goldly-server.helper.ui :refer [link-dispatch link-href]]))
+   [goldly-server.helper.ui :refer [link-dispatch link-href]]
+   [goldly-bindings-generated]))
 
 (defn b [b]
   [:span.m-1 (key b)])
@@ -85,9 +86,11 @@
          ;[:p (pr-str x)]
          [:h1.text-2xl.text-blue-700 "goldly"]
          (when v
-           [:div (str "goldly " (:version v) " generated: " (:generated-at v))])
+           [:div (str "goldly version:" (:version v)
+                      " generated: " (:generated-at v)
+                      "binding create time: " goldly-bindings-generated/compile-time)])
 
-         ;[:p (pr-str x)]
+;[:p (pr-str x)]
          [extensions x]
          [:h2.text-2xl.text-blue-700.bg-blue-300.mt-10 "bindings"]
          [bl "user" (:bindings s)]
