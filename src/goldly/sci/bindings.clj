@@ -78,12 +78,12 @@
 (comment
 
   ;config management  
-  (add-cljs-namespace [clojure.walk :as walk])
-  (add-cljs-namespace [goldly.sci.bindings-goldly])
-  (add-cljs-namespace [goldly.code.core])
-
-  (add-cljs-bindings {'sin sin
-                      'println println})
+  ; PRODUCE LINT ERRORS
+  ;(add-cljs-namespace [clojure.walk :as walk])
+  ;(add-cljs-namespace [goldly.sci.bindings-goldly])
+  ;(add-cljs-namespace [goldly.code.core])
+  ;(add-cljs-bindings {'sin sin
+  ;                    'println println})
 
   ; generate forms
 

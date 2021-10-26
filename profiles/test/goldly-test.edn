@@ -3,7 +3,8 @@
  {:lazy true
   :lazy-exclude #{"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
                   "ui-math"}
-  :autoload-dir "src/demo/cljs"
+  :autoload-dir ["src/demo/cljs-libs"
+                 "src/demo/cljs"]
   :notebook-dir ["src/demo/test"
                  "src/demo/studies"]
   ; taggedmatch cannot be read by normal clojure edn reader,

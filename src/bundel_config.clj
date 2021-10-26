@@ -1,6 +1,6 @@
 (ns bundel-config
   (:require
-   [taoensso.timbre :refer [trace debug info error]]
+   [taoensso.timbre :refer [info]]
 
    [clojure.edn :as edn]
    [com.rpl.specter :as s]

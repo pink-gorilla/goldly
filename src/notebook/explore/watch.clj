@@ -17,7 +17,7 @@
   (infof "broadcasting root: %s file: %s" root file)
   (let [;p (.getPath file)
         name (.getName file)
-        result (load-file! root name)]
+        result (load-file! (str root "/" name))]
     (send-all! [event-name result])))
 
 (defn process-file-change [event-name root
@@ -35,11 +35,12 @@
   ctx)
 
 (defn watch [path event-name]
+  (assert (string? path))
   (let [dir (io/file path)
         root (to-canonical path)
         watch-paths [path]]
     (when (.exists dir)
-      (info "watching: " watch-paths)
+      (info "watching: " dir)
       (hawk/watch! {:watcher :polling}
                    [{:paths watch-paths
                      :handler (partial process-file-change event-name root)}]))))

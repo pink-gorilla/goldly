@@ -1,0 +1,71 @@
+{:linters
+ {; see here for all options 
+  ;https://github.com/clj-kondo/clj-kondo/blob/master/src/clj_kondo/impl/config.clj
+
+  ;:lint-as 
+  ;{org.httpkit.server/with-channel clj-kondo.lint-as/def-catch-all}
+
+
+; namespaces in this list are those we get for side-effects.
+  ; it is also possible to do regex search here:
+  ; https://github.com/borkdude/clj-kondo/blob/master/doc/config.md
+  :unused-namespace {:level :off
+                     :exclude [clojure.core.async
+                               cljs.core.async
+                               cljs.core.async.macros]}
+  :unused-binding {:level :off}
+  
+  :unused-referred-var {:level :off
+                        :exclude {taoensso.timbre [trace tracef ; dont be strict in referring to logging functions 
+                                                   debug debugf
+                                                   info infof
+                                                   warn warnf
+                                                   error errorf]
+                                  clojure.core.async [<! <!! >! >!! put! chan go go-loop]
+                                  cljs.core.async  [<! <!! >! >!! put! chan go go-loop]
+                                  cljs.core.async.macros [go go-loop]
+                                  re-frame.core [reg-event-db dispatch]}}
+
+  
+
+  :unused-private-var {:level :info}
+
+  :unresolved-symbol {:level :info
+   ;:creates-vars {org.httpkit.server/with-channel [con]}
+   ;:exclude [; needed for: pinkgorilla/routes.cljs app-routes
+             ;(secretary.core/defroute [query-params projects-path renderer-path])
+    ;         (org.httpkit.server/with-channel [con])
+     ;        (pinkgorilla.nrepl.ws.httpkit-ws-relay [con])
+      ;       ]
+                      }
+
+  ;:redundant-let
+  ;{:level :info
+  ; :exclude [pinkgorilla.events/kernel [kernel]]}
+
+  :redundant-do {:level :info ; because the line below does not work, at least make them not ci breaking
+                 :exclude [pinkgorilla.nrepl.ws.relay/process-message-mem] ; TODO: this does not work 
+                 }
+  ; linters end
+  }
+
+ :output {:format :text ;; or :edn
+          ;:format :edn
+          :summary true ;; outputs summary at end, only applicable to output :text
+          ;; outputs analyzed var definitions and usages of them
+          :analysis false
+          ;; set to truthy to print progress while linting, only applicable to output :text
+          :progress false
+          ;; output can be filtered and removed by regex on filename. empty options leave the output untouched.
+          :include-files [] #_["^src" "^test"]
+          :exclude-files [".*cljs"
+                          "src/systems.*" ; system macro.
+                             ;"^cljs/core"
+                             ; "profiles/test/src/demo/cljs.*"
+                          ]
+             ;; the output pattern can be altered using a template. use {{LEVEL}} to print the level in capitals.
+             ;; the default template looks like this:
+             ;; :pattern "{{filename}}:{{row}}:{{col}}: {{level}}: {{message}}"
+          :canonical-paths false ;; set to true to see absolute file paths and jar files
+          :level :warning
+          }}

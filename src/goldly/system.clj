@@ -36,11 +36,12 @@
 
 (comment
   (def no "so-bad")
-  (def-ui y [:p 67])
-  (goldly? y)
   (goldly? no)
-  (escape-html [+ no 8 8 y (println "hello" 42)])
-  (macroexpand '(escape-html [+ 8 8 y]))
+
+  ;(def-ui y [:p 67]) ; brings linter error
+  ;(goldly? y)
+  ;(escape-html [+ no 8 8 y (println "hello" 42)])
+  ;(macroexpand '(escape-html [+ 8 8 y]))
 
   (escape-html
    {:name "click counter"

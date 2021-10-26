@@ -5,6 +5,7 @@
 
 (defn dir? [filename]
   (-> (io/file filename) .isDirectory))
+
 (defn explore-dir [dir purpose]
   (let [dir (io/file dir)
         files (if (.exists dir)
@@ -18,7 +19,7 @@
     ;(warn "type file:" (type (first files)) "dir?: " (dir? (first files)))
     files))
 
-(defn load-file! [dir filename]
-  (let [code (slurp (str dir "/" filename))]
+(defn load-file! [filename]
+  (let [code (slurp filename)]
     {:filename filename
      :code code}))
