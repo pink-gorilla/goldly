@@ -28,7 +28,7 @@
     (tree-seq (comp seq resource-dir) resource-dir-paths path))
 
 (defn add-extension [{:keys [name] :as extension}]
-  (info "adding extension: " name)
+  (debug "adding extension: " name)
   (add-extension-theme extension)
   (add-extension-cljs extension)
   (add-extension-snippets extension)
