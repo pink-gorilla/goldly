@@ -16,8 +16,8 @@
 ; clojurescript
 
 (ns demo-tag-render
-  (:require 
-   [pinkgorilla.ui.pinkie :refer [register-tag]])) 
+  (:require
+   [pinkgorilla.ui.pinkie :refer [register-tag]]))
 ;; @@
 ;; =>
 ;;; ["^ ","~:type","~:html","~:content",["~:span",["^ ","~:class","clj-nil"],"nil"],"~:value","nil"]

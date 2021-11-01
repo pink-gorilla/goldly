@@ -11,7 +11,7 @@
 
 ;; @@ [cljs]
 (ns mariacloud.shapes.dem
-  (:require 
+  (:require
    [awb99.shapes.core :as s :refer [color-names square layer colorize]]))
 
 ;; @@
@@ -151,12 +151,12 @@ s/color-names
 (let [t (s/triangle 100)] ;; <-- this vector holds our name/value pair
   ;; now we write an expression using that name:
   (s/layer t
-         (s/position 50 0 t)
-         (s/position 88 0 t)
-         (s/position 113 0 t)
-         (s/position 185 0 t)
-         (s/position 195 0 t)
-         (s/position 238 0 t)))
+           (s/position 50 0 t)
+           (s/position 88 0 t)
+           (s/position 113 0 t)
+           (s/position 185 0 t)
+           (s/position 195 0 t)
+           (s/position 238 0 t)))
 ;; @@
 ;; =>
 ;;; {}
@@ -193,7 +193,7 @@ s/color-names
 ;; <=
 
 ;; @@ [cljs]
-(map (fn [c] (s/colorize c (s/rectangle 300 20))) 
+(map (fn [c] (s/colorize c (s/rectangle 300 20)))
      rainbow)
 ;; @@
 ;; =>
@@ -201,10 +201,10 @@ s/color-names
 ;; <=
 
 ;; @@ [cljs]
-(defn vertical-flag [colors] 
+(defn vertical-flag [colors]
   (apply s/above
          (map (fn [c]
-                (s/colorize c (s/rectangle 300 (/ 200 (count colors))))) 
+                (s/colorize c (s/rectangle 300 (/ 200 (count colors)))))
               colors)))
 ;; @@
 ;; =>
@@ -238,7 +238,7 @@ s/color-names
 ;; <=
 
 ;; @@ [cljs]
- [(s/circle 25) nil]
+[(s/circle 25) nil]
 ;; @@
 ;; =>
 ;;; ["^ ","~:type","~:list-like","~:open",["~:span",["^ ","~:class","clj-vector"],"["],"~:close",["^3",["^ ","^4","clj-vector"],"]"],"~:separator",["^3"," "],"~:items",["~#list",[["^ ","^0","~:html","~:content",["~:svg",["^ ","~:x",0,"~:y",0,"~:width",50,"~:height",50],["~:circle",["^ ","~:stroke","none","~:stroke-width",0,"~:fill","black","~:cx",25,"~:cy",25,"~:r",25],null]]],["^ ","^0","^9","^:",["^3",["^ ","^4","clj-nil"],"nil"],"~:value","nil"]]],"^D","[#awb99.shapes.core.Shape{:kind :circle, :x nil, :y nil, :height nil, :width nil, :stroke \"none\", :stroke-width 0, :fill \"black\", :rotate nil, :opacity nil, :bbox nil, :children nil, :cx 25, :cy 25, :r 25, :rx nil, :ry nil, :points nil, :font-size nil, :font-weight nil, :font-family nil, :text nil, :href nil} nil]"]
@@ -263,7 +263,7 @@ s/color-names
 ;; <=
 
 ;; @@ [cljs]
-(remove nil? [ (s/square 50) nil])
+(remove nil? [(s/square 50) nil])
 ;; @@
 ;; =>
 ;;; ["^ ","~:type","~:list-like","~:open",["~:span",["^ ","~:class","clj-lazy-seq"],"("],"~:close",["^3",["^ ","^4","clj-lazy-seq"],")"],"~:separator",["^3"," "],"~:items",["~#list",[["^ ","^0","~:html","~:content",["~:svg",["^ ","~:x",0,"~:y",0,"~:width",50,"~:height",50],["~:rect",["^ ","~:x",0,"~:y",0,"^=",50,"^<",50,"~:stroke","none","~:stroke-width",0,"~:fill","black"],null]]]]],"~:value","(#awb99.shapes.core.Shape{:kind :rect, :x 0, :y 0, :height 50, :width 50, :stroke \"none\", :stroke-width 0, :fill \"black\", :rotate nil, :opacity nil, :bbox nil, :children nil, :cx nil, :cy nil, :r nil, :rx nil, :ry nil, :points nil, :font-size nil, :font-weight nil, :font-family nil, :text nil, :href nil})"]

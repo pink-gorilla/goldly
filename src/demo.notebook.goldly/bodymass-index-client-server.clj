@@ -64,7 +64,7 @@ x
 
 ;; @@ [cljs]
 ; evaluate on server, but call from client clojurescript. y is an atom
-(def y (reagent.core/atom nil)) 
+(def y (reagent.core/atom nil))
 (pinkgorilla.kernel.nrepl.clj y "user/calc-bmi-server" {:height 200 :weight 95.3})
 ;; @@
 ;; =>
@@ -113,12 +113,10 @@ y
 ;; @@ [cljs]
 ;(pinkgorilla.notebook.repl/r! 
 ; (fn []
- ^:r [:div 
-  [:p(str  "height: " (:height @bmi-data))]
-  [cljs.user/slider :height (:height @bmi-data) 10 220] ; babies are perhaps only 10cm, adults can go up to 220.
-  ]
-
-
+^:r [:div
+     [:p (str  "height: " (:height @bmi-data))]
+     [cljs.user/slider :height (:height @bmi-data) 10 220] ; babies are perhaps only 10cm, adults can go up to 220.
+     ]
 ;; @@
 ;; =>
 ;;; {}
@@ -147,10 +145,10 @@ y
 (defn bmi-component []
   (let [{:keys [weight height bmi]} (calc-bmi-server)
         [color diagnose] (cond
-                          (< bmi 18.5) ["orange" "underweight"]
-                          (< bmi 25) ["inherit" "normal"]
-                          (< bmi 30) ["orange" "overweight"]
-                          :else ["red" "obese"])]
+                           (< bmi 18.5) ["orange" "underweight"]
+                           (< bmi 25) ["inherit" "normal"]
+                           (< bmi 30) ["orange" "overweight"]
+                           :else ["red" "obese"])]
     [:div
      [:h3 "BMI calculator"]
      [:div
@@ -183,7 +181,7 @@ y
 ;; <=
 
 ;; @@ [cljs]
- (pinkgorilla.kernel.nrepl.clj bmi-data "user/calc-bmi-server" {:height 200 :weight 50})
+(pinkgorilla.kernel.nrepl.clj bmi-data "user/calc-bmi-server" {:height 200 :weight 50})
 ;; @@
 ;; =>
 ;;; ["^ ","~:type","~:html","~:content",["~:span",["^ ","~:class","clj-unknown"],"#<Atom: {:height 186, :weight 80, :bmi nil}>"],"~:value","#<Atom: {:height 186, :weight 80, :bmi nil}>"]

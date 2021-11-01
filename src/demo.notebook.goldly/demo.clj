@@ -96,7 +96,7 @@ x
 ;; @@ [cljs]
 ; infinite seq
 (def fib-seq-seq
-  ((fn fib [a b] 
+  ((fn fib [a b]
      (lazy-seq (cons a (fib b (+ a b)))))
    0 1))
 (take 1000 fib-seq-seq)
@@ -106,7 +106,7 @@ x
 ;; <=
 
 ;; @@ [cljs]
-(defn foo 
+(defn foo
   ([] "foo")
   ([x] x)
   ([x y] y))
@@ -139,7 +139,7 @@ x
    (for [form forms]
      `(str '~form " => " ~form "\n"))))
 
-(my.best/disp 
+(my.best/disp
  (map inc [1 2 3])
  (+ 4 5 6))
 ;; @@

@@ -24,60 +24,57 @@
 ;; **
 
 ;; @@ [cljs]
-(def svg-data 
-[:svg
- {:viewbox "-10 -10 116 111"}
- [:path
-  {:d "M0,0  h7.75     a45.5,45.5 0 1 1 0,91     h-7.75     v-20     h7.75     a25.5,25.5 0 1 0 0,-51     h-7.75     z     m36.2510,0     h32     a27.75,27.75 0 0 1 21.331,45.5     a27.75,27.75 0 0 1 -21.331,45.5     h-32     a53.6895,53.6895 0 0 0 18.7464,-20     h13.2526     a7.75,7.75 0 1 0 0,-15.5     h-7.75     a53.6895,53.6895 0 0 0 0,-20     h7.75     a7.75,7.75 0 1 0 0,-15.5     h-13.2526     a53.6895,53.6895 0 0 0 -18.7464,-20     z   "
-   :fill "#bbb"}]
- [:g
-  {:stroke-opacity "0.3"
-   :stroke-width "0.15"
-   :stroke "currentColor"
-   :fill "none"}
-  [:line {:y2 "0", :y1 "0", :x2 "200", :x1 "-100"}]
-  [:line {:y2 "20", :y1 "20", :x2 "200", :x1 "-100"}]
-  [:line {:y2 "35.5", :y1 "35.5", :x2 "200", :x1 "-100"}]
-  [:line {:y2 "45.5", :y1 "45.5", :x2 "200", :x1 "-100"}]
-  [:line {:y2 "55.5", :y1 "55.5", :x2 "200", :x1 "-100"}]
-  [:line {:y2 "71", :y1 "71", :x2 "200", :x1 "-100"}]
-  [:line {:y2 "91", :y1 "91", :x2 "200", :x1 "-100"}]
-  [:line {:y2 "200", :y1 "-100", :x2 "0", :x1 "0"}]
-  [:line {:y2 "200", :y1 "-100", :x2 "7.75", :x1 "7.75"}]
-  [:line {:y2 "200", :y1 "-100", :x2 "60.5", :x1 "60.5"}]
+(def svg-data
+  [:svg
+   {:viewbox "-10 -10 116 111"}
+   [:path
+    {:d "M0,0  h7.75     a45.5,45.5 0 1 1 0,91     h-7.75     v-20     h7.75     a25.5,25.5 0 1 0 0,-51     h-7.75     z     m36.2510,0     h32     a27.75,27.75 0 0 1 21.331,45.5     a27.75,27.75 0 0 1 -21.331,45.5     h-32     a53.6895,53.6895 0 0 0 18.7464,-20     h13.2526     a7.75,7.75 0 1 0 0,-15.5     h-7.75     a53.6895,53.6895 0 0 0 0,-20     h7.75     a7.75,7.75 0 1 0 0,-15.5     h-13.2526     a53.6895,53.6895 0 0 0 -18.7464,-20     z   "
+     :fill "#bbb"}]
+   [:g
+    {:stroke-opacity "0.3"
+     :stroke-width "0.15"
+     :stroke "currentColor"
+     :fill "none"}
+    [:line {:y2 "0", :y1 "0", :x2 "200", :x1 "-100"}]
+    [:line {:y2 "20", :y1 "20", :x2 "200", :x1 "-100"}]
+    [:line {:y2 "35.5", :y1 "35.5", :x2 "200", :x1 "-100"}]
+    [:line {:y2 "45.5", :y1 "45.5", :x2 "200", :x1 "-100"}]
+    [:line {:y2 "55.5", :y1 "55.5", :x2 "200", :x1 "-100"}]
+    [:line {:y2 "71", :y1 "71", :x2 "200", :x1 "-100"}]
+    [:line {:y2 "91", :y1 "91", :x2 "200", :x1 "-100"}]
+    [:line {:y2 "200", :y1 "-100", :x2 "0", :x1 "0"}]
+    [:line {:y2 "200", :y1 "-100", :x2 "7.75", :x1 "7.75"}]
+    [:line {:y2 "200", :y1 "-100", :x2 "60.5", :x1 "60.5"}]
 
   ; XXX 
-  [:line {:y2 "200", :y1 "-100", :x2 "68.25", :x1 "68.25"}]
-  [:line {:y2 "200", :y1 "-100", :x2 "96", :x1 "96"}]]
- [:g
-  {:fill "blue"}
-  [:circle {:r ".5", :cy "45.5", :cx "7.75"}]
-  [:circle {:r ".5", :cy "27.75", :cx "68.25"}]
-  [:circle {:r ".5", :cy "63.25", :cx "68.25"}]]
- [:g
-  {:fill "red"}
+    [:line {:y2 "200", :y1 "-100", :x2 "68.25", :x1 "68.25"}]
+    [:line {:y2 "200", :y1 "-100", :x2 "96", :x1 "96"}]]
+   [:g
+    {:fill "blue"}
+    [:circle {:r ".5", :cy "45.5", :cx "7.75"}]
+    [:circle {:r ".5", :cy "27.75", :cx "68.25"}]
+    [:circle {:r ".5", :cy "63.25", :cx "68.25"}]]
+   [:g
+    {:fill "red"}
   ;; Intersecting horizontal lines with the r=53.6895 circle.
-  [:circle {:r ".5", :cy "0", :cx "36.2510"}]
-  [:circle {:r ".5", :cy "20", :cx "54.9974"}]
-  [:circle {:r ".5", :cy "35.5", :cx "60.5"}]
-  [:circle {:r ".5", :cy "55.5", :cx "60.5"}]
-  [:circle {:r ".5", :cy "71", :cx "54.9974"}]
-  [:circle {:r ".5", :cy "91", :cx "36.2510"}]
+    [:circle {:r ".5", :cy "0", :cx "36.2510"}]
+    [:circle {:r ".5", :cy "20", :cx "54.9974"}]
+    [:circle {:r ".5", :cy "35.5", :cx "60.5"}]
+    [:circle {:r ".5", :cy "55.5", :cx "60.5"}]
+    [:circle {:r ".5", :cy "71", :cx "54.9974"}]
+    [:circle {:r ".5", :cy "91", :cx "36.2510"}]
   ;; Intersecting the two r=27.75 circles. 
-  [:circle {:r ".5", :cy "45.5", :cx "89.5807"}]]
- [:g
-  {:stroke-width "0.15", :stroke "currentColor", :fill "none"}
-  [:circle {:r "25.5", :cy "45.5", :cx "7.75"}]
-  [:circle {:r "45.5", :cy "45.5", :cx "7.75"}]
+    [:circle {:r ".5", :cy "45.5", :cx "89.5807"}]]
+   [:g
+    {:stroke-width "0.15", :stroke "currentColor", :fill "none"}
+    [:circle {:r "25.5", :cy "45.5", :cx "7.75"}]
+    [:circle {:r "45.5", :cy "45.5", :cx "7.75"}]
   ;; Radius is computed to intersect at the intended x=60.5.
-  [:circle {:r "53.6895", :cy "45.5", :cx "7.75"}]
-  [:circle {:r "7.75", :cy "27.75", :cx "68.25"}]
-  [:circle {:r "27.75", :cy "27.75", :cx "68.25"}]
-  [:circle {:r "7.75", :cy "63.25", :cx "68.25"}]
-  [:circle {:r "27.75", :cy "63.25", :cx "68.25"}]]] )  
-  
-
- 
+    [:circle {:r "53.6895", :cy "45.5", :cx "7.75"}]
+    [:circle {:r "7.75", :cy "27.75", :cx "68.25"}]
+    [:circle {:r "27.75", :cy "27.75", :cx "68.25"}]
+    [:circle {:r "7.75", :cy "63.25", :cx "68.25"}]
+    [:circle {:r "27.75", :cy "63.25", :cx "68.25"}]]])
 
 ;; @@
 ;; =>
@@ -96,7 +93,7 @@
 ;; **
 
 ;; @@ [cljs]
-(pinkgorilla.notebook.repl/r! [:canvas#bongo {:width 500 :height 500} ])
+(pinkgorilla.notebook.repl/r! [:canvas#bongo {:width 500 :height 500}])
 ;; @@
 ;; =>
 ;;; ["^ ","~:type","~:reagent","~:content",["^ ","~:hiccup",["~:canvas#bongo",["^ ","~:width",500,"~:height",500]],"~:map-keywords",true]]
@@ -146,27 +143,27 @@
 ;; @@ [clj]
 ; QUIL demo
 
-(ns qil-demo 
-  (:require 
-    [reagent.core :as reagent :refer [atom]] 
-    [quil.core :as q :include-macros true] 
-    [quil.middleware :as m])) 
+(ns qil-demo
+  (:require
+   [reagent.core :as reagent :refer [atom]]
+   [quil.core :as q :include-macros true]
+   [quil.middleware :as m]))
 
-(def w 400) 
-(def h 400) 
-(defn setup [] {:t 1}) 
-(defn update [state] (update-in state [:t] inc)) 
-(defn draw [state] 
-  (q/background 255) 
-  (q/fill 0) 
-  (q/ellipse (rem (:t state) w) 46 55 55)) 
+(def w 400)
+(def h 400)
+(defn setup [] {:t 1})
+(defn update [state] (update-in state [:t] inc))
+(defn draw [state]
+  (q/background 255)
+  (q/fill 0)
+  (q/ellipse (rem (:t state) w) 46 55 55))
 
-(q/defsketch foo :setup setup :update update :draw draw :host "foo" :no-start true :middleware [m/fun-mode] :size [w h]) 
+(q/defsketch foo :setup setup :update update :draw draw :host "foo" :no-start true :middleware [m/fun-mode] :size [w h])
 
-(defn hello-world [] 
-  (reagent/create-class 
-    {:reagent-render (fn [] [:canvas#foo {:width w :height h}]) 
-     :component-did-mount foo})) 
+(defn hello-world []
+  (reagent/create-class
+   {:reagent-render (fn [] [:canvas#foo {:width w :height h}])
+    :component-did-mount foo}))
 
 (reagent/render-component [hello-world] (. js/document (getElementById "app")))
 

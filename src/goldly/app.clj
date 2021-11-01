@@ -22,7 +22,8 @@
    [goldly.service.core]
    [goldly.service.handler]
    [goldly.services]
-   [goldly.require-clj :refer [require-clj-namespaces]])
+   [goldly.require-clj :refer [require-clj-namespaces]]
+   [goldly.nrepl-server :refer [run-nrepl-server]])
   (:gen-class))
 
 (defn goldly-init! []
@@ -63,7 +64,7 @@
 
     ; add goldly user-app routes
     (if (empty? routes)
-      (do 
+      (do
         (warn "no [:goldly :routes ] defined - you will see a blank page.")
         (add-routes {:app {"" :goldly/no-page}
                      :api {}}))
@@ -80,8 +81,7 @@
     ;  (do (info "loading extensions from ns: " extensions)
     ;      (require-namespaces extensions))
     ;  (warn "no goldly extensions defined!"))
-    ))
-
+    (run-nrepl-server (get-in-config [:nrepl]))))
 
 (defn goldly-server-run!
   [{:keys [config profile] ; a map so it can be consumed by tools deps -X

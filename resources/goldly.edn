@@ -3,7 +3,7 @@
          :ns-clj [goldly.app]
          :ns-cljs [goldly.app]
          :routes goldly.routes/routes
-         :start-user-app [:goldly-server/init]}
+         :start-user-app [:goldly/init]}
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 

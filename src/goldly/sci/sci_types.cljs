@@ -9,13 +9,13 @@
    ))
 
 #_(extend-type sci.impl.vars/SciVar
-  Renderable
-  (render [self]
-    (span-render self "clj-symbol")))
+    Renderable
+    (render [self]
+      (span-render self "clj-symbol")))
 
 #_(extend-type sci.impl.vars.SciNamespace
-  Renderable
-  (render [self]
+    Renderable
+    (render [self]
     ;(error "sci ns: " (pr-str self))
-    (span-render (.toString self) "clj-namespace")))
+      (span-render (.toString self) "clj-namespace")))
 

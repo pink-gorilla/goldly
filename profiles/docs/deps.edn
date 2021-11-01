@@ -6,7 +6,7 @@
         org.pinkgorilla/ui-repl {:mvn/version "0.0.23"} ; tick needs to be made lazy.
         
         ; GoldlyDOCS deps
-        org.pinkgorilla/ui-site {:mvn/version "0.0.13"}
+        org.pinkgorilla/ui-site {:mvn/version "0.0.14"}
         org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
         org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.3"}
         org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}

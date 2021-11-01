@@ -23,11 +23,10 @@
 ;; <=
 
 ;; @@ [cljs]
-(ns unsightly-resonance  
-  (:require 
-    [fortune.core :as f]
-    [module$node_modules$moment$moment :as m]
-   )) 
+(ns unsightly-resonance
+  (:require
+   [fortune.core :as f]
+   [module$node_modules$moment$moment :as m]))
 ;; @@
 ;; =>
 ;;; ["^ ","~:type","~:html","~:content",["~:span",["^ ","~:class","clj-nil"],"nil"],"~:value","nil"]

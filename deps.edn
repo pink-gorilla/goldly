@@ -38,12 +38,12 @@
   :cljfmt
   {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
    :main-opts ["-m" "cljfmt.main" "check"
-               "src" "profiles/test/src"
+               "src" "profiles/demo/src"
                "--indents" "cljfmt.edn"]}
   :cljfmt-fix
   {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
    :main-opts ["-m" "cljfmt.main" "fix"
-               "src" "profiles/test/src"
+               "src" "profiles/demo/src"
                "--indents" "cljfmt.edn"]}
 
  ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
@@ -140,7 +140,7 @@
   ; highcharts  300
   ; video       100
 
-  :bundel-config {:exec-fn bundel-config/generate-bundle-config}
+  :docs-config {:exec-fn docs-config/generate-docs-config}
 
 ;
   }}

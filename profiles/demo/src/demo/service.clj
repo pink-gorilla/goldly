@@ -2,7 +2,6 @@
   (:require
    [goldly.service.core :as s]))
 
-
 (defn fun-add [a b]
   (+ a b))
 

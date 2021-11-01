@@ -18,7 +18,6 @@
            (fn [e s prefix]
              (assoc s
                     :in (:value e)
-                    :msg (str prefix ", " (:value e))))}}
-  ))
+                    :msg (str prefix ", " (:value e))))}}))
 
 
