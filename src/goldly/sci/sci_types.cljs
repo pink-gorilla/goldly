@@ -4,15 +4,16 @@
 
    [sci.impl.vars]
    [sci.impl.vars :refer [SciNamespace]]
-   [picasso.protocols :refer [Renderable render]]
-   [picasso.render.span :refer [span-render]]))
+   ;[picasso.protocols :refer [Renderable render]]
+   ;[picasso.render.span :refer [span-render]]
+   ))
 
-(extend-type sci.impl.vars/SciVar
+#_(extend-type sci.impl.vars/SciVar
   Renderable
   (render [self]
     (span-render self "clj-symbol")))
 
-(extend-type sci.impl.vars.SciNamespace
+#_(extend-type sci.impl.vars.SciNamespace
   Renderable
   (render [self]
     ;(error "sci ns: " (pr-str self))

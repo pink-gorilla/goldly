@@ -2,6 +2,13 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
+        ; core deps
+        org.pinkgorilla/ui-site {:mvn/version "0.0.13"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.23"} ; tick needs to be made lazy.
+        org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
+        org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.3"}
+        org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}
+
         ; bundel deps
         ;lazy deps:
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
@@ -76,7 +83,7 @@
    :exec-args {:profile "watch2"
                :config {:goldly
                         {:lazy true
-                         :systems
+                         :autoload-clj-ns
                          [systems.snippet-registry
                           systems.snippet-scratchpad]}}}}
 

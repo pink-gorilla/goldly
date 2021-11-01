@@ -1,0 +1,17 @@
+{:webly {:ns-clj [goldly.app]}
+ :keybindings []
+
+ :goldly {; build
+          :lazy true
+          :lazy-exclude #{"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
+                          "ui-math"}
+          ; run-time
+          :autoload-clj-ns [demo.service]
+          :autoload-cljs-dir ["src/demo/cljs_libs"
+                              "src/demo/page"]
+          :routes {:app {"" :user/main
+                         "info" :user/info
+                         "error" :user/error
+                         "service" :user/service
+                         }
+                   :api {}}}}

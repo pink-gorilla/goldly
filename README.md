@@ -67,7 +67,7 @@ Add this alias to your deps.edn:
  :goldly
   {:extra-deps {org.pinkgorilla/goldly-docs {:mvn/version "RELEASE"}}
    :exec-fn goldly-docs/run
-   :exec-args {:config {:goldly {:systems [systems.snippet-registry  ; if you want snippet browser started
+   :exec-args {:config {:goldly {:autoload-clj-ns [systems.snippet-registry  ; if you want snippet browser started
                                            systems.snippet-scratchpad
                                            demo.hello-user
                                               ]}}}}
@@ -92,7 +92,7 @@ then add a goldly alias:
 ```
 Add a goldly-user.edn file:
 ```
-{:goldly {:systems [systems.snippet-registry  ; if you want snippet browser started
+{:goldly {:autoload-clj-ns [systems.snippet-registry  ; if you want snippet browser started
                     systems.snippet-scratchpad
                     demo.hello-user]}}
 ```

@@ -15,17 +15,14 @@
   rewrite-clj/rewrite-clj {:mvn/version "1.0.644-alpha"}
 
   ; core 
-  org.pinkgorilla/picasso {:mvn/version "3.1.63"} ; kernel type rendering - used in cljs kernel
-  org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/webly {:mvn/version "0.3.51"} ; web app build tool
-  org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.54"}
+  org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.23"}
+  ;org.pinkgorilla/picasso {:mvn/version "3.1.63"} ; kernel type rendering - used in cljs kernel
+  ;org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.54"}
 
   ; core-bundel
-  org.pinkgorilla/ui-site {:mvn/version "0.0.13"}
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.23"} ; tick needs to be made lazy.
-  org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
-  org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.3"}
-  org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}}
+  }
  :aliases
  {;; developer tooling
 
@@ -88,17 +85,15 @@
                      "--formats" "edn"]}
 
   :ci {:extra-paths ["test"]
-       :exec-fn goldly-server.app/goldly-server-run!
+       :exec-fn goldly.app/goldly-server-run!
        :exec-args {:profile "ci"
                    :config nil}}
 
   :goldly
   {:extra-paths []
-   :exec-fn goldly-server.app/goldly-server-run!
+   :exec-fn goldly.app/goldly-server-run!
    :exec-args {:profile "watch"
-               :config {:goldly {:notebook-dir "profiles/test/src/demo/test"
-                                 #_["profiles/test/src/demo/studies"
-                                                "profiles/test/src/demo/test"]}}}}
+               :config {:goldly {}}}}
 
   ; goldly core (no modules)
   ; watch:      15.0MB

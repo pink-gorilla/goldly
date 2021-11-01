@@ -3,14 +3,15 @@
    #?(:clj  [clojure.core.async :refer [>! chan close! go]]
       :cljs [cljs.core.async :refer [>! chan close!] :refer-macros [go]])
    [taoensso.timbre :as timbre :refer [debugf info error]]
-   [picasso.id :refer [guuid]]
-   [picasso.kernel.protocol :refer [kernel-eval]]
-   [picasso.converter :refer [->picasso]]
    [sci.core :as sci]
    [goldly.sci.sci-types]
    [goldly-bindings-generated :refer [bindings-generated ns-generated]]
    ;[goldly.sci.bindings-static :refer [ns-static]]
    ;[goldly.sci.lazy :refer [load-fn]]
+
+   ;[picasso.id :refer [guuid]]
+   ;[picasso.kernel.protocol :refer [kernel-eval]]
+   ;[picasso.converter :refer [->picasso]]
    ))
 
 (defn add-lazy [namespaces]
@@ -36,18 +37,18 @@
                  :cljs {:root-ex (.-data e)
                         :err (.-message e)})})))
 
-(defmethod kernel-eval :cljs [{:keys [id code]
-                               :or {id (guuid)}}]
-  (let [c (chan)]
-    (info "sci-eval: " code)
-    (go (try (let [{:keys [error result]} (compile-code code)
-                   eval-result (if error
-                                 (merge {:id id} error)
-                                 {:id id :picasso (->picasso result)})]
-               (>! c eval-result))
-             (catch #?(:cljs js/Error :clj Exception) e
-               (error "eval ex: " e)
-               (>! c {:id id
-                      :error e})))
-        (close! c))
-    c))
+#_(defmethod kernel-eval :cljs [{:keys [id code]
+                                 :or {id (guuid)}}]
+    (let [c (chan)]
+      (info "sci-eval: " code)
+      (go (try (let [{:keys [error result]} (compile-code code)
+                     eval-result (if error
+                                   (merge {:id id} error)
+                                   {:id id :picasso (->picasso result)})]
+                 (>! c eval-result))
+               (catch #?(:cljs js/Error :clj Exception) e
+                 (error "eval ex: " e)
+                 (>! c {:id id
+                        :error e})))
+          (close! c))
+      c))
