@@ -8,3 +8,9 @@
   (defmethod reagent-page kw [{:keys [route-params query-params handler] :as route}]
     [error-boundary
      [p route]]))
+
+(defn available-pages []
+  (->> (methods reagent-page)
+       keys
+       (remove #(= :default %))
+       (into [])))

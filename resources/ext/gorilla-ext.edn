@@ -14,6 +14,8 @@
  :cljs-ns-bindings {'goldly {'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
                              'compile-time compile-time}
+                    'page {'add goldly.page.page/add-page
+                           'available goldly.page.page/available-pages}
                     'link {'dispatch goldly-server.helper.ui/link-dispatch
                            'href goldly-server.helper.ui/link-href}
                     'walk {'postwalk clojure.walk/postwalk
