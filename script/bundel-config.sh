@@ -2,7 +2,7 @@
 
 # generates deps.edn in profiles/bundelci
 
-clojure -X:bundel-config
+clojure -X:docs-config
 
 
 # alternative approach culd be depstar:

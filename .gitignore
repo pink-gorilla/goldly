@@ -24,12 +24,9 @@ goldly_bindings_generated.cljs
 profiles/demo/node_modules/
 profiles/demo/target/
 
-profiles/test/node_modules/
-profiles/test/target/
+profiles/docs/node_modules/
+profiles/docs/target/
 
-profiles/bundel/node_modules/
-profiles/bundel/target/
-
-profiles/bundelci/node_modules/
-profiles/bundelci/target/
-profiles/bundelci/deps.edn
+profiles/docsci/node_modules/
+profiles/docsci/target/
+profiles/docsci/deps.edn

@@ -169,11 +169,11 @@ clojure -X:goldly :profile '"release"'
 clojure -X:goldly :profile '"jetty"'
 ```
 
-To test the bundel creation:
+To test the docs creation:
 ```
-clojure -X:bundel-config
-cd bundel
-./bundel-compile.sh
+clojure -X:docs-config
+cd profiles/docs
+./docs-compile.sh
 clojure -X:run
 ```
 
