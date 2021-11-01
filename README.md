@@ -1,7 +1,7 @@
 # Goldly 
 [![GitHub Actions status |pink-gorilla/goldly](https://github.com/pink-gorilla/goldly/workflows/CI/badge.svg)](https://github.com/pink-gorilla/goldly/actions?workflow=CI)
 [![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly.svg)](https://clojars.org/org.pinkgorilla/goldly)
-[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly-bundel.svg)](https://clojars.org/org.pinkgorilla/goldly-bundel)
+[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/goldly-docs.svg)](https://clojars.org/org.pinkgorilla/goldly-docs)
 
 - goldly lets you create interactive visualization in a webbrowser in clojure
 - visualizations can interact with the clojure server.
@@ -46,14 +46,14 @@ The snippets are primitive, but demonstrate certain features of goldly:
 The easiest way to run the goldly locally is leveraging the `clojure` cli
 
 ```
-clojure -Sdeps '{:deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}}' -m bundel.run
+clojure -Sdeps '{:deps {org.pinkgorilla/goldly-docs {:mvn/version "RELEASE"}}}' -m bundel.run
 ```
 
 This lets you see many snippets that you might like.
 
 ## Run - in your project **using readymade default ui renderers**
 
-You need to include the **goldly-bundel** artefact, which ships a pre-built javascript 
+You need to include the **goldly-docs** artefact, which ships a pre-built javascript 
 bundle and already includes many ui-renderers. 
 
 You can:
@@ -65,8 +65,8 @@ You can:
 Add this alias to your deps.edn:
 ```
  :goldly
-  {:extra-deps {org.pinkgorilla/goldly-bundel {:mvn/version "RELEASE"}}
-   :exec-fn goldly-bundel/run
+  {:extra-deps {org.pinkgorilla/goldly-docs {:mvn/version "RELEASE"}}
+   :exec-fn goldly-docs/run
    :exec-args {:config {:goldly {:systems [systems.snippet-registry  ; if you want snippet browser started
                                            systems.snippet-scratchpad
                                            demo.hello-user
@@ -81,13 +81,13 @@ An example of project that uses goldly this way is: [trateg](https://github.com/
 
 ### with leiningen
 
-In project.clj add the goldly-bundel dependency: `[org.pinkgorilla/goldly "0.2.78"]`
+In project.clj add the goldly-docs dependency: `[org.pinkgorilla/goldly "0.2.78"]`
 then add a goldly alias:
 
 ```
 {:alias
    "goldly"
-   ["run" "-m" "goldly-bundel.run" "goldly-user.edn"]}
+   ["run" "-m" "goldly-docs.run" "goldly-user.edn"]}
 
 ```
 Add a goldly-user.edn file:
@@ -131,7 +131,7 @@ both use deps.edn to build a custom goldly bundel (that includes the library tha
 
 ### for leiningen
 
-See [demo-goldly-bundel](https://github.com/pink-gorilla/demo-goldly-bundel) for the complete project.
+See [demo-goldly-docs](https://github.com/pink-gorilla/demo-goldly-docs) for the complete project.
 Add the alias to project.clj
 ```
 {:alias

@@ -1,4 +1,4 @@
 {:group-id "org.pinkgorilla"
- :artifact-id "goldly-bundel"
+ :artifact-id "goldly-docs"
  :scm-url "https://github.com/pink-gorilla/goldly/"
  }
