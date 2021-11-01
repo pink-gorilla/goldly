@@ -5,6 +5,8 @@
    [webly.ws.core :refer [send! send-all! send-response]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]))
 
+;; services registry
+
 (def services-atom (atom {})) ; {:cookie/get db/get-cookie}
 
 (defn add [m]
@@ -13,8 +15,16 @@
 (defn services-list []
   (keys @services-atom))
 
+(defn get-fn [kw]
+  (cond
+    (keyword? kw) (kw @services-atom)
+    (symbol? kw) (resolve kw)))
+
+; (get-fn :ff)
+; (get-fn 'get-collections)
+
 (defn run [kw & args]
-  (if-let [fun (kw @services-atom)]
+  (if-let [fun (get-fn kw)]
     (try {:result (if args
                     (apply fun args)
                     (fun))}
