@@ -51,7 +51,7 @@
   (load-file-or-res! filename))
 
 (defn cljs-explore-with-res []
-  (-> (concat (cljs-explore) @autoload-cljs-res-a)
+  (-> (concat @autoload-cljs-res-a (cljs-explore))
       vec))
 
 (s/add {:cljs/explore cljs-explore-with-res ; cljs-explore
