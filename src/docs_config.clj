@@ -14,7 +14,7 @@
       (edn/read-string)
       (get-in path)))
 
-(defn generate-bundle-config [& args]
+(defn generate-docs-config [& args]
   (let [core (load-deps-path "deps.edn" [])
         bundel-deps (load-deps-path "profiles/docs/deps.edn" [:deps])
         ;bundel-deps (dissoc bundel-deps 'org.pinkgorilla/goldly)
