@@ -8,8 +8,3 @@
            (do (info "loading ns: " s)
                (require s))))
   namespaces)
-
-(comment
-  (require 'systems.components 'clojure.string)
-;
-  )

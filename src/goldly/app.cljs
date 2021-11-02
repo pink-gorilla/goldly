@@ -8,7 +8,6 @@
    [pinkie.default-setup] ; pinkie is a necessary dependency, because goldly systems use it for frontend description   
    [goldly.service.core]
    [goldly.sci.kernel-cljs]
-   [goldly.cljs.loader]
    [goldly.extension.lazy]
    [goldly.extension.pinkie :refer [add-extension-pinkie-static]]))
 

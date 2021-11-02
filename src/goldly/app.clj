@@ -4,9 +4,8 @@
    [clojure.java.io]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [com.rpl.specter :refer [transform setval END ALL]]
-   [webly.config :refer [get-in-config config-atom]]
+   [webly.config :refer [get-in-config config-atom load-config! add-config]]
    [webly.profile :refer [compile? server?]]
-   [webly.config :refer [load-config! add-config]]
    [webly.user.app.app :refer [webly-run!]]
 
    ; compile time

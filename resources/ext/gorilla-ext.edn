@@ -3,11 +3,7 @@
  :cljs-namespace [clojure.walk
                   goldly.page.page
                   goldly.page.no-page
-                  goldly.service.core
-                  ;;goldly.broadcast.core
-                 ; goldly-server.helper.ui
-                  ;goldly.system.ui ; ui for goldly system
-                  ]
+                  goldly.service.core]
  :cljs-bindings {'add-page goldly.page.page/add-page
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a

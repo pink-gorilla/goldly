@@ -1,8 +1,6 @@
 (ns goldly.sci.sci-types
   (:require
    [taoensso.timbre :as timbre :refer-macros [debugf info error]]
-
-   [sci.impl.vars]
    [sci.impl.vars :refer [SciNamespace]]
    ;[picasso.protocols :refer [Renderable render]]
    ;[picasso.render.span :refer [span-render]]

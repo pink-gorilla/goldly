@@ -24,15 +24,15 @@
         (info "extension: " result)
         r))))
 
-(def ext-snippets
+#_(def ext-snippets
   ;{:cljs-bindings {'add snippets.snip/add}}
-  (lazy/loadable {:add snippets.snip/add}))
+    (lazy/loadable {:add snippets.snip/add}))
 
-(defn lazytest []
-  (let [on-load (fn [r]
-                  (let [add (:add r)]
-                    (info "add: " (add 7 7))))]
-    (lazy/load ext-snippets on-load)))
+#_(defn lazytest []
+    (let [on-load (fn [r]
+                    (let [add (:add r)]
+                      (info "add: " (add 7 7))))]
+      (lazy/load ext-snippets on-load)))
 
 (defn timestamp []
   (.getTime (js/Date.)))
@@ -57,13 +57,13 @@
     (warn "lazyly loaded: " @a)
     @a))
 
-(defn load-fn [{:keys [namespace] :as p}]
-  (error "lazy load-fn: " namespace)
-  (when (= namespace 'snippets)
-    (let [a (load-ext-shadow ext-snippets)]
-      (error "atom: " a)
-      {:file "snippets.clj"
-       :source "(ns user) (def add :foo)"})))
+#_(defn load-fn [{:keys [namespace] :as p}]
+    (error "lazy load-fn: " namespace)
+    (when (= namespace 'snippets)
+      (let [a (load-ext-shadow ext-snippets)]
+        (error "atom: " a)
+        {:file "snippets.clj"
+         :source "(ns user) (def add :foo)"})))
 
 ; tis does not work. block times out before shadow load completes.
 #_(defn lazytest2 []

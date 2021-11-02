@@ -58,8 +58,11 @@
           :progress false
           ;; output can be filtered and removed by regex on filename. empty options leave the output untouched.
           :include-files [] #_["^src" "^test"]
-          :exclude-files [".*cljs"
-                          "src/systems.*" ; system macro.
+          :exclude-files [;".*cljs"
+                          "src/systems.*" 
+                          "src/demo.notebook.goldly"
+                          "src/goldly_bindings_generated.cljs"
+                          ; system macro.
                              ;"^cljs/core"
                              ; "profiles/test/src/demo/cljs.*"
                           ]

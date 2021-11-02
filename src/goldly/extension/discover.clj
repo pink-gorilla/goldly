@@ -56,8 +56,8 @@
       last
       ;slurp
       )
-  (recursive-resource-paths "ext")
-  (recursive-resource-paths "")
+  ;(recursive-resource-paths "ext")
+  ;(recursive-resource-paths "")
 
   (map str [])
   ;  

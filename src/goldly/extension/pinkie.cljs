@@ -10,6 +10,8 @@
     (if (not (empty? pinkie))
       (do (errorf "adding %s pinkie renderers: %s " (count pinkie) (keys pinkie))
           (doall (for [[k v] pinkie]
-                   (do ;(warn "pinky register: " k v (type v) (pr-str v))
-                     (register-tag k v)))))
+                   ;(do ;(warn "pinky register: " k v (type v) (pr-str v))
+                   (register-tag k v)
+                    ; )
+                   )))
       (warn "no pinkie renderers in config received."))))
