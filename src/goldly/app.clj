@@ -4,30 +4,26 @@
    [clojure.java.io]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [com.rpl.specter :refer [transform setval END ALL]]
-   [webly.config :refer [get-in-config config-atom]]
+   [webly.config :refer [get-in-config config-atom load-config! add-config]]
+   [webly.profile :refer [compile? server?]]
+   [webly.user.app.app :refer [webly-run!]]
 
+   ; compile time
    [goldly.version :refer [print-version]]
    [goldly.extension.discover :as d]
    [goldly.extension.pinkie :refer [available]]
+   [goldly.sci.bindings :refer [generate-bindings]]
 
+   ; runtime
+   [goldly.routes] ; side effects
+   [goldly.cljs.loader :refer [cljs-watch]]
+   [goldly.ws-connect :refer [start-ws-conn-watch]]
    [goldly.service.core]
    [goldly.service.handler]
    [goldly.services]
-
-   [goldly.broadcast.core]
-   [goldly.cljs.loader :refer [cljs-watch]]
-   [goldly.component.type.notebook :refer [notebook-watch]]
-   [goldly.sci.bindings :refer [generate-bindings]]
-   [goldly.component.type.system]
-   [goldly.component.ws-connect :refer [start-ws-conn-watch]]
-
-   [goldly.system.require :refer [require-namespaces]]
-   [goldly.notebook.picasso]
-
-   [goldly.scratchpad.handler]
-   [goldly.scratchpad.core]
-
-   [pinkgorilla.nrepl.service]))
+   [goldly.require-clj :refer [require-clj-namespaces]]
+   [goldly.nrepl-server :refer [run-nrepl-server]])
+  (:gen-class))
 
 (defn goldly-init! []
     ; extensions can add to cljs namespaces. therefore extensions have to
@@ -61,28 +57,49 @@
     ))
 
 (defn goldly-run! []
-  (let [{:keys [systems routes]
+  (let [{:keys [autoload-clj-ns routes]
          :or {routes {}}}
         (get-in-config [:goldly])]
 
     ; add goldly user-app routes
     (if (empty? routes)
-      (warn "no goldly user routes defined - you will not see custom pages.")
+      (do
+        (warn "no [:goldly :routes ] defined - you will see a blank page.")
+        (add-routes {:app {"" :goldly/no-page}
+                     :api {}}))
       (add-routes routes))
 
-    ; systems are stored in clj files
-    (if systems
-      (do (info "loading systems from ns: " systems)
-          (require-namespaces systems))
-      (warn "no goldly systems defined!"))
+    (if (empty? autoload-clj-ns)
+      (warn "no autoload-clj-ns defined!")
+      (do (info "loading clj namespaces: " autoload-clj-ns)
+          (require-clj-namespaces autoload-clj-ns)))
 
     (cljs-watch)
-    (notebook-watch)
     (start-ws-conn-watch)
     ;(if extensions
     ;  (do (info "loading extensions from ns: " extensions)
     ;      (require-namespaces extensions))
     ;  (warn "no goldly extensions defined!"))
-    (pinkgorilla.nrepl.service/start-nrepl (get-in-config [:nrepl]))))
+    (run-nrepl-server (get-in-config [:nrepl]))))
 
+(defn goldly-server-run!
+  [{:keys [config profile] ; a map so it can be consumed by tools deps -X
+    :or {profile "jetty"
+         config {}}}]
+  (let [config (add-config "goldly.edn" config)]
+    (load-config! config)
+    (goldly-init!)
+    (when (compile? profile)
+      (goldly-compile!))
+    (when (server? profile)
+      (goldly-run!))
+    (webly-run! profile config)))
 
+(defn -main ; for lein alias
+  ([]
+   (goldly-server-run! {}))
+  ([config]
+   (goldly-server-run! {:config config}))
+  ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
+   (goldly-server-run! {:profile profile
+                        :config config})))

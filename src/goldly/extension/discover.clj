@@ -6,7 +6,7 @@
    [webly.writer]
    [webly.config :refer [config-atom]]
    [goldly.extension.theme :refer [add-extension-theme]]
-   [goldly.extension.snippets :refer [add-extension-snippets]]
+  ; [goldly.extension.snippets :refer [add-extension-snippets]]
    [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
    [goldly.extension.clj :refer [add-extension-clj]]
    [goldly.extension.pinkie :refer [pinkie-atom save-pinkie]]
@@ -31,7 +31,7 @@
   (debug "adding extension: " name)
   (add-extension-theme extension)
   (add-extension-cljs extension)
-  (add-extension-snippets extension)
+  ;(add-extension-snippets extension)
   (add-extension-clj extension))
 
 (defn discover []
@@ -56,8 +56,8 @@
       last
       ;slurp
       )
-  (recursive-resource-paths "ext")
-  (recursive-resource-paths "")
+  ;(recursive-resource-paths "ext")
+  ;(recursive-resource-paths "")
 
   (map str [])
   ;  

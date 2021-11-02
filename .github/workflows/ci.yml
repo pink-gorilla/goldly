@@ -64,16 +64,16 @@ jobs:
       # clojure -M:release deploy
       # lein release
       # bash <(curl -s https://codecov.io/bash)
-    - name: Release-Bundel
+    - name: Release-GoldlyDocs
       env:
         CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
         CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        ./script/bundel-config.sh
-        cd profiles/bundelci
+        ./script/docs-config.sh
+        cd profiles/docsci
         echo "pwd: $PWD"
-        ./bundel-compile-adv.sh
-        ./bundel-publish.sh
+        ./docs-compile-adv.sh
+        ./docs-publish.sh
 

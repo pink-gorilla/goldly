@@ -3,11 +3,11 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [webly.config :refer [get-in-config]]
    [goldly.service.core :as s]
-   [notebook.explore.explore :refer [explore-dir load-file!]]
-   [notebook.explore.watch :refer [watch]]))
+   [goldly.explore.explore :refer [explore-dir load-file!]]
+   [goldly.explore.watch :refer [watch]]))
 
 (defn autoload-dir []
-  (get-in-config [:goldly :autoload-dir]))
+  (get-in-config [:goldly :autoload-cljs-dir]))
 
 (defn process-dir-dirs
   [fun fun-err]

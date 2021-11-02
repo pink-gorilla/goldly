@@ -1,7 +1,6 @@
-(ns bundel-config
+(ns docs-config
   (:require
    [taoensso.timbre :refer [info]]
-
    [clojure.edn :as edn]
    [com.rpl.specter :as s]
    [fipp.clojure]))
@@ -17,14 +16,14 @@
 
 (defn generate-bundle-config [& args]
   (let [core (load-deps-path "deps.edn" [])
-        bundel-deps (load-deps-path "profiles/bundel/deps.edn" [:deps])
+        bundel-deps (load-deps-path "profiles/docs/deps.edn" [:deps])
         ;bundel-deps (dissoc bundel-deps 'org.pinkgorilla/goldly)
         ;bundel (get-in core [:aliases :notebook :extra-deps])
         ]
     (info "bundel deps: " bundel-deps)
     (->> (s/transform [:deps] #(merge % bundel-deps) core)
          (pr-str-fipp)
-         (spit "profiles/bundelci/deps.edn"))))
+         (spit "profiles/docsci/deps.edn"))))
 
 (comment
   (generate-bundle-config)

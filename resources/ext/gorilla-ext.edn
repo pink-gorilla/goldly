@@ -1,23 +1,20 @@
 {:name "goldly"
  :clj-require []
  :cljs-namespace [clojure.walk
-                  goldly.service.core
-                  goldly.broadcast.core
                   goldly.page.page
-                  goldly-server.helper.ui
-                  goldly.system.ui ; ui for goldly system
-                  ]
+                  goldly.page.no-page
+                  goldly.service.core]
  :cljs-bindings {'add-page goldly.page.page/add-page
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
-                 'set-system-state goldly.broadcast.core/set-system-state}
+                 ;'set-system-state goldly.broadcast.core/set-system-state
+                 }
  :cljs-ns-bindings {'goldly {'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
                              'compile-time compile-time}
                     'page {'add goldly.page.page/add-page
                            'available goldly.page.page/available-pages}
-                    'link {'dispatch goldly-server.helper.ui/link-dispatch
-                           'href goldly-server.helper.ui/link-href}
+
                     'walk {'postwalk clojure.walk/postwalk
                            'prewalk clojure.walk/prewalk
                            'keywordize-keys clojure.walk/keywordize-keys
@@ -26,7 +23,8 @@
                            'prewalk-replace clojure.walk/prewalk-replace
                            'stringify-keys clojure.walk/stringify-keys}}
  :lazy false
- :pinkie {:p/goldly goldly.system.ui/system}
+ :pinkie {;:p/goldly goldly.system.ui/system
+          }
  :snippets [{:type :pinkie
              :category :goldly
              :id :hello-world

@@ -8,15 +8,30 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Cache Maven dependencies
-      uses: actions/cache@v1
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-    - name: Check formatting
+        fetch-depth: 0
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Prepare java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'zulu' # https://github.com/actions/setup-java/blob/main/README.md#Supported-distributions
+        java-version: '14'
+        java-package: jdk # optional (jdk or jre) - defaults to jdk
+    - name: Install clojure tools
+      uses: DeLaGuardo/setup-clojure@3.5
+      with:
+        cli: 1.10.3.929 # Clojure CLI based on tools.deps
+    #- name: Execute clojure code on Linux and MacOS
+    #  if: ${{ matrix.os != 'windows-latest' }}
+    #  run: clojure -e "(+ 1 1)"
+    #  shell: bash
+    - name: clj-fmt
+      if: ${{ matrix.os != 'windows-latest' }}
       run: clojure -M:cljfmt
+      shell: bash

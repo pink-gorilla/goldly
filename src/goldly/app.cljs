@@ -2,33 +2,15 @@
   (:require
    [re-frame.core :as rf]
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
-
+   [cljs.core.async :refer [>! <! chan close! put! timeout] :refer-macros [go]]
+   [goldly.cljs.loader :as loader]
    ; side-effecs
    [pinkie.default-setup] ; pinkie is a necessary dependency, because goldly systems use it for frontend description   
-
    [goldly.service.core]
-   [goldly.broadcast.core]
    [goldly.sci.kernel-cljs]
-   [goldly.cljs.loader]
-
    [goldly.extension.lazy]
-   [goldly.extension.pinkie :refer [add-extension-pinkie-static]]
+   [goldly.extension.pinkie :refer [add-extension-pinkie-static]]))
 
-   [goldly.component.load]
-   [goldly.component.type.system]
-   [goldly.component.type.notebook]
-
-   [goldly.notebook-loader.clj-load]
-   [goldly.notebook-loader.clj-list :refer [start-watch-notebooks]]
-   [ui.notebook.loader.list]
-
-   ; needs refactoring:
-   [goldly.system.ui]
-   [goldly.system.db]
-   [goldly.system.ws]
-   [goldly.scratchpad.core]
-;
-   ))
 (def initial-db
   {:id nil
    ; system ui
@@ -46,3 +28,24 @@
    (let [_ (debugf "rcvd :goldly/systems: %s" data)]
      (rf/dispatch [:goldly/clj-result data])
      db)))
+
+(rf/reg-event-fx
+ :ws/open-first
+ (fn [cofx [_ new-state-map]]
+   (infof "websocket successfully established!: %s" new-state-map)
+   (info "goldly starting ..")
+   (rf/dispatch [:ga/event {:category "goldly" :action "started" :label 77 :value 13}])
+
+   ;(request-systems)
+   (add-extension-pinkie-static)
+
+   (go (<! (loader/load-cljs)) ; await for cljs auto-load to be finised before showing ui.
+       (rf/dispatch [:webly/status :running]))
+
+   ;(start-watch-notebooks)
+   ;(rf/dispatch [:nrepl/init])
+
+   #_(go (<! (timeout 1000))
+         (rf/dispatch [:webly/status :running]))
+
+   nil))
