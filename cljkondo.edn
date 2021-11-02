@@ -62,6 +62,7 @@
                           "src/systems.*" 
                           "src/demo.notebook.goldly"
                           "src/goldly_bindings_generated.cljs"
+                          "src/demo.*"
                           ; system macro.
                              ;"^cljs/core"
                              ; "profiles/test/src/demo/cljs.*"
