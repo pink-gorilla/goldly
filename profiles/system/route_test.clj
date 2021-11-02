@@ -3,10 +3,10 @@
    [clojure.test :refer [deftest is testing]]
    [bidi.bidi :as bidi]
    [bidi.ring]
-   [goldly.routes :refer [routes-app routes-api]]))
+   [goldly.routes :refer [routes]]))
 
 (def routes-client
-  ["/" routes-app])
+  ["/" (:app routes)])
 
 (defn get-url [url]
   (bidi/match-route routes-client url :request-method :get))
