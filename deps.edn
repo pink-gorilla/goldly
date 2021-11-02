@@ -18,7 +18,7 @@
   org.pinkgorilla/webly {:mvn/version "0.3.51"} ; web app build tool
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/ui-repl {:mvn/version "0.0.23"}
-  org.pinkgorilla/reval {:mvn/version "0.0.5"}
+  org.pinkgorilla/reval {:mvn/version "0.0.6"}
   ;org.pinkgorilla/picasso {:mvn/version "3.1.63"} ; kernel type rendering - used in cljs kernel
   ;org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.54"}
   org.pinkgorilla/ui-site {:mvn/version "0.0.14"}

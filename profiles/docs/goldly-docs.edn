@@ -10,8 +10,7 @@
  :goldly {:lazy true
           ; runtime
           :autoload-clj-ns []
-          :autoload-cljs-dir  []
-          }
+          :autoload-cljs-dir  []}
 
  :devtools {:rdocument  {:storage-root "demo/rdocument/"
                          :url-root "/api/rdocument/file/"}
