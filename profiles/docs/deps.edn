@@ -2,10 +2,6 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
-        ; already in goldly;
-        ;org.pinkgorilla/ui-repl {:mvn/version "0.0.23"} ; tick needs to be made lazy.
-        ;org.pinkgorilla/reval {:mvn/version "0.0.5"}
-
         ; GoldlyDOCS deps        
         ;lazy deps:
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
@@ -78,7 +74,7 @@
   {:extra-deps {}
    :exec-fn goldly.app/goldly-server-run!
    :exec-args {:profile "watch2"
-               :config  "goldly-docs.edn" }}
+               :config  "goldly-docs.edn"}}
 
   :goldly-m
   {:main-opts ["-m" "goldly.app"]}
