@@ -33,9 +33,24 @@
  :goldly {:enabled true
           :lazy true
           :src-dir "src"
+          ; runtime
           :autoload-clj-ns []
-          :autoload-cljs-dir [] ;"goldly/cljs"  ; to load cljs files to repl state
-          }
+          :autoload-cljs-dir []
+          :routes {:app {"" :devtools
+                         "devtools/scratchpad" :scratchpad
+                         "devtools/viewer" :viewer
+                         "devtools/environment" :environment}
+                   :api {"rdocument/ns" :rdocument/ns
+                         "rdocument/files" :rdocument/files
+                         ["rdocument/file/" :ns "/" :name] :rdocument/file ; http://localhost:8000/api/viewer/file/demo.playground.cljplot/vega-spec.edn
+                         }}}
+
+ :devtools {:rdocument  {:storage-root "demo/rdocument/"
+                         :url-root "/api/rdocument/file/"}
+            :collections {:user [:clj "user/notebook/"]
+                          :demo [:clj "demo/notebook/"]}}
+
+
 
 ;
  }

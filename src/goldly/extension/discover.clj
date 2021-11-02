@@ -5,11 +5,16 @@
    [resauce.core :as rs]
    [webly.writer]
    [webly.config :refer [config-atom]]
+
+   ; build time
    [goldly.extension.theme :refer [add-extension-theme]]
-  ; [goldly.extension.snippets :refer [add-extension-snippets]]
-   [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
-   [goldly.extension.clj :refer [add-extension-clj]]
    [goldly.extension.pinkie :refer [pinkie-atom save-pinkie]]
+   [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
+
+   ; runtime
+   [goldly.extension.cljs-autoload :refer [add-extension-cljs-autoload]]
+   [goldly.extension.clj :refer [add-extension-clj-require add-extension-autoload-clj-ns]]
+
    [goldly.extension.core :refer [save-extensions]]))
 
 #_(defn resource-dir-paths [path]
@@ -29,10 +34,15 @@
 
 (defn add-extension [{:keys [name] :as extension}]
   (debug "adding extension: " name)
+   ; build-time
   (add-extension-theme extension)
   (add-extension-cljs extension)
+
+  ;run-time
   ;(add-extension-snippets extension)
-  (add-extension-clj extension))
+  (add-extension-cljs-autoload extension)
+  (add-extension-autoload-clj-ns extension)
+  (add-extension-clj-require extension))
 
 (defn discover []
   (let [r  (rs/resource-dir "ext")
@@ -48,17 +58,28 @@
 
 (comment
 
-  (rs/resources "ext")
+  (rs/resources "demo.notebook.goldly")
   (rs/resources "")
+
+  (-> (rs/resources "demo/notebook/apple.clj")
+      first
+      (rs/directory?))
 
   (-> (rs/resource-dir "ext")
       ;first
       last
       ;slurp
       )
+
+  (-> (rs/resource-dir "demo/notebook")
+      ;first
+      last
+      rs/name
+      ;slurp
+      )
+
   ;(recursive-resource-paths "ext")
   ;(recursive-resource-paths "")
 
-  (map str [])
-  ;  
+;  
   )

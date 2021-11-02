@@ -3,13 +3,10 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}
         ; already in goldly;
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.23"} ; tick needs to be made lazy.
-        
-        ; GoldlyDOCS deps
-        org.pinkgorilla/ui-site {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
-        org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.3"}
-        org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}
+        ;org.pinkgorilla/ui-repl {:mvn/version "0.0.23"} ; tick needs to be made lazy.
+        ;org.pinkgorilla/reval {:mvn/version "0.0.5"}
+
+        ; GoldlyDOCS deps        
         ;lazy deps:
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.6"}
@@ -81,9 +78,7 @@
   {:extra-deps {}
    :exec-fn goldly.app/goldly-server-run!
    :exec-args {:profile "watch2"
-               :config {:goldly
-                        {:lazy true
-                         :autoload-clj-ns []}}}}
+               :config  "goldly-docs.edn" }}
 
   :goldly-m
   {:main-opts ["-m" "goldly.app"]}

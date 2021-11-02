@@ -16,7 +16,8 @@
   ; - services
 
   :goldly
-  {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}
+  {:extra-deps {org.pinkgorilla/reval {:mvn/version "0.0.4"}
+                org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}
                 ;org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.6"}
                 ;org.pinkgorilla/ui-aggrid {:mvn/version "0.0.11"}
                 ;org.pinkgorilla/ui-highcharts {:mvn/version "0.0.13"}

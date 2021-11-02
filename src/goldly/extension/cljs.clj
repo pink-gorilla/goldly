@@ -15,7 +15,7 @@
 
 (defn cljs-init []
   (when (lazy-enabled)
-    (warn "lazy modules enabled!")
+    (info "lazy modules enabled!")
     (swap! goldly-namespaces conj '[webly.build.lazy :refer-macros [wrap-lazy]])))
 
 (defn add-extension-cljs [{:keys [name cljs-namespace]

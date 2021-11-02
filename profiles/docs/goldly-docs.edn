@@ -1,0 +1,22 @@
+{:timbre-loglevel [[#{"pinkgorilla.nrepl.*"} :warn]
+                   [#{"org.eclipse.jetty.*"} :warn]
+                   [#{"webly.*"} :info]
+                   [#{"*"} :info]]
+
+ :nrepl {:enabled true
+         :bind "0.0.0.0"
+         :port 9100}
+
+ :goldly {:lazy true
+          ; runtime
+          :autoload-clj-ns []
+          :autoload-cljs-dir  []
+          }
+
+ :devtools {:rdocument  {:storage-root "demo/rdocument/"
+                         :url-root "/api/rdocument/file/"}
+            :collections {:user [:clj "user/notebook/"]
+                          :demo [:clj "demo/notebook/"]}}
+
+ ;
+ }

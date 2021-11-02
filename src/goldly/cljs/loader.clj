@@ -3,8 +3,9 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [webly.config :refer [get-in-config]]
    [goldly.service.core :as s]
-   [goldly.explore.explore :refer [explore-dir load-file!]]
-   [goldly.explore.watch :refer [watch]]))
+   [goldly.explore.explore :refer [explore-dir load-file! load-file-or-res!]]
+   [goldly.explore.watch :refer [watch]]
+   [goldly.extension.cljs-autoload :refer [autoload-cljs-res-a]]))
 
 (defn autoload-dir []
   (get-in-config [:goldly :autoload-cljs-dir]))
@@ -45,10 +46,15 @@
 
 (defn cljs-load [filename]
   (assert (string? filename))
-  (info "loading cljs file: " filename)
-  (load-file! filename))
+  (debug "loading cljs file: " filename)
+  ;(load-file! filename)
+  (load-file-or-res! filename))
 
-(s/add {:cljs/explore cljs-explore
+(defn cljs-explore-with-res []
+  (-> (concat (cljs-explore) @autoload-cljs-res-a)
+      vec))
+
+(s/add {:cljs/explore cljs-explore-with-res ; cljs-explore
         :cljs/load cljs-load})
 
 (comment
@@ -65,6 +71,7 @@
   (explore-once "src/demo/cljs-libs")
   (cljs-explore)
   (cljs-watch)
+  (cljs-explore-with-res)
 
 ;  
   )

@@ -23,3 +23,21 @@
   (let [code (slurp filename)]
     {:filename filename
      :code code}))
+
+(defn load-file-or-res! [filename]
+  (let [r (io/resource filename)
+        code-res  (try (slurp r)
+                       (catch Exception _
+                         nil))
+        code (if code-res
+               code-res
+               (slurp filename))]
+    {:filename filename
+     :code code}))
+
+(comment
+  (-> (io/resource "goldly/lib/util.cljs")
+      slurp)
+
+  (load-file-or-res! "goldly/lib/util.cljs")
+  (load-file-or-res! "src/demo/page/info.cljs"))

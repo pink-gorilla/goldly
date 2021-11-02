@@ -70,8 +70,8 @@
       (add-routes routes))
 
     (if (empty? autoload-clj-ns)
-      (warn "no autoload-clj-ns defined!")
-      (do (info "loading clj namespaces: " autoload-clj-ns)
+      (warn "no user autoload-clj-ns defined!")
+      (do (info "loading user clj namespaces: " autoload-clj-ns)
           (require-clj-namespaces autoload-clj-ns)))
 
     (cljs-watch)
@@ -82,11 +82,13 @@
     ;  (warn "no goldly extensions defined!"))
     (run-nrepl-server (get-in-config [:nrepl]))))
 
+(defonce goldly-default-edn (atom "goldly.edn"))
+
 (defn goldly-server-run!
   [{:keys [config profile] ; a map so it can be consumed by tools deps -X
     :or {profile "jetty"
          config {}}}]
-  (let [config (add-config "goldly.edn" config)]
+  (let [config (add-config @goldly-default-edn config)]
     (load-config! config)
     (goldly-init!)
     (when (compile? profile)

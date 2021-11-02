@@ -22,7 +22,7 @@
         {:keys [enabled bind port]} config]
     (if enabled
       (do
-        (errorf "nrepl starting on %s:%s" bind port)
+        (infof "nrepl starting on %s:%s" bind port)
         (nrepl.server/start-server :bind bind
                                    :port port
                                    ;:handler (make-default-handler)
