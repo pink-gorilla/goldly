@@ -26,7 +26,7 @@
          (spit "profiles/docsci/deps.edn"))))
 
 (comment
-  (generate-bundle-config)
+  (generate-docs-config)
 
   ;
   )

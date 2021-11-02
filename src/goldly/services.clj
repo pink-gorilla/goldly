@@ -3,6 +3,7 @@
    [clojure.java.io :as io]
    [clojure.edn :as edn]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
+   ;[webly.build.lazy :as lazy]
    [goldly.service.core :as s]
    [goldly.version :refer [load-version]]
    [goldly.extension.core :refer [extension-summary extensions]]
@@ -22,23 +23,42 @@
        :data data})
     {:error (str "resource not found: " filename)}))
 
-(defn load-extension [name]
+(defn get-extension-info [name]
   (let [content (slurp ".webly/extensions.edn")
         extensions (edn/read-string content)
         e (first (filter #(= name (:name %)) extensions))]
     e))
-(defn status-sci []
+
+(defn sci-bindings []
   (edn-load-res "public/sci-cljs-bindings.edn"))
 
-(s/add {:goldly/version load-version
+(s/add {;:webly/lazy-list lazy/available this is cljs
+
+        ; compile time
+        :goldly/version #(load-version "goldly")
+        :goldly/extension-summary extension-summary
+        :goldly/extension-list extensions
+        :goldly/sci-bindings sci-bindings
+
+        :goldly/get-extension-info get-extension-info
+        :goldly/get-extension-theme ext-theme
+
+        ;runtime
         :goldly/services s/services-list
-
-        :extension/all extensions
-        :extension/summary extension-summary
-        :extension/theme ext-theme
-        :extension/load load-extension
-
-        :status/sci status-sci
         :edn/load edn-load})
 
+(comment
+    ;compile time
+  (load-version "goldly")
+  (extension-summary)
+  (extensions)
+  (sci-bindings)
+
+  (get-extension-info "ui-code")
+  (ext-theme "ui-code")
+
+  (s/services-list)
+
+;  
+  )
 

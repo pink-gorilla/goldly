@@ -29,6 +29,7 @@
                                    [k (list 'webly.build.lazy/wrap-lazy v)]) bindings))]
     (debug "make-lazy pinkie: " lazy-bindings)
     lazy-bindings))
+
 (defn add-extension-pinkie-lazy [{:keys [name
                                          pinkie]
                                   :or {pinkie {}}

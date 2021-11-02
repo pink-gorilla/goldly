@@ -1,9 +1,10 @@
 
 
+
 (defn info-c [r]
   [:div.bg-red-200.w-screen.h-screen.p-5
-   [:p.text-blue-500.text-xxl "hello, world"]
-
+   [:a.m-1 {:href "/"}  "main"]
+   [:p.text-blue-500.text-xxl "sci compile test."]
    [:p "test for compilation: " (pr-str (compile-sci "(+ 5 5)"))]])
 
-(add-page info-c :user/info)
+(add-page info-c :user/scicompile)

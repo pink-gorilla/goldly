@@ -7,10 +7,15 @@
    [:p "the real reason for this app is to test if goldy extension system is working."]
    [:p "when the binary time is appearing, it is a good start..."]
 
+   ; menu
    [:div.bg-green-300
-    [:a.m-1 {:href "/info"}  "info"]
+
+    [:a.m-1 {:href "/devtools/help"}  "devtools"]
+
+    [:a.m-1 {:href "/scicompile"}  "scicompile"]
     [:a.m-1 {:href "/error"} "error"]
-    [:a.m-1 {:href "/service"} "service test"]]
+    [:a.m-1 {:href "/service"} "service test"]
+    [:a.m-1 {:href "/lazy"} "lazyload test"]]
 
    [:h1 "binary time"]
    [clock]])

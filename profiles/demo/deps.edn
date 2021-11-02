@@ -24,7 +24,7 @@
                 ;org.pinkgorilla/ui-math {:mvn/version "0.0.8"}
                 }
    :exec-fn goldly.app/goldly-server-run!
-   :exec-args {:profile "watch"
+   :exec-args {:profile "watch2" ; warch2 has no texnx devtools
                :config "goldly-demo.edn"}}
 
 ;           

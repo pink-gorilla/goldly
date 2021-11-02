@@ -7,13 +7,9 @@
    [taoensso.timbre :as timbre :refer [debugf info error]]
    [sci.core :as sci]
    [goldly.sci.sci-types]
+  ;[goldly.sci.bindings-static :refer [ns-static]]
    [goldly-bindings-generated :refer [bindings-generated ns-generated]]
-   ;[goldly.sci.bindings-static :refer [ns-static]]
    ;[goldly.sci.lazy :refer [load-fn]]
-
-   ;[picasso.id :refer [guuid]]
-   ;[picasso.kernel.protocol :refer [kernel-eval]]
-   ;[picasso.converter :refer [->picasso]]
    ))
 
 (defn add-lazy [namespaces]
@@ -37,6 +33,7 @@
    :namespaces (add-lazy ns-generated) ; ns-static
    ;:load-fn load-fn
    })
+
 (def ctx-repl (sci/init ctx-static))
 
 #_(defmethod kernel-eval :cljs [{:keys [id code]
