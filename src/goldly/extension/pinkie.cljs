@@ -8,8 +8,9 @@
 (defn register-tag-safe [k v]
   (try
     (register-tag k v)
-    (catch js/Exception _
-      (errorf "pinkie/register-tag failed for: %s" k))))
+    (catch :default e
+      (errorf "pinkie/register-tag failed for: %s" k)
+      (errorf "exception: %s" e))))
 
 (defn add-extension-pinkie-static []
   (let [pinkie (clj/registry)]
