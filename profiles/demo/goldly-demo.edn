@@ -19,7 +19,9 @@
                          "devtools/help" :devtools
                          "devtools/scratchpad" :scratchpad
                          "devtools/viewer" :viewer
-                         "devtools/environment" :environment}
+                         "devtools/environment" :environment
+                         "devtools/pages" :pages
+                         }
                    :api {"rdocument/ns" :rdocument/ns
                          "rdocument/files" :rdocument/files
                          ["rdocument/file/" :ns "/" :name] :rdocument/file}}}

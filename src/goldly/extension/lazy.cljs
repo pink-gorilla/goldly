@@ -28,7 +28,7 @@
 (defn load-css [ext-name]
   (warn "loading css for: " ext-name)
   (go
-    (let [{:keys [error result] :as r} (<! (run {:fun :extension/theme
+    (let [{:keys [error result] :as r} (<! (run {:fun :goldly/get-extension-theme
                                                  :args [ext-name]}))]
       (infof "theme rcvd %s" ext-name)
       ;(errorf "theme for %s is: %s" ext-name result)

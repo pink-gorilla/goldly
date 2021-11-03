@@ -40,7 +40,7 @@
         :goldly/extension-list extensions
         :goldly/sci-bindings sci-bindings
 
-        :goldly/get-extension-info get-extension-info
+        :goldly/get-extension-info get-extension-info ; this is used by the lazy-extension css loader
         :goldly/get-extension-theme ext-theme
 
         ;runtime

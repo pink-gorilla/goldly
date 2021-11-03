@@ -5,13 +5,19 @@
    [pinkie.pinkie :refer [register-tag]]
    [webly.build.lazy]))
 
+(defn register-tag-safe [k v]
+  (try
+    (register-tag k v)
+    (catch js/Exception _
+      (errorf "pinkie/register-tag failed for: %s" k))))
+
 (defn add-extension-pinkie-static []
   (let [pinkie (clj/registry)]
     (if (not (empty? pinkie))
       (do (errorf "adding %s pinkie renderers: %s " (count pinkie) (keys pinkie))
           (doall (for [[k v] pinkie]
                    ;(do ;(warn "pinky register: " k v (type v) (pr-str v))
-                   (register-tag k v)
+                   (register-tag-safe k v)
                     ; )
                    )))
       (warn "no pinkie renderers in config received."))))
