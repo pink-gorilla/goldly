@@ -53,3 +53,21 @@
   (let [[_ params] event ; _ is :goldly/service
         response (run-service params)]
     (send-response ev-msg :goldly/service response)))
+
+
+; future:
+
+; [:deny :all]
+; [:allow :all]
+; [:deny #{demo/s1 demo/s2 goldly/s3}]
+; [:allow #{demo/s1 demo/s2 goldly/s3}]
+
+; (defonce permissions (atom [:deny :all]))
+
+; (defn check-permision [s]
+;  (let [[mode symbols] @permissions]
+;    (if (boolean? symbols)
+;       (= mode :allow)
+;      (if (= mode :allow)
+;          (set/includes symbols s)
+;          (not (set/includes symbols s))))))
