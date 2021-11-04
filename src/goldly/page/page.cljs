@@ -7,8 +7,8 @@
 (defn show-page
   "shows a page 
    expects: kw and route-map"
-  [kw route-map]
-  (reagent-page kw route-map))
+  [route-map]
+  (reagent-page route-map))
 
 (defn available-pages
   "currently available pages that can be used in the routing table
