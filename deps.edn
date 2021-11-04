@@ -17,7 +17,7 @@
   org.pinkgorilla/webly {:mvn/version "0.3.53"} ; web app build tool
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/ui-repl {:mvn/version "0.0.25"}
-  org.pinkgorilla/reval {:mvn/version "0.0.14"}
+  org.pinkgorilla/reval {:mvn/version "0.0.15"}
   ;org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.54"}
   org.pinkgorilla/ui-site {:mvn/version "0.0.14"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
