@@ -54,7 +54,6 @@
         response (run-service params)]
     (send-response ev-msg :goldly/service response)))
 
-
 ; future:
 
 ; [:deny :all]
