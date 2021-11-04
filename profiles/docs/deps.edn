@@ -10,7 +10,6 @@
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.13"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.12"}
         org.pinkgorilla/ui-input {:mvn/version "0.0.13"}
-        org.pinkgorilla/ui-gorilla {:mvn/version "0.3.50"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.26"}
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
