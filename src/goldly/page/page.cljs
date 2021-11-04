@@ -4,13 +4,28 @@
    [webly.web.handler :refer [reagent-page]]
    [pinkie.error :refer [error-boundary]]))
 
-(defn add-page [p kw]
-  (defmethod reagent-page kw [{:keys [route-params query-params handler] :as route}]
-    [error-boundary
-     [p route]]))
+(defn show-page
+  "shows a page 
+   expects: kw and route-map"
+  [kw route-map]
+  (reagent-page kw route-map))
 
-(defn available-pages []
+(defn available-pages
+  "currently available pages that can be used in the routing table
+   seq of page keywords"
+  []
   (->> (methods reagent-page)
        keys
        (remove #(= :default %))
        (into [])))
+
+(defn add-page
+  "add-page is exposed to sci
+   defines a new browser-based page 
+   that can be used in the routing table to define new pages"
+  [p kw]
+  (defmethod reagent-page kw [{:keys [route-params query-params handler] :as route}]
+    [error-boundary
+     [p route]]))
+
+

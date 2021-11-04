@@ -4,16 +4,18 @@
                   goldly.page.page
                   goldly.page.no-page
                   goldly.service.core]
- :cljs-bindings {'add-page goldly.page.page/add-page
+ :cljs-bindings {'add-page goldly.page.page/add-page ; depreciated - use page/add
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
                  ;'set-system-state goldly.broadcast.core/set-system-state
                  }
- :cljs-ns-bindings {'goldly {'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
+ :cljs-ns-bindings {'goldly {'compile-time compile-time
+                             'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
-                             'compile-time compile-time}
-                    'page {'add goldly.page.page/add-page
-                           'available goldly.page.page/available-pages}
+                             }
+                    'page {'available goldly.page.page/available-pages
+                           'show goldly.page.page/show-page
+                           'add goldly.page.page/add-page}
 
                     'walk {'postwalk clojure.walk/postwalk
                            'prewalk clojure.walk/prewalk
@@ -24,33 +26,5 @@
                            'stringify-keys clojure.walk/stringify-keys}}
  :lazy false
  :pinkie {;:p/goldly goldly.system.ui/system
-          }
- :snippets [{:type :pinkie
-             :category :goldly
-             :id :hello-world
-             :filename "snippets/goldly/hello.edn"}
-            {:type :goldly
-             :category :goldly
-             :id :click-counter
-             :filename "snippets/goldly/click_counter.clj"}
-            {:type :goldly
-             :category :goldly
-             :id :countdown
-             :filename "snippets/goldly/countdown.edn"}
-            #_{:type :goldly-clj
-               :category :goldly
-               :id :fortune
-               :filename "snippets/goldly/fortune.clj"}
-            {:type :goldly-clj
-             :category :goldly
-             :id :greeter
-             :filename "snippets/goldly/greeter.clj"}
-            {:type :goldly-clj
-             :category :goldly
-             :id :greeter-details
-             :filename "snippets/goldly/greeter_details.clj"}
-            {:type :goldly-clj
-             :category :goldly
-             :id :time
-             :filename "snippets/goldly/time.clj"}]}
+          }}
 

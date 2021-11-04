@@ -1,7 +1,15 @@
 
 (ns demo.greeter)
 
-(defn greeter-page []
+(defn greeter-details-page [route-data]
+  [:div
+   [:p "this shows how to do master-detail relations"]
+   [:p "Access this component only via greeter."]
+   [:p.bg-blue-300.mg-3 "the best dad in the world is: " ext]])
+
+(add-page greeter-details-page :greeter-details)
+
+(defn greeter-page [route-data]
   (let [state (r/atom {:in ""
                        :msg "Type Something..."})
         change-state (fn [s e]
