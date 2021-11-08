@@ -7,4 +7,4 @@
        "Seconds Elapsed: "
        @state])))
 
-(add-page countdown-page :demo/countdown)
+(add-page countdown-page :demo-countdown)

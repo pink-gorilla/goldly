@@ -1,14 +1,20 @@
 {:name "goldly"
  :clj-require []
  :cljs-namespace [clojure.walk
+                  applied-science.js-interop
                   goldly.page.page
                   goldly.page.no-page
-                  goldly.service.core]
+                  goldly.service.core
+                  goldly.sci.helper]
  :cljs-bindings {'add-page goldly.page.page/add-page ; depreciated - use page/add
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
                  ;'set-system-state goldly.broadcast.core/set-system-state
-                 }
+                 ;'console (.console goog/global) ; js/console
+                 ;'window js/window
+                 'js goog/global
+                 'value-of goldly.sci.helper/value-of
+                 'obj->clj goldly.sci.helper/obj->clj}
  :cljs-ns-bindings {'goldly {'compile-time compile-time
                              'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
@@ -16,6 +22,12 @@
                     'page {'available goldly.page.page/available-pages
                            'show goldly.page.page/show-page
                            'add goldly.page.page/add-page}
+
+                    'j {'get applied-science.js-interop/get
+                        'call applied-science.js-interop/call
+                        'get-in applied-science.js-interop/get-in
+                        'call-in applied-science.js-interop/call-in
+                        'obj applied-science.js-interop/obj}
 
                     'walk {'postwalk clojure.walk/postwalk
                            'prewalk clojure.walk/prewalk

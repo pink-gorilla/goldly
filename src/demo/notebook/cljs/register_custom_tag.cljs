@@ -1,9 +1,6 @@
 
 
-^:R [:p/text "h2\nkllj\njj"]
 
-;  from a clojurescript kernel, we can generate new renders easily.
-; custom renderer definition
 
 (defn bongo []
   [:div

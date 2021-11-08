@@ -8,16 +8,16 @@
   thi.ng/strf {:mvn/version "0.2.2"}
   com.rpl/specter {:mvn/version "1.1.3"}
   com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"}
-  borkdude/sci {:mvn/version "0.2.6"} ; sci compiler  
+  borkdude/sci {:mvn/version "0.2.7"} ; sci compiler  
   fipp/fipp {:mvn/version "0.6.24"} ; edn pretty printing
   resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
   hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
-
+  applied-science/js-interop  {:mvn/version "0.3.0"}
   ; core 
   org.pinkgorilla/webly {:mvn/version "0.3.53"} ; web app build tool
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.26"}
-  org.pinkgorilla/reval {:mvn/version "0.0.21"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.31"}
+  org.pinkgorilla/reval {:mvn/version "0.0.22"}
   org.pinkgorilla/ui-gorilla {:mvn/version "0.4.2"} ; needed by reval
   ;org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.54"}
   org.pinkgorilla/ui-site {:mvn/version "0.0.14"}

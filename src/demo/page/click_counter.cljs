@@ -12,4 +12,4 @@
         @state]
        " times"])))
 
-(add-page click-counter-page :demo/click-counter)
+(add-page click-counter-page :demo-click-counter)

@@ -7,7 +7,7 @@
    [:p "Access this component only via greeter."]
    [:p.bg-blue-300.mg-3 "the best dad in the world is: " ext]])
 
-(add-page greeter-details-page :greeter-details)
+(add-page greeter-details-page :demo-greeter-details)
 
 (defn greeter-page [route-data]
   (let [state (r/atom {:in ""
@@ -26,7 +26,7 @@
         [:p.m-2.p-1.border.border-round (str "goto person: " (:in @state))]]
        [:div.text-2xl (:msg @state)]])))
 
-(add-page greeter-page :greeter)
+(add-page greeter-page :demo-greeter)
 
 
 

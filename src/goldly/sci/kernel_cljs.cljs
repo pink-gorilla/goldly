@@ -4,6 +4,7 @@
       ;:cljs 
    [cljs.core.async :refer [>! chan close!] :refer-macros [go]]
            ; )
+   [goog.object :as g]
    [taoensso.timbre :as timbre :refer [debugf info error]]
    [sci.core :as sci]
    [goldly.sci.sci-types]
@@ -27,10 +28,23 @@
       {:error  {:root-ex (.-data e)
                 :err (.-message e)}})))
 
+(error "goog glboal: " goog/global)
+
 (def ctx-static
   {:bindings (assoc bindings-generated 'compile-sci compile-code)
-   :preset {:termination-safe true}
+   :preset {:termination-safe false} ; was: true
    :namespaces (add-lazy ns-generated) ; ns-static
+
+   :classes  {'js goog/global :allow :all} ; In JS hosts, to allow interop with anything, use the following config:
+   ;:classes {'js js/goog.global
+             ;:allow :all
+            ; 'js goog.global ; this returns the same as window.
+            ; 'console js/console
+            ; 'String js/String
+             ;'js2 js/window
+             ;'window js/window
+    ;         }
+   :disable-arity-checks true ; from clerk
    ;:load-fn load-fn
    })
 
