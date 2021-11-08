@@ -22,20 +22,21 @@
 
 (defn compile-code [code]
   (try
-    {:result (sci/eval-string code ctx-repl)}
+    {:result (sci/eval-string* ctx-repl code)
+        ;(sci/eval-string code ctx-repl)
+     }
     (catch :default e
       ;(error "sci compile-code --]" code "[-- ex: " e)
       {:error  {:root-ex (.-data e)
                 :err (.-message e)}})))
-
-(error "goog glboal: " goog/global)
 
 (def ctx-static
   {:bindings (assoc bindings-generated 'compile-sci compile-code)
    :preset {:termination-safe false} ; was: true
    :namespaces (add-lazy ns-generated) ; ns-static
 
-   :classes  {'js goog/global :allow :all} ; In JS hosts, to allow interop with anything, use the following config:
+   :classes  {'js js/window :allow :all}
+   ;:classes  {'js goog/global :allow :all} ; In JS hosts, to allow interop with anything, use the following config:
    ;:classes {'js js/goog.global
              ;:allow :all
             ; 'js goog.global ; this returns the same as window.

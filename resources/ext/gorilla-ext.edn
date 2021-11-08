@@ -12,7 +12,7 @@
                  ;'set-system-state goldly.broadcast.core/set-system-state
                  ;'console (.console goog/global) ; js/console
                  ;'window js/window
-                 'js goog/global
+                ; 'js2 goog/global
                  'value-of goldly.sci.helper/value-of
                  'obj->clj goldly.sci.helper/obj->clj}
  :cljs-ns-bindings {'goldly {'compile-time compile-time
