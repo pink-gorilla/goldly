@@ -10,12 +10,12 @@
    ; menu
    [:div.bg-green-300
 
-    [:a.m-1 {:href "/devtools/help"}  "devtools"]
+    [:a.m-2 {:href "/devtools/help"}  "devtools"]
 
-    [:a.m-1 {:href "/scicompile"}  "scicompile"]
-    [:a.m-1 {:href "/error"} "error"]
-    [:a.m-1 {:href "/service"} "service test"]
-    [:a.m-1 {:href "/lazy"} "lazyload test"]]
+    [:a.m-2 {:href "/scicompile"}  "scicompile"]
+    [:a.m-2 {:href "/error"} "error"]
+    [:a.m-2 {:href "/service"} "service-test"]
+    [:a.m-2 {:href "/lazy"} "lazyload-test"]]
 
    [:h1 "binary time"]
    [clock]])

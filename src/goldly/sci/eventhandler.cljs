@@ -1,4 +1,4 @@
-(ns goldly.system.eventhandler
+(ns goldly.sci.eventhandler
   (:require
    [clojure.string :as str]
    [taoensso.timbre :as timbre :refer-macros [debug debugf info infof error]]))
@@ -24,22 +24,22 @@
        (filter (comp edn? second))
        (into {})))
 
-(defn eventhandler-fn [state fun]
+(defn eventhandler-fn [fun]
   (fn [e & args]
     (try
-      (info "running eventhandler fn with args: " args) ; fun  - fun displays source
+      ;(info "eventhandler-fn args: " args) ; fun  - fun displays source
       ;(info "running eventhandler with state: " @state)
       (.preventDefault e)
       (.stopPropagation e)
-      (let [e-norm (norm-evt (.-target e))
-            _   (debug "eventhandler e-norm: " e-norm "args: " args)
-            fun-args [e-norm @state]
+      (let [t (.-target e)
+            v (.-value t)
+            e-norm (norm-evt t)
+            _   (info "eventhandler v:" v  " e-norm: " e-norm " args: " args)
+            fun-args [v e-norm] ; todo: allow additional properties , not only FUN
             fun-args (if (nil? args)
                        fun-args
                        (into [] (concat fun-args args)))
             _ (debug "fun-args: " fun-args)]
-        (->> (apply fun fun-args)
-             (reset! state))
-        (info "new state: " @state))
-      (catch :default e
-        (.log js/console "eventhandler-fn exception: " e)))))
+        (apply fun fun-args))
+      (catch :default err
+        (error "eventhandler-fn exception: " err)))))
