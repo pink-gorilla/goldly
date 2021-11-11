@@ -12,11 +12,11 @@
   fipp/fipp {:mvn/version "0.6.24"} ; edn pretty printing
   resauce/resauce {:mvn/version  "0.2.0"} ; jar resources
   hawk/hawk {:mvn/version "0.2.11"} ; file watcher  ;:exclusions [[net.java.dev.jna/jna]] ; this breaks tech.ml.dataset and libpythonclj
-  applied-science/js-interop  {:mvn/version "0.3.0"}
+  applied-science/js-interop  {:mvn/version "0.3.1"}
   ; core 
   org.pinkgorilla/webly {:mvn/version "0.3.53"} ; web app build tool
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.31"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}
   org.pinkgorilla/reval {:mvn/version "0.0.25"}
   org.pinkgorilla/ui-gorilla {:mvn/version "0.4.2"} ; needed by reval
   ;org.pinkgorilla/nrepl-middleware {:mvn/version "0.3.54"}

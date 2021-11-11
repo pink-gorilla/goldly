@@ -16,12 +16,12 @@
                          "service" :user/service
 
                          ;devtools
-                         "devtools/help" :devtools
+                         "devtools/" :devtools
+                         "devtools/pages" :pages
                          "devtools/scratchpad" :scratchpad
                          "devtools/viewer" :viewer
                          "devtools/environment" :environment
-                         "devtools/pages" :pages
-                         }
+                         "devtools/theme" :theme}
                    :api {"rdocument/ns" :rdocument/ns
                          "rdocument/files" :rdocument/files
                          ["rdocument/file/" :ns "/" :name] :rdocument/file}}}

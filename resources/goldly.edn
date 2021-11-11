@@ -36,10 +36,13 @@
           ; runtime
           :autoload-clj-ns []
           :autoload-cljs-dir []
-          :routes {:app {"" :devtools
+          :routes {:app {"devtools/pages" :pages
                          "devtools/scratchpad" :scratchpad
                          "devtools/viewer" :viewer
-                         "devtools/environment" :environment}
+                         "devtools/environment" :environment
+                         "devtools/theme" :theme
+                         "devtools" :devtools
+                         }
                    :api {"rdocument/ns" :rdocument/ns
                          "rdocument/files" :rdocument/files
                          ["rdocument/file/" :ns "/" :name] :rdocument/file ; http://localhost:8000/api/viewer/file/demo.playground.cljplot/vega-spec.edn
