@@ -1,7 +1,7 @@
 (ns goldly.extension.pinkie
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [webly.writer :refer [write-status]]))
+   [modular.writer :refer [write-status]]))
 
 (defonce pinkie-atom (atom {}))
 

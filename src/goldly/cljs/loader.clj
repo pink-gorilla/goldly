@@ -1,7 +1,7 @@
 (ns goldly.cljs.loader
   (:require
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
-   [webly.config :refer [get-in-config]]
+   [modular.config :refer [get-in-config]]
    [goldly.service.core :as s]
    [goldly.explore.explore :refer [explore-dir load-file! load-file-or-res!]]
    [goldly.explore.watch :refer [watch]]
@@ -61,9 +61,9 @@
   (apply concat '(["helper.cljs"] ["error.cljs" "main.cljs" "info.cljs"]))
 
   ; test different configs:
-  (swap! webly.config/config-atom
+  (swap! modular.config/config-atom
          #(assoc-in % [:goldly :autoload-dir] "src/demo/cljs"))
-  (swap! webly.config/config-atom
+  (swap! modular.config/config-atom
          #(assoc-in % [:goldly :autoload-dir] ["src/demo/cljs-libs" "src/demo/cljs"]))
   (autoload-dir)
 

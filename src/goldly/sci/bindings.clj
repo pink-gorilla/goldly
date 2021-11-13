@@ -4,9 +4,9 @@
    [clojure.string :as str]
    [taoensso.timbre :refer [trace debug debugf info infof error]]
    [fipp.clojure]
-   [webly.config :refer [get-in-config]]
-   [webly.date :refer [now-str]]
-   [webly.writer :refer [write-target write-status]]))
+   [modular.config :refer [get-in-config]]
+   [modular.date :refer [now-str]]
+   [modular.writer :refer [write-target write-status]]))
 
 ; config management
 

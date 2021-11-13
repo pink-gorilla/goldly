@@ -1,8 +1,8 @@
 (ns goldly.extension.core
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error errorf]]
-   [webly.writer :refer [write-status]]
-   [webly.config :refer [config-atom]]))
+   [modular.writer :refer [write-status]]
+   [modular.config :refer [config-atom]]))
 
 ;; config
 (defn lazy-enabled []

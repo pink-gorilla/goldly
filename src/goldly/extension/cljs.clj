@@ -1,7 +1,7 @@
 (ns goldly.extension.cljs
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [webly.config :refer [config-atom]]
+   [modular.config :refer [config-atom]]
    [goldly.sci.bindings :refer [goldly-namespaces]]
    [goldly.extension.core :refer [lazy-enabled ext-lazy?]]
    [goldly.extension.sci :refer [add-extension-sci add-extension-sci-lazy]]

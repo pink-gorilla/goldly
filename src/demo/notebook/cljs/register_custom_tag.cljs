@@ -12,3 +12,6 @@
 
 ; render custom tag from cljs
 ^:R [:p/bongo]
+
+; change theme via sci.
+(rf/dispatch [:css/set-theme-component :codemirror "mdn-like"])

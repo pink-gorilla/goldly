@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [clojure.java.io :as io]
-   [webly.config :refer [get-in-config]]
+   [modular.config :refer [get-in-config]]
    [notebook.rewriteclj.parser :refer [file->notebook]]
    [goldly.explore.explore :refer [explore-dir]]
    [goldly.explore.watch :refer [watch]]

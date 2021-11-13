@@ -3,8 +3,8 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [clojure.edn :as edn]
    [resauce.core :as rs]
-   [webly.writer]
-   [webly.config :refer [config-atom]]
+   [modular.writer]
+   [modular.config :refer [config-atom]]
 
    ; build time
    [goldly.extension.theme :refer [add-extension-theme]]

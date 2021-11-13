@@ -69,7 +69,7 @@
    :exec-args {:profile "ci"
                :config nil}}
 
-  :goldly ; used to create bundle
+  :goldly ; used to create goldly-docs jar
   {:extra-deps {}
    :exec-fn goldly.app/goldly-server-run!
    :exec-args {:profile "watch2"

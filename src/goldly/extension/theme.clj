@@ -1,7 +1,7 @@
 (ns goldly.extension.theme
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [webly.config :refer [config-atom]]
+   [modular.config :refer [config-atom]]
    [goldly.extension.core :refer [ext-lazy? get-extension]]))
 
 (defn theme-split [theme]
