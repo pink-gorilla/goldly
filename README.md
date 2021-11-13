@@ -14,14 +14,13 @@
   - quil for 2d dynamic animations
 - visualizers can be easily extended. you can access the entire npm + clojurescript ecosystem.
   An example for a simple ui extension is [ui-binaryclock](https://github.com/pink-gorilla/ui-binary-clock)
-- goldly systems and the clojurescript kernel can be developed/used in a [Pinkgorilla Notebook](https://github.com/pink-gorilla/notebook)
 - visualize edn datastructures (either from a repl or in the web-app (via scratchpad) 
 
 ## demo apps
 
 - [demo goldly](https://github.com/pink-gorilla/demo-goldly)
   **NEWBEES: START WITH DEMO-GOLDLY!**
-- [trateg](https://github.com/clojure-quant/trateg) financial market backtesting
+- [trateg](https://github.com/clojure-quant/trateg) quantitative backtesting framework
 - [EDGAR](https://github.com/clojure-quant/edgar) visualise mutual fund holdings
 
 
@@ -60,44 +59,18 @@ You can:
 - add custom systems to goldly easily.
 - use your clj functions to render ui visualizations.
 
-### with tools.deps
-
 Add this alias to your deps.edn:
 ```
  :goldly
   {:extra-deps {org.pinkgorilla/goldly-docs {:mvn/version "RELEASE"}}
    :exec-fn goldly-docs/run
-   :exec-args {:config {:goldly {:autoload-clj-ns [systems.snippet-registry  ; if you want snippet browser started
-                                           systems.snippet-scratchpad
-                                           demo.hello-user
-                                              ]}}}}
+   :exec-args {:config nil}}}
 ```
-then run it with `clojure -X:goldly`.
+then run it with `clojure -X:goldly-docs`.
 
 The source to the demo.hello-user system is in `src/demo`
 
 An example of project that uses goldly this way is: [trateg](https://github.com/clojure-quant/trateg)
-
-
-### with leiningen
-
-In project.clj add the goldly-docs dependency: `[org.pinkgorilla/goldly "0.2.78"]`
-then add a goldly alias:
-
-```
-{:alias
-   "goldly"
-   ["run" "-m" "goldly-docs.run" "goldly-user.edn"]}
-
-```
-Add a goldly-user.edn file:
-```
-{:goldly {:autoload-clj-ns [systems.snippet-registry  ; if you want snippet browser started
-                    systems.snippet-scratchpad
-                    demo.hello-user]}}
-```
-
-run with: `lein goldly`
 
 ## Run - in your  project **with custom ui-renderers**
 
@@ -113,7 +86,6 @@ add the ui extensions to the javascript bundle.
 
 This example adds gorilla-ui to goldly:
 
-### for tools.deps
 Add this alias to your deps.edn:
 
 ```
@@ -129,25 +101,10 @@ Add this alias to your deps.edn:
 [ui-quil](https://github.com/pink-gorilla/ui-quil)
 both use deps.edn to build a custom goldly bundel (that includes the library that gets built).
 
-### for leiningen
 
-See [demo-goldly-docs](https://github.com/pink-gorilla/demo-goldly-docs) for the complete project.
-Add the alias to project.clj
-```
-{:alias
-   "goldly"
-   ["with-profile" "+goldly" "run" "-m" "goldly-server.app" "goldly-gorillaui.edn" "watch"]}
+## for goldly developers 
 
-```
-Add a goldly-gorillaui.edn:
-```
-{:goldly {}}
-```
-
-UI Extension [ui-vega](https://github.com/pink-gorilla/ui-vega) uses leiningen to run
-goldly with a custom build bundel.
-
-## Run - cloned git repo
+Run inside cloned goldly git repo.
 
 This option is mainly there for development of goldly. 
 For regular use, the long compile-times are not really sensible.
@@ -157,9 +114,6 @@ Clone this repo, then:
 run goldly **with bundel ui-extensions**: `clojure -X:goldly`
 
 run goldly **without ui-extensions** `clojure -X:goldly-core`
-
-The source code of the registry systems is in `src/systems`.
-The snippets are in `resources/snippets/`
 
 
 Compile and run:
@@ -176,8 +130,6 @@ cd profiles/docs
 ./docs-compile.sh
 clojure -X:run
 ```
-
-# for goldly developers
 
 core
 ```
@@ -201,9 +153,3 @@ test
 
 You can get and set the scratchpad data via http api.
 Please execute `./script/scratchpad-get.sh` or `./script/scratchpad-set.sh`
-
-# todo
-
-Add more widgets, and have syntax similar to shiny:
-http://gallery.htmlwidgets.org/
-
