@@ -11,7 +11,7 @@
   applied-science/js-interop  {:mvn/version "0.3.1"}
   ; core 
   org.pinkgorilla/webly {:mvn/version "0.3.55"} ; web app build tool
-  org.pinkgorilla/reval {:mvn/version "0.0.29"}
+  org.pinkgorilla/reval {:mvn/version "0.0.30"}
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}
   org.pinkgorilla/ui-gorilla {:mvn/version "0.4.2"} ; needed by reval
