@@ -1,0 +1,130 @@
+{:paths ["script"
+         "target/node_modules"]
+ :deps {babashka/fs {:mvn/version "0.1.1"}
+        ;borkdude/gh-release-artifact
+       ; {:git/url "https://github.com/borkdude/gh-release-artifact"
+       ;  :sha "2f8898d84126a4e922c490f8614211a8b0cf67cd"}
+       ; com.github.liquidz/antq {:mvn/version "RELEASE"}
+       ; 
+        }
+
+ :tasks {:requires [;deps 
+                    webly
+                    [clojure.edn :as edn]
+                    [babashka.fs :as fs]]
+         ; dev tools
+         lint (webly/clojure "goldly" "-M:lint" "src" "../oauth2" "../webserver")
+         cljfmt-check (webly/clojure "goldly" "-M:cljfmt" "check" "src" "../oauth2" "../webserver")
+         cljfmt-fix (webly/clojure "goldly" "-M:cljfmt" "fix" "src" "../oauth2" "../webserver")
+         deps-tree (webly/clojure "goldly" "-X:deps" "tree")
+         outdated (webly/clojure "goldly" "-M:outdated")
+
+         ; build
+         clean (do (webly/clean-project ".")
+                   (webly/clean-project "./demo")
+                   (webly/clean-project "./demo-repl")
+                   (webly/clean-project "./goldly")
+                   (webly/clean-project "./goldly-docs"))
+         tailwind-girouette-usage (webly/clojure "demo-webly" "-X:tailwind-girouette-usage")
+         tailwind-girouette-webly (webly/clojure "demo-webly" "-X:tailwind-girouette-webly")
+         npm-install (webly/run "demo-webly" "demo-webly" "npm-install")
+         build-ci (webly/run "demo-webly" "demo-webly" "ci")
+         copy-resources (shell {:dir "demo-webly"} "../script/copy_res.sh")
+         get-fonts  (shell {:dir "demo-webly"} "../script/get-fonts.sh")
+   
+         build {:depends [npm-install
+                          build-ci
+                          tailwind-girouette-webly
+                          copy-resources
+                          get-fonts
+                          ]
+                :task (shell "echo" "cljs bundle has been built!")}
+
+         ; tests
+         test-clj (webly/clojure "demo-webly" "-M:test-clj")
+         test-cljs (shell {:dir "demo-webly"} "npm" "test")
+
+         ;; CI
+         ci-check {:depends [cljfmt-check
+                             build
+                             test-clj
+                             test-cljs]
+                   :task (shell "echo" "ci checks are ok!")}
+
+         commit-check {:doc "if this succeeds, then the github ci pipeline will work too."
+                       :depends [clean
+                                 cljfmt-fix
+                                 ci-check]
+                       :task (shell "echo" "all good - you can push to github")}
+
+
+         ;; JAR 
+         jar {:doc "Builds the jar"
+              :task (webly/clojure "demo-webly" "-T:build" "jar")}
+
+         clojars {:doc "Deploys the jar to clojars"
+                  :task (webly/clojure "demo-webly" "-T:build" "deploy")}
+
+         tag {:doc "Tags release and pushes tag to Github."
+              :task (let [version (-> (slurp "demo-webly/resources/META-INF/pink-gorilla/webly/meta.edn")
+                                      edn/read-string
+                                      :version)
+                          tag (str "v" version)]
+                      (shell "git tag" tag)
+                      (shell "git push origin" tag))}
+
+         ci-deploy {:doc "Deploys the jar to clojars"
+                 ;; ensure sequential order becauce tag reads from info.edn made
+                 ;; by build.clj
+                    :task (do
+                            (run 'jar)
+                            (run 'clojars)
+                            (run 'tag))}
+
+         jar-extract {:doc "Extracts generated jar (for debugging)"
+                      :task (shell {:dir "demo-webly/target"} "fastjar" "xf" "webly-0.4.516.jar")}
+
+         ;; devtest
+
+         devtest-webserver-https (webly/clojure "webserver" "-X:webserver")
+
+         ;; demos
+
+         demo-webly {:doc "webly demo with shadow-cljs watch"
+                     :task (do  (run 'tailwind-girouette-webly)
+                                (webly/run "demo-webly" "demo-webly" "watch2"))}
+         demo-webly-tenx {:doc "webly demo with shadow-cljs watch"
+                          :task (do  (run 'tailwind-girouette-webly)
+                                     (webly/run "demo-webly" "demo-webly" "watch"))}
+         demo-compile {:doc "compile webly demo javascript"
+                       :task (webly/run "demo-webly" "demo-webly" "release")}
+         demo-jetty {:doc "serve compiled webly demo javascript with jetty"
+                     :task (webly/run "demo-webly" "demo-webly" "jetty")}
+
+         req-github {:doc "web requests to github"
+                     :task (webly/clojure "demo-repl" "-X:web-requests-github")}
+         req-google (webly/clojure "demo-repl" "-X:web-requests-google")
+         req-xero (webly/clojure "demo-repl" "-X:web-requests-xero")
+
+
+         copy-static {:doc "Prepares the static page"
+                      :task (do (fs/delete-tree "docs")
+                                (fs/create-dirs "docs/r/webly")
+                                (fs/create-dirs "docs/r")
+                                (fs/copy-tree "demo-webly/target/webly/public" "docs" {:replace-existing true})
+                                (fs/copy-tree "demo-webly/target/node_modules/public" "docs/r" {:replace-existing true})
+                                (fs/copy-tree "demo-webly/target/res/public" "docs/r" {:replace-existing true})
+
+                                )}
+         update-static {:doc "Compiles Bundel and copies static"
+                        :task (do (run 'clean)
+                                  (run 'npm-install)
+                                  (run 'demo-compile)
+                                  (run 'tailwind-girouette-webly)
+                                  (run 'copy-resources)
+                                  (run 'get-fonts)
+                                  (run 'copy-static))}
+
+
+ ;        
+         }}
