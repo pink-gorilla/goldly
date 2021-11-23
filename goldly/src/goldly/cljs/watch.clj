@@ -1,10 +1,10 @@
-(ns goldly.explore.watch
+(ns goldly.cljs.watch
   (:require
    [clojure.java.io :as io]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [hawk.core :as hawk]
    [webly.ws.core :refer [send! send-all! send-response]]
-   [goldly.explore.explore :refer [load-file!]]))
+   [goldly.cljs.explore :refer [load-file!]]))
 
 (defn to-canonical [path]
   (->>
@@ -44,6 +44,3 @@
       (hawk/watch! {:watcher :polling}
                    [{:paths watch-paths
                      :handler (partial process-file-change event-name root)}]))))
-
-
-

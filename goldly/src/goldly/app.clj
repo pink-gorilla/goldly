@@ -15,10 +15,10 @@
    [goldly.extension.discover :as d]
    [goldly.extension.pinkie :refer [available]]
    [goldly.sci.bindings :refer [generate-bindings]]
+   [goldly.cljs.loader :refer [generate-cljs-autoload cljs-watch]]
 
    ; runtime
    [goldly.routes] ; side effects
-   [goldly.cljs.loader :refer [cljs-watch]]
    [goldly.ws-connect :refer [start-ws-conn-watch]]
    [goldly.service.core]
    [goldly.service.handler]
@@ -41,7 +41,8 @@
     ;  (do (info "loading extensions from ns: " extensions)
     ;      (require-namespaces extensions))
     ;  (warn "no goldly extensions defined!"))
-    (generate-bindings)))
+    (generate-bindings)
+    (generate-cljs-autoload)))
 
 (defn add-routes [routes]
   (let [m (fn [r]
@@ -98,11 +99,11 @@
       (goldly-run!))
     (webly-run! profile config)))
 
-(defn -main ; for lein alias
-  ([]
-   (goldly-server-run! {}))
-  ([config]
-   (goldly-server-run! {:config config}))
-  ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
-   (goldly-server-run! {:profile profile
-                        :config config})))
+#_(defn -main ; for lein alias
+    ([]
+     (goldly-server-run! {}))
+    ([config]
+     (goldly-server-run! {:config config}))
+    ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
+     (goldly-server-run! {:profile profile
+                          :config config})))

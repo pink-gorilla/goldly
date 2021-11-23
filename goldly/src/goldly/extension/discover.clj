@@ -17,21 +17,6 @@
 
    [goldly.extension.core :refer [save-extensions]]))
 
-#_(defn resource-dir-paths [path]
-    (let [parents (map str (rs/resources path))]
-    ;(warn "parents: " (pr-str parents))
-      (for [url (rs/resource-dir path)]
-        (let [prefix (first (filter (partial str/starts-with? url) parents))]
-          (str path (subs (str url) (count (str prefix))))))))
-
-#_(defn resource-dir [path]
-    (if (not (= path "module-info.class")) ; (rs/directory? path))
-      (rs/resource-dir path)
-      []))
-
-#_(defn recursive-resource-paths [path]
-    (tree-seq (comp seq resource-dir) resource-dir-paths path))
-
 (defn add-extension [{:keys [name] :as extension}]
   (debug "adding extension: " name)
    ; build-time
@@ -39,7 +24,6 @@
   (add-extension-cljs extension)
 
   ;run-time
-  ;(add-extension-snippets extension)
   (add-extension-cljs-autoload extension)
   (add-extension-autoload-clj-ns extension)
   (add-extension-clj-require extension))

@@ -23,13 +23,11 @@
    [:h1 "binary time"]
    [clock]])
 
-
-
 (defn main-page [{:keys [handler route-params query-params] :as route}]
 
   [site/main-with-header
    ;[:div "header"]
-   header  
+   header
    30
    [main-body]])
 

@@ -14,11 +14,12 @@
                     [babashka.fs :as fs]]
          ; dev tools
          lint (webly/clojure "goldly" "-M:lint"
-                             "."  "../demo")  ; "../goldly-docs" nothing to lint in goldly-docs
+                             "." ; "../goldly-test"
+                             )  ; "../goldly-docs" nothing to lint in goldly-docs
          cljfmt-check (webly/clojure "goldly" "-M:cljfmt" "check"
-                                     "." "../goldly-docs" "../demo")
+                                     "." "../goldly-docs" "../goldly-test")
          cljfmt-fix (webly/clojure "goldly" "-M:cljfmt" "fix"
-                                   "." "../goldly-docs" "../demo")
+                                   "." "../goldly-docs" "../goldly-test")
          deps-tree (webly/clojure "goldly" "-X:deps" "tree")
          outdated (webly/clojure "goldly" "-M:outdated")
 
@@ -30,14 +31,15 @@
                    (webly/clean-project "./goldly-docs"))
          npm-install (webly/run "goldly-docs" "goldly-docs" "npm-install")
          build-ci (webly/run "goldly-docs" "goldly-docs" "ci")
-         copy-resources (shell {:dir "goldly-docs"} "../script/copy_res.sh")
-         get-fonts  (shell {:dir "goldly-docs"} "../script/get-fonts.sh")
+         ;copy-resources (shell {:dir "goldly-docs"} "../script/copy_res.sh")
+         ;get-fonts  (shell {:dir "goldly-docs"} "../script/get-fonts.sh")
 
          build {:depends [npm-install
                           build-ci
-                          tailwind-girouette-webly
-                          copy-resources
-                          get-fonts]
+                          ;tailwind-girouette-webly
+                          ;copy-resources
+                          ;get-fonts
+                          ]
                 :task (shell "echo" "cljs bundle has been built!")}
 
          ; tests
@@ -66,7 +68,7 @@
                   :task (webly/clojure "goldly-docs" "-T:build" "deploy")}
 
          tag {:doc "Tags release and pushes tag to Github."
-              :task (let [version (-> (slurp "goldly-docs/resources/META-INF/pink-gorilla/webly/meta.edn")
+              :task (let [version (-> (slurp "goldly-docs/resources/META-INF/pink-gorilla/goldly/meta.edn")
                                       edn/read-string
                                       :version)
                           tag (str "v" version)]
@@ -86,7 +88,7 @@
 
          ;; devtest
 
-         devtest-webserver-https (webly/clojure "webserver" "-X:webserver")
+        ; devtest-webserver-https (webly/clojure "webserver" "-X:webserver")
 
          ;; goldly-test
          goldly-test {:doc "goldly-test with shadow-cljs watch"
@@ -106,20 +108,22 @@
          goldly-docs-jetty {:doc "serve compiled goldlly docs javascript with jetty"
                             :task (webly/run "goldly-docs" "goldly" "jetty")}
 
-
+         ; STATIC PAGE
 
          copy-static {:doc "Prepares the static page"
                       :task (do (fs/delete-tree "docs")
-                                (fs/create-dirs "docs/r/webly")
+                                ;(fs/create-dirs "docs/r/webly")
                                 (fs/create-dirs "docs/r")
                                 (fs/copy-tree "goldly-docs/target/webly/public" "docs" {:replace-existing true})
-                                (fs/copy-tree "goldly-docs/target/node_modules/public" "docs/r" {:replace-existing true})
-                                (fs/copy-tree "goldly-docs/target/res/public" "docs/r" {:replace-existing true}))}
+                                ;(fs/copy-tree "goldly-docs/target/node_modules/public" "docs/r" {:replace-existing true})
+                                ;(fs/copy-tree "goldly-docs/target/res/public" "docs/r" {:replace-existing true})
+                                )}
+         
          update-static {:doc "Compiles Bundel and copies static"
                         :task (do (run 'clean)
                                   (run 'npm-install)
                                   (run 'demo-compile)
-                                  (run 'tailwind-girouette-webly)
+                                  ;(run 'tailwind-girouette-webly)
                                   (run 'copy-resources)
                                   (run 'get-fonts)
                                   (run 'copy-static))}

@@ -3,10 +3,20 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [modular.config :refer [get-in-config]]
    [modular.file.explore :refer [explore-dir]]
+   [modular.writer :refer [write-target write-status]]
    [goldly.service.core :as s]
-   [goldly.explore.explore :refer [load-file! load-file-or-res!]]
-   [goldly.explore.watch :refer [watch]]
+   [goldly.cljs.explore :refer [load-file-or-res!]]
+   [goldly.cljs.watch :refer [watch]]
    [goldly.extension.cljs-autoload :refer [autoload-cljs-res-a]]))
+
+;; LOAD
+
+(defn cljs-load [filename]
+  (assert (string? filename))
+  (debug "loading cljs file: " filename)
+  (load-file-or-res! filename))
+
+;; EXPLORE ONCE
 
 (defn autoload-dir []
   (get-in-config [:goldly :autoload-cljs-dir]))
@@ -37,6 +47,16 @@
    explore-once
    #(warn "no cljs [:goldly :autoload-dir] defined!")))
 
+(defn cljs-explore-with-res []
+  (-> (concat @autoload-cljs-res-a (cljs-explore))
+      vec))
+
+(defn generate-cljs-autoload []
+  (let [d (cljs-explore)]
+    (write-target "sci-cljs-autoload" d)))
+
+;; WATCH
+
 (defn watch-dir [dir]
   (watch dir :goldly/cljs-sci-reload))
 
@@ -45,15 +65,7 @@
    watch-dir
    nil))
 
-(defn cljs-load [filename]
-  (assert (string? filename))
-  (debug "loading cljs file: " filename)
-  ;(load-file! filename)
-  (load-file-or-res! filename))
-
-(defn cljs-explore-with-res []
-  (-> (concat @autoload-cljs-res-a (cljs-explore))
-      vec))
+;; SERVICES
 
 (s/add {:cljs/explore cljs-explore-with-res ; cljs-explore
         :cljs/load cljs-load})
@@ -66,6 +78,7 @@
          #(assoc-in % [:goldly :autoload-dir] "src/demo/cljs"))
   (swap! modular.config/config-atom
          #(assoc-in % [:goldly :autoload-dir] ["src/demo/cljs-libs" "src/demo/cljs"]))
+
   (autoload-dir)
 
   (explore-once "src/demo/cljs")

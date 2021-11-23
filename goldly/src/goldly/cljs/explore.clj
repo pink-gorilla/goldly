@@ -1,4 +1,4 @@
-(ns goldly.explore.explore
+(ns goldly.cljs.explore
   (:require
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [modular.resource.load :refer [slurp-res]]))

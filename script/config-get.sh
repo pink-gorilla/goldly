@@ -1,5 +1,5 @@
 #!/bin/sh
-curl  http://localhost:8000/api/config \
+curl  http://localhost:8080/api/config \
      -H 'Connection: keep-alive' \
      -H 'Pragma: no-cache' \
      -H 'Cache-Control: no-cache' \

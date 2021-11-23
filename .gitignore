@@ -30,3 +30,5 @@ goldly-docs/target/
 profiles/docsci/node_modules/
 profiles/docsci/target/
 profiles/docsci/deps.edn
+
+docs/
