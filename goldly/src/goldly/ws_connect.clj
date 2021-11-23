@@ -1,7 +1,7 @@
 (ns goldly.ws-connect
   (:require
    [taoensso.timbre :as log :refer [tracef debug debugf info infof warn error errorf]]
-   [webly.ws.core :refer [send! send-response watch-conn]]
+   [modular.ws.core :refer [send! send-response watch-conn]]
    ;[goldly.component.load :refer [get-index-response]]
    ))
 

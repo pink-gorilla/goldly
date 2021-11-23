@@ -1,6 +1,6 @@
 (ns goldly.page.no-page
   (:require
-   [webly.web.handler :refer [reagent-page]]
+   [frontend.page :refer [reagent-page]]
    [re-frame.core :as rf]))
 
 (defn no-page []

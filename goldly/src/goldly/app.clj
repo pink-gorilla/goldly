@@ -8,7 +8,7 @@
 
    ; webly build-tool
    [webly.profile :refer [compile? server?]]
-   [webly.user.app.app :refer [webly-run!]]
+   [webly.app.app :refer [webly-run!]]
 
    ; compile time
    [goldly.version :refer [print-version]]

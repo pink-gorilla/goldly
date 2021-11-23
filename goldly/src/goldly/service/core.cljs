@@ -2,8 +2,8 @@
   (:require
    [taoensso.timbre :refer-macros [trace debug debugf info infof warnf error errorf]]
    [cljs.core.async :refer [>! chan close! put!] :refer-macros [go]]
-   [webly.ws.core :refer [send!]]
-   [webly.user.notifications.core :as n]
+   [modular.ws.core :refer [send!]]
+   [frontend.notifications.core :as n]
    [goldly.service.result :refer [update-atom-where]]))
 
 (defn print-result [[event-type data]]

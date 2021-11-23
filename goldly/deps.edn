@@ -11,11 +11,12 @@
   applied-science/js-interop  {:mvn/version "0.3.1"}
   ; core 
   org.pinkgorilla/modular {:mvn/version "0.0.17"} ; TODO: REMOVE.
-  org.pinkgorilla/webly {:mvn/version "0.3.55"} ; web app build tool
-  ;org.pinkgorilla/reval {:local/root "../../reval" :deps/manifest :deps}
-  org.pinkgorilla/reval {:mvn/version "0.0.32"}
+  ; org.pinkgorilla/webly {:mvn/version "0.3.55"} 
+  org.pinkgorilla/webly {:mvn/version "0.4.555"} ; web app build tool
+  org.pinkgorilla/reval {:local/root "../../reval" :deps/manifest :deps}
+  ;org.pinkgorilla/reval {:mvn/version "0.0.32"}
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
-  org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.36"}
   org.pinkgorilla/ui-gorilla {:mvn/version "0.4.2"} ; needed by reval
   org.pinkgorilla/ui-site {:mvn/version "0.0.15"}
   org.pinkgorilla/ui-code {:mvn/version "0.0.28"}

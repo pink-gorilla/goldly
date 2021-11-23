@@ -2,8 +2,8 @@
   (:require
    [taoensso.timbre :refer [trace debug info error]]
    [ring.util.response :as res]
-   [webly.web.middleware :refer [wrap-api-handler]]
-   [webly.web.handler :refer [add-ring-handler]]
+   [modular.webserver.middleware.api :refer [wrap-api-handler]]
+   [modular.webserver.handler.registry :refer [add-ring-handler]]
    [goldly.service.core :refer [run-service]]))
 
 (defn service-handler

@@ -1,7 +1,7 @@
 (ns goldly.page.page
   (:require
    [re-frame.core :refer [dispatch subscribe]]
-   [webly.web.handler :refer [reagent-page]]
+   [frontend.page :refer [reagent-page]]
    [pinkie.error :refer [error-boundary]]))
 
 (defn show-page

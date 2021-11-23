@@ -15,7 +15,7 @@
          ; dev tools
          lint (webly/clojure "goldly" "-M:lint"
                              "." ; "../goldly-test"
-                             )  ; "../goldly-docs" nothing to lint in goldly-docs
+)  ; "../goldly-docs" nothing to lint in goldly-docs
          cljfmt-check (webly/clojure "goldly" "-M:cljfmt" "check"
                                      "." "../goldly-docs" "../goldly-test")
          cljfmt-fix (webly/clojure "goldly" "-M:cljfmt" "fix"
@@ -30,6 +30,8 @@
                    (webly/clean-project "./goldly-test"))
          npm-install (webly/run "goldly-docs" "goldly" "npm-install")
          build-ci (webly/run "goldly-docs" "goldly" "ci")
+         build-ci-adv (webly/run "goldly-docs" "goldly" "release-adv")
+
          ;copy-resources (shell {:dir "goldly-docs"} "../script/copy_res.sh")
          ;get-fonts  (shell {:dir "goldly-docs"} "../script/get-fonts.sh")
 
@@ -59,10 +61,28 @@
                                  ci-check]
                        :task (shell "echo" "all good - you can push to github")}
 
+         ; DOCS BUILD
 
-         ;; JAR 
+         copy-static {:doc "Prepares the static page"
+                      :task (do (fs/delete-tree "docs")
+                                ;(fs/create-dirs "docs/r/webly")
+                                (fs/create-dirs "docs/r")
+                                (fs/copy-tree "goldly-docs/target/webly/public" "docs" {:replace-existing true})
+                                ;(fs/copy-tree "goldly-docs/target/node_modules/public" "docs/r" {:replace-existing true})
+                                ;(fs/copy-tree "goldly-docs/target/res/public" "docs/r" {:replace-existing true})
+                                )}
+
          jar {:doc "Builds the jar"
-              :task (webly/clojure "goldly-docs" "-T:build" "jar")}
+               :task (webly/clojure "goldly-docs" "-T:build" "jar")}
+
+         goldly-docs-build {:doc "Build goldly-docs, but don't deploy"
+                            :depends [clean
+                                   npm-install
+                                   build-ci-adv
+                                   jar
+                                   copy-static]
+                         :task (shell "echo" "cljs bundle has been built!")}
+        
 
          clojars {:doc "Deploys the jar to clojars"
                   :task (webly/clojure "goldly-docs" "-T:build" "deploy")}
@@ -75,13 +95,11 @@
                       (shell "git tag" tag)
                       (shell "git push origin" tag))}
 
-         ci-deploy {:doc "Deploys the jar to clojars"
+         goldly-docs-deploy {:doc "Deploys the jar to clojars"
                  ;; ensure sequential order becauce tag reads from info.edn made
                  ;; by build.clj
-                    :task (do
-                            (run 'jar)
-                            (run 'clojars)
-                            (run 'tag))}
+                    :task (do (run 'clojars)
+                              (run 'tag))}
 
          jar-extract {:doc "Extracts generated jar (for debugging)"
                       :task (shell {:dir "goldly-docs/target"} "fastjar" "xf" "webly-0.4.516.jar")}
@@ -108,25 +126,7 @@
          goldly-docs-jetty {:doc "serve compiled goldlly docs javascript with jetty"
                             :task (webly/run "goldly-docs" "goldly" "jetty")}
 
-         ; STATIC PAGE
 
-         copy-static {:doc "Prepares the static page"
-                      :task (do (fs/delete-tree "docs")
-                                ;(fs/create-dirs "docs/r/webly")
-                                (fs/create-dirs "docs/r")
-                                (fs/copy-tree "goldly-docs/target/webly/public" "docs" {:replace-existing true})
-                                ;(fs/copy-tree "goldly-docs/target/node_modules/public" "docs/r" {:replace-existing true})
-                                ;(fs/copy-tree "goldly-docs/target/res/public" "docs/r" {:replace-existing true})
-                                )}
-         
-         update-static {:doc "Compiles Bundel and copies static"
-                        :task (do (run 'clean)
-                                  (run 'npm-install)
-                                  (run 'demo-compile)
-                                  ;(run 'tailwind-girouette-webly)
-                                  (run 'copy-resources)
-                                  (run 'get-fonts)
-                                  (run 'copy-static))}
 
 
  ;        

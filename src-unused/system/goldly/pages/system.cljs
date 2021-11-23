@@ -1,7 +1,7 @@
 (ns goldly-server.pages.system
   (:require
    [taoensso.timbre :as timbre :refer-macros [info]]
-   [webly.web.handler :refer [reagent-page]]
+   [frontend.page :refer [reagent-page]]
    [goldly.system.ui :refer [system-ext]]
    [goldly-server.helper.site :refer [header]]))
 

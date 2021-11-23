@@ -3,7 +3,6 @@
    [taoensso.timbre :refer-macros [trace debug debugf info infof warn warnf error errorf]]
    [cljs.core.async :refer [>! <! chan close! put!] :refer-macros [go]]
    [re-frame.core :as rf]
-   ;[webly.ws.msg-handler :refer [-event-msg-handler]]
    [goldly.service.core :refer [run]]
    [goldly.sci.kernel-cljs :refer [compile-code]]
    [goldly.sci.error :refer [show-sci-error]]

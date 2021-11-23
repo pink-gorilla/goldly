@@ -1,7 +1,7 @@
 (ns goldly.sci.error
   (:require
    [taoensso.timbre :as timbre :refer [debugf info error]]
-   [webly.user.notifications.core :refer [add-notification]]))
+   [frontend.notifications.core :refer [add-notification]]))
 
 ; {:error {:root-ex {:type :sci/error
 ;                   :line 4

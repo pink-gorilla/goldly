@@ -4,9 +4,9 @@
    [taoensso.timbre :refer-macros [trace debug debugf info infof warn warnf error errorf]]
    ;[reagent.impl.batching :refer [flush]] ; flushing does not help.
    [bidi.bidi :as bidi]
-   [webly.web.routes :refer [current]]
-   [webly.web.handler :refer [reagent-page]]
-   [webly.user.app.views :refer [refresh-page]]))
+   [frontend.routes :refer [current]]
+   [frontend.page :refer [reagent-page]]
+   [webly.app.views :refer [refresh-page]]))
 
 (defn reloading-cljs-ui []
   [:div "reloading cljs (sci) code"])
