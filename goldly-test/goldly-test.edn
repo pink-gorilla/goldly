@@ -16,7 +16,7 @@
                          "service" :user/service
 
                          ;devtools
-                         "devtools/" :devtools
+                         "devtools/help" :devtools
                          "devtools/pages" :pages
                          "devtools/scratchpad" :scratchpad
                          "devtools/viewer" :viewer

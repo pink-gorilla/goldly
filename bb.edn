@@ -13,9 +13,12 @@
                     [clojure.edn :as edn]
                     [babashka.fs :as fs]]
          ; dev tools
-         lint (webly/clojure "goldly" "-M:lint" "src" "../oauth2" "../webserver")
-         cljfmt-check (webly/clojure "goldly" "-M:cljfmt" "check" "src" "../oauth2" "../webserver")
-         cljfmt-fix (webly/clojure "goldly" "-M:cljfmt" "fix" "src" "../oauth2" "../webserver")
+         lint (webly/clojure "goldly" "-M:lint"
+                             "."  "../demo")  ; "../goldly-docs" nothing to lint in goldly-docs
+         cljfmt-check (webly/clojure "goldly" "-M:cljfmt" "check"
+                                     "." "../goldly-docs" "../demo")
+         cljfmt-fix (webly/clojure "goldly" "-M:cljfmt" "fix"
+                                   "." "../goldly-docs" "../demo")
          deps-tree (webly/clojure "goldly" "-X:deps" "tree")
          outdated (webly/clojure "goldly" "-M:outdated")
 
@@ -25,24 +28,21 @@
                    (webly/clean-project "./demo-repl")
                    (webly/clean-project "./goldly")
                    (webly/clean-project "./goldly-docs"))
-         tailwind-girouette-usage (webly/clojure "demo-webly" "-X:tailwind-girouette-usage")
-         tailwind-girouette-webly (webly/clojure "demo-webly" "-X:tailwind-girouette-webly")
-         npm-install (webly/run "demo-webly" "demo-webly" "npm-install")
-         build-ci (webly/run "demo-webly" "demo-webly" "ci")
-         copy-resources (shell {:dir "demo-webly"} "../script/copy_res.sh")
-         get-fonts  (shell {:dir "demo-webly"} "../script/get-fonts.sh")
-   
+         npm-install (webly/run "goldly-docs" "goldly-docs" "npm-install")
+         build-ci (webly/run "goldly-docs" "goldly-docs" "ci")
+         copy-resources (shell {:dir "goldly-docs"} "../script/copy_res.sh")
+         get-fonts  (shell {:dir "goldly-docs"} "../script/get-fonts.sh")
+
          build {:depends [npm-install
                           build-ci
                           tailwind-girouette-webly
                           copy-resources
-                          get-fonts
-                          ]
+                          get-fonts]
                 :task (shell "echo" "cljs bundle has been built!")}
 
          ; tests
-         test-clj (webly/clojure "demo-webly" "-M:test-clj")
-         test-cljs (shell {:dir "demo-webly"} "npm" "test")
+         test-clj (webly/clojure "goldly" "-M:test-clj")
+         test-cljs (shell {:dir "goldly-docs"} "npm" "test")
 
          ;; CI
          ci-check {:depends [cljfmt-check
@@ -60,13 +60,13 @@
 
          ;; JAR 
          jar {:doc "Builds the jar"
-              :task (webly/clojure "demo-webly" "-T:build" "jar")}
+              :task (webly/clojure "goldly-docs" "-T:build" "jar")}
 
          clojars {:doc "Deploys the jar to clojars"
-                  :task (webly/clojure "demo-webly" "-T:build" "deploy")}
+                  :task (webly/clojure "goldly-docs" "-T:build" "deploy")}
 
          tag {:doc "Tags release and pushes tag to Github."
-              :task (let [version (-> (slurp "demo-webly/resources/META-INF/pink-gorilla/webly/meta.edn")
+              :task (let [version (-> (slurp "goldly-docs/resources/META-INF/pink-gorilla/webly/meta.edn")
                                       edn/read-string
                                       :version)
                           tag (str "v" version)]
@@ -82,40 +82,39 @@
                             (run 'tag))}
 
          jar-extract {:doc "Extracts generated jar (for debugging)"
-                      :task (shell {:dir "demo-webly/target"} "fastjar" "xf" "webly-0.4.516.jar")}
+                      :task (shell {:dir "goldly-docs/target"} "fastjar" "xf" "webly-0.4.516.jar")}
 
          ;; devtest
 
          devtest-webserver-https (webly/clojure "webserver" "-X:webserver")
 
-         ;; demos
+         ;; goldly-test
+         goldly-test {:doc "goldly-test with shadow-cljs watch"
+                      :task (do  ;(run 'tailwind-girouette-webly)
+                              (webly/run "goldly-test" "goldly" "watch2"))}
 
-         demo-webly {:doc "webly demo with shadow-cljs watch"
-                     :task (do  (run 'tailwind-girouette-webly)
-                                (webly/run "demo-webly" "demo-webly" "watch2"))}
-         demo-webly-tenx {:doc "webly demo with shadow-cljs watch"
-                          :task (do  (run 'tailwind-girouette-webly)
-                                     (webly/run "demo-webly" "demo-webly" "watch"))}
-         demo-compile {:doc "compile webly demo javascript"
-                       :task (webly/run "demo-webly" "demo-webly" "release")}
-         demo-jetty {:doc "serve compiled webly demo javascript with jetty"
-                     :task (webly/run "demo-webly" "demo-webly" "jetty")}
 
-         req-github {:doc "web requests to github"
-                     :task (webly/clojure "demo-repl" "-X:web-requests-github")}
-         req-google (webly/clojure "demo-repl" "-X:web-requests-google")
-         req-xero (webly/clojure "demo-repl" "-X:web-requests-xero")
+         ;; goldly-docs
+
+         goldly-docs {:doc "goldlly docs with shadow-cljs watch"
+                      :task (do  ;(run 'tailwind-girouette-webly)
+                              (webly/run "goldly-docs" "goldly" "watch2"))}
+         goldly-docs-tenx {:doc "goldlly docs with shadow-cljs watch"
+                           :task (do  (webly/run "goldly-docs" "goldly" "watch"))}
+         goldly-docs-compile {:doc "compilegoldlly docs javascript"
+                              :task (webly/run "goldly-docs" "goldly" "release")}
+         goldly-docs-jetty {:doc "serve compiled goldlly docs javascript with jetty"
+                            :task (webly/run "goldly-docs" "goldly" "jetty")}
+
 
 
          copy-static {:doc "Prepares the static page"
                       :task (do (fs/delete-tree "docs")
                                 (fs/create-dirs "docs/r/webly")
                                 (fs/create-dirs "docs/r")
-                                (fs/copy-tree "demo-webly/target/webly/public" "docs" {:replace-existing true})
-                                (fs/copy-tree "demo-webly/target/node_modules/public" "docs/r" {:replace-existing true})
-                                (fs/copy-tree "demo-webly/target/res/public" "docs/r" {:replace-existing true})
-
-                                )}
+                                (fs/copy-tree "goldly-docs/target/webly/public" "docs" {:replace-existing true})
+                                (fs/copy-tree "goldly-docs/target/node_modules/public" "docs/r" {:replace-existing true})
+                                (fs/copy-tree "goldly-docs/target/res/public" "docs/r" {:replace-existing true}))}
          update-static {:doc "Compiles Bundel and copies static"
                         :task (do (run 'clean)
                                   (run 'npm-install)

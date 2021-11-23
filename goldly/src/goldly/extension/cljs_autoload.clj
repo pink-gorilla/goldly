@@ -3,6 +3,7 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [clojure.string :as str]
    [clojure.java.io :as io]
+
    [modular.resource.classpath :refer [describe-url]]
    [resauce.core :as rs]))
 

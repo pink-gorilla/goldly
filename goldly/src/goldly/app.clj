@@ -4,7 +4,9 @@
    [clojure.java.io]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [com.rpl.specter :refer [transform setval END ALL]]
-   [modular.config :refer [get-in-config config-atom load-config! add-config]]
+   [modular.config :refer [get-in-config config-atom load-config! add-config require-namespaces]]
+
+   ; webly build-tool
    [webly.profile :refer [compile? server?]]
    [webly.user.app.app :refer [webly-run!]]
 
@@ -21,7 +23,6 @@
    [goldly.service.core]
    [goldly.service.handler]
    [goldly.services]
-   [goldly.require-clj :refer [require-clj-namespaces]]
    [goldly.nrepl-server :refer [run-nrepl-server]])
   (:gen-class))
 
@@ -72,7 +73,7 @@
     (if (empty? autoload-clj-ns)
       (warn "no user autoload-clj-ns defined!")
       (do (info "loading user clj namespaces: " autoload-clj-ns)
-          (require-clj-namespaces autoload-clj-ns)))
+          (require-namespaces autoload-clj-ns)))
 
     (cljs-watch)
     (start-ws-conn-watch)

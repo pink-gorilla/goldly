@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [pinkgorilla.repl :refer [add-require]]
-   [goldly.require-clj :refer [require-clj-namespaces]]))
+   [modular.config :refer [require-namespaces]]))
 
 (defn add-extension-clj-require [{:keys [name
                                          clj-require]
@@ -18,6 +18,6 @@
                                       :as extension}]
   (when-not (empty? autoload-clj-ns)
     (info name "autoload-clj-ns: " autoload-clj-ns)
-    (require-clj-namespaces autoload-clj-ns)))
+    (require-namespaces autoload-clj-ns)))
 
 

@@ -1,7 +1,7 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/goldly {:local/root "../.." :deps/manifest :deps}}
+ :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}}
 
  :aliases
  {:outdated
@@ -25,7 +25,7 @@
                 }
    :exec-fn goldly.app/goldly-server-run!
    :exec-args {:profile "watch2" ; warch2 has no texnx devtools
-               :config "goldly-demo.edn"}}
+               :config "goldly-test.edn"}}
 
 ;           
   }}

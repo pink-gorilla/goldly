@@ -10,7 +10,6 @@
   [route-map]
   (reagent-page route-map))
 
-
 ;; this is already in webly.
 (defn available-pages
   "currently available pages that can be used in the routing table

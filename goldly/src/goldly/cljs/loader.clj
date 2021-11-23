@@ -2,8 +2,9 @@
   (:require
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [modular.config :refer [get-in-config]]
+   [modular.file.explore :refer [explore-dir]]
    [goldly.service.core :as s]
-   [goldly.explore.explore :refer [explore-dir load-file! load-file-or-res!]]
+   [goldly.explore.explore :refer [load-file! load-file-or-res!]]
    [goldly.explore.watch :refer [watch]]
    [goldly.extension.cljs-autoload :refer [autoload-cljs-res-a]]))
 
