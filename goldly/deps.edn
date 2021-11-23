@@ -12,8 +12,8 @@
   ; core 
   org.pinkgorilla/modular {:mvn/version "0.0.17"} ; TODO: REMOVE.
   org.pinkgorilla/webly {:mvn/version "0.3.55"} ; web app build tool
-  org.pinkgorilla/reval {:local/root "../../reval" :deps/manifest :deps}
-  ;org.pinkgorilla/reval {:mvn/version "0.0.31"}
+  ;org.pinkgorilla/reval {:local/root "../../reval" :deps/manifest :deps}
+  org.pinkgorilla/reval {:mvn/version "0.0.32"}
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
   org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}
   org.pinkgorilla/ui-gorilla {:mvn/version "0.4.2"} ; needed by reval
@@ -21,16 +21,11 @@
   org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
   org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.4"}
   org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}}
+ 
  :aliases
  {;; developer tooling
 
-  ;https://github.com/applied-science/deps-library
-  ; for new minor version:
-  ; clojure -M:release tag --minor
-  ; git push --tags
-  :release
-  {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
-   :main-opts ["-m" "applied-science.deps-library"]}
+  
 
   ; https://github.com/weavejester/cljfmt
   :cljfmt
@@ -63,9 +58,7 @@
    :main-opts ["-m" "cognitect.test-runner"]
    :exec-fn cognitect.test-runner.api/test}
 
-  :garamond ; https://github.com/workframers/garamond
-  {:main-opts ["-m" "garamond.main"]
-   :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
+ 
 
   ;; goldly
 
@@ -87,7 +80,7 @@
    :exec-args {:profile "watch2"
                :config {:goldly {}}}}
 
-  :docs-config {:exec-fn docs-config/generate-docs-config}
+
 
 ;
   }}

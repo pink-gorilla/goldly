@@ -27,19 +27,11 @@ jobs:
       uses: DeLaGuardo/setup-clojure@3.5
       with:
         cli: 1.10.3.1029 # Clojure CLI based on tools.deps
-    - name: clj-fmt
-      if: ${{ matrix.os != 'windows-latest' }}
-      run: clojure -M:cljfmt
-      shell: bash
-    #- name: show git tag
-    #  run: clojure -M:garamond
-    #- name: clj-kondo
-    #  run: clojure -M:lint
-    - name: test-clj
-      run: clojure -M:test
-    #- name: cloverage
-    #  run: clojure -M:cloverage
-    - name: Release
+    - name: Install Babashka
+      run: bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
+    - name: bb ci-check
+      run: bb ci-check
+    - name: bb ci-deploy
       if: success()
       # if: github.event_name == 'push'
       env:
@@ -49,27 +41,11 @@ jobs:
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        clojure -M:release tag --patch
-        clojure -M:spit
-        clojure -M:release
-        git push --tags
-      #  clojure -M:release --patch
-      #  clojure -M:release tag --minor
-      #  clojure -M:release pom
-      #  clojure -M:release jar
-      # clojure -M:release deploy
-      # lein release
+        bb ci-deploy
       # bash <(curl -s https://codecov.io/bash)
-    - name: Release-GoldlyDocs
-      env:
-        CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
-        CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
-      run: |
-        git config --global user.email "ci@pinkgorilla.org"
-        git config --global user.name "CI/CD"
-        ./script/docs-config.sh
-        cd profiles/docsci
-        echo "pwd: $PWD"
-        ./docs-compile-adv.sh
-        ./docs-publish.sh
-
+      # lein with-profile +relay-jetty cloverage
+      #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
+      #
+      # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
+      # Default 10000 not enough for us
+      # export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"     

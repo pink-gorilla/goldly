@@ -25,12 +25,11 @@
 
          ; build
          clean (do (webly/clean-project ".")
-                   (webly/clean-project "./demo")
-                   (webly/clean-project "./demo-repl")
                    (webly/clean-project "./goldly")
-                   (webly/clean-project "./goldly-docs"))
-         npm-install (webly/run "goldly-docs" "goldly-docs" "npm-install")
-         build-ci (webly/run "goldly-docs" "goldly-docs" "ci")
+                   (webly/clean-project "./goldly-docs")
+                   (webly/clean-project "./goldly-test"))
+         npm-install (webly/run "goldly-docs" "goldly" "npm-install")
+         build-ci (webly/run "goldly-docs" "goldly" "ci")
          ;copy-resources (shell {:dir "goldly-docs"} "../script/copy_res.sh")
          ;get-fonts  (shell {:dir "goldly-docs"} "../script/get-fonts.sh")
 
@@ -44,13 +43,14 @@
 
          ; tests
          test-clj (webly/clojure "goldly" "-M:test-clj")
-         test-cljs (shell {:dir "goldly-docs"} "npm" "test")
+         ;test-cljs (shell {:dir "goldly-docs"} "npm" "test")
 
          ;; CI
          ci-check {:depends [cljfmt-check
                              build
                              test-clj
-                             test-cljs]
+                             ;test-cljs
+                             ]
                    :task (shell "echo" "ci checks are ok!")}
 
          commit-check {:doc "if this succeeds, then the github ci pipeline will work too."
@@ -68,7 +68,7 @@
                   :task (webly/clojure "goldly-docs" "-T:build" "deploy")}
 
          tag {:doc "Tags release and pushes tag to Github."
-              :task (let [version (-> (slurp "goldly-docs/resources/META-INF/pink-gorilla/goldly/meta.edn")
+              :task (let [version (-> (slurp "goldly-docs/resources/META-INF/pink-gorilla/goldly-docs/meta.edn")
                                       edn/read-string
                                       :version)
                           tag (str "v" version)]
