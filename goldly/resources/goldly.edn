@@ -1,0 +1,65 @@
+{:webly {:title "Goldly"
+         :ns-clj [goldly.app]
+         :ns-cljs [goldly.app]
+         :routes goldly.routes/routes
+         :start-user-app [:goldly/init]}
+
+ 
+  :prefix "/r/"
+  :prefix-static "/goldly/r/"
+
+ :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
+
+ :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
+                   [#{"webly.ws.*"} :info]
+                   [#{"webly.*"} :info]
+                   [#{"goldly.*"} :info]
+                   [#{"pinkgorilla.nrepl.*"} :info]
+                   [#{"ui.*"} :info]
+                   [#{"user"} :warn] ; time sender
+                   [#{"*"} :info]]
+
+; :keybindings  goldly-server.keybindings/keybindings-default
+
+ :settings {; settings can be changed by user (via dialog)
+            ; :use-localstorage is true: load settings from localstorage, and only use
+            ; config-settings to initialize the app when localstorage is empty
+            :use-localstorage  false
+
+            :notebook  {:layout :horizontal ; :vertical
+                        :view-only false}}
+
+ :nrepl {:enabled true
+         :bind "0.0.0.0"
+         :port 9100}
+
+
+
+ :goldly {:enabled true
+          :lazy true
+          :src-dir "src"
+          ; runtime
+          :autoload-clj-ns []
+          :autoload-cljs-dir []
+          :routes {:app {"devtools/pages" :pages
+                         "devtools/scratchpad" :scratchpad
+                         "devtools/viewer" :viewer
+                         "devtools/environment" :environment
+                         "devtools/theme" :theme
+                         "devtools" :devtools
+                         }
+                   :api {"rdocument/ns" :rdocument/ns
+                         "rdocument/files" :rdocument/files
+                         ["rdocument/file/" :ns "/" :name] :rdocument/file ; http://localhost:8000/api/viewer/file/demo.playground.cljplot/vega-spec.edn
+                         }}}
+
+ :devtools {:rdocument  {:storage-root "demo/rdocument/"
+                         :url-root "/api/rdocument/file/"}
+            :collections {:user [:clj "user/notebook/"]
+                          :demo [:clj "demo/notebook/"]}}
+
+
+
+;
+ }
+

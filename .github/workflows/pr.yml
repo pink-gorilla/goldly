@@ -1,12 +1,9 @@
 name: Validate Pull Request
-
 on:
   pull_request:
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -27,11 +24,7 @@ jobs:
       uses: DeLaGuardo/setup-clojure@3.5
       with:
         cli: 1.10.3.1029 # Clojure CLI based on tools.deps
-    #- name: Execute clojure code on Linux and MacOS
-    #  if: ${{ matrix.os != 'windows-latest' }}
-    #  run: clojure -e "(+ 1 1)"
-    #  shell: bash
-    - name: clj-fmt
-      if: ${{ matrix.os != 'windows-latest' }}
-      run: clojure -M:cljfmt
-      shell: bash
+    - name: Install Babashka
+      run: bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
+    - name: bb ci-check
+      run: bb ci-check

@@ -3,7 +3,7 @@
    [reagent.core :as r]
    [re-frame.core :as rf]
    [bidi.bidi :as bidi]
-   [webly.web.handler :refer [reagent-page]]
+   [frontend.page :refer [reagent-page]]
    [goldly.system.ws :refer [request-systems]]
    [goldly-server.helper.site :refer [header]]))
 
