@@ -8,8 +8,7 @@
        ; 
         }
 
- :tasks {:requires [;deps 
-                    webly
+ :tasks {:requires [webly
                     [clojure.edn :as edn]
                     [babashka.fs :as fs]]
          ; dev tools
