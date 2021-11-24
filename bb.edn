@@ -72,16 +72,16 @@
                                 )}
 
          jar {:doc "Builds the jar"
-               :task (webly/clojure "goldly-docs" "-T:build" "jar")}
+              :task (webly/clojure "goldly-docs" "-T:build" "jar")}
 
          goldly-docs-build {:doc "Build goldly-docs, but don't deploy"
                             :depends [clean
-                                   npm-install
-                                   build-ci-adv
-                                   jar
-                                   copy-static]
-                         :task (shell "echo" "cljs bundle has been built!")}
-        
+                                      npm-install
+                                      build-ci-adv
+                                      jar
+                                      copy-static]
+                            :task (shell "echo" "cljs bundle has been built!")}
+
 
          clojars {:doc "Deploys the jar to clojars"
                   :task (webly/clojure "goldly-docs" "-T:build" "deploy")}
@@ -94,11 +94,12 @@
                       (shell "git tag" tag)
                       (shell "git push origin" tag))}
 
-         goldly-docs-deploy {:doc "Deploys the jar to clojars"
+         ci-goldly-docs-deploy {:doc "Deploys the jar to clojars"
                  ;; ensure sequential order becauce tag reads from info.edn made
                  ;; by build.clj
-                    :task (do (run 'clojars)
-                              (run 'tag))}
+                                :task (do (run 'goldly-docs-build)
+                                          (run 'clojars)
+                                          (run 'tag))}
 
          jar-extract {:doc "Extracts generated jar (for debugging)"
                       :task (shell {:dir "goldly-docs/target"} "fastjar" "xf" "webly-0.4.516.jar")}
