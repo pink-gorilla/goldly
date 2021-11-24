@@ -21,14 +21,15 @@ package-lock.json
 karma.conf.js
 goldly_bindings_generated.cljs
 
+goldly/resources/META-INF
+goldly/node_modules/
+goldly/target/
+
 goldly-test/node_modules/
 goldly-test/target/
-
 goldly-docs/node_modules/
 goldly-docs/target/
 
-profiles/docsci/node_modules/
-profiles/docsci/target/
-profiles/docsci/deps.edn
+
 
 docs/
