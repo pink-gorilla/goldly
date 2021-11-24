@@ -5,7 +5,7 @@
          :start-user-app [:goldly/init]}
 
  
-  :prefix-static "/r/"
+  :prefix "/r/"
   :prefix-static "/goldly/r/"
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
