@@ -43,7 +43,15 @@ jobs:
         git config --global user.name "CI/CD"
         bb ci-goldly-docs-deploy
     - name: bb ci-goldly-deploy
-      run: bb ci-goldly-deploy
+      env:
+        CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
+        CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
+        CODECOV_TOKEN: ${{ secrets.CodecovToken }}
+      run: |
+        git config --global user.email "ci@pinkgorilla.org"
+        git config --global user.name "CI/CD"
+        bb ci-goldly-docs-deploy
+    - name: bb ci-goldly-deploy
       # bash <(curl -s https://codecov.io/bash)
       # lein with-profile +relay-jetty cloverage
       #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
