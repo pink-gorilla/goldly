@@ -94,12 +94,20 @@
                       (shell "git tag" tag)
                       (shell "git push origin" tag))}
 
-         ci-goldly-docs-deploy {:doc "Deploys the jar to clojars"
+         ci-goldly-docs-deploy {:doc "Deploys goldly-docs to clojars"
                  ;; ensure sequential order becauce tag reads from info.edn made
                  ;; by build.clj
                                 :task (do (run 'goldly-docs-build)
                                           (run 'clojars)
                                           (run 'tag))}
+
+         goldly-jar {:doc "Builds the jar"
+                     :task (webly/clojure "goldly" "-T:build" "jar")}
+
+         ci-goldly-deploy {:doc "Deploys goldly to clojars"
+                           :task  (do (run 'goldly-jar)
+                                      (webly/clojure "goldly" "-T:build" "deploy"))}
+
 
          jar-extract {:doc "Extracts generated jar (for debugging)"
                       :task (shell {:dir "goldly-docs/target"} "fastjar" "xf" "webly-0.4.516.jar")}
