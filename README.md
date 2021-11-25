@@ -26,18 +26,8 @@
 
 ### Web Interface
 
-Whichever method you use to start goldly, you should reach it at [`http://localhost:8000/`](http://localhost:8000/).
+Whichever method you use to start goldly, you should reach it at [`http://localhost:8080/`](http://localhost:8080/).
 
-- In the browser window click on `running systems` and then `snippet registry`
-- You are able to click on all the systems in he registry.
-
-The snippets are primitive, but demonstrate certain features of goldly:
-- hello: demonstrates the simplest hiccup rendering usecase
-- click-counter demonstrates dynamic ui intteractions.
-- greeter: shows how to create links from one system to another; this can be 
-  used for master-detail type of navigation.
-- fortune: demonstrates how to load data from clojure (could be a database)
-- time: demonstrates to push data from clojure
 
 
 ## Run - standalone 

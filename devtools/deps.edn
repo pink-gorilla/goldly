@@ -5,7 +5,7 @@
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/reval {:mvn/version "0.0.35"}
         ;org.pinkgorilla/reval {:local/root "../../reval" :deps/manifest :deps}
-        ;org.pinkgorilla/modular {:mvn/version "0.0.17"} ; TODO: REMOVE.
+        org.pinkgorilla/modular {:mvn/version "0.0.20"} ; TODO: REMOVE.
         org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
         org.pinkgorilla/ui-repl {:mvn/version "0.0.36"}
         org.pinkgorilla/ui-gorilla {:mvn/version "0.4.2"} ; needed by reval
@@ -24,8 +24,6 @@
                                  :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
    :main-opts ["-m"
                "clj-check.check"]}
-
-
 
   :lint
   {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
@@ -54,14 +52,6 @@
    :main-opts ["-m"
                "cognitect.test-runner"]
    :exec-fn cognitect.test-runner.api/test}
-
-
-
-
-
-
-
-
 
 ;           
   }}

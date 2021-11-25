@@ -14,7 +14,7 @@
    [goldly.extension.discover :refer [discover-extensions]]
    [goldly.extension.pinkie :refer [available]]
    [goldly.sci.bindings :refer [generate-bindings]]
-   [goldly.cljs.loader :refer [cljs-watch]]
+   [goldly.cljs.discover :refer [cljs-watch]]
    [goldly.extension.cljs-autoload :refer [generate-cljs-autoload]]
    ; runtime
    [goldly.routes] ; side effects

@@ -23,6 +23,7 @@
         (error "error loading cljs: " r))
       (when result
         (compile-cljs result)))))
+
 ; called from goldly.system.ws after ws connected:
 (defn load-cljs []
   (info "load-cljs")
