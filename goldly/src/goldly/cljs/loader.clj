@@ -51,8 +51,6 @@
   (-> (concat @autoload-cljs-res-a (cljs-explore))
       vec))
 
-
-
 ;; WATCH
 
 (defn watch-dir [dir]

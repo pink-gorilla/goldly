@@ -64,7 +64,7 @@
 
 (defn generate-bindings []
   (info "writing sci-cljs-bindings")
-   #_(write-status "sci-cljs-bindings" {:namespaces @goldly-namespaces
+  #_(write-status "sci-cljs-bindings" {:namespaces @goldly-namespaces
                                        :bindings @goldly-bindings
                                        :ns-bindings @goldly-ns-bindings})
   (write-target "sci-cljs-bindings" {:namespaces @goldly-namespaces

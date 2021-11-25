@@ -28,7 +28,6 @@
   (add-extension-autoload-clj-ns extension)
   (add-extension-clj-require extension))
 
-
 (defn discover-extensions []
   (let [r  (rs/resource-dir "ext")
         extensions (for [f r]

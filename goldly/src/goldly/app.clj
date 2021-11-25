@@ -14,7 +14,7 @@
    [goldly.extension.discover :refer [discover-extensions]]
    [goldly.extension.pinkie :refer [available]]
    [goldly.sci.bindings :refer [generate-bindings]]
-   [goldly.cljs.loader :refer [ cljs-watch]]
+   [goldly.cljs.loader :refer [cljs-watch]]
    [goldly.extension.cljs-autoload :refer [generate-cljs-autoload]]
    ; runtime
    [goldly.routes] ; side effects
@@ -31,9 +31,7 @@
     ; for css and clj ns. Therefore put to init
   (print-version "goldly")
   (discover-extensions)
-  (info "pinkie renderer (clj): " (available)
-        
-        ))
+  (info "pinkie renderer (clj): " (available)))
 
 (defn goldly-compile! []
   (let [{:keys [systems]}

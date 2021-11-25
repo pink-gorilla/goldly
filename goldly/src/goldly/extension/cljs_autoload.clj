@@ -47,8 +47,6 @@
          (map #(str path % ".cljs"))
          (into []))))
 
-
-
 (defn add-extension-cljs-autoload [{:keys [name autoload-cljs-dir]
                                     :or {autoload-cljs-dir []}
                                     :as extension}]
@@ -56,7 +54,6 @@
            (let [paths (get-cljs-res-files s)]
              (info "discovered extension with cljs-autoload paths:" paths)
              (swap! autoload-cljs-res-a concat paths)))))
-
 
 (comment
   (get-file-list :clj "demo/notebook/")
