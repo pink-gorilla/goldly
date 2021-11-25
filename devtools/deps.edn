@@ -1,0 +1,69 @@
+{:paths ["src"
+         "resources" ; extension , resources used in devtools ui
+         ;"target/webly"
+         ]
+ :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
+        org.pinkgorilla/reval {:local/root "../../reval" :deps/manifest :deps}
+        ;org.pinkgorilla/reval {:mvn/version "0.0.34"}
+        ;org.pinkgorilla/modular {:mvn/version "0.0.17"} ; TODO: REMOVE.
+        org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.36"}
+        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.2"} ; needed by reval
+        org.pinkgorilla/ui-site {:mvn/version "0.0.16"}
+        org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
+        org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.4"}
+        org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}}
+
+
+
+ :aliases
+ {:outdated
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+   :main-opts ["-m"
+               "antq.core"]}
+  :check
+  {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
+                                 :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
+   :main-opts ["-m"
+               "clj-check.check"]}
+
+
+
+  :lint
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
+   :main-opts ["-m"
+               "clj-kondo.main"
+               "--lint"
+               "src"]}
+  :cljfmt
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
+   :main-opts ["-m"
+               "cljfmt.main"
+               "check"
+               "--indents"
+               "cljfmt.edn"]}
+  :cljfmt-fix
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
+   :main-opts ["-m"
+               "cljfmt.main"
+               "fix"
+               "--indents"
+               "cljfmt.edn"]}
+  :test
+  {:extra-paths ["test"]
+   :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                                                      :sha "dd6da11611eeb87f08780a30ac8ea6012d4c05ce"}}
+   :main-opts ["-m"
+               "cognitect.test-runner"]
+   :exec-fn cognitect.test-runner.api/test}
+
+
+
+
+
+
+
+
+
+;           
+  }}

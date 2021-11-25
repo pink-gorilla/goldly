@@ -1,0 +1,12 @@
+{:name "devtools"
+ ; build time
+ :lazy false  ; we dont have any code, lazy fucks up size report
+ :cljs-namespace []
+ :cljs-ns-bindings {}
+ :cljs-bindings {}
+ :pinkie {}
+ ; run time
+ :clj-require []
+ :autoload-cljs-dir ["goldly/lib"
+                     "goldly/devtools"]
+ :autoload-clj-ns [goldly.devtools]}

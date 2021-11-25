@@ -37,7 +37,7 @@
         (fun-err dir)))))
 
 (defn explore-once [dir]
-  (info "loading cljs from: " dir)
+  (info "explore sci-autoload-cljs dir: " dir)
   (->> (explore-dir dir "autoload-dir")
        (map #(str dir "/" %))
        vec))
@@ -51,9 +51,7 @@
   (-> (concat @autoload-cljs-res-a (cljs-explore))
       vec))
 
-(defn generate-cljs-autoload []
-  (let [d (cljs-explore)]
-    (write-target "sci-cljs-autoload" d)))
+
 
 ;; WATCH
 

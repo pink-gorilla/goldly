@@ -1,7 +1,7 @@
 (ns goldly.extension.core
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error errorf]]
-   [modular.writer :refer [write-status]]
+   [modular.writer :refer [write-status write-target]]
    [modular.config :refer [config-atom]]))
 
 ;; config
@@ -113,7 +113,7 @@
     ;(error "ext fns:" (ext-fns))
     (info "extensions: " (extension-summary))
     (write-status "extensions" ext-list)
-    (write-status "module-fn-maps" (map-fn-module ext-list))))
+    (write-target "module-fn-maps" (map-fn-module ext-list))))
 
 
 

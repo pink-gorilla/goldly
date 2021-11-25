@@ -28,7 +28,8 @@
   (add-extension-autoload-clj-ns extension)
   (add-extension-clj-require extension))
 
-(defn discover []
+
+(defn discover-extensions []
   (let [r  (rs/resource-dir "ext")
         extensions (for [f r]
                      (-> f slurp edn/read-string))]

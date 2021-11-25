@@ -5,18 +5,17 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [com.rpl.specter :refer [transform setval END ALL]]
    [modular.config :refer [get-in-config config-atom load-config! add-config require-namespaces]]
-
    ; webly build-tool
-   [webly.profile :refer [compile? server?]]
+   [webly.build.profile :refer [compile? server?]]
    [webly.app.app :refer [webly-run!]]
 
    ; compile time
    [goldly.version :refer [print-version]]
-   [goldly.extension.discover :as d]
+   [goldly.extension.discover :refer [discover-extensions]]
    [goldly.extension.pinkie :refer [available]]
    [goldly.sci.bindings :refer [generate-bindings]]
-   [goldly.cljs.loader :refer [generate-cljs-autoload cljs-watch]]
-
+   [goldly.cljs.loader :refer [ cljs-watch]]
+   [goldly.extension.cljs-autoload :refer [generate-cljs-autoload]]
    ; runtime
    [goldly.routes] ; side effects
    [goldly.ws-connect :refer [start-ws-conn-watch]]
@@ -31,8 +30,10 @@
     ; be included at compile time. But extensions also are needed
     ; for css and clj ns. Therefore put to init
   (print-version "goldly")
-  (d/discover)
-  (info "pinkie renderer (clj): " (available)))
+  (discover-extensions)
+  (info "pinkie renderer (clj): " (available)
+        
+        ))
 
 (defn goldly-compile! []
   (let [{:keys [systems]}

@@ -3,8 +3,8 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [clojure.string :as str]
    [clojure.java.io :as io]
-
    [modular.resource.classpath :refer [describe-url]]
+   [modular.writer :refer [write-target]]
    [resauce.core :as rs]))
 
 (defn get-ns-files [res-path]
@@ -31,7 +31,12 @@
        (map first)
        ;(map #(filename->ns res-path %))
        ))
+
 (defonce autoload-cljs-res-a (atom  []))
+
+(defn generate-cljs-autoload []
+  (info "writing sci-cljs-autoload")
+  (write-target "sci-cljs-autoload" @autoload-cljs-res-a))
 
 (defn get-cljs-res-files [s]
   ;(info "getting res files for path:" s)
@@ -42,13 +47,16 @@
          (map #(str path % ".cljs"))
          (into []))))
 
+
+
 (defn add-extension-cljs-autoload [{:keys [name autoload-cljs-dir]
                                     :or {autoload-cljs-dir []}
                                     :as extension}]
   (doall (for [s autoload-cljs-dir]
            (let [paths (get-cljs-res-files s)]
-             (info "discovered: " paths)
+             (info "discovered extension with cljs-autoload paths:" paths)
              (swap! autoload-cljs-res-a concat paths)))))
+
 
 (comment
   (get-file-list :clj "demo/notebook/")
