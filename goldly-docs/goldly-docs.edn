@@ -12,14 +12,16 @@
           ; runtime
           :autoload-clj-ns [] ; goldly.devtools
           :autoload-cljs-dir  []
-          :routes {:app {"" :goldly/no-page
-                         "goldly/reload" :goldly/reload-cljs
-                         "devtools/pages" :pages
+          :routes {:app {"devtools/viewer" :viewer
                          "devtools/scratchpad" :scratchpad
-                         "devtools/viewer" :viewer
-                         "devtools/environment" :environment
                          "devtools/theme" :theme
-                         "devtools" :devtools}
+                         "devtools/environment" :environment
+                         "devtools/config" :config
+                         "devtools/build" :build
+                         "devtools/pages" :pages
+                         "devtools/help" :devtools
+                         "goldly/reload" :goldly/reload-cljs
+                         "" :goldly/no-page}
                    :api {"rdocument/ns" :rdocument/ns
                          "rdocument/files" :rdocument/files
                          ["rdocument/file/" :ns "/" :name] :rdocument/file ; http://localhost:8000/api/viewer/file/demo.playground.cljplot/vega-spec.edn

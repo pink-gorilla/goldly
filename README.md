@@ -18,21 +18,18 @@
 
 ## demo apps
 
+Whichever method you use to start goldly, you should reach it at [`http://localhost:8080/`](http://localhost:8080/).
+
 - [demo goldly](https://github.com/pink-gorilla/demo-goldly)
-  **NEWBEES: START WITH DEMO-GOLDLY!**
 - [trateg](https://github.com/clojure-quant/trateg) quantitative backtesting framework
 - [EDGAR](https://github.com/clojure-quant/edgar) visualise mutual fund holdings
 
 
-### Web Interface
+## goldly docs - standalone 
 
-Whichever method you use to start goldly, you should reach it at [`http://localhost:8080/`](http://localhost:8080/).
+Goldly Docs ships with readymade default ui renderers and a compiled js bundle.
 
-
-
-## Run - standalone 
-
-The easiest way to run the goldly locally is leveraging the `clojure` cli
+The easiest way to run the goldly-docs locally is leveraging the `clojure` cli
 
 ```
 clojure -Sdeps '{:deps {org.pinkgorilla/goldly-docs {:mvn/version "RELEASE"}}}' -m bundel.run
@@ -40,13 +37,13 @@ clojure -Sdeps '{:deps {org.pinkgorilla/goldly-docs {:mvn/version "RELEASE"}}}' 
 
 This lets you see many snippets that you might like.
 
-## Run - in your project **using readymade default ui renderers**
+## goldly docs - in your project 
 
 You need to include the **goldly-docs** artefact, which ships a pre-built javascript 
 bundle and already includes many ui-renderers. 
 
 You can:
-- add custom systems to goldly easily.
+- add custom pages to goldly-docs easily.
 - use your clj functions to render ui visualizations.
 
 Add this alias to your deps.edn:
@@ -99,47 +96,8 @@ Run inside cloned goldly git repo.
 This option is mainly there for development of goldly. 
 For regular use, the long compile-times are not really sensible.
 
-Clone this repo, then:
+Please see `bb tasks` for all available options. 
 
-run goldly **with bundel ui-extensions**: `clojure -X:goldly`
-
-run goldly **without ui-extensions** `clojure -X:goldly-core`
-
-
-Compile and run:
-
-```
-clojure -X:goldly :profile '"release"'
-clojure -X:goldly :profile '"jetty"'
-```
-
-To test the docs creation:
-```
-clojure -X:docs-config
-cd profiles/docs
-./docs-compile.sh
-clojure -X:run
-```
-
-core
-```
-  clojure -X:goldly              - watch
-  ./script/clean.sh
-
-  ./script/compile_run.sh        - release
-  ./script/clean.sh
-
-  ./script/compile_adv_run.sh    - release-adv
-  ./script/clean.sh
-```
-
-test
-```
-  cd profiles/test
-  clojure -X:goldly              - watch
-```
-
-# API
-
+*API*
 You can get and set the scratchpad data via http api.
 Please execute `./script/scratchpad-get.sh` or `./script/scratchpad-set.sh`
