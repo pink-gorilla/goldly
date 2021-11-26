@@ -67,8 +67,6 @@
             {:text "scratchpad"  :dispatch [:bidi/goto :scratchpad]}  ; :link "/devtools/scratchpad"
             {:text "theme"  :dispatch [:bidi/goto :theme]} ;  :link "/devtools/theme"
             {:text "environment"  :dispatch  [:bidi/goto :environment]} ; :link "/devtools/environment"
-            {:text "config"  :dispatch [:bidi/goto :config]}
-            {:text "build"  :dispatch [:bidi/goto :build]}
             {:text "pages"  :dispatch [:bidi/goto :pages]}  ; :link "/devtools/pages"
             {:text "help"  :dispatch [:bidi/goto :devtools]}  ; :link "/devtools"
             {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special? true}]}])

@@ -1,3 +1,4 @@
+(ns notebook.svg-sierpinsky)
 
 ;;; # Lets create a complex svg data structure
 

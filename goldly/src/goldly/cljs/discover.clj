@@ -10,25 +10,29 @@
    [goldly.extension.cljs-autoload :refer [autoload-cljs-res-a]]
    [goldly.service.core :as s]))
 
-;; EXPLORE ONCE
+;; CONFIG
 
-(defn autoload-dir []
+(defn autoload-cljs-dir []
   (get-in-config [:goldly :autoload-cljs-dir]))
 
+(defn watch-cljs-dir []
+  (get-in-config [:goldly :watch-cljs-dir]))
+
 (defn process-dir-dirs
-  [fun fun-err]
-  (let [dir (autoload-dir)]
-    (assert (or (nil? dir)
-                (vector? dir)
-                (string? dir)))
-    (if dir
-      (if (vector? dir)
-        (->> (map fun dir)
-             (apply concat)
-             vec)
-        (fun dir))
-      (when fun-err
-        (fun-err dir)))))
+  [dir fun fun-err]
+  (assert (or (nil? dir)
+              (vector? dir)
+              (string? dir)))
+  (if dir
+    (if (vector? dir)
+      (->> (map fun dir)
+           (apply concat)
+           vec)
+      (fun dir))
+    (when fun-err
+      (fun-err dir))))
+
+;; EXPLORE RESOURCES
 
 (defn explore-once [dir]
   (info "explore sci-autoload-cljs dir: " dir)
@@ -38,6 +42,7 @@
 
 (defn cljs-explore []
   (process-dir-dirs
+   (autoload-cljs-dir)
    explore-once
    #(warn "no cljs [:goldly :autoload-dir] defined!")))
 
@@ -52,6 +57,7 @@
 
 (defn cljs-watch []
   (process-dir-dirs
+   (watch-cljs-dir)
    watch-dir
    nil))
 

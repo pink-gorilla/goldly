@@ -13,7 +13,7 @@
         ]
     (infof "ws connected  uids: %s" uids)
     (doseq [uid uids]
-      (infof "sending systems/notebooks to uid: %s" uid)
+      (infof "sending autoload-cljs to uid: %s" uid)
       ;(debug "system response: " system)
       ;(warn "notebook response: " notebook)
       ;(send! uid system)

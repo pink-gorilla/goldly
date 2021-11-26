@@ -71,8 +71,29 @@
         ;(map ext exts)
          )])
 
+(defn config-info []
+  (let [config (rf/subscribe [:webly/config])]
+    (fn []
+      [:div
+       [:h2.text-2xl.text-blue-700.bg-blue-300 "config"]
+        ;(pr-str @config)
+       [frisk @config]])))
+
+(defn build-info [b]
+    [:div
+      [:h2.text-2xl.text-blue-700.bg-blue-300 "build"]
+       [:div (pr-str b)]])
+
+
 (defn environment []
   [:div
+  
+      [url-loader {:fmt :edn
+                   :url "/r/build.edn"}  ; "sci-cljs-autoload.edn"  "sci-cljs-bindings.edn" "build-config.edn"
+        build-info]
+
+   [config-info]
+
    [url-loader {:fmt :clj
                 :url :goldly/version}
     goldly-version]

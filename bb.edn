@@ -135,6 +135,9 @@
                             :task (webly/run "goldly-docs" "goldly" "jetty")}
 
 
+         
+         nbeval {:doc "evaluates notebooks"
+                  :task (webly/clojure "goldly-docs" "-X:nbeval")}
 
 
  ;        

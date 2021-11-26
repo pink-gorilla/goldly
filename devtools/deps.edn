@@ -3,12 +3,12 @@
          ;"target/webly"
          ]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/reval {:mvn/version "0.0.35"}
+        org.pinkgorilla/reval {:mvn/version "0.0.37"}
         ;org.pinkgorilla/reval {:local/root "../../reval" :deps/manifest :deps}
         org.pinkgorilla/modular {:mvn/version "0.0.20"} ; TODO: REMOVE.
         org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; frontend ui layout
         org.pinkgorilla/ui-repl {:mvn/version "0.0.36"}
-        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.2"} ; needed by reval
+        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.3"} ; needed by reval
         org.pinkgorilla/ui-site {:mvn/version "0.0.16"}
         org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
         org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.4"}
