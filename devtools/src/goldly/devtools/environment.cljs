@@ -6,7 +6,7 @@
 (defn keyword-list [name list]
   [:div.mt-10
    [:h2.text-2xl.text-blue-700.bg-blue-300 name]
-   (into [:div.grid.grid-cols-4]
+   (into [:div.grid.grid-cols-2.md:grid-cols-4]
          (map kw-item (sort list)))])
 
 ;[:h2.text-2xl.text-blue-700.bg-blue-300 "pinkie renderer - lazy"]
@@ -41,7 +41,7 @@
 (defn ns-bindings-view [ns bindings]
   [:div
    [:h1.text-blue-500.text-xl "sci ns: " (str ns)]
-   (into [:div.grid.grid-cols-2]
+   (into [:div.grid.grid-cols-1.md:grid-cols-2]
          (map ns-binding-view bindings))])
 
 (defn ns-bindings-list [ns-bindings]

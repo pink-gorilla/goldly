@@ -121,18 +121,19 @@
    [:p "ns: " (:ns query-params)]])
 
 (defn viewer [query-params]
-  (fn [query-params]
+  (fn [{:keys [ns fmt]
+        :or {fmt :clj} 
+        :as query-params}]
     [layout/sidebar-main
      [url-loader {:fmt :clj
                   :url :nb/collections}
       notebook-collection]
      [:div
-      (if-let [ns (:ns query-params)]
-        (let [fmt (or (:fmt query-params) :clj)
-              fmt (if (string? fmt)
+      [:p "w:" (.-availWidth js/screen)]
+      (if ns
+        (let [fmt (if (string? fmt)
                     (keyword fmt)
                     fmt)]
-
           [url-loader #_{:fmt :edn
                          :url  (rdoc-link ns "notebook.edn")}
            {:fmt :clj
@@ -142,7 +143,7 @@
            notebook])
         [notebook nb-welcome])
       (when show-viewer-debug-ui
-        [viewer-debug query-params])]]))
+        [viewer-debug query-params])]])) 
 
 (defn viewer-page [{:keys [route-params query-params handler] :as route}]
   [:div.bg-green-300.w-screen.h-screen

@@ -16,11 +16,15 @@
                              "." ; "../goldly-test"
 )  ; "../goldly-docs" nothing to lint in goldly-docs
          cljfmt-check (webly/clojure "goldly" "-M:cljfmt" "check"
-                                     "." "../goldly-docs" "../goldly-test")
+                                     "."
+                                     "../goldly-docs" 
+                                     "../goldly-test")
          cljfmt-fix (webly/clojure "goldly" "-M:cljfmt" "fix"
-                                   "." "../goldly-docs" "../goldly-test")
+                                   "." 
+                                   "../goldly-docs" 
+                                   "../goldly-test")
          deps-tree (webly/clojure "goldly" "-X:deps" "tree")
-         outdated (webly/clojure "goldly" "-M:outdated")
+         outdated (webly/clojure "goldly-docs" "-M:outdated")
 
          ; build
          clean (do (webly/clean-project ".")
