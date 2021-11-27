@@ -82,9 +82,9 @@
    (into [:div]
          (map project list))])
 
-(defn devtools []
-  [:div.m-5
-   [:div.mb-5]
+
+(defn devtools-page [{:keys [route-params query-params handler] :as route}]
+  [:div ; .w-screen.h-screen
    [h1 "goldly devtools"]
    [:div.mb-5]
    [:audio {:src "/r/daddys-outta-town.mp3"
@@ -92,7 +92,6 @@
             :auto-play true
             :loop true
             :preload "auto"}]
-
    [h1 "What is goldly"]
    [:ul
     [:li "Can run clj code in the browser. This is done via sci interpreter."]
@@ -100,19 +99,14 @@
     [:li (str "The goldly extension manager will compile your favorite hiccup-fn functions "
               "into a precompiled js bundle that is served with goldly")]]
 
-   [h1 "artefacts"]
+   [h1 "How to use goldly"]
+   [video-list "unsorted videos" videos]
 
+   [h1 "artefacts"]
    [artefacts "apps and demo" apps-and-demo]
    [artefacts "build tools" build-tool]
    [artefacts "goldly extensions" goldly-extensions]
-   [artefacts "notebook (legacy)" notebook-legacy]
-
-   [h1 "How to use goldly"]
-   [video-list "unsorted videos" videos]])
-
-(defn devtools-page [{:keys [route-params query-params handler] :as route}]
-  [:div.bg-green-300 ; .w-screen.h-screen
-   [devtools]])
+   [artefacts "notebook (legacy)" notebook-legacy]])
 
 (add-page-template devtools-page :devtools)
 

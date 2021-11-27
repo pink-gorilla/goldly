@@ -122,28 +122,38 @@
 
 (defn viewer [query-params]
   (fn [{:keys [ns fmt]
-        :or {fmt :clj} 
+        :or {fmt :clj}
         :as query-params}]
-    [layout/sidebar-main
-     [url-loader {:fmt :clj
-                  :url :nb/collections}
-      notebook-collection]
-     [:div
-      [:p "w:" (.-availWidth js/screen)]
-      (if ns
-        (let [fmt (if (string? fmt)
-                    (keyword fmt)
-                    fmt)]
-          [url-loader #_{:fmt :edn
-                         :url  (rdoc-link ns "notebook.edn")}
-           {:fmt :clj
-            :url :nb/load
+    (let [fmt (if (string? fmt)
+                (keyword fmt)
+                fmt)
+          c [url-loader {:fmt :clj
+                         :url :nb/collections}
+             notebook-collection]
+          nb [url-loader #_{:fmt :edn
+                            :url  (rdoc-link ns "notebook.edn")}
+              {:fmt :clj
+               :url :nb/load
              ;:arg-fetch ns
-            :args-fetch [ns fmt]}
-           notebook])
-        [notebook nb-welcome])
-      (when show-viewer-debug-ui
-        [viewer-debug query-params])]])) 
+               :args-fetch [ns fmt]}
+              notebook]]
+      [:div
+       (if (< 500 (.-availWidth js/screen))
+         ; big screen
+         [layout/sidebar-main
+          c
+          (if ns
+            nb
+            [notebook nb-welcome])]
+         ; small screen
+         (if ns
+           nb
+           c)
+         
+         )
+
+       (when show-viewer-debug-ui
+         [viewer-debug query-params])])))
 
 (defn viewer-page [{:keys [route-params query-params handler] :as route}]
   [:div.bg-green-300.w-screen.h-screen

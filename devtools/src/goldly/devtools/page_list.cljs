@@ -1,7 +1,13 @@
 
+
+
+;(keyword "user" "foo")
+
 (defn page-item [i]
   [:span.m-1
-   [link-dispatch [:bidi/goto :pages :query-params {:page (name i)}]
+   [link-dispatch [:bidi/goto :pages :query-params {:page (name i)
+                                                    :ns (namespace i)
+                                                    }]
     (str i)]])
 
 (defn page-list [p]
@@ -26,12 +32,20 @@
         (remove #(= :pages %))
         (remove #(= :goldly/reload-cljs %))))
 
+
+(defn blank? [s]
+  (or (= s "")
+      (= s nil)))
+
 (defn page-list-page [{:keys [route-params query-params handler] :as route}]
   (let [p (get-available-pages)]
     (fn [{:keys [route-params query-params handler] :as route}]
-      (let [page (:page query-params)
+      (let [ns (:ns query-params)
+            page (:page query-params)
             page (if (string? page)
-                   (keyword page)
+                   (if (blank? ns)
+                      (keyword page)
+                      (keyword ns page))
                    page)]
   ;[:div.bg-green-300.w-screen.h-screen.overflow-scroll
         [:div
