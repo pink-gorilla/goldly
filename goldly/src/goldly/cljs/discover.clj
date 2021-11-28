@@ -50,6 +50,11 @@
   (-> (concat @autoload-cljs-res-a (cljs-explore))
       vec))
 
+(defn generate-cljs-autoload []
+  (cljs-explore-with-res)
+  (info "writing sci-cljs-autoload" @autoload-cljs-res-a)
+  (write-target "sci-cljs-autoload" @autoload-cljs-res-a))
+
 ;; WATCH
 
 (defn watch-dir [dir]

@@ -13,9 +13,10 @@
    [goldly.version :refer [print-version]]
    [goldly.extension.discover :refer [discover-extensions]]
    [goldly.extension.pinkie :refer [available]]
+   [goldly.extension.cljs-autoload]
    [goldly.sci.bindings :refer [generate-bindings]]
-   [goldly.cljs.discover :refer [cljs-watch]]
-   [goldly.extension.cljs-autoload :refer [generate-cljs-autoload]]
+   [goldly.cljs.discover :refer [cljs-watch generate-cljs-autoload]]
+
    ; runtime
    [goldly.routes] ; side effects
    [goldly.ws-connect :refer [start-ws-conn-watch]]
