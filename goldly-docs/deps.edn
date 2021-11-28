@@ -80,18 +80,24 @@
   {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.0"}}
    :exec-fn deps-deploy.deps-deploy/deploy
    :exec-args {:installer :remote
-               :artifact "target/webly.jar"}}
+               :artifact "target/webly.jar"}
+    :jvm-opts ["-Dmaven.wagon.rto=90000"]
+   }
 
 
   :goldly ; used to create goldly-docs jar
   {:extra-deps {}
    :exec-fn goldly.app/goldly-server-run!
    :exec-args {:profile "watch2"
-               :config  "goldly-docs.edn"}}
+               :config  "goldly-docs.edn"}
+    :jvm-opts ["-Dmaven.wagon.rto=90000"]
+   }
 
   :nbeval {:extra-paths ["demo"]
            :exec-fn  reval.task/nbeval
-           :exec-args {:config "goldly-docs.edn"}}
+           :exec-args {:config "goldly-docs.edn"}
+            :jvm-opts ["-Dmaven.wagon.rto=90000"]
+           }
 
 
 ;           
