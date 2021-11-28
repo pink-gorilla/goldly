@@ -16,7 +16,7 @@
   (let [r (compile-code code)]
     (if (:error r)
       (show-sci-error filename r)
-      (infof "successfully compiled %s " filename))))
+      (debugf "successfully compiled %s " filename))))
 
 ;; websocket / static helper
 

@@ -1,7 +1,7 @@
 (ns goldly.app
   (:require
    [re-frame.core :as rf]
-   [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof error]]
+   [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof warn error]]
    [cljs.core.async :refer [>! <! chan close! put! timeout] :refer-macros [go]]
    [webly.build.prefs :refer [pref]]
    [goldly.cljs.loader :as loader]
@@ -27,7 +27,7 @@
 (rf/reg-event-db
  :goldly/init
  (fn [db _]
-   (info "goldly.init..")
+   (warn "goldly.init..")
    (let [db (or db {})
          pref (pref)
          profile (:profile pref)

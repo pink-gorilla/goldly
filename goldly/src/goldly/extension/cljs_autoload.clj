@@ -3,14 +3,8 @@
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [clojure.string :as str]
    [clojure.java.io :as io]
-   [modular.resource.classpath :refer [describe-url]]
-   [modular.writer :refer [write-target]]
-   [resauce.core :as rs]))
-
-(defn get-ns-files [res-path]
-  (->> (rs/resource-dir res-path)
-       (remove rs/directory?)
-       (map (partial describe-url res-path))))
+   [modular.resource.explore  :as resources]
+   [modular.writer :refer [write-target]]))
 
 (defn split-ext [filename]
   (let [m (re-matches #"(.*)\.(clj[sc]*)" filename)
@@ -24,8 +18,8 @@
     "cljc" true))
 
 (defn get-file-list [fmt res-path]
-  (->> (get-ns-files res-path)
-       (map :name)
+  (->> (resources/describe-files res-path)
+       (map :name) ; :name-full
        (map split-ext)
        (filter (partial is-format? fmt))
        (map first)
