@@ -87,11 +87,12 @@
   [:div ; .w-screen.h-screen
    [h1 "goldly devtools"]
    [:div.mb-5]
-   [:audio {:src "/r/daddys-outta-town.mp3"
-            :controls false
-            :auto-play true
-            :loop true
-            :preload "auto"}]
+   ; this mp3 is too big for clojars
+   ;[:audio {:src "/r/daddys-outta-town.mp3"
+   ;         :controls false
+   ;         :auto-play true
+   ;         :loop true
+   ;         :preload "auto"}]
    [h1 "What is goldly"]
    [:ul
     [:li "Can run clj code in the browser. This is done via sci interpreter."]

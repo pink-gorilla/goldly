@@ -17,11 +17,11 @@
 )  ; "../goldly-docs" nothing to lint in goldly-docs
          cljfmt-check (webly/clojure "goldly" "-M:cljfmt" "check"
                                      "."
-                                     "../goldly-docs" 
+                                     "../goldly-docs"
                                      "../goldly-test")
          cljfmt-fix (webly/clojure "goldly" "-M:cljfmt" "fix"
-                                   "." 
-                                   "../goldly-docs" 
+                                   "."
+                                   "../goldly-docs"
                                    "../goldly-test")
          deps-tree (webly/clojure "goldly" "-X:deps" "tree")
          outdated (webly/clojure "goldly-docs" "-M:outdated")
@@ -139,9 +139,9 @@
                             :task (webly/run "goldly-docs" "goldly" "jetty")}
 
 
-         
+
          nbeval {:doc "evaluates notebooks"
-                  :task (webly/clojure "goldly-docs" "-X:nbeval")}
+                 :task (webly/clojure "goldly-docs" "-X:nbeval")}
 
 
  ;        
