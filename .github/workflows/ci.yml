@@ -31,6 +31,15 @@ jobs:
       run: bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
     - name: bb ci-check
       run: bb ci-check
+    - name: bb ci-goldly-deploy
+      env:
+        CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
+        CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
+        CODECOV_TOKEN: ${{ secrets.CodecovToken }}
+      run: |
+        git config --global user.email "ci@pinkgorilla.org"
+        git config --global user.name "CI/CD"
+        bb ci-goldly-deploy
     - name: bb ci-goldly-docs-deploy
       if: success()
       # if: github.event_name == 'push'
@@ -42,15 +51,6 @@ jobs:
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
         bb ci-goldly-docs-deploy
-    - name: bb ci-goldly-deploy
-      env:
-        CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
-        CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
-        CODECOV_TOKEN: ${{ secrets.CodecovToken }}
-      run: |
-        git config --global user.email "ci@pinkgorilla.org"
-        git config --global user.name "CI/CD"
-        bb ci-goldly-deploy
       # bash <(curl -s https://codecov.io/bash)
       # lein with-profile +relay-jetty cloverage
       #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
