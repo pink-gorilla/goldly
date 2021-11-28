@@ -6,7 +6,10 @@
    [goldly.service.core :refer [run]]
    [goldly.sci.kernel-cljs :refer [compile-code]]
    [goldly.sci.error :refer [show-sci-error]]
-   [goldly.cljs.reload :refer [reload-cljs]]))
+   [goldly.cljs.reload :refer [reload-cljs]]
+   [goldly.static :refer [cljs-explore get-code]]))
+
+;; compile
 
 (defn compile-cljs [{:keys [filename code]}]
   (info "compiling: " filename)
@@ -15,20 +18,30 @@
       (show-sci-error filename r)
       (infof "successfully compiled %s " filename))))
 
-(defn load-cljs-file [filename]
+;; websocket / static helper
+
+(defn explore [static?]
+  (if static?
+    (cljs-explore)
+    (run {:fun :cljs/explore})))
+
+(defn load-cljs-file [static? filename]
   (info "loading cljs file: " filename)
   (go
-    (let [{:keys [error result] :as r} (<! (run {:fun :cljs/load :args [filename]}))]
+    (let [{:keys [error result] :as r}
+          (<! (if static?
+                (get-code filename)
+                (run {:fun :cljs/load :args [filename]})))]
       (when error
         (error "error loading cljs: " r))
       (when result
         (compile-cljs result)))))
 
 ; called from goldly.system.ws after ws connected:
-(defn load-cljs []
-  (info "load-cljs")
+(defn load-cljs [static?]
+  (info "load-cljs static?: " static?)
   (go
-    (let [{:keys [result error]} (<! (run {:fun :cljs/explore}))]
+    (let [{:keys [result error]} (<! (explore static?))]
       (if error
         (error "error getting cljs files: " (pr-str error))
         (if (empty? result)
@@ -37,7 +50,7 @@
             (info "cljs files: " (pr-str result))
             (loop [f (first result)
                    files (rest result)]
-              (<! (load-cljs-file f))
+              (<! (load-cljs-file static? f))
               (when (seq files)
                 (recur (first files)
                        (rest files))))))))))

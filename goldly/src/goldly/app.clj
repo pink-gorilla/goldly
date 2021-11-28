@@ -98,11 +98,3 @@
       (goldly-run!))
     (webly-run! profile config)))
 
-#_(defn -main ; for lein alias
-    ([]
-     (goldly-server-run! {}))
-    ([config]
-     (goldly-server-run! {:config config}))
-    ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
-     (goldly-server-run! {:profile profile
-                          :config config})))
