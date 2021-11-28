@@ -51,9 +51,9 @@
       vec))
 
 (defn generate-cljs-autoload []
-  (cljs-explore-with-res)
-  (info "writing sci-cljs-autoload" @autoload-cljs-res-a)
-  (write-target "sci-cljs-autoload" @autoload-cljs-res-a))
+  (let [sci-cljs-files (cljs-explore-with-res)]
+    (info "writing sci-cljs-autoload" sci-cljs-files)
+    (write-target "sci-cljs-autoload" sci-cljs-files)))
 
 ;; WATCH
 
