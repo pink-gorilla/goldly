@@ -72,7 +72,7 @@
                 ;rewrite-clj/rewrite-clj {:mvn/version "1.0.699-alpha"}
                  babashka/fs {:mvn/version "0.0.5"}}
           :ns-default build
-          :jvm-opts "-Dmaven.wagon.rto=90000"
+          :jvm-opts ["-Dmaven.wagon.rto=90000"]
           }
 
 
