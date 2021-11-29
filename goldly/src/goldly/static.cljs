@@ -38,6 +38,7 @@
                            :filename filename}]
                     ;(info "code: " d)
                     (put! ch {:result d})))]
+    (info "getcode url: " uri)
     (GET uri {:handler handler
               :error-handler error-handler})
     ch))
