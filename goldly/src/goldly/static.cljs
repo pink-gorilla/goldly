@@ -29,6 +29,18 @@
   (let [url (make-url "sci-cljs-autoload.edn")]
     (get-url url)))
 
+(defn extensions []
+  (let [url (make-url "extensions.edn")]
+    (get-url url)))
+
+(defn get-ext-static [ext-name]
+  (go (let [ch (chan)
+            data (<! (extensions))
+            _ (info "data: " data)
+            e (filter #(= ext-name (:name %)) data)]
+        (info "ext: " e)
+        (>! ch e))))
+
 (defn get-code [filename]
   (let [uri (make-url filename)
         ch (chan)

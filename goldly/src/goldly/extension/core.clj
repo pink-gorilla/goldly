@@ -112,7 +112,7 @@
     ;(print-all)
     ;(error "ext fns:" (ext-fns))
     (info "extensions: " (extension-summary))
-    (write-status "extensions" ext-list)
+    (write-target "extensions" ext-list)
     (write-target "module-fn-maps" (map-fn-module ext-list))))
 
 

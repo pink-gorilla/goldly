@@ -6,7 +6,9 @@
    [re-frame.core :as rf]
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof warn error errorf]]
    [webly.build.lazy :refer [on-load]]
-   [goldly.service.core :refer [run]]))
+   [webly.build.prefs :refer [pref]]
+   [goldly.service.core :refer [run]]
+   [goldly.static :refer [get-ext-static]]))
 
 (def mapping-table (compiled-ext-fns))
 
@@ -25,16 +27,25 @@
   (let [fn-name (name symbol-fn)]
     (get mapping-table fn-name)))
 
+(defn get-ext [static? ext-name]
+  (info "get-ext static?:" static? " ext-name: " ext-name)
+  (if static?
+    (get-ext-static ext-name)
+    (run {:fun :goldly/get-extension-theme
+          :args [ext-name]})))
+
 (defn load-css [ext-name]
   (warn "loading css for: " ext-name)
-  (go
-    (let [{:keys [error result] :as r} (<! (run {:fun :goldly/get-extension-theme
-                                                 :args [ext-name]}))]
-      (infof "theme rcvd %s" ext-name)
+  (let [pref (pref)
+        profile (:profile pref)
+        static? (= "static" profile)]
+    (go
+      (let [{:keys [error result] :as r} (<! (get-ext static? ext-name))]
+        (infof "theme rcvd %s" ext-name)
       ;(errorf "theme for %s is: %s" ext-name result)
-      (rf/dispatch [:css/add-components
-                    (:available result)
-                    (:current result)]))))
+        (rf/dispatch [:css/add-components
+                      (:available result)
+                      (:current result)])))))
 
 (defn goldly-on-load [symbol-fn]
   (debugf "goldly lazy loading %s" symbol-fn)
