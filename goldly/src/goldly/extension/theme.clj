@@ -2,6 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.config :refer [config-atom]]
+   [modular.writer :refer [write-status write-target]]
    [goldly.extension.core :refer [ext-lazy? get-extension]]))
 
 (defn theme-split [theme]
@@ -27,8 +28,17 @@
       (debug "preloading css for ext: " name)
       (swap! config-atom assoc-in [:webly :theme] theme-m))))
 
+(defonce theme-atom (atom {}))
+
+(defn set-lazy-themes! [t]
+  (reset! theme-atom t)
+  (write-target "ext-theme" t))
+
+(defmacro theme-registry []
+  @theme-atom)
+
 (defn ext-theme [name]
-  (if-let [ext (get-extension name)]
+  (if-let [ext (get @theme-atom name)]
     (:theme ext)
     {:available {}
      :current {}

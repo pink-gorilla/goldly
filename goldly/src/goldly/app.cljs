@@ -3,15 +3,16 @@
    [re-frame.core :as rf]
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof warn error]]
    [cljs.core.async :refer [>! <! chan close! put! timeout] :refer-macros [go]]
-   [webly.build.prefs :refer [pref]]
+   [webly.build.prefs :refer-macros [pref]]
+   [goldly.static :refer [static?]]
    [goldly.cljs.loader :as loader]
-   ; side-effecs
-   [pinkie.default-setup] ; pinkie is a necessary dependency, because goldly systems use it for frontend description   
    [goldly.service.core]
    [goldly.sci.kernel-cljs]
    [goldly.extension.lazy]
-   [goldly.extension.pinkie :refer [add-extension-pinkie-static]]))
-
+   [goldly.extension.pinkie :refer [add-extension-pinkie-static]]
+   ; side-effecs
+   [pinkie.default-setup] ; pinkie is a necessary dependency, because goldly systems use it for frontend description    
+   ))
 (def initial-db
   {:id nil
    ; system ui
@@ -29,16 +30,13 @@
  (fn [db _]
    (warn "goldly.init..")
    (let [db (or db {})
-         pref (pref)
-         profile (:profile pref)
-         static? (= "static" profile)]
-     (error "goldly.PREF:. " pref)
+         static? (static?)]
      (when static?
        (error "goldly.static.mode: " static?)
        (goldly-start static?))
      (-> db
          (assoc-in [:goldly] initial-db)
-         (assoc-in [:pref] pref)))))
+         (assoc-in [:pref] (pref))))))
 
 (rf/reg-event-db
  :goldly/dispatch

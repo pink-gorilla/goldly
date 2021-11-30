@@ -124,4 +124,3 @@
 
 ;  sci-bindings
 ; :goldly/get-extension-info get-extension-info
-; :goldly/get-extension-theme ext-theme

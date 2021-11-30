@@ -10,25 +10,20 @@
    [:p "test if goldy extension system is working."]
    [:p "when the binary time is appearing, it is a good start."]
 
-   ; menu
-   [:div.bg-green-300
-
-    [:div.grid.grid-cols-2
-     [:a.m-2 {:href "/devtools/help"}  "devtools"]
-     [:a.m-2 {:href "/scicompile"}  "scicompile"]
-     [:a.m-2 {:href "/error"} "error"]
-     [:a.m-2 {:href "/service"} "service-test"]
-     [:a.m-2 {:href "/lazy"} "lazyload-test"]]]
-
    [:h1 "binary time"]
-   [clock]])
+   [clock]
+
+   [:h1 "devtoools"]
+   [:div.bg-green-300
+    [:a.m-2 {:href "/devtools/help"}  "devtools"]]
+;   
+   ])
 
 (defn main-page [{:keys [handler route-params query-params] :as route}]
 
-  [site/main-with-header
+  [layout/header-main
    ;[:div "header"]
-   header
-   30
+   [test-header]
    [main-body]])
 
 (add-page main-page :user/main)

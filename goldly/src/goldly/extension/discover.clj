@@ -7,15 +7,15 @@
    [modular.config :refer [config-atom]]
 
    ; build time
-   [goldly.extension.theme :refer [add-extension-theme]]
+   [goldly.extension.theme :refer [add-extension-theme set-lazy-themes!]]
    [goldly.extension.pinkie :refer [pinkie-atom save-pinkie]]
    [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
 
    ; runtime
    [goldly.extension.cljs-autoload :refer [add-extension-cljs-autoload]]
-   [goldly.extension.clj :refer [add-extension-clj-require add-extension-autoload-clj-ns]]
+   [goldly.extension.clj :refer [add-extension-autoload-clj-ns]]
 
-   [goldly.extension.core :refer [save-extensions]]))
+   [goldly.extension.core :refer [save-extensions ext-themes]]))
 
 (defn add-extension [{:keys [name] :as extension}]
   (debug "adding extension: " name)
@@ -25,8 +25,7 @@
 
   ;run-time
   (add-extension-cljs-autoload extension)
-  (add-extension-autoload-clj-ns extension)
-  (add-extension-clj-require extension))
+  (add-extension-autoload-clj-ns extension))
 
 (defn discover-extensions []
   (let [r  (rs/resource-dir "ext")
@@ -34,11 +33,16 @@
                      (-> f slurp edn/read-string))]
     (debug "discovered extensions: " (pr-str r))
     (cljs-init)
+
+    ; discover
     (doall (for [ext extensions]
              (add-extension ext)))
+
+    ; save collected data.
     (save-extensions extensions)
     (save-pinkie)
-    (swap! config-atom assoc :pinkie @pinkie-atom)))
+    (swap! config-atom assoc :pinkie @pinkie-atom)
+    (set-lazy-themes! (ext-themes))))
 
 (comment
 

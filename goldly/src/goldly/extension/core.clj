@@ -98,8 +98,21 @@
                  [(name k) v])
                exts))))
 
+;; themes
+
+(defn ext-themes []
+  (let [names (extension-names)
+        get-theme (fn [name]
+                    [name (-> name get-extension :theme)])]
+    (->> (map get-theme names)
+         (into {}))))
+
+;; MACROS
+
 (defmacro compiled-ext-fns []
   (ext-fns-s))
+
+;; SUMMARY.
 
 (defn save-extensions [ext-list]
   (let [ext-map (ext->map ext-list)]
@@ -113,6 +126,7 @@
     ;(error "ext fns:" (ext-fns))
     (info "extensions: " (extension-summary))
     (write-target "extensions" ext-list)
+
     (write-target "module-fn-maps" (map-fn-module ext-list))))
 
 

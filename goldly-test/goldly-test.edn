@@ -7,12 +7,13 @@
                           "ui-math"}
           ; run-time
           :autoload-clj-ns [demo.service]
-          :autoload-cljs-dir ["src/demo/cljs_libs"
-                              "src/demo/page"]
+          :autoload-cljs-dir ["demo/cljs_libs"
+                              "demo/page"]
           :routes {:app {"" :user/main
                          "scicompile" :user/scicompile
                          "lazy" :user/lazy
                          "error" :user/error
+                         "select" :user/select
                          "service" :user/service
 
                          ;devtools

@@ -19,7 +19,7 @@
 
 (defn scratchpad-set-handler
   [req]
-  (debug "snippet-api-handler: " req)
+  (debug "scratchpad-api-handler: " req)
   (let [src (body-string req)]
     (info "src:" src)
     (scratchpad/show! src)

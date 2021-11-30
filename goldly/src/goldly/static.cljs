@@ -6,6 +6,14 @@
    [cljs.reader :refer [read-string]]
    [webly.build.prefs :refer [pref]]))
 
+(defn static? []
+  (let [pref (pref)
+        profile (:profile pref)
+        static? (= "static" profile)]
+    (info "pref:" pref)
+    (info "static?: " static?)
+    static?))
+
 (defn error-handler [& args]
   (error "error getting data ..."))
 

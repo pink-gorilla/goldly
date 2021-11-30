@@ -3,7 +3,6 @@
   (let [state (r/atom {:first true})]
     (fn []
       [:div
-       [:a.m-1 {:href "/"}  "main"]
        [:p "this tests if clj services are working"]
        [:p "you should see one error message (for a service that is not defined)"]
        (when (:first @state)
@@ -15,4 +14,4 @@
 
        [:p.bg-blue-300.mg-3 "state: " (pr-str @state)]])))
 
-(add-page service-page :user/service)
+(add-page-test service-page :user/service)
