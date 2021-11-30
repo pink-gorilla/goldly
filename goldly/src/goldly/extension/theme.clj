@@ -3,7 +3,7 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.config :refer [config-atom]]
    [modular.writer :refer [write-status write-target]]
-   [goldly.extension.core :refer [ext-lazy? get-extension]]))
+   [goldly.extension.core :refer [ext-lazy?]]))
 
 (defn theme-split [theme]
   (let [theme (or theme {})
@@ -27,6 +27,8 @@
           theme-m (merge-theme theme-g theme)]
       (debug "preloading css for ext: " name)
       (swap! config-atom assoc-in [:webly :theme] theme-m))))
+
+;; theme registry
 
 (defonce theme-atom (atom {}))
 
