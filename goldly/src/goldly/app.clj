@@ -16,6 +16,7 @@
    [goldly.extension.cljs-autoload]
    [goldly.sci.bindings :refer [generate-bindings]]
    [goldly.cljs.discover :refer [cljs-watch generate-cljs-autoload]]
+   [goldly.static :refer [export-sci-cljs]]
 
    ; runtime
    [goldly.routes] ; side effects
@@ -42,7 +43,8 @@
     ;      (require-namespaces extensions))
     ;  (warn "no goldly extensions defined!"))
     (generate-bindings)
-    (generate-cljs-autoload)))
+    (generate-cljs-autoload)
+    (export-sci-cljs)))
 
 (defn add-routes [routes]
   (let [m (fn [r]
