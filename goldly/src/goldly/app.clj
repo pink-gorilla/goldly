@@ -86,13 +86,13 @@
     ;  (warn "no goldly extensions defined!"))
     (run-nrepl-server (get-in-config [:nrepl]))))
 
-(defonce goldly-default-edn (atom "goldly.edn"))
+(defonce goldly-default-config (atom ["webly/config.edn" "goldly.edn"]))
 
 (defn goldly-server-run!
   [{:keys [config profile] ; a map so it can be consumed by tools deps -X
     :or {profile "jetty"
          config {}}}]
-  (let [config (add-config @goldly-default-edn config)]
+  (let [config (add-config @goldly-default-config config)]
     (load-config! config)
     (goldly-init!)
     (when (compile? profile)
