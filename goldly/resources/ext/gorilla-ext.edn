@@ -2,6 +2,10 @@
  :clj-require []
  :cljs-namespace [clojure.walk
                   applied-science.js-interop
+                  ; oauth2
+                  modular.oauth2.token.ui
+                  modular.oauth2.user.view
+                  ; goldly
                   goldly.page.page
                   goldly.page.no-page
                   goldly.service.core
@@ -20,6 +24,9 @@
                     'page {'available goldly.page.page/available-pages
                            'show goldly.page.page/show-page
                            'add goldly.page.page/add-page}
+
+                     'oauth2 {'provider-status-grid modular.oauth2.token.ui/provider-status-grid
+                              'user-login modular.oauth2.user.view/user-login}
 
                     'j {'get applied-science.js-interop/get
                         'call applied-science.js-interop/call
