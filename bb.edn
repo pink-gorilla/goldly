@@ -128,14 +128,14 @@
 
          ;; goldly-docs
 
-         goldly-docs {:doc "goldlly docs with shadow-cljs watch"
+         goldly-docs {:doc "goldly docs with shadow-cljs watch"
                       :task (do  ;(run 'tailwind-girouette-webly)
                               (webly/run "goldly-docs" "goldly" "watch2"))}
-         goldly-docs-tenx {:doc "goldlly docs with shadow-cljs watch"
+         goldly-docs-tenx {:doc "goldly docs with shadow-cljs watch"
                            :task (do  (webly/run "goldly-docs" "goldly" "watch"))}
-         goldly-docs-compile {:doc "compilegoldlly docs javascript"
+         goldly-docs-compile {:doc "compile goldly docs javascript"
                               :task (webly/run "goldly-docs" "goldly" "release")}
-         goldly-docs-jetty {:doc "serve compiled goldlly docs javascript with jetty"
+         goldly-docs-jetty {:doc "serve compiled goldly docs javascript with jetty"
                             :task (webly/run "goldly-docs" "goldly" "jetty")}
 
 
