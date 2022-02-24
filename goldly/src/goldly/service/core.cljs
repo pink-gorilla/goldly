@@ -10,7 +10,7 @@
   (warnf "service result rcvd: type: %s data: %s" event-type data))
 
 (defn run-cb [{:keys [fun args timeout cb]
-               :or {timeout 5000
+               :or {timeout 60000 ; 1 minute
                     cb print-result}
                :as params}]
   (let [p-clean (dissoc params :cb :a :where)]
