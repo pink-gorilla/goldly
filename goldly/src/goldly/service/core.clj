@@ -48,18 +48,13 @@
       (debug "sending service response: " response))
     response))
 
-;(defn send-reject-response [req event]
-;  (send-response req event {:error "Not Authorized"
-;                            :error-message "You are not authorized for this service"}))
-
 (defmethod -event-msg-handler :goldly/service
   [{:keys [event id ?data uid] :as req}]
   (let [[_ params] event ; _ is :goldly/service
         {:keys [fun args]} params]
     (if (is-authorized fun uid)
       (send-response ev-msg :goldly/service (run-service params))
-      (send-reject-response req event)
-      ))
+      (send-response ev-msg :goldly/service  {:error "Not Permissioned"}))))
 
 ; future:
 
