@@ -53,8 +53,8 @@
   (let [[_ params] event ; _ is :goldly/service
         {:keys [fun args]} params]
     (if (is-authorized? fun uid)
-      (send-response ev-msg :goldly/service (run-service params))
-      (send-response ev-msg :goldly/service  {:error "Not Permissioned"}))))
+      (send-response req :goldly/service (run-service params))
+      (send-response req :goldly/service  {:error "Not Permissioned"}))))
 
 ; future:
 
