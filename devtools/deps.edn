@@ -5,7 +5,7 @@
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/reval {:mvn/version "0.0.37"}
         ;org.pinkgorilla/reval {:local/root "../../reval" :deps/manifest :deps}
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.37"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.39"}
         org.pinkgorilla/ui-gorilla {:mvn/version "0.4.3"} ; needed by reval
         org.pinkgorilla/ui-site {:mvn/version "0.0.17"}
         org.pinkgorilla/ui-code {:mvn/version "0.0.28"}

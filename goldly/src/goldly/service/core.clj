@@ -3,7 +3,7 @@
    [clojure.string]
    [taoensso.timbre :as log :refer [debug info infof warn error errorf]]
    [modular.ws.core :refer [send! send-all! send-response]]
-   [modular.ws.msg-handler :refer [-event-msg-handler]]))
+   [modular.ws.msg-handler :refer [-event-msg-handler is-authorized? send-reject-response]]))
 
 ;; services registry
 
@@ -48,11 +48,18 @@
       (debug "sending service response: " response))
     response))
 
+;(defn send-reject-response [req event]
+;  (send-response req event {:error "Not Authorized"
+;                            :error-message "You are not authorized for this service"}))
+
 (defmethod -event-msg-handler :goldly/service
-  [{:as ev-msg :keys [event id ?data]}]
+  [{:keys [event id ?data uid] :as req}]
   (let [[_ params] event ; _ is :goldly/service
-        response (run-service params)]
-    (send-response ev-msg :goldly/service response)))
+        {:keys [fun args]} params]
+    (if (is-authorized fun uid)
+      (send-response ev-msg :goldly/service (run-service params))
+      (send-reject-response req event)
+      ))
 
 ; future:
 
