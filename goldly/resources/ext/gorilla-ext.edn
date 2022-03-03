@@ -14,6 +14,8 @@
  :cljs-bindings {'add-page goldly.page.page/add-page ; depreciated - use page/add
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
+                 'run-cb goldly.service.core/run-cb
+                 'wait-chan-result goldly.service.core/wait-chan-result
                  'value-of goldly.sci.helper/value-of
                  'obj->clj goldly.sci.helper/obj->clj}
  :cljs-ns-bindings {'goldly {'compile-time compile-time

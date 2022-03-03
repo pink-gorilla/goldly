@@ -9,6 +9,8 @@
 (defn print-result [[event-type data]]
   (warnf "service result rcvd: type: %s data: %s" event-type data))
 
+; run with callback
+
 (defn run-cb [{:keys [fun args timeout cb]
                :or {timeout 60000 ; 1 minute
                     cb print-result}
@@ -18,6 +20,8 @@
     (send! [:goldly/service p-clean] cb timeout)
     nil))
 
+; run with core-async channel
+
 (defn run [params]
   (let [ch (chan)
         cb (fn [event] ; _ = event-type ;goldly/service
@@ -26,6 +30,16 @@
                (put! ch data)))]
     (run-cb (assoc params :cb cb))
     ch))
+
+(defn wait-chan-result [ch fn-success fn-err]
+  (go
+    (let [{:keys [error result] :as r} (<! ch)]
+      (when error
+        (fn-err error))
+      (when result
+        (fn-success result)))))
+
+; run to atom
 
 (defn process-error [data]
   (error "error in clj-service: " data)
