@@ -79,10 +79,19 @@
 ;  :hiccup [:p "hi"]
 ;  :ns     demo.playground.cljplot
 
-(defn process-scratchpad-op [{:keys [op hiccup] :as msg}]
+(defn remote-eval [code]
+   (println "remote eval: " code)
+   (let [eval-result (compile-sci code)]
+     ;(rf/dispatch [:goldly/send :scratchpad/evalresult {:code code :result eval-result}])
+     ;(run-cb {:fun :scratchpad/evalresult :args {:code code :result eval-result}})
+     (send! [:scratchpad/evalresult {:code code :result eval-result}] (fn [& _]) 2000)
+   ))
+
+(defn process-scratchpad-op [{:keys [op hiccup code] :as msg}]
   (case op
     :clear (clear-scratchpad)
     :show  (show-hiccup hiccup)
+    :eval (remote-eval code)
     (println "unknown viewer op:" op)))
 
 (rf/reg-event-fx

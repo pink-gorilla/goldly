@@ -1,6 +1,10 @@
 {:webly {:ns-clj [goldly.app]}
  :keybindings []
 
+  :nrepl {:enabled true
+          :bind "0.0.0.0"
+          :port 9100}
+
  :goldly {; build
           :lazy true
           :lazy-exclude #{"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
