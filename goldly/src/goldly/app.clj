@@ -31,9 +31,9 @@
     ; extensions can add to cljs namespaces. therefore extensions have to
     ; be included at compile time. But extensions also are needed
     ; for css and clj ns. Therefore put to init
-  (print-version "goldly")
+  ;(print-version "goldly")
   (discover-extensions)
-  (info "pinkie renderer (clj): " (available)))
+  (debug "pinkie renderer (clj): " (available)))
 
 (defn goldly-compile! []
   (let [{:keys [systems]}
