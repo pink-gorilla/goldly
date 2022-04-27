@@ -34,3 +34,4 @@ goldly-docs/target/
 
 docs/
 rdocument/
+.clj-kondo
