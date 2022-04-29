@@ -8,14 +8,14 @@
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
- :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
-                   [#{"webly.ws.*"} :info]
-                   [#{"webly.*"} :info]
-                   [#{"goldly.*"} :info]
-                   [#{"pinkgorilla.nrepl.*"} :info]
-                   [#{"ui.*"} :info]
-                   [#{"user"} :warn] ; time sender
-                   [#{"*"} :info]]
+ :timbre/clj {:min-level  [[#{"org.eclipse.jetty.*"} :info]
+                           [#{"webly.ws.*"} :info]
+                           [#{"webly.*"} :info]
+                           [#{"goldly.*"} :info]
+                           [#{"pinkgorilla.nrepl.*"} :info]
+                           [#{"ui.*"} :info]
+                           [#{"user"} :warn] ; time sender
+                           [#{"*"} :info]]}
 
 ; :keybindings  goldly-server.keybindings/keybindings-default
 

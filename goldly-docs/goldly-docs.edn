@@ -1,7 +1,7 @@
-{:timbre-loglevel [[#{"pinkgorilla.nrepl.*"} :warn]
-                   [#{"org.eclipse.jetty.*"} :warn]
-                   [#{"webly.*"} :info]
-                   [#{"*"} :info]]
+{:timbre/cljs {:min-level [[#{"pinkgorilla.nrepl.*"} :warn]
+                           [#{"org.eclipse.jetty.*"} :warn]
+                           [#{"webly.*"} :info]
+                           [#{"*"} :info]]}
 
  :nrepl {:enabled true
          :bind "0.0.0.0"
