@@ -1,9 +1,9 @@
 {:webly {:ns-clj [goldly.app]}
  :keybindings []
 
-  :nrepl {:enabled true
-          :bind "0.0.0.0"
-          :port 9100}
+ :nrepl {:enabled true
+         :bind "0.0.0.0"
+         :port 9100}
 
  :goldly {; build
           :lazy true

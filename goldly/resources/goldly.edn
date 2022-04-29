@@ -3,8 +3,8 @@
          :ns-cljs [goldly.app]
          :routes goldly.routes/routes
          :start-user-app [:goldly/init]}
- 
-  :prefix "/r/"
+
+ :prefix "/r/"
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
@@ -36,11 +36,7 @@
           :src-dir "src"
           ; runtime
           :autoload-clj-ns []
-          :autoload-cljs-dir []
-          }
-
- }
-
+          :autoload-cljs-dir []}
 
 
 ;
