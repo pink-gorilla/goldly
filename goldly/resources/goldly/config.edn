@@ -1,13 +1,14 @@
-{:webly {:title "Goldly"
-         :ns-clj [goldly.app]
+{:ns-clj []
+ :webly {:title "Goldly"
+         ;:ns-clj [goldly.app]
          :ns-cljs [goldly.app]
          :routes goldly.routes/routes
+         ;:routes {:app {"" :goldly/no-page
+         ;               "goldly/reload" :goldly/reload-cljs}
+         ;        :api {}}
          :start-user-app [:goldly/init]}
-
  :prefix "/r/"
-
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
-
  :timbre/clj {:min-level  [[#{"org.eclipse.jetty.*"} :info]
                            [#{"webly.ws.*"} :info]
                            [#{"webly.*"} :info]
@@ -27,15 +28,9 @@
             :notebook  {:layout :horizontal ; :vertical
                         :view-only false}}
 
- :nrepl {:enabled true
-         :bind "0.0.0.0"
-         :port 9100}
-
- :goldly {:enabled true
-          :lazy true
+ :goldly {:lazy true
           :src-dir "src"
           ; runtime
-          :autoload-clj-ns []
           :autoload-cljs-dir []}
 
 

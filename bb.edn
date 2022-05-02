@@ -31,9 +31,9 @@
                    (webly/clean-project "./goldly")
                    (webly/clean-project "./goldly-docs")
                    (webly/clean-project "./goldly-test"))
-         npm-install (webly/run "goldly-docs" "goldly" "npm-install")
-         build-ci (webly/run "goldly-docs" "goldly" "ci")
-         build-ci-adv (webly/run "goldly-docs" "goldly" "release-adv")
+         npm-install (webly/run "goldly-docs" "docs-build" "npm-install")
+         build-ci (webly/run "goldly-docs" "docs-ci" "ci")
+         build-ci-adv (webly/run "goldly-docs" "docs-build" "release-adv")
 
          ;copy-resources (shell {:dir "goldly-docs"} "../script/copy_res.sh")
          ;get-fonts  (shell {:dir "goldly-docs"} "../script/get-fonts.sh")

@@ -1,6 +1,9 @@
 (ns demo.service
   (:require
+   [taoensso.timbre :as timbre :refer [info warn errorf]]
    [goldly.service.core :as s]))
+
+(info "namespace demo.service is getting loaded...")
 
 (defn fun-add [a b]
   (+ a b))

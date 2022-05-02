@@ -28,8 +28,6 @@
    :main-opts ["-m"
                "clj-check.check"]}
 
-
-
   :lint
   {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
    :main-opts ["-m"
@@ -58,14 +56,6 @@
                "cognitect.test-runner"]
    :exec-fn cognitect.test-runner.api/test}
 
-  ;; goldly
-  :ci
-  {:extra-paths ["test"]
-   :exec-fn goldly.app/goldly-server-run!
-   :exec-args {:profile "ci"
-               :config nil}}
-
-
   :build {:deps {io.github.clojure/tools.build {:git/tag "v0.6.1" :git/sha "515b334"}
                  io.github.slipset/deps-deploy {:git/sha "d1fac08888ec8beda0579d3071bb9f804a1d446c"}
                  io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
@@ -83,18 +73,41 @@
    :jvm-opts ["-Dmaven.wagon.rto=90000"]}
 
 
-  :goldly ; used to create goldly-docs jar
+   ; BUILD BUNDLE (then exit)
+  :docs-build  ; used to create goldly-docs jar
   {:extra-deps {}
-   :exec-fn goldly.app/goldly-server-run!
-   :exec-args {:profile "watch2"
-               :config  "goldly-docs.edn"}
-   :jvm-opts ["-Dmaven.wagon.rto=90000"]}
+   :jvm-opts ["-Dmaven.wagon.rto=90000"]
+   :exec-fn goldly.app.build/goldly-build
+   :exec-args {:profile "compile" ; watch2 has no texnx devtools
+               :config ["webly/config.edn" "goldly/config.edn" "docs/docs-config.edn"]}}
+
+      ;; BUILD UNIT TESTS (then exit)
+  :docs-ci
+  {:extra-paths ["test"]
+   :exec-fn goldly.app.build/goldly-build
+   :exec-args {:profile "ci"
+               :config ["webly/config.edn" "goldly/config.edn" "docs/docs-config.edn"]}}
+
+   ; RUN SERVICES (keep running)
+  :docs-run
+  {:extra-deps {}
+   :jvm-opts ["-Dmaven.wagon.rto=90000"]
+   :exec-fn modular.system/start!
+   :exec-args {:profile "watch2" ; watch2 has no texnx devtools
+               :config ["webly/config.edn" "goldly/config.edn" "docs/docs-config.edn"]
+               :services "docs/docs-services.edn"}}
+
+    ;;AUTO EVALUATE NOTEBOOKS
 
   :nbeval {:extra-paths ["demo"]
            :exec-fn  reval.task/nbeval
            :exec-args {:config "goldly-docs.edn"}
            :jvm-opts ["-Dmaven.wagon.rto=90000"]}
 
-
+ ; tree and list are here just because tools.deps.alpha does not work on my machine
+  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+         :exec-fn clojure.tools.cli.api/tree}
+  :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+         :exec-fn clojure.tools.cli.api/list}
 ;           
   }}

@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    ;[pinkgorilla.repl :refer [add-require]]
-   [modular.config :refer [require-namespaces]]))
+   [modular.require :refer [require-namespaces]]))
 
 (defn add-extension-autoload-clj-ns [{:keys [name
                                              autoload-clj-ns]

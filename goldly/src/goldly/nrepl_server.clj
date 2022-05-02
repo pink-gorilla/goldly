@@ -14,20 +14,20 @@
    ;[pinkgorilla.nrepl.middleware.sniffer]
    ))
 
-(defn run-nrepl-server [config]
-  (let [config (merge {:enabled false
-                       :bind "0.0.0.0"
+(defn start-nrepl-server [config]
+  (let [config (merge {:bind "0.0.0.0"
                        :port 9100}
                       (or config  {}))
-        {:keys [enabled bind port]} config]
-    (if enabled
-      (do
-        (infof "nrepl starting on %s:%s" bind port)
-        (nrepl.server/start-server :bind bind
-                                   :port port
-                                   ;:handler (make-default-handler)
-                                   )
-        (spit ".nrepl-port" (str port)) ; todo - add this to goldly!
-        )
-      (do (warn "nrepl is disabled.")
-          nil))))
+        {:keys [bind port]} config]
+    (infof "nrepl starting on %s:%s" bind port)
+    (spit ".nrepl-port" (str port)) ; todo - add this to goldly!
+    (nrepl.server/start-server :bind bind
+                               :port port
+                                ;:handler (make-default-handler)
+                               )))
+
+(defn stop-nrepl-server [this]
+  (.close this))
+
+
+

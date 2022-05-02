@@ -5,8 +5,6 @@
  :goldly {:enabled true
           :lazy true
           :src-dir "src"
-          :autoload-clj-ns [systems.snippet-registry
-                            systems.snippet-scratchpad]
           :notebook-dir "goldly/notebooks"
           :routes {:app
                      {"demo" #bidi.bidi.TaggedMatch{:matched :goldly/system, :tag :hello-user}

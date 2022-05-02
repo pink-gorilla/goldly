@@ -5,17 +5,18 @@
    [resauce.core :as rs]
    [modular.writer]
    [modular.config :refer [config-atom]]
-
    ; build time
    [goldly.extension.theme :refer [add-extension-theme set-lazy-themes!]]
    [goldly.extension.pinkie :refer [pinkie-atom save-pinkie]]
    [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
-
    ; runtime
    [goldly.extension.cljs-autoload :refer [add-extension-cljs-autoload]]
    [goldly.extension.clj :refer [add-extension-autoload-clj-ns]]
+   [goldly.extension.core :refer [save-extensions ext-themes]]
 
-   [goldly.extension.core :refer [save-extensions ext-themes]]))
+   ; side effects
+   [goldly.routes] ; side effects
+   ))
 
 (defn add-extension [{:keys [name] :as extension}]
   (debug "adding extension: " name)
@@ -24,7 +25,7 @@
   (add-extension-cljs extension)
 
   ;run-time
-  (add-extension-cljs-autoload extension)
+  (add-extension-cljs-autoload extension) ; the sci namespaces/files.
   (add-extension-autoload-clj-ns extension))
 
 (defn discover-extensions []

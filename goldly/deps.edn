@@ -5,11 +5,12 @@
  {org.clojure/clojure    {:mvn/version "1.11.1"}
   org.clojure/core.async {:mvn/version "1.5.648"}
   org.clojure/data.json {:mvn/version "2.4.0"}
+  
   ;thi.ng/strf {:mvn/version "0.2.2"} ; used in ui-repl
   org.babashka/sci {:mvn/version "0.3.4"}
   com.rpl/specter {:mvn/version "1.1.4"}
   applied-science/js-interop  {:mvn/version "0.3.3"}
-  org.pinkgorilla/webly {:mvn/version "0.4.599"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.4.601"} ; web app build tool
   org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; component registry (used in xtension discovery)
   }
 

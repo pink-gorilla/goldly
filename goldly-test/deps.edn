@@ -2,14 +2,13 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}
-        }
+        org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}}
 
  :aliases
  {:outdated
   {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
    :main-opts ["-m" "antq.core"]}
-  
+
   ; goldy demo
   ; this is a complete deps.edn project used to test goldly.
   ; tests:
@@ -17,18 +16,20 @@
   ; - lazy loading  (binaryclock dependency) 
   ; - services
 
-  :goldly
-  {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}
-                ;org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.6"}
-                ;org.pinkgorilla/ui-aggrid {:mvn/version "0.0.11"}
-                ;org.pinkgorilla/ui-highcharts {:mvn/version "0.0.13"}
-                ;org.pinkgorilla/ui-leaflet {:mvn/version "0.0.10"}
-                ;org.pinkgorilla/ui-math {:mvn/version "0.0.8"}
-                }
-   :exec-fn goldly.app/goldly-server-run!
-   :exec-args {:profile "watch2" ; warch2 has no texnx devtools
-               :config "goldly-test.edn"}}
+  ; BUILD BUNDLE (then exit)
+  :build
+  {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
+   :exec-fn goldly.app.build/goldly-build
+   :exec-args {:profile "compile" ; watch2 has no texnx devtools
+               :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]}}
 
+   ; RUN SERVICES (keep running)
+  :run
+  {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
+   :exec-fn modular.system/start!
+   :exec-args {:profile "watch2" ; watch2 has no texnx devtools
+               :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]
+               :services "test-services.edn"}}
 
 ;           
   }}
