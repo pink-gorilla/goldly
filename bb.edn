@@ -24,7 +24,8 @@
                                    "../goldly-docs"
                                    "../goldly-test")
          deps-tree (webly/clojure "goldly" "-X:deps" "tree")
-         outdated (webly/clojure "goldly-docs" "-M:outdated")
+         outdated (do (webly/clojure "goldly" "-M:outdated")
+                      (webly/clojure "goldly-docs" "-M:outdated" ))
 
          ; build
          clean (do (webly/clean-project ".")
@@ -90,7 +91,7 @@
 
 
          clojars {:doc "Deploys the jar to clojars"
-                  :task (webly/clojure "goldly-docs" "-T:build" "deploy")}
+                  :task (webly/clojure "goldly-docs" "-T:build-jar" "deploy")}
 
          tag {:doc "Tags release and pushes tag to Github."
               :task (let [version (-> (slurp "goldly-docs/resources/META-INF/pink-gorilla/goldly-docs/meta.edn")

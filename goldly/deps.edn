@@ -7,7 +7,7 @@
   org.clojure/data.json {:mvn/version "2.4.0"}
   
   ;thi.ng/strf {:mvn/version "0.2.2"} ; used in ui-repl
-  org.babashka/sci {:mvn/version "0.3.4"}
+  org.babashka/sci {:mvn/version "0.3.5"}
   com.rpl/specter {:mvn/version "1.1.4"}
   applied-science/js-interop  {:mvn/version "0.3.3"}
   org.pinkgorilla/webly {:mvn/version "0.4.601"} ; web app build tool
