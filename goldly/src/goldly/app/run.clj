@@ -1,5 +1,6 @@
 (ns goldly.app.run
   (:require
+   [clojure.string] ; side effects
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [com.rpl.specter :refer [transform setval END ALL]]
    [modular.config :refer [get-in-config config-atom load-config! add-config resolve-config-key]]

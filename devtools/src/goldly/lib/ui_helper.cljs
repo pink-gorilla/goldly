@@ -14,7 +14,7 @@
   ([t]
    (text2 {} t))
   ([opts t]
-   (let [lines (str/split t #"\n")]
+   (let [lines (string/split t #"\n")]
      (into
       [:div (merge {:class "textbox text-lg"} opts)]
       (map line-with-br lines)))))
@@ -29,7 +29,7 @@
 
 (defn s-cols [nr]
   (->> (take nr (repeatedly (fn [] "1fr ")))
-       (str/join "")))
+       (string/join "")))
 
 (defn grid [{:keys [cols background-color]
              :or {cols 2

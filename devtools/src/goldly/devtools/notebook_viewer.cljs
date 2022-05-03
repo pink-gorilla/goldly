@@ -51,7 +51,7 @@
        [user/highlightjs scode])
      (when err
        [evalerr err])
-     (when (not (str/blank? out))
+     (when (not (string/blank? out))
        [text2 out])
      (when hiccup
        [:div.mt-1.mb-1
@@ -84,7 +84,7 @@
 (defn nb-item [fmt ns]
   [:p.w-full.truncate ; .overflow-x-hidden
    [link-dispatch [:bidi/goto :viewer :query-params {:ns ns :fmt (name fmt)}]
-    (-> (str/split ns ".") last)
+    (-> (string/split ns ".") last)
    ; ns
     ]])
 

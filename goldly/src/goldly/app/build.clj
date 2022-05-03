@@ -1,5 +1,6 @@
 (ns goldly.app.build
   (:require
+   [clojure.string] ; side effects
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.config :refer [get-in-config config-atom load-config! add-config resolve-config-key]]
    [modular.require :refer [require-namespaces]]

@@ -1,6 +1,7 @@
 {:name "goldly"
  :clj-require []
- :cljs-namespace [clojure.walk
+ :cljs-namespace [clojure.string
+                  clojure.walk
                   applied-science.js-interop
                   ; oauth2
                   modular.oauth2.token.ui
@@ -11,8 +12,7 @@
                   goldly.service.core
                   goldly.sci.helper
                   goldly.sci.eventhandler
-                  modular.ws.core
-                  ]
+                  modular.ws.core]
  :cljs-bindings {'add-page goldly.page.page/add-page ; depreciated - use page/add
                  'run goldly.service.core/run
                  'run-a goldly.service.core/run-a
@@ -20,20 +20,25 @@
                  'wait-chan-result goldly.service.core/wait-chan-result
                  'send! modular.ws.core/send!
                  'value-of goldly.sci.helper/value-of
-                 'obj->clj goldly.sci.helper/obj->clj
-                
-                 }
- :cljs-ns-bindings {'goldly {'compile-time compile-time
+                 'obj->clj goldly.sci.helper/obj->clj}
+
+ :cljs-ns-bindings {'string {'split clojure.string/split
+                             'join clojure.string/join
+                             'escape clojure.string/escape
+                             'blank? clojure.string/blank?
+                             'replace clojure.string/replace
+                             'lower-case clojure.string/lower-case}
+
+                    'goldly {'compile-time compile-time
                              'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
-                             'eventhandler  goldly.sci.eventhandler/eventhandler-fn
-                             }
+                             'eventhandler  goldly.sci.eventhandler/eventhandler-fn}
                     'page {'available goldly.page.page/available-pages
                            'show goldly.page.page/show-page
                            'add goldly.page.page/add-page}
 
-                     'oauth2 {'provider-status-grid modular.oauth2.token.ui/provider-status-grid
-                              'user-login modular.oauth2.user.view/user-login}
+                    'oauth2 {'provider-status-grid modular.oauth2.token.ui/provider-status-grid
+                             'user-login modular.oauth2.user.view/user-login}
 
                     'j {'get applied-science.js-interop/get
                         'call applied-science.js-interop/call
