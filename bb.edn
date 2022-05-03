@@ -76,7 +76,7 @@
                                 )}
 
          jar {:doc "Builds the jar"
-              :task (webly/clojure "goldly-docs" "-T:build" "jar")}
+              :task (webly/clojure "goldly-docs" "-T:build-jar" "jar")}
 
          goldly-docs-build {:doc "Build goldly-docs, but don't deploy"
                             :depends [clean
@@ -85,6 +85,8 @@
                                       jar
                                       copy-static]
                             :task (shell "echo" "cljs bundle has been built!")}
+
+         show-docs-jar (shell "fastjar" "tf" "goldly-docs/target/goldly-docs-0.4.507.jar")
 
 
          clojars {:doc "Deploys the jar to clojars"

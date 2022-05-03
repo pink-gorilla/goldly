@@ -5,7 +5,7 @@
    [taoensso.timbre :refer [info warn]]))
 
 (defn load-version [app]
-  (if-let [r (io/resource (str app "_version.edn"))]
+  (if-let [r (io/resource (str "META-INF/pink-gorilla/" app "/meta.edn"))]
     (let [data (-> (slurp r) (edn/read-string))]
       data)
     {:app app :error "no version information"}))
@@ -14,5 +14,5 @@
   (let [data (load-version app)]
     (if (:error data)
       (warn app " version unknown!")
-      (info app " " (:version data) " generated: " (:generated-at data)))))
+      (info app " " (:version data) " generated: " (:generated data)))))
 

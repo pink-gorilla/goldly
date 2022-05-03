@@ -56,13 +56,15 @@
                "cognitect.test-runner"]
    :exec-fn cognitect.test-runner.api/test}
 
-  :build {:deps {io.github.clojure/tools.build {:git/tag "v0.6.1" :git/sha "515b334"}
-                 io.github.slipset/deps-deploy {:git/sha "d1fac08888ec8beda0579d3071bb9f804a1d446c"}
-                 io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
-                ;rewrite-clj/rewrite-clj {:mvn/version "1.0.699-alpha"}
-                 babashka/fs {:mvn/version "0.0.5"}}
-          :ns-default build
-          :jvm-opts ["-Dmaven.wagon.rto=90000"]}
+  :build-jar {:deps {io.github.clojure/tools.build {:git/tag "v0.6.1" :git/sha "515b334"}
+                     io.github.slipset/deps-deploy {:git/sha "d1fac08888ec8beda0579d3071bb9f804a1d446c"}
+                     io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
+                     ;rewrite-clj/rewrite-clj {:mvn/version "1.0.699-alpha"}
+                     babashka/fs {:mvn/version "0.0.5"}
+                     org.pinkgorilla/modular {:mvn/version "0.0.30"} ; modular.date
+                     }
+              :ns-default build
+              :jvm-opts ["-Dmaven.wagon.rto=90000"]}
 
 
   :deploy-jar
@@ -86,7 +88,7 @@
   {:extra-paths ["test"]
    :exec-fn goldly.app.build/goldly-build
    :exec-args {:profile "ci"
-               :config ["webly/config.edn" "goldly/config.edn" "docs/docs-config.edn"]}}
+               :config ["webly/config.edn" "goldly/config.edn" "goldly/docs-config.edn"]}}
 
    ; RUN SERVICES (keep running)
   :docs-run
@@ -94,14 +96,14 @@
    :jvm-opts ["-Dmaven.wagon.rto=90000"]
    :exec-fn modular.system/start!
    :exec-args {:profile "watch2" ; watch2 has no texnx devtools
-               :config ["webly/config.edn" "goldly/config.edn" "docs/docs-config.edn"]
-               :services "docs/docs-services.edn"}}
+               :config ["webly/config.edn" "goldly/config.edn" "goldly/docs-config.edn"]
+               :services "goldly/docs-services.edn"}}
 
     ;;AUTO EVALUATE NOTEBOOKS
 
   :nbeval {:extra-paths ["demo"]
            :exec-fn  reval.task/nbeval
-           :exec-args {:config "goldly-docs.edn"}
+           :exec-args {:config "goldly/docs-config.edn"}
            :jvm-opts ["-Dmaven.wagon.rto=90000"]}
 
  ; tree and list are here just because tools.deps.alpha does not work on my machine

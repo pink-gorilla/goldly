@@ -24,12 +24,13 @@ goldly_bindings_generated.cljs
 goldly/resources/META-INF
 goldly/node_modules/
 goldly/target/
+goldly/resources/META-INF
 
 goldly-test/node_modules/
 goldly-test/target/
 goldly-docs/node_modules/
 goldly-docs/target/
-
+goldly-docs/resources/META-INF
 
 
 docs/

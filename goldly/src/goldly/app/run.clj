@@ -29,14 +29,14 @@
 (defn start-goldly-services []
   (let [{:keys [routes]
          :or {routes {}}}
-        (get-in-config [:goldly])]
+        (get-in-config [:goldly])
+        routes (if (empty? routes)
+                 (do (warn "no [:goldly :routes ] defined - you will see a blank page.")
+                     {:app {"" :goldly/no-page}
+                      :api {}})
+                 routes)]
     ; add goldly user-app routes
-    (if (empty? routes)
-      (do
-        (warn "no [:goldly :routes ] defined - you will see a blank page.")
-        (add-routes {:app {"" :goldly/no-page}
-                     :api {}}))
-      (add-routes routes))
+    (add-routes routes)
     (let [w-cljs (cljs-watch)
           w-conn (start-ws-conn-watch)]
       {:cljs-watch w-cljs

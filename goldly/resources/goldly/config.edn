@@ -1,6 +1,5 @@
 {:ns-clj []
  :webly {:title "Goldly"
-         ;:ns-clj [goldly.app]
          :ns-cljs [goldly.app]
          :routes goldly.routes/routes
          ;:routes {:app {"" :goldly/no-page
@@ -9,16 +8,14 @@
          :start-user-app [:goldly/init]}
  :prefix "/r/"
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
- :timbre/clj {:min-level  [[#{"org.eclipse.jetty.*"} :info]
-                           [#{"webly.ws.*"} :info]
-                           [#{"webly.*"} :info]
+ :timbre/clj {:min-level  [[#{"org.eclipse.jetty.*"
+                              "webly.*"
+                              "webly.ws.*"} :info]
                            [#{"goldly.*"} :info]
                            [#{"pinkgorilla.nrepl.*"} :info]
                            [#{"ui.*"} :info]
                            [#{"user"} :warn] ; time sender
                            [#{"*"} :info]]}
-
-; :keybindings  goldly-server.keybindings/keybindings-default
 
  :settings {; settings can be changed by user (via dialog)
             ; :use-localstorage is true: load settings from localstorage, and only use
@@ -32,7 +29,6 @@
           :src-dir "src"
           ; runtime
           :autoload-cljs-dir []}
-
 
 ;
  }
