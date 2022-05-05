@@ -36,3 +36,4 @@ goldly-docs/resources/META-INF
 docs/
 rdocument/
 .clj-kondo
+scratchpad/target

@@ -13,7 +13,7 @@ curl -X POST \
      -H 'Accept-Encoding: gzip, deflate' \
      -H 'Accept-Language: de,en;q=0.9,de-DE;q=0.8,en-DE;q=0.7,en-US;q=0.6' \
      --insecure \
-      http://localhost:8007/api/scratchpad
+      http://localhost:8080/api/scratchpad
 
 
 #      -d "data=@script/hello.edn" \

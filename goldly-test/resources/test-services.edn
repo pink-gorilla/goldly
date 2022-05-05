@@ -17,8 +17,8 @@
             :stop (goldly.app.run/stop-goldly this)}
 
   ;:print-goldly-env {:start (println "goldly environment: " (clip/ref :goldly))}
-  :print-goldly-webly-config {:start (println "webly (dynamic config): " (:webly (clip/ref :goldly)))}
-  :print-goldly-ns-clj-config {:start (println "ns-clj (dynamic config): " (:ns-clj(clip/ref :goldly)))}
+  ;:print-goldly-webly-config {:start (println "webly (dynamic config): " (:webly (clip/ref :goldly)))}
+  ;:print-goldly-ns-clj-config {:start (println "ns-clj (dynamic config): " (:ns-clj(clip/ref :goldly)))}
 
   ; load the :ns-clj defined by the user [demo.service]
   :ns-require {:start (modular.require/require-namespaces
@@ -33,8 +33,8 @@
                   (:profile #ref [:modular]))
           :stop (webly.app.app/stop-webly this)}
 
-  ;:nrepl {:start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
-  ;        :stop (.close this)}
+  :nrepl {:start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
+          :stop (.close this)}
 
   ;:time {:start (demo.time/start-time-sender!)
    ;      :stop  (demo.time/stop! this)}

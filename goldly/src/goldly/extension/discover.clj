@@ -7,7 +7,7 @@
    [modular.config :refer [config-atom]]
    ; build time
    [goldly.extension.theme :refer [add-extension-theme set-lazy-themes!]]
-   [goldly.extension.pinkie :refer [pinkie-atom save-pinkie]]
+   ;[goldly.extension.pinkie :refer [pinkie-atom save-pinkie]]
    [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
    ; runtime
    [goldly.extension.cljs-autoload :refer [add-extension-cljs-autoload]]
@@ -41,8 +41,8 @@
 
     ; save collected data.
     (save-extensions extensions)
-    (save-pinkie)
-    (swap! config-atom assoc :pinkie @pinkie-atom)
+    ;(save-pinkie)
+    ;(swap! config-atom assoc :pinkie @pinkie-atom)
     (set-lazy-themes! (ext-themes))))
 
 (comment

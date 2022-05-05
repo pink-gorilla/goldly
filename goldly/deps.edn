@@ -10,14 +10,10 @@
   org.babashka/sci {:mvn/version "0.3.5"}
   com.rpl/specter {:mvn/version "1.1.4"}
   applied-science/js-interop  {:mvn/version "0.3.3"}
-  org.pinkgorilla/webly {:mvn/version "0.4.601"} ; web app build tool
-  org.pinkgorilla/pinkie {:mvn/version "0.3.11"} ; component registry (used in xtension discovery)
+  org.pinkgorilla/webly {:mvn/version "0.4.602"} ; web app build tool
   }
-
  :aliases
  {;; developer tooling
-
-
 
   ; https://github.com/weavejester/cljfmt
   :cljfmt

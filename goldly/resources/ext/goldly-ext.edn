@@ -1,6 +1,7 @@
 {:name "goldly"
  :clj-require []
- :cljs-namespace [clojure.string
+ :cljs-namespace [; clojure
+                  clojure.string
                   clojure.walk
                   applied-science.js-interop
                   ; oauth2

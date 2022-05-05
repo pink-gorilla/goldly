@@ -1,8 +1,4 @@
 
-
-
-;(keyword "user" "foo")
-
 (defn page-item [i]
   [:span.m-1
    [link-dispatch [:bidi/goto :pages :query-params {:page (name i)

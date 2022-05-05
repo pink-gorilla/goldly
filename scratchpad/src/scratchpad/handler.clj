@@ -1,12 +1,13 @@
-(ns goldly.scratchpad-handler
+(ns scratchpad.handler
   (:require
    [taoensso.timbre :refer [trace debug info error]]
    [clojure.core.async :refer [go <! <!!]]
+   [clojure.edn]
    [ring.util.response :as res]
    [ring.util.request :refer  [body-string]]
    [modular.webserver.middleware.api :refer [wrap-api-handler]]
    [modular.webserver.handler.registry :refer [add-ring-handler]]
-   [goldly.scratchpad :as scratchpad]))
+   [scratchpad.core :as scratchpad]))
 
 (defn scratchpad-get-handler
   [req]
@@ -20,9 +21,10 @@
 (defn scratchpad-set-handler
   [req]
   (debug "scratchpad-api-handler: " req)
-  (let [src (body-string req)]
-    (info "src:" src)
-    (scratchpad/show! src)
+  (let [s (body-string req)
+        hiccup (clojure.edn/read-string s)]
+    (info "string:" s "hiccup: " hiccup)
+    (scratchpad/show! hiccup)
     (res/response {:message "src sent to scratchpad."})
     #_(res/bad-request save-result)))
 

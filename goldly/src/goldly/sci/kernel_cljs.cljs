@@ -8,6 +8,7 @@
    [taoensso.timbre :as timbre :refer [debugf info error]]
    [sci.core :as sci]
    [goldly.sci.sci-types]
+   [sci.impl.resolve :as sci-resolve]
   ;[goldly.sci.bindings-static :refer [ns-static]]
    [goldly-bindings-generated :refer [bindings-generated ns-generated]]
    ;[goldly.sci.lazy :refer [load-fn]]
@@ -30,8 +31,13 @@
       {:error  {:root-ex (.-data e)
                 :err (.-message e)}})))
 
+(defn resolve-symbol [sym]
+  (sci-resolve/resolve-symbol ctx-repl sym))
+
 (def ctx-static
-  {:bindings (assoc bindings-generated 'compile-sci compile-code)
+  {:bindings (assoc bindings-generated
+                    'compile-sci compile-code
+                    'resolve-symbol-sci resolve-symbol)
    :preset {:termination-safe false} ; was: true
    :namespaces (add-lazy ns-generated) ; ns-static
 

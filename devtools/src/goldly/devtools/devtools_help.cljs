@@ -82,7 +82,6 @@
    (into [:div]
          (map project list))])
 
-
 (defn devtools-page [{:keys [route-params query-params handler] :as route}]
   [:div ; .w-screen.h-screen
    [h1 "goldly devtools"]

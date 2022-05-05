@@ -2,14 +2,9 @@
          "resources" ; extension , resources used in devtools ui
          ]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/scratchpad {:local/root "../scratchpad" :deps/manifest :deps}
-        org.pinkgorilla/reval {:mvn/version "0.0.37"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.43"}
-        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.3"} ; needed by reval
-        org.pinkgorilla/ui-site {:mvn/version "0.0.17"}
-        org.pinkgorilla/ui-code {:mvn/version "0.0.28"}
-        org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.4"}
-        org.pinkgorilla/ui-markdown {:mvn/version "0.0.18"}}
+        org.pinkgorilla/pinkie {:mvn/version "0.3.13"} ; component registry (used in xtension discovery)
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.43"} ; for reagent
+        }
 
  :aliases
  {:outdated
@@ -49,6 +44,23 @@
    :main-opts ["-m"
                "cognitect.test-runner"]
    :exec-fn cognitect.test-runner.api/test}
+
+
+  ; BUILD BUNDLE (then exit)
+  :build
+  {:extra-paths ["demo"]
+   :exec-fn goldly.app.build/goldly-build
+   :exec-args {:profile "npm-install"
+               :config ["webly/config.edn" "goldly/config.edn" "scratchpad-config.edn"]}}
+
+  ; RUN SERVICES (keep running)
+  :run
+  {:extra-paths ["demo"]
+   :exec-fn modular.system/start!
+   :exec-args {:profile "watch2"
+               :config ["webly/config.edn" "goldly/config.edn" "scratchpad-config.edn"]
+               :services "scratchpad-services.edn"}}
+
 
 ;           
   }}

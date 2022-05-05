@@ -7,7 +7,6 @@
    [reval.default] ; side effects
    [goldly.service.core :as s]
    [goldly.document-handler] ; side effect
-   [goldly.scratchpad-handler] ; side effect
    ))
 
 (info "goldly devtools loading..")

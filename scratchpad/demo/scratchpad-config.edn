@@ -1,0 +1,13 @@
+{:ns-clj []
+ :keybindings []
+ :goldly {; build
+          :lazy true
+          ; run-time
+          :autoload-cljs-dir []
+          :routes {:app {"" :scratchpad}
+                   :api {"scratchpad" {:get :scratchpad/get
+                                       :post :scratchpad/set}
+                         }}}
+;
+ }
+

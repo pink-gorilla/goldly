@@ -63,8 +63,9 @@
   [site/header-menu
    {:brand "Application"
     :brand-link "/"
-    :items [{:text "notebooks" :dispatch [:bidi/goto :viewer :query-params {}]} ;  :link "/devtools/viewer"
-            {:text "scratchpad"  :dispatch [:bidi/goto :scratchpad]}  ; :link "/devtools/scratchpad"
+    :items [{:text "scratchpad"  :dispatch [:bidi/goto :scratchpad]}  ; :link "/devtools/scratchpad"
+            {:text "repl"  :dispatch [:bidi/goto :repl]}
+            {:text "notebooks" :dispatch [:bidi/goto :viewer :query-params {}]} ;  :link "/devtools/viewer"
             {:text "theme"  :dispatch [:bidi/goto :theme]} ;  :link "/devtools/theme"
             {:text "environment"  :dispatch  [:bidi/goto :environment]} ; :link "/devtools/environment"
             {:text "pages"  :dispatch [:bidi/goto :pages]}  ; :link "/devtools/pages"

@@ -55,7 +55,7 @@
        [text2 out])
      (when hiccup
        [:div.mt-1.mb-1
-        (->hiccup hiccup)])
+        (render-vizspec2 hiccup)])
      (when show-viewer-debug-ui
        [segment-debug segment])]))
 
@@ -148,9 +148,7 @@
          ; small screen
          (if ns
            nb
-           c)
-         
-         )
+           c))
 
        (when show-viewer-debug-ui
          [viewer-debug query-params])])))

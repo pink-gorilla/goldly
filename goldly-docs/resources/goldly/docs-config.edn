@@ -12,13 +12,16 @@
                            ;"../devtools/src/goldly/devtools"]
           :routes {:app {"devtools/viewer" :viewer
                          "devtools/scratchpad" :scratchpad
+                         "devtools/repl" :repl
                          "devtools/theme" :theme
                          "devtools/environment" :environment
                          "devtools/pages" :pages
                          "devtools/help" :devtools
                          "goldly/reload" :goldly/reload-cljs
                          "" :goldly/no-page}
-                   :api {"rdocument/ns" :rdocument/ns
+                   :api {"scratchpad" {:get :scratchpad/get
+                                       :post :scratchpad/set}
+                         "rdocument/ns" :rdocument/ns
                          "rdocument/files" :rdocument/files
                          ["rdocument/file/" :ns "/" :name] :rdocument/file ; http://localhost:8000/api/viewer/file/demo.playground.cljplot/vega-spec.edn
                          }}}
