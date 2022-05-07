@@ -21,7 +21,7 @@
                                      "../goldly-test")
          cljfmt-fix (webly/clojure "goldly" "-M:cljfmt" "fix"
                                    "."
-                                   "../scratchpad"
+                                   ;"../scratchpad"
                                    "../devtools"
                                    "../goldly-docs"
                                    "../goldly-test")
@@ -35,7 +35,7 @@
                    (webly/clean-project "./goldly-docs")
                    (webly/clean-project "./goldly-test")
                    (webly/clean-project "./devtools")
-                   (webly/clean-project "./scratchpad")
+                  ; (webly/clean-project "./scratchpad")
                    
                    )
          npm-install (webly/run "goldly-docs" "docs-build" "npm-install")
@@ -139,7 +139,8 @@
 
          goldly-docs {:doc "goldly docs with shadow-cljs watch"
                       :task (do  ;(run 'tailwind-girouette-webly)
-                              (webly/run "goldly-docs" "goldly" "watch2"))}
+                              (webly/clojure "goldly-docs" "-X:docs-build" ":profile" "npm-install")
+                              (webly/clojure "goldly-docs" "-X:docs-run" ":profile" "watch2"))}
          goldly-docs-tenx {:doc "goldly docs with shadow-cljs watch"
                            :task (do  (webly/run "goldly-docs" "goldly" "watch"))}
          goldly-docs-compile {:doc "compile goldly docs javascript"
