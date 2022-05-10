@@ -21,6 +21,16 @@
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
 
+; from scittle
+;(defn ^:export eval-string [s]
+;  (try (sci/eval-string* @ctx s)
+;       (catch :default e
+;         (error/error-handler e (:src @ctx))
+;         (let [sci-error? (isa? (:type (ex-data e)) :sci/error)]
+;           (throw (if sci-error?
+;                    (or (ex-cause e) e)
+;                    e))))))
+
 (defn compile-code [code]
   (try
     {:result (sci/eval-string* ctx-repl code)

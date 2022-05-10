@@ -9,9 +9,9 @@
    [goldly.service.core]
    [goldly.sci.kernel-cljs]
    [goldly.extension.lazy]
-   [goldly.extension.pinkie :refer [add-extension-pinkie-static]]
+   ;[goldly.extension.pinkie :refer [add-extension-pinkie-static]]
    ; side-effecs
-   [pinkie.default-setup] ; pinkie is a necessary dependency, because goldly systems use it for frontend description    
+   ;[pinkie.default-setup] ; pinkie is a necessary dependency, because goldly systems use it for frontend description    
    ))
 (def initial-db
   {:id nil
@@ -21,7 +21,7 @@
 (defn goldly-start [static?]
   (info "goldly starting ..")
   (rf/dispatch [:ga/event {:category "goldly" :action "started" :label 77 :value 13}])
-  (add-extension-pinkie-static)
+  ;(add-extension-pinkie-static)
   (go (<! (loader/load-cljs static?)) ; await for cljs auto-load to be finised before showing ui.
       (rf/dispatch [:webly/status :running])))
 

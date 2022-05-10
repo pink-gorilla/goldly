@@ -1,7 +1,3 @@
-
-
-
-
 ;; websocket helper
 
 (defn print-result [t]
