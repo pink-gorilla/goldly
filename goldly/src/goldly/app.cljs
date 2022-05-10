@@ -9,7 +9,7 @@
    [goldly.service.core]
    [goldly.sci.kernel-cljs]
    [goldly.extension.lazy]
-   ;[goldly.extension.pinkie :refer [add-extension-pinkie-static]]
+   ;[goldly.extension.pinkie2 :refer [add-extension-pinkie-static]]
    ; side-effecs
    ;[pinkie.default-setup] ; pinkie is a necessary dependency, because goldly systems use it for frontend description    
    ))

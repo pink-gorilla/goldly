@@ -1,4 +1,4 @@
-(ns goldly.extension.pinkie
+(ns goldly.extension.pinkie2
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.writer :refer [write-status]]))

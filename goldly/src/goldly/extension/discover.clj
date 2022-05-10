@@ -7,7 +7,7 @@
    [modular.config :refer [config-atom]]
    ; build time
    [goldly.extension.theme :refer [add-extension-theme set-lazy-themes!]]
-   ;[goldly.extension.pinkie :refer [pinkie-atom save-pinkie]]
+   ;[goldly.extension.pinkie2 :refer [pinkie-atom save-pinkie]]
    [goldly.extension.cljs :refer [cljs-init add-extension-cljs]]
    ; runtime
    [goldly.extension.cljs-autoload :refer [add-extension-cljs-autoload]]

@@ -5,7 +5,8 @@
    [goldly.sci.bindings :refer [goldly-namespaces]]
    [goldly.extension.core :refer [lazy-enabled ext-lazy?]]
    [goldly.extension.sci :refer [add-extension-sci add-extension-sci-lazy]]
-   [goldly.extension.pinkie :refer [add-extension-pinkie add-extension-pinkie-lazy]]))
+   ;[goldly.extension.pinkie2 :refer [add-extension-pinkie add-extension-pinkie-lazy]]
+   ))
 
 (defn add-lazy-namespaces [name cljs-namespace]
   (let [modules-g (or (get-in @config-atom [:webly :modules])  {})
@@ -25,7 +26,9 @@
     (do (debug "lazy extension: " name)
         (add-lazy-namespaces name cljs-namespace)
         (add-extension-sci-lazy ext)
-        (add-extension-pinkie-lazy ext))
+        ;(add-extension-pinkie-lazy ext)
+        )
     (do
       (add-extension-sci ext)
-      (add-extension-pinkie ext))))
+      ;(add-extension-pinkie ext)
+      )))

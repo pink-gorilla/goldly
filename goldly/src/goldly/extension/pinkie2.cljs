@@ -1,5 +1,5 @@
-(ns goldly.extension.pinkie
-  (:require-macros [goldly.extension.pinkie :as clj])
+(ns goldly.extension.pinkie2
+  (:require-macros [goldly.extension.pinkie2 :as clj])
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug infof warn errorf]]
    [pinkie.pinkie :refer [register-tag]]
