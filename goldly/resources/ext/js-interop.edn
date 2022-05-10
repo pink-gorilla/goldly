@@ -1,0 +1,32 @@
+{:name "js-interop"
+ ; compile time
+ :lazy false
+ :cljs-namespace [; clojure
+                  clojure.string
+                  clojure.walk
+                  applied-science.js-interop]
+ :cljs-bindings {}
+ :cljs-ns-bindings {'string {'split clojure.string/split
+                             'join clojure.string/join
+                             'escape clojure.string/escape
+                             'blank? clojure.string/blank?
+                             'replace clojure.string/replace
+                             'lower-case clojure.string/lower-case}
+
+                    'j {'get applied-science.js-interop/get
+                        'call applied-science.js-interop/call
+                        'get-in applied-science.js-interop/get-in
+                        'call-in applied-science.js-interop/call-in
+                        'obj applied-science.js-interop/obj}
+
+                    'walk {'postwalk clojure.walk/postwalk
+                           'prewalk clojure.walk/prewalk
+                           'keywordize-keys clojure.walk/keywordize-keys
+                           'walk clojure.walk/walk
+                           'postwalk-replace clojure.walk/postwalk-replace
+                           'prewalk-replace clojure.walk/prewalk-replace
+                           'stringify-keys clojure.walk/stringify-keys}}
+
+ :pinkie {}
+ ; runtime
+ :clj-require []}

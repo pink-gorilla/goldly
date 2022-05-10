@@ -5,11 +5,9 @@
  {org.clojure/clojure    {:mvn/version "1.10.3"}
   org.clojure/core.async {:mvn/version "1.5.648"}
   org.clojure/data.json {:mvn/version "2.4.0"}
-  
-  ;thi.ng/strf {:mvn/version "0.2.2"} ; used in ui-repl
   org.babashka/sci {:mvn/version "0.3.5"}
   com.rpl/specter {:mvn/version "1.1.4"}
-  applied-science/js-interop  {:mvn/version "0.3.3"}
+  applied-science/js-interop  {:mvn/version "0.3.3"} ; todo: move to ui-repl. not essential here.
   org.pinkgorilla/webly {:mvn/version "0.4.602"} ; web app build tool
   }
  :aliases

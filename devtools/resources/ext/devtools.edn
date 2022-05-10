@@ -9,4 +9,4 @@
  :clj-require []
  :autoload-cljs-dir ["goldly/lib"
                      "goldly/devtools"]
- :autoload-clj-ns [goldly.devtools]}
+ :autoload-clj-ns []}
