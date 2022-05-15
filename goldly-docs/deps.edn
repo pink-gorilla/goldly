@@ -80,10 +80,10 @@
   {:extra-deps {}
    :jvm-opts ["-Dmaven.wagon.rto=90000"]
    :exec-fn goldly.app.build/goldly-build
-   :exec-args {:profile "compile" ; watch2 has no texnx devtools
+   :exec-args {:profile "compile2"
                :config ["webly/config.edn" "goldly/config.edn" "docs/docs-config.edn"]}}
 
-      ;; BUILD UNIT TESTS (then exit)
+   ;; BUILD UNIT TESTS (then exit)
   :docs-ci
   {:extra-paths ["test"]
    :exec-fn goldly.app.build/goldly-build
@@ -95,7 +95,7 @@
   {:extra-deps {}
    :jvm-opts ["-Dmaven.wagon.rto=90000"]
    :exec-fn modular.system/start!
-   :exec-args {:profile "watch2" ; watch2 has no texnx devtools
+   :exec-args {:profile "jetty" 
                :config ["webly/config.edn" "goldly/config.edn" "goldly/docs-config.edn"]
                :services "goldly/docs-services.edn"}}
 

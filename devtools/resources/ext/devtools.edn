@@ -5,7 +5,6 @@
  :cljs-ns-bindings {}
  :cljs-bindings {}
  ; run time
- :clj-require []
  :autoload-cljs-dir ["goldly/lib"
                      "goldly/devtools"]
  :autoload-clj-ns []}
