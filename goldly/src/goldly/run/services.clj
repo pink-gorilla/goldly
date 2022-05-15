@@ -1,13 +1,12 @@
-(ns goldly.services
+(ns goldly.run.services
   (:require
    [clojure.java.io :as io]
    [clojure.edn :as edn]
-   [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
-   ;[webly.build.lazy :as lazy]
    [goldly.service.core :as s]
+   [goldly.service.handler] ; side effects
    [goldly.version :refer [load-version]]
-   [goldly.extension.core :refer [extension-summary extensions]]
-   [goldly.extension.theme :refer [ext-theme]]))
+   ;[goldly.extension.core :refer [extension-summary extensions]]
+   ))
 
 (defn edn-load [filename]
   (let [content (slurp filename)
@@ -29,32 +28,43 @@
         e (first (filter #(= name (:name %)) extensions))]
     e))
 
+(defn build-sci-config []
+  (edn-load-res "public/goldly-build-sci-config.edn"))
+
+(defn run-sci-cljs-autoload []
+  (edn-load-res "public/goldly-run-sci-cljs-autoload.edn"))
+
 (defn sci-bindings []
-  (edn-load-res "public/sci-cljs-bindings.edn"))
+  (edn-load-res "public/goldly-build-sci-config.edn"))
 
 (s/add {;:webly/lazy-list lazy/available this is cljs
 
-        ; compile time
-        :goldly/version #(load-version "goldly")
-        :goldly/extension-summary extension-summary
-        :goldly/extension-list extensions
-        :goldly/sci-bindings sci-bindings
+        ; edn-loader
+        :edn/load edn-load
 
-        :goldly/get-extension-info get-extension-info ; this is used by the lazy-extension css loader
+        ; used in devtools:
+        :goldly/version #(load-version "goldly")
+        ;
+        ;:goldly/extension-summary extension-summary
+        ;:goldly/extension-list extensions
+        :goldly/build-sci-config build-sci-config
+        :goldly/run-sci-cljs-autoload run-sci-cljs-autoload
+
+        ; this is used by the lazy-extension css loader
+        :goldly/get-extension-info get-extension-info
 
         ;runtime
-        :goldly/services s/services-list
-        :edn/load edn-load})
+        :goldly/services s/services-list})
 
 (comment
     ;compile time
   (load-version "goldly")
-  (extension-summary)
-  (extensions)
+  ;(extension-summary)
+  ;(extensions)
   (sci-bindings)
 
   (get-extension-info "ui-code")
-  (ext-theme "ui-code")
+  ;(ext-theme "ui-code")
 
   (s/services-list)
 

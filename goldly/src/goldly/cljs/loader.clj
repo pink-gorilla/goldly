@@ -1,6 +1,5 @@
 (ns goldly.cljs.loader
   (:require
-   [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [modular.resource.load :refer [slurp-res]]))
 
 (defn load-file! [filename]

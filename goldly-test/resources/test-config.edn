@@ -3,7 +3,9 @@
  :goldly {; build
           :lazy true
           :lazy-exclude #{"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
-                          "ui-math"}
+                          "ui-math"
+                          "ui-input"
+                          }
           ; run-time
           :autoload-cljs-dir ["demo/cljs_libs"
                               "demo/page"]
@@ -19,7 +21,8 @@
                          "devtools/pages" :pages
                          "devtools/scratchpad" :scratchpad
                          "devtools/viewer" :viewer
-                         "devtools/environment" :environment
+                         "devtools/build" :build
+                         "devtools/runtime" :runtime
                          "devtools/theme" :theme}
                    :api {"rdocument/ns" :rdocument/ns
                          "rdocument/files" :rdocument/files

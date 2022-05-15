@@ -7,7 +7,7 @@
    [goog.object :as g]
    [taoensso.timbre :as timbre :refer [debugf info error]]
    [sci.core :as sci]
-   [goldly.sci.sci-types]
+  ; [goldly.sci.sci-types]
    [sci.impl.resolve :as sci-resolve]
   ;[goldly.sci.bindings-static :refer [ns-static]]
    [goldly-bindings-generated :refer [bindings-generated ns-generated]]

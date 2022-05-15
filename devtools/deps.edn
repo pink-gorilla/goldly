@@ -5,7 +5,7 @@
         org.pinkgorilla/viz-spec {:mvn/version "0.0.3"} ; viz-spec and scatchpad
         org.pinkgorilla/reval {:mvn/version "0.5.86"} ; repl and notebook viewer
         org.pinkgorilla/ui-repl {:mvn/version "0.0.43"}
-        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.3"} ; videos in devtools help
+        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.6"} ; videos in devtools help
         org.pinkgorilla/ui-site {:mvn/version "0.0.17"} ; menu in devtools
         }
 

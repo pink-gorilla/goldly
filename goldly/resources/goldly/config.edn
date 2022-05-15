@@ -1,6 +1,6 @@
 {:ns-clj []
  :webly {:title "Goldly"
-         :ns-cljs [goldly.app]
+         :ns-cljs []
          :routes goldly.routes/routes
          ;:routes {:app {"" :goldly/no-page
          ;               "goldly/reload" :goldly/reload-cljs}
@@ -16,14 +16,6 @@
                            [#{"ui.*"} :info]
                            [#{"user"} :warn] ; time sender
                            [#{"*"} :info]]}
-
- :settings {; settings can be changed by user (via dialog)
-            ; :use-localstorage is true: load settings from localstorage, and only use
-            ; config-settings to initialize the app when localstorage is empty
-            :use-localstorage  false
-
-            :notebook  {:layout :horizontal ; :vertical
-                        :view-only false}}
 
  :goldly {:lazy true
           :src-dir "src"

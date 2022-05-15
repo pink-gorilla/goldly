@@ -1,16 +1,11 @@
-(ns goldly.extension.lazy
+(ns goldly.run.lazy-ext-css
   (:require-macros
-   [goldly.extension.core :refer [compiled-ext-fns]]
-   [goldly.extension.theme :refer [theme-registry]])
+   [goldly.app.build :refer [compiled-ext-fns theme-registry]])
   (:require
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof warn error errorf]]
    [clojure.set]
-   [cljs.core.async :refer [>! <! chan close! put!] :refer-macros [go]]
    [re-frame.core :as rf]
-   [webly.build.lazy :refer [on-load]]
-   [goldly.static :refer [static? get-ext-static]]
-
-   [goldly.service.core :refer [run]]))
+   [goldly.static :refer [static? get-ext-static]]))
 
 (def mapping-table (compiled-ext-fns))
 
@@ -32,30 +27,28 @@
 ;; theme registry
 
 (def themes (theme-registry))
-(warn "lazy themes count: " (-> themes keys count))
+
+(warn "lazy themes :" themes)
 
 (defn load-css [ext-name]
-  (warn "loading css for: " ext-name)
-  (let [{:keys [available current]
-         :or {available {}
-              current {}}
-         :as ext-theme} (get themes ext-name)
-        evt [:css/add-components available current]]
+  (warn "layz-loading css for: " ext-name)
+  (let [ext-theme (or (get themes ext-name)
+                      {:available {}
+                       :current {}})
+        evt [:css/add-components (:available ext-theme) (:current ext-theme)]]
     (warn "theme for " ext-name ": " evt)
     (rf/dispatch evt)))
 
 (defn goldly-on-load [symbol-fn]
-  (infof "goldly lazy loading %s" symbol-fn)
+  (errorf "goldly lazy loading %s" symbol-fn)
   (if-let [ext-name (lookup-module symbol-fn)]
     (when-not (contains? @lazy-loaded-atom ext-name)
       (swap! lazy-loaded-atom conj ext-name)
       (load-css ext-name))
     (error "module not found in lookup table: " symbol-fn)))
 
-(reset! on-load goldly-on-load)
-
 (defn add-load-status
-  "adds :loaded key to each ext in te seq
+  "adds :loaded key to each ext in the seq
    used to display loading status"
   [ext-seq]
   (let [add-load (fn [x]

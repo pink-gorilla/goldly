@@ -53,5 +53,3 @@
             [page-list p]])]))))
 
 (add-page page-list-page :pages)
-
-

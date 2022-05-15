@@ -4,18 +4,15 @@
  :cljs-namespace [; oauth2
                   modular.oauth2.token.ui
                   modular.oauth2.user.view
+                  ; ws
+                  modular.ws.core
                   ; goldly
                   goldly.page.page
                   goldly.page.no-page
-                  goldly.service.core
                   goldly.sci.helper
                   goldly.sci.eventhandler
-                  modular.ws.core]
+                  ]
  :cljs-bindings {'add-page goldly.page.page/add-page ; depreciated - use page/add
-                 'run goldly.service.core/run
-                 'run-a goldly.service.core/run-a
-                 'run-cb goldly.service.core/run-cb
-                 'wait-chan-result goldly.service.core/wait-chan-result
                  'send! modular.ws.core/send!
                  'value-of goldly.sci.helper/value-of
                  'obj->clj goldly.sci.helper/obj->clj}
@@ -27,11 +24,8 @@
                     'page {'available goldly.page.page/available-pages
                            'show goldly.page.page/show-page
                            'add goldly.page.page/add-page}
-
                     'oauth2 {'provider-status-grid modular.oauth2.token.ui/provider-status-grid
                              'user-login modular.oauth2.user.view/user-login}}
- 
- :pinkie {}
  ; runtime
  :clj-require []
  }

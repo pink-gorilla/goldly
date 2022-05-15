@@ -67,7 +67,8 @@
             {:text "repl"  :dispatch [:bidi/goto :repl]}
             {:text "notebooks" :dispatch [:bidi/goto :viewer :query-params {}]} ;  :link "/devtools/viewer"
             {:text "theme"  :dispatch [:bidi/goto :theme]} ;  :link "/devtools/theme"
-            {:text "environment"  :dispatch  [:bidi/goto :environment]} ; :link "/devtools/environment"
+            {:text "build"  :dispatch  [:bidi/goto :build]}
+            {:text "runtime"  :dispatch  [:bidi/goto :runtime]}
             {:text "pages"  :dispatch [:bidi/goto :pages]}  ; :link "/devtools/pages"
             {:text "help"  :dispatch [:bidi/goto :devtools]}  ; :link "/devtools"
             {:text "feedback" :link "https://github.com/pink-gorilla/goldly/issues" :special? true}]}])

@@ -1,4 +1,4 @@
-(ns goldly.extension.cljs-autoload
+(ns goldly.config.runtime.cljs-autoload-files
   (:require
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [clojure.string :as str]
@@ -34,15 +34,10 @@
          (map #(str path % ".cljs"))
          (into []))))
 
-(defonce autoload-cljs-res-a (atom  []))
-
-(defn add-extension-cljs-autoload [{:keys [name autoload-cljs-dir]
-                                    :or {autoload-cljs-dir []}
-                                    :as extension}]
-  (doall (for [s autoload-cljs-dir]
-           (let [paths (get-cljs-res-files s)]
-             (info "discovered extension with cljs-autoload paths:" paths)
-             (swap! autoload-cljs-res-a concat paths)))))
+(defn cljs-autoload-files  [autoload-cljs-dirs]
+  (->> (map get-cljs-res-files autoload-cljs-dirs)
+       (apply concat)
+       (into [])))
 
 (comment
   (get-file-list :clj "demo/notebook/")
@@ -52,11 +47,17 @@
   (get-cljs-res-files "goldly/lib")
   (get-cljs-res-files "goldly/devtools")
 
-  (add-extension-cljs-autoload
-   {:name "bongo" :autoload-cljs-dir ["goldly/lib"]})
+  (cljs-autoload-files ["goldly/lib"])
 
-  @autoload-cljs-res-a
-  (reset! autoload-cljs-res-a [])
+  (require '[goldly.config.discover :refer [discover]])
+  (require '[goldly.config.runtime.cljs-autoload :refer [cljs-autoload-config]])
+
+  (->> (discover {:lazy true})
+       (cljs-autoload-config)
+       (cljs-autoload-files))
+
+  (explore-once "demo/cljs_libs")
+  (explore-once "demo")
 
 ;  
   )

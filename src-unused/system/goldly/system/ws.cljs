@@ -15,7 +15,6 @@
  (fn [cofx [_ & data]] ; strip off :goldly/send from args vector
    ; example for data: 
    ; [:goldly/send :goldly/dispatch id fun-name arg1 arg2]
-   ; [:goldly/send :goldly/system id]
    (let [data-v (into [] data)
          goldly-tag (first data-v)]
      (infof "goldly/send %s " data-v)

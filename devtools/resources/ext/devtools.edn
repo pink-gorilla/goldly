@@ -4,7 +4,6 @@
  :cljs-namespace []
  :cljs-ns-bindings {}
  :cljs-bindings {}
- :pinkie {}
  ; run time
  :clj-require []
  :autoload-cljs-dir ["goldly/lib"
