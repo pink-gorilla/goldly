@@ -6,7 +6,7 @@
         ; GoldlyDOCS deps        
         ;lazy deps:
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
-        org.pinkgorilla/ui-input {:mvn/version "0.0.20"}
+        org.pinkgorilla/ui-input {:mvn/version "0.0.21"}
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.3"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.14"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.27"}

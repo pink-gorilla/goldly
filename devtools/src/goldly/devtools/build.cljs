@@ -49,7 +49,10 @@
                 :url :goldly/version}
     goldly-version]
 
-   ;[url-loader {:fmt :clj
+   [:a {:href "/r/bundlesizereport.html"}
+    [:p "show bundlesize stats"]]
+
+;[url-loader {:fmt :clj
    ;             :url :goldly/extension-summary}
    ; extension-summary]
 
