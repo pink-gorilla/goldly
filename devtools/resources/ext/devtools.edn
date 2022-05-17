@@ -1,10 +1,10 @@
 {:name "devtools"
- ; build time
+ ; build
  :lazy false  ; we dont have any code, lazy fucks up size report
  :cljs-namespace []
  :cljs-ns-bindings {}
  :cljs-bindings {}
- ; run time
+ ; run 
  :autoload-cljs-dir ["goldly/lib"
                      "goldly/devtools"]
  :autoload-clj-ns []}
