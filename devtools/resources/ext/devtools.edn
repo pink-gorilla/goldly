@@ -5,6 +5,6 @@
  :cljs-ns-bindings {}
  :cljs-bindings {}
  ; run 
- :autoload-cljs-dir ["goldly/lib"
-                     "goldly/devtools"]
+ :autoload-cljs-dir ["goldly/devtools"
+                     "goldly/devtools/page"]
  :autoload-clj-ns []}

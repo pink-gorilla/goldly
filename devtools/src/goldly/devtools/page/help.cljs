@@ -1,3 +1,7 @@
+(ns goldly.devtools.page.help
+  (:require
+   [user :refer [video format]]
+   [goldly.devtools.ui-helper :refer [add-page-template h1]]))
 
 ;; video
 

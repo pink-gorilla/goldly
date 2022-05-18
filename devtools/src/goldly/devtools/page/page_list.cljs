@@ -1,9 +1,14 @@
+(ns goldly.devtools.page.page-list
+  (:require
+   [rf]
+   [page]
+   [user :refer [add-page]]
+   [goldly.devtools.ui-helper :refer [add-page-template devtools-header link-dispatch]]))
 
 (defn page-item [i]
   [:span.m-1
    [link-dispatch [:bidi/goto :pages :query-params {:page (name i)
-                                                    :ns (namespace i)
-                                                    }]
+                                                    :ns (namespace i)}]
     (str i)]])
 
 (defn page-list [p]
@@ -28,7 +33,6 @@
         (remove #(= :pages %))
         (remove #(= :goldly/reload-cljs %))))
 
-
 (defn blank? [s]
   (or (= s "")
       (= s nil)))
@@ -40,8 +44,8 @@
             page (:page query-params)
             page (if (string? page)
                    (if (blank? ns)
-                      (keyword page)
-                      (keyword ns page))
+                     (keyword page)
+                     (keyword ns page))
                    page)]
   ;[:div.bg-green-300.w-screen.h-screen.overflow-scroll
         [:div

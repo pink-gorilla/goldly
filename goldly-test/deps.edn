@@ -26,14 +26,14 @@
   ; - services
 
   ; BUILD BUNDLE (then exit)
-  :build
+  :goldly-build
   {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
    :exec-fn goldly.app.build/goldly-build
-   :exec-args {:profile "compile"
+   :exec-args {:profile "compile2"
                :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]}}
 
    ; RUN SERVICES (keep running)
-  :run
+  :goldly-run
   {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
    :exec-fn modular.system/start!
    :exec-args {:profile "jetty"

@@ -1,9 +1,14 @@
-
+(ns goldly.devtools.page.build
+  (:require
+   [user :refer [video format]]
+   [goldly.devtools.url-loader :refer [url-loader]]
+   [goldly.devtools.ui-helper :refer [add-page-template h1]]))
 
 (defn goldly-version [{:keys [version generated-at]}]
   [:div "goldly version: " version " " generated-at
    ;(pr-str v)
    ])
+
 (defn build-info [b]
   [:div
    [:h2.text-2xl.text-blue-700.bg-blue-300 "build"]

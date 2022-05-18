@@ -1,3 +1,8 @@
+(ns goldly.devtools.page.theme
+  (:require
+   [rf]
+   [goldly]
+   [goldly.devtools.ui-helper :refer [add-page-template]]))
 
 ;; css links
 (defn show-css-links [css-links]

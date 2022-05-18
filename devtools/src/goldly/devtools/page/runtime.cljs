@@ -1,4 +1,10 @@
-
+(ns goldly.devtools.page.runtime
+  (:require
+   [rf]
+   [page]
+   [user :refer [frisk]]
+   [goldly.devtools.url-loader :refer [url-loader]]
+   [goldly.devtools.ui-helper :refer [add-page-template]]))
 
 (defn kw-item [t]
   [:p.m-1 (pr-str t)])

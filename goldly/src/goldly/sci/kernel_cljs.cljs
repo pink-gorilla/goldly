@@ -5,7 +5,7 @@
    [cljs.core.async :refer [>! chan close!] :refer-macros [go]]
            ; )
    [goog.object :as g]
-   [taoensso.timbre :as timbre :refer [debugf info error]]
+   [taoensso.timbre :as timbre :refer-macros [debugf info error]]
    [sci.core :as sci]
   ; [goldly.sci.sci-types]
    [sci.impl.resolve :as sci-resolve]
@@ -31,13 +31,13 @@
 ;                    (or (ex-cause e) e)
 ;                    e))))))
 
-(defn compile-code [code]
+(defn ^:export compile-code [code]
   (try
     {:result (sci/eval-string* ctx-repl code)
         ;(sci/eval-string code ctx-repl)
      }
     (catch :default e
-      ;(error "sci compile-code --]" code "[-- ex: " e)
+      (timbre/error "sci compile-code --]" code "[-- ex: " e)
       {:error  {:root-ex (.-data e)
                 :err (.-message e)}})))
 

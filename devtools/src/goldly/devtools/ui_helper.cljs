@@ -1,6 +1,14 @@
+(ns goldly.devtools.ui-helper
+  (:require
+   [string]
+   [rf]
+   [site]
+   [layout]
+   [page]
+   [user :refer [add-page]]))
+
 ;; comes from pinkie
 ;; but we need more customization!
-
 
 (defn line-with-br [t]
   [:div
@@ -78,7 +86,7 @@
                        [layout/header-main  ; .w-screen.h-screen
                         [devtools-header]
                         [page route]])]
-    (add-page wrapped-page name)))
+    (page/add wrapped-page name)))
 
 ;; styling
 

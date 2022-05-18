@@ -1,3 +1,7 @@
+(ns goldly.devtools.visspec2
+  (:require
+   [pinkie]
+   [user :refer [resolve-symbol-sci]]))
 
 (defn safe-resolve2 [s]
   (try

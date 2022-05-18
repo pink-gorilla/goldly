@@ -12,7 +12,7 @@
 ;; compile
 
 (defn compile-cljs [{:keys [filename code]}]
-  (info "compiling: " filename)
+  (debug "compiling: " filename)
   (let [r (compile-code code)]
     (if (:error r)
       (show-sci-error filename r)

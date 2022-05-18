@@ -1,8 +1,13 @@
+(ns goldly.devtools.websocket
+  (:require
+    ;[user :refer [println]]
+   [rf]))
+
 ;; websocket helper
 
 (defn print-result [t]
   (fn [r]
-    (println "callback result: " r)))
+    (println "ws-send callback result: " r)))
 
 (defn send-msg [{:keys [type args fn-callback timeout]
                  :or {args []
