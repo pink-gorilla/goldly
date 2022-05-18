@@ -1,6 +1,5 @@
 (ns goldly.devtools.page.build
   (:require
-   [user :refer [video format]]
    [goldly.devtools.url-loader :refer [url-loader]]
    [goldly.devtools.ui-helper :refer [add-page-template h1]]))
 

@@ -1,31 +1,7 @@
 (ns goldly.devtools.page.help
   (:require
-   [user :refer [video format]]
+   [user :refer [format]]
    [goldly.devtools.ui-helper :refer [add-page-template h1]]))
-
-;; video
-
-(defn youtube [id]
-  [video {:box :lg
-          :controls true
-          :url (format "https://www.youtube.com/watch?v=%s" id)}])
-
-(def videos
-  {:sniffer-repl "HxejHqw4jfI"
-   :notebook "8TwXaVTZ1G8"
-   :clojisr "BbjYkDmp3fg"})
-
-(defn show-video [[name id]]
-  [:div
-   [:h1.text-xl.text-blue-900 name]
-   [youtube id]])
-
-(defn video-list [name list]
-  ^:R  ; this is needed, soartefacts function can be used in the repl
-  [:div
-   [:h1.text-3xl.text-blue-900 name]
-   (into [:div]
-         (map show-video list))])
 
 ; artefacts
 
@@ -52,7 +28,9 @@
    [svg "https://clojars.org/org.pinkgorilla/%s"
     "https://img.shields.io/clojars/v/org.pinkgorilla/%s.svg" p]])
 
-(def apps-and-demo ["goldly-docs"
+(def apps-and-demo ["studio"
+                    "goldly-docs"
+                    "pages"
                     "demo-goldly"])
 
 (def build-tool ["modular" "webly" "goldly"])
@@ -68,7 +46,7 @@
                         "ui-quil"
                         "ui-leaflet"
                         "ui-cytoscape"
-                        "ui-code"
+                        "ui-codemirror"
                         "ui-markdown"
                         "ui-binaryclock"])
 
@@ -102,9 +80,6 @@
     [:li "Via hiccup-fh (functional hiccup) new render functions can be executed from clj."]
     [:li (str "The goldly extension manager will compile your favorite hiccup-fn functions "
               "into a precompiled js bundle that is served with goldly")]]
-
-   [h1 "How to use goldly"]
-   [video-list "unsorted videos" videos]
 
    [h1 "artefacts"]
    [artefacts "apps and demo" apps-and-demo]

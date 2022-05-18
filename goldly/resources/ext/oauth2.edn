@@ -1,0 +1,8 @@
+{:name "oauth2"
+ ; build
+ :lazy false
+ :cljs-namespace [; oauth2
+                  modular.oauth2.token.ui
+                  modular.oauth2.user.view]
+ :cljs-ns-bindings {'oauth2 {'provider-status-grid modular.oauth2.token.ui/provider-status-grid
+                             'user-login modular.oauth2.user.view/user-login}}}

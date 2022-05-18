@@ -3,8 +3,9 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}
-        org.pinkgorilla/ui-input {:mvn/version "0.0.20"} ; more modern ui-input
-        org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.5"} ; more modern ui-highlightjs
+        org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}
+        ;org.pinkgorilla/ui-input {:mvn/version "0.0.21"} ; more modern ui-input
+        ;org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.8"} ; more modern ui-highlightjs
         }
 
  :aliases
@@ -27,14 +28,14 @@
 
   ; BUILD BUNDLE (then exit)
   :goldly-build
-  {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
+  {;:extra-deps {}
    :exec-fn goldly.app.build/goldly-build
    :exec-args {:profile "compile2"
                :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]}}
 
    ; RUN SERVICES (keep running)
   :goldly-run
-  {:extra-deps {org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
+  {;:extra-deps {}
    :exec-fn modular.system/start!
    :exec-args {:profile "jetty"
                :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]

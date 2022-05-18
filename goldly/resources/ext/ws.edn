@@ -1,0 +1,9 @@
+{:name "ws"
+ ; build
+ :lazy false
+ :cljs-namespace [; ws
+                  modular.ws.core]
+ :cljs-bindings {'send! modular.ws.core/send!}
+ :cljs-ns-bindings {'ws {'send! modular.ws.core/send!}}
+ }
+

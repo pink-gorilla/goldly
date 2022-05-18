@@ -2,11 +2,11 @@
          "resources" ; extension , resources used in devtools ui
          ]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/viz-spec {:mvn/version "0.0.3"} ; viz-spec and scatchpad
-        org.pinkgorilla/reval {:mvn/version "0.5.98"} ; repl and notebook viewer
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.44"}
-        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.8"} ; videos in devtools help
+        org.pinkgorilla/viz-spec {:mvn/version "0.0.5"} ; viz-spec and scatchpad
+        org.pinkgorilla/reval {:mvn/version "0.5.100"} ; repl and notebook viewer
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.44"} ; reagent
         org.pinkgorilla/ui-site {:mvn/version "0.0.18"} ; menu in devtools
+        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.8"} ; frisk
         }
 
  :aliases
