@@ -30,17 +30,17 @@
   '[(ns example1 (:require ["some_js_lib" :as my-lib]))
     (my-lib/libfn)])
  (async-eval
-  '[(ns example2 (:require [adder :as x]))
-    (x/add 7 13)])
+  '[(ns example2 (:require [adder]))
+    (adder/add 7 13)])
  (async-eval
-  '[(ns example3 (:require [funny :as f]))
-    (f/joke)])
- #_(async-eval
-    '[(ns example4 (:require [funny :as funny]))
-      (funny/joke)])
+  '[(ns example3 (:require [funny]))
+    (funny/joke)])
  (async-eval
-  '[(ns example5 (:require [funny]))
-    (funny/joke)])]
+  '[(ns example4 (:require [funny :refer [joke]]))
+    (joke)])
+ (async-eval
+  '[(ns example5 (:require [funny :as f]))
+    (f/joke)])]
 
 
 

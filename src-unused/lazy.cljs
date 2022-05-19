@@ -6,13 +6,7 @@
    [shadow.lazy :as lazy]
    [goldly.service.core :refer [run]]))
 
-; https://code.thheller.com/blog/shadow-cljs/2019/03/03/code-splitting-clojurescript.html
-; https://clojureverse.org/t/shadow-lazy-convenience-wrapper-for-shadow-loader-cljs-loader/3841
 
-; (def xy (lazy/loadable [demo.thing/x demo.other/y]))
-; (def xym (lazy/loadable {:x demo.thing/x
-;                         :y demo.other/y}))
-; (def x (lazy/loadable snippets.snip/add))
 
 (defn load-extension [name]
   (info "loading extension: " name)

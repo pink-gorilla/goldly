@@ -1,5 +1,5 @@
 {:name "js-interop"
- ; compile time
+ ; build
  :lazy false
  :cljs-namespace [; clojure
                   clojure.string
@@ -25,8 +25,4 @@
                            'walk clojure.walk/walk
                            'postwalk-replace clojure.walk/postwalk-replace
                            'prewalk-replace clojure.walk/prewalk-replace
-                           'stringify-keys clojure.walk/stringify-keys}}
-
- :pinkie {}
- ; runtime
- :clj-require []}
+                           'stringify-keys clojure.walk/stringify-keys}}}

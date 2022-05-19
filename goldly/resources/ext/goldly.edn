@@ -15,6 +15,5 @@
                              'eventhandler  goldly.sci.eventhandler/eventhandler-fn}
                     'page {'available goldly.page.page/available-pages
                            'show goldly.page.page/show-page
-                           'add goldly.page.page/add-page}}
- }
+                           'add goldly.page.page/add-page}}}
 

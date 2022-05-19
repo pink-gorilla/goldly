@@ -31,27 +31,56 @@
 (defmacro generate-require [namespaces]
   `(concat (list :require) ~namespaces))
 
-(defn make-sci-lazy-ns-bindings [sci-lazy-ns-bindings]
-  ; sci lazy module
-  ; {'fun {:module "fun", :sci-ns-def {'joke demo.funny/joke}},
-  ;  'adder {:module "adder", :sci-ns-def {'add adder/add}}}
-  (into {}
-        (map (fn [[sci-ns {:keys [module sci-ns-def]}]]
-               [sci-ns {:module module
-                        :loadable (list 'shadow.lazy/loadable sci-ns-def)}])
-             sci-lazy-ns-bindings)))
+(defn sci-ns-vars-only-kw [[ns-name ns-def]]
+   ;{'funny {:joke demo.funny/joke
+   ;         :facts demo.funny/facts
+   ;         :data demo.funny/data}
+   ; 'animals {:all demo.animals/all}}
+  (map (fn [[var impl]]
+         var) ns-def))
 
-(defn make-forms [{:keys [requires bindings ns-bindings ns-module-lazy]}]
+(defn convert-module-def [module-def]  ; {'funny {:sci-def [] :loadable []} 'animals {}}
+  (into {}
+        (map (fn [[sci-ns {:keys [loadable sci-def]}]]
+               [sci-ns {:sci-def (-> sci-def keys vec)
+                        :loadable (list 'shadow.lazy/loadable (vec loadable))}])
+             module-def)))
+
+(defn convert-module [[module-name module-def]] ; "funny" {'funny {} 'animals {}}
+  [module-name (convert-module-def module-def)])
+
+(defn make-sci-lazy-ns-bindings [lazy-modules]
+  ; {"adder" {'adder {:sci-def {:add adder/add,
+  ;                            :mult adder/mult},
+  ;                  :loadable (adder/add
+  ;                             adder/mult)}},
+  ; "funny" {'funny {:sci-def {:joke demo.funny/joke,
+  ;                            :facts demo.funny/facts,
+  ;                            :data demo.funny/data},
+  ;                  :loadable (demo.funny/joke
+  ;                             demo.funny/facts
+  ;                             demo.funny/data)},
+  ;          'animals {:sci-def {:all demo.animals/all},
+  ;                    :loadable (demo.animals/all)}}}
+  ;
+  ; we really just want to convert :loadable here. great usecase for specter.
+  ; but we dont want to use specter to bring in a new dependency.
+  (->> (map convert-module lazy-modules)
+       (into {})))
+
+(defn make-forms [{:keys [requires bindings ns-bindings
+                          lazy-modules sci-lazy-ns-dict]}]
   (let [nsl '(ns goldly-bindings-generated)
         r (generate-require requires)
         rl (list r)
         nslr (concat nsl rl)
-        lazy-lookup (make-sci-lazy-ns-bindings ns-module-lazy)]
+        lazy-lookup (make-sci-lazy-ns-bindings lazy-modules)]
     [nslr
      (list 'def 'compile-time (now-str))
      (list 'def 'bindings-generated bindings)
      (list 'def 'ns-generated ns-bindings)
-     (list 'def 'lazy-lookup lazy-lookup)]))
+     (list 'def 'lazy-modules lazy-lookup)
+     (list 'def 'sci-lazy-ns-dict sci-lazy-ns-dict)]))
 
 ; write forms to cljs 
 

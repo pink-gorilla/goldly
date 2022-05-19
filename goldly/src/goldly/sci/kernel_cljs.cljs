@@ -1,24 +1,17 @@
 (ns goldly.sci.kernel-cljs
   (:require
-   [goog.object :as g]
-   [taoensso.timbre :as timbre :refer-macros [debugf info error]]
+   ;[goog.object :as g]
+   [taoensso.timbre :as timbre :refer-macros [debug debugf info error]]
+   [promesa.core]
    ; sci
    [sci.core :as sci]
    [sci.async :as scia]
    [sci.impl.resolve :as sci-resolve]
    ; bindings
    ;[goldly.sci.bindings-static :refer [ns-static]]
-   [goldly-bindings-generated :refer [bindings-generated ns-generated lazy-lookup]]
-   ;[goldly.sci.lazy :refer [load-fn]]
-   [goldly.sci.load-shadow :refer [load-ext-shadow]]
-   [shadow.lazy :as lazy])
-  #_(:require-macros
-     [goldly.app.build :refer [sci-lazy-registry]]))
-
-;(defn add-lazy [namespaces]
-;  (assoc namespaces
-;         'snippets
-;         {'add (sci/new-var 'add :internal)}))
+   [goldly-bindings-generated :refer [bindings-generated ns-generated
+                                      sci-lazy-ns-dict lazy-modules]]
+   [goldly.sci.load-shadow :refer [load-ext-shadow]]))
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
 
@@ -45,41 +38,68 @@
 (defn resolve-symbol [sym]
   (sci-resolve/resolve-symbol ctx-repl sym))
 
-;(def lazy-sci-dict (sci-lazy-registry))
-
 (defn sci-ns-lookup [libname]
   ; (str libname)
-  (println "available lazy namespaces:" (pr-str lazy-lookup))
-  (println "looking up sci-ns:" libname)
-  ;{'fun {:module "fun", :loadable (shadow.lazy/loadable {'joke demo.funny/joke})},
-  ; 'adder {:module "adder", :loadable (shadow.lazy/loadable {'add adder/add})}}
-  (get lazy-lookup libname)
-  ;(case mod
-  ;  "adder" (lazy/loadable {:add adder/add})
-  ;  "fun" (lazy/loadable {:joke demo.funny/joke})
-  ;  )
-  )
+  ;(debug "available lazy namespaces:" (pr-str sci-lazy-ns-dict))
+  (debug "looking up module for sci-ns:" libname)
+  (when-let [module-name (get sci-lazy-ns-dict libname)]
+    (info "module for " libname ": " module-name)
+    (get lazy-modules module-name)))
+
+(defn add-sci-ns [ctx libname ns opts sci-ns sci-defs ns-vars]
+  (info "creating sci ns: " sci-ns "ns-vars:" ns-vars "sci-defs" sci-defs)
+  (let [mlns (sci/create-ns sci-ns)
+        sci-ns-def (->> (map (fn [sci-def ns-var]
+                               ;(info "ci-def:" sci-def "ns-var:" ns-var)
+                               ;(when-let [joke (:joke mod)]
+                               ;  (info "joke: " (joke)))
+                               (when (= sci-def :add)
+                                 (info "TEST: adding: " (ns-var 7 7)))
+
+                               [sci-def (sci/new-var sci-def ns-var {:ns mlns})])
+                             sci-defs ns-vars)
+                        (into {}))]
+    (info "sci/add-namespace! sci-ns: " libname " sci ns :" sci-ns "def: " sci-ns-def)
+    (sci/add-namespace! ctx libname sci-ns-def)))
+
+(defn load-module-ns [ctx libname ns opts sci-ns sci-def loadable]
+  (-> (load-ext-shadow loadable)
+      (.then
+       (fn [ns-vars]
+         (info "received ns-vars for sci-ns: " sci-ns "libname: " libname "ns: " ns)
+         (add-sci-ns ctx libname ns opts sci-ns sci-def ns-vars)))))
+
+(defn load-module [ctx libname ns opts sci-mod]
+  (info "loading all namespaces for module: " libname)
+  (let [promises (map (fn [[sci-ns {:keys [sci-def loadable]}]]
+                        (load-module-ns ctx libname ns opts sci-ns sci-def loadable))
+                      sci-mod)
+        p-all (promesa.core/all promises) ; Given an array of promises, return a promise that is fulfilled when all the items in the array are fulfilled.
+        ]
+    (.then p-all
+           (fn [d]
+             (info "all namespaces loaded for: " libname)
+             ;(info "all data: " d)
+             ;; empty map return value, SCI will still process `:as` and `:refer`
+             {}))))
+
+(defn load-module-test [ctx libname ns opts]
+  (-> (js/Promise.resolve #js {:libfn (fn [] "result!")})
+      (.then (fn [mod]
+               (info "demo lib : " libname "did load: " mod "mod-clj:" (js->clj mod))
+               (sci/add-class! ctx (:as opts) mod)
+               (sci/add-import! ctx ns (:as opts) (:as opts))
+               {:handled true}))))
 
 (defn async-load-fn
   [{:keys [libname opts ctx ns]}]
-  (println "async-load: " libname)
   (let [sci-mod (sci-ns-lookup libname)]
     (cond
       (= libname "some_js_lib")
-      (-> (js/Promise.resolve #js {:libfn (fn [] "result!")})
-          (.then (fn [mod]
-                   (error "demo lib : " libname "did load: " mod "mod-clj:" (js->clj mod))
-                   (sci/add-class! ctx (:as opts) mod)
-                   (sci/add-import! ctx ns (:as opts) (:as opts))
-                   {:handled true})))
+      (load-module-test ctx libname ns opts)
+
       sci-mod
-      (let [{:keys [module loadable]} sci-mod]
-        (-> (load-ext-shadow module loadable)
-            (.then (fn [mod]
-                     (error "shadow lib : " libname "did load: " mod "mod-clj:" (js->clj mod))
-                     (sci/add-class! ctx (:as opts) mod)
-                     (sci/add-import! ctx ns (:as opts) (:as opts))
-                     {:handled true})))))))
+      (load-module ctx libname opts ns sci-mod))))
 
 (defn ^:export compile-code-async [code]
   (try
@@ -108,24 +128,6 @@
              ;'window js/window
     ;         }
    :disable-arity-checks true ; from clerk
-   :async-load-fn async-load-fn
-   ;:load-fn load-fn
-   })
+   :async-load-fn async-load-fn})
 
 (def ctx-repl (sci/init ctx-static))
-
-#_(defmethod kernel-eval :cljs [{:keys [id code]
-                                 :or {id (guuid)}}]
-    (let [c (chan)]
-      (info "sci-eval: " code)
-      (go (try (let [{:keys [error result]} (compile-code code)
-                     eval-result (if error
-                                   (merge {:id id} error)
-                                   {:id id :picasso (->picasso result)})]
-                 (>! c eval-result))
-               (catch js/Error  e
-                 (error "eval ex: " e)
-                 (>! c {:id id
-                        :error e})))
-          (close! c))
-      c))

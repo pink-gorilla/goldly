@@ -6,7 +6,10 @@
   org.clojure/core.async {:mvn/version "1.5.648"}
   org.clojure/data.json {:mvn/version "2.4.0"}
   com.rpl/specter {:mvn/version "1.1.4"}
-  org.babashka/sci {:mvn/version "0.3.5"}
+  funcool/promesa {:mvn/version "8.0.450"}
+  org.babashka/sci ; {:mvn/version "0.3.5"}
+                   {:git/url "https://github.com/babashka/sci.git"
+                    :sha "0859844b3892710a2b9c6dc57002d7bdd0115c74"}
   applied-science/js-interop  {:mvn/version "0.3.3"} ; todo: move to ui-repl. not essential here.
   org.pinkgorilla/webly {:mvn/version "0.4.604"} ; web app build tool
   org.pinkgorilla/goldly-service {:local/root "../service" :deps/manifest :deps}

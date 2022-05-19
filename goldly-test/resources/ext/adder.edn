@@ -3,6 +3,6 @@
  :lazy false
  :lazy-sci true
  :cljs-namespace [adder]
- :cljs-ns-bindings {'adder {:add adder/add
-                            :mult adder/mult}}}
+ :cljs-ns-bindings {'adder {'add adder/add
+                            'mult adder/mult}}}
 
