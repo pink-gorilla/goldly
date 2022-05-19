@@ -1,0 +1,7 @@
+{:name "funny"
+ ;build
+ :lazy false
+ :lazy-sci true
+ :cljs-namespace [demo.funny]
+ :cljs-ns-bindings {'funny {:joke demo.funny/joke}}}
+

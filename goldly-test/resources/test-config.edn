@@ -4,9 +4,8 @@
           :lazy true
           :lazy-exclude #{"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
                           "ui-math"
-                          "ui-input"
-                          }
-          ; run-time
+                          "ui-input"}
+          ; run
           :autoload-cljs-dir ["demo/cljs_libs"
                               "demo/page"]
           :routes {:app {"" :user/main
@@ -18,19 +17,22 @@
 
                          ;devtools
                          "devtools/help" :devtools
+                         "devtools/repl" :repl
                          "devtools/pages" :pages
                          "devtools/scratchpad" :scratchpad
                          "devtools/viewer" :viewer
                          "devtools/build" :build
                          "devtools/runtime" :runtime
-                         "devtools/theme" :theme}
+                         "devtools/theme" :theme
+                         }
                    :api {"rdocument/ns" :rdocument/ns
                          "rdocument/files" :rdocument/files
                          ["rdocument/file/" :ns "/" :name] :rdocument/file}}}
 
- :devtools {:rdocument  {:storage-root "rdocument/"
-                         :url-root "/api/rdocument/file/"}
-            :collections {:demo [:clj "demo/notebook/"]}}
+ :reval {:rdocument  {:storage-root "rdocument/"
+                      :url-root "/api/rdocument/file/"}
+         :collections {:demo [:clj "demo/notebook/"]
+                       :cljs [:cljs "demo/notebook/"]}}
 
 ;
  }

@@ -1,6 +1,0 @@
-{:name "goldly-test"
- :clj-require []
- :cljs-namespace []
- :cljs-bindings {}
- :cljs-ns-bindings {}}
-

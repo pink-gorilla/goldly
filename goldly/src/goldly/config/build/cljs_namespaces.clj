@@ -1,14 +1,14 @@
 (ns goldly.config.build.cljs-namespaces)
 
 (defn- add-extension-cljs [webly-modules
-                           {:keys [lazy name cljs-namespace]
+                           {:keys [lazy lazy-sci name cljs-namespace]
                             :or {cljs-namespace []}
                             :as ext}]
 
   (if (empty? cljs-namespace)
     webly-modules
     (merge webly-modules
-           (if lazy
+           (if (or lazy lazy-sci)
              {(keyword name) cljs-namespace}
              {:goldly-main (concat (or (:goldly-main webly-modules) [])
                                    cljs-namespace)}))))

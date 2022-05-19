@@ -7,39 +7,51 @@
 
 ; config management
 
-(defonce goldly-namespaces (atom []))
-(defonce goldly-bindings (atom {}))
+#_(defonce goldly-namespaces (atom []))
+#_(defonce goldly-bindings (atom {}))
 
-(defonce goldly-ns-bindings (atom {}))
+#_(defonce goldly-ns-bindings (atom {}))
 
-(defmacro add-cljs-namespace [n]
-  `(swap! goldly-namespaces conj '~n))
+#_(defmacro add-cljs-namespace [n]
+    `(swap! goldly-namespaces conj '~n))
 
-(defmacro add-cljs-bindings [b]
-  `(swap! goldly-bindings merge '~b))
+#_(defmacro add-cljs-bindings [b]
+    `(swap! goldly-bindings merge '~b))
 
-(defmacro add-cljs-ns-bindings [n b]
-  `(swap! goldly-ns-bindings assoc '~n '~b))
+#_(defmacro add-cljs-ns-bindings [n b]
+    `(swap! goldly-ns-bindings assoc '~n '~b))
 
-(defn sci-config-old []
-  {:requires @goldly-namespaces
-   :bindings @goldly-bindings
-   :ns-bindings @goldly-ns-bindings})
+#_(defn sci-config-old []
+    {:requires @goldly-namespaces
+     :bindings @goldly-bindings
+     :ns-bindings @goldly-ns-bindings})
 
 ; generate forms
 
 (defmacro generate-require [namespaces]
   `(concat (list :require) ~namespaces))
 
-(defn make-forms [{:keys [requires bindings ns-bindings]}]
+(defn make-sci-lazy-ns-bindings [sci-lazy-ns-bindings]
+  ; sci lazy module
+  ; {'fun {:module "fun", :sci-ns-def {'joke demo.funny/joke}},
+  ;  'adder {:module "adder", :sci-ns-def {'add adder/add}}}
+  (into {}
+        (map (fn [[sci-ns {:keys [module sci-ns-def]}]]
+               [sci-ns {:module module
+                        :loadable (list 'shadow.lazy/loadable sci-ns-def)}])
+             sci-lazy-ns-bindings)))
+
+(defn make-forms [{:keys [requires bindings ns-bindings ns-module-lazy]}]
   (let [nsl '(ns goldly-bindings-generated)
         r (generate-require requires)
         rl (list r)
-        nslr (concat nsl rl)]
+        nslr (concat nsl rl)
+        lazy-lookup (make-sci-lazy-ns-bindings ns-module-lazy)]
     [nslr
      (list 'def 'compile-time (now-str))
      (list 'def 'bindings-generated bindings)
-     (list 'def 'ns-generated ns-bindings)]))
+     (list 'def 'ns-generated ns-bindings)
+     (list 'def 'lazy-lookup lazy-lookup)]))
 
 ; write forms to cljs 
 

@@ -33,6 +33,14 @@
 (defn set-lazy-themes! [t]
   (reset! theme-atom t))
 
+(defonce sci-lazy-atom (atom {}))
+
+(defmacro sci-lazy-registry []
+  @sci-lazy-atom)
+
+(defn set-sci-lazy! [t]
+  (reset! sci-lazy-atom t))
+
 ;; export webly config
 
 (defn set-webly-config [cljs-config]
@@ -85,7 +93,8 @@
         sci-config (:sci bconfig)
         cljs-config (:cljs bconfig)
         css-theme (:css-theme bconfig)
-        ext-lookup (ext-fn-lookup ext-config)]
+        ext-lookup (ext-fn-lookup ext-config)
+        ns-module-lazy (:ns-module-lazy sci-config)]
     (write-target "goldly-build-full" bconfig)
     (write-target "goldly-build-sci-config" sci-config)
     (write-extensions-build ext-config)
@@ -94,6 +103,8 @@
     (write-target "goldly-build-module-fn-maps" ext-lookup)
     (set-lazy-themes! css-theme)
     (write-target "goldly-build-theme-lazy" css-theme)
+    (write-target "goldly-build-ns-module-lazy" ns-module-lazy)
+    (set-sci-lazy! ns-module-lazy)
     (set-webly-config cljs-config)
     ;; 
     ;(warn "requiring namespaces..") ; does this have to be AFTER discovering extensions? in run- for sure yes.
