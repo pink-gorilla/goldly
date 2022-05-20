@@ -1,11 +1,11 @@
 (ns goldly.devtools.visspec2
   (:require
    [pinkie]
-   [user :refer [resolve-symbol-sci]]))
+   [user]))
 
 (defn safe-resolve2 [s]
   (try
-    (resolve-symbol-sci s)
+    (user/resolve-symbol-sci s)
     (catch :default e
       (println "renderer not found: " s)
       nil)))

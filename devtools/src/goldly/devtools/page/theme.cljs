@@ -2,7 +2,7 @@
   (:require
    [rf]
    [goldly]
-   [goldly.devtools.ui-helper :refer [add-page-template]]))
+   [goldly.devtools.ui-helper]))
 
 ;; css links
 (defn show-css-links [css-links]
@@ -51,4 +51,4 @@
   [:div.container.mx-auto ; tailwind containers are not centered by default; mx-auto does this
    [theme-info]])
 
-(add-page-template theme-page :theme)
+(goldly.devtools.ui-helper/add-page-template theme-page :theme)

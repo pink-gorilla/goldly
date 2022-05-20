@@ -1,7 +1,12 @@
 (ns goldly.devtools.url-loader
   (:require
    [http]
-   [user :refer [info run-a error-boundary]]))
+   [service]
+   ;[user :refer [ run-a error-boundary]]
+)) ; info
+
+(defn error-boundary [d]
+  [:div d])
 
 (def show-loader-debug-ui false)
 
@@ -14,16 +19,16 @@
         comparator [url arg-fetch args-fetch]]
     (if comparator?
       (when (not (= comparator (:comparator @a)))
-        (info (str "loading:  " comparator))
+        ;(info (str "loading:  " comparator))
         (swap! a assoc :comparator comparator)
         (case fmt
           :txt (http/get-str url a [:data])
           :edn (http/get-edn url a [:data])
           :clj (if arg-fetch
-                 (run-a a [:data] url arg-fetch)
+                 (service/run-a a [:data] url arg-fetch)
                  (if args-fetch
-                   (apply run-a a [:data] url args-fetch)
-                   (run-a a [:data] url))))
+                   (apply service/run-a a [:data] url args-fetch)
+                   (service/run-a a [:data] url))))
 
         nil)
       (swap! a assoc :data nil))))

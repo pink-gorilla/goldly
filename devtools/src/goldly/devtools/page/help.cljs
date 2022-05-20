@@ -1,7 +1,7 @@
 (ns goldly.devtools.page.help
   (:require
-   [user :refer [format]]
-   [goldly.devtools.ui-helper :refer [add-page-template h1]]))
+   [user]
+   [goldly.devtools.ui-helper]))
 
 ; artefacts
 
@@ -12,10 +12,10 @@
         children))
 
 (defn svg [url-link url-img p]
-  [:a {:href (format url-link p)}
+  [:a {:href (user/format url-link p)}
    [:img.inline-block
     {:src
-     (format url-img p)}]])
+     (user/format url-img p)}]])
 
 (defn project [p]
   [:p ; p
@@ -66,7 +66,7 @@
 
 (defn devtools-page [{:keys [route-params query-params handler] :as route}]
   [:div ; .w-screen.h-screen
-   [h1 "goldly devtools"]
+   [goldly.devtools.ui-helper/h1 "goldly devtools"]
    [:div.mb-5]
    ; this mp3 is too big for clojars
    ;[:audio {:src "/r/daddys-outta-town.mp3"
@@ -74,18 +74,18 @@
    ;         :auto-play true
    ;         :loop true
    ;         :preload "auto"}]
-   [h1 "What is goldly"]
+   [goldly.devtools.ui-helper/h1 "What is goldly"]
    [:ul
     [:li "Can run clj code in the browser. This is done via sci interpreter."]
     [:li "Via hiccup-fh (functional hiccup) new render functions can be executed from clj."]
     [:li (str "The goldly extension manager will compile your favorite hiccup-fn functions "
               "into a precompiled js bundle that is served with goldly")]]
 
-   [h1 "artefacts"]
+   [goldly.devtools.ui-helper/h1 "artefacts"]
    [artefacts "apps and demo" apps-and-demo]
    [artefacts "build tools" build-tool]
    [artefacts "goldly extensions" goldly-extensions]
    [artefacts "notebook (legacy)" notebook-legacy]])
 
-(add-page-template devtools-page :devtools)
+(goldly.devtools.ui-helper/add-page-template devtools-page :devtools)
 

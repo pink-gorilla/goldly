@@ -2,13 +2,13 @@
   (:require
    [rf]
    [page]
-   [user :refer [add-page]]
-   [goldly.devtools.ui-helper :refer [add-page-template devtools-header link-dispatch]]))
+   [user]
+   [goldly.devtools.ui-helper]))
 
 (defn page-item [i]
   [:span.m-1
-   [link-dispatch [:bidi/goto :pages :query-params {:page (name i)
-                                                    :ns (namespace i)}]
+   [goldly.devtools.ui-helper/link-dispatch [:bidi/goto :pages :query-params {:page (name i)
+                                                                              :ns (namespace i)}]
     (str i)]])
 
 (defn page-list [p]
@@ -53,7 +53,7 @@
          (if page
            [page-show page route]
            [:div
-            [devtools-header]
+            [goldly.devtools.ui-helper/devtools-header]
             [page-list p]])]))))
 
-(add-page page-list-page :pages)
+(user/add-page page-list-page :pages)

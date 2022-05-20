@@ -4,19 +4,54 @@
    [cljs.core.async :refer [>! <! chan close! put!] :refer-macros [go]]
    [re-frame.core :as rf]
    [goldly.service.core :refer [run]]
-   [goldly.sci.kernel-cljs :refer [compile-code]]
+   [goldly.sci.kernel-cljs :refer [compile-code compile-code-async]]
    [goldly.sci.error :refer [show-sci-error]]
    [goldly.cljs.reload :refer [reload-cljs]]
    [goldly.static :refer [cljs-explore get-code]]))
 
 ;; compile
 
-(defn compile-cljs [{:keys [filename code]}]
-  (debug "compiling: " filename)
-  (let [r (compile-code code)]
-    (if (:error r)
-      (show-sci-error filename r)
-      (debugf "successfully compiled %s " filename))))
+#_(defn compile-cljs [{:keys [filename code]}]
+    (debug "compiling: " filename)
+    (let [r (compile-code code)]
+      (if-let [e (:error r)]
+        (show-sci-error filename e)
+        (debugf "successfully compiled %s " filename))))
+
+(defn compile-cljs-p [{:keys [filename code]}]
+  (info "compiling-async: " filename)
+  (let [er-p (compile-code-async code)]
+    (-> er-p
+        (.catch (fn [e]
+                  (error "eval failed: " e)
+                    ; #error {:message "Could not resolve symbol: call-bad-fn", 
+                    ;          :data {:type :sci/error, :line nil, :column nil, :file nil, :phase "analysis"}}
+                    ; not working:
+                    ; error-message (:error/message err)
+                    ; error-data (:error/data err)
+                  (let [data (ex-data e)]
+                    (when-let [message (or (:message data) (.-message e))]
+                      (let [data (or (:data data) (.-data e))
+                            r {:err message
+                               :root-ex data}]
+                        (error "error-message:" message)
+                        (error "error-data:" data)
+                        (show-sci-error filename r)
+                        r)))))
+        (.then (fn [er]
+                 (infof "successfully compiled %s " filename)
+                 (when [er]
+                   (info "cljs eval result:" er)
+                   ;(reset! cur-ns (:ns er))
+                   er))))))
+
+(defn compile-cljs [opts]
+  (let [p (compile-cljs-p opts)
+        ch (chan)]
+    (.then p (fn [data]
+               (infof "compile-code promise received:  %s" data)
+               (put! ch 27)))
+    ch))
 
 ;; websocket / static helper
 

@@ -1,7 +1,7 @@
 (ns goldly.devtools.page.build
   (:require
-   [goldly.devtools.url-loader :refer [url-loader]]
-   [goldly.devtools.ui-helper :refer [add-page-template h1]]))
+   [goldly.devtools.url-loader]
+   [goldly.devtools.ui-helper]))
 
 (defn goldly-version [{:keys [version generated-at]}]
   [:div "goldly version: " version " " generated-at
@@ -43,28 +43,28 @@
 (defn build []
   [:div
 
-   [url-loader {:fmt :edn
-                :url "/r/build.edn"}
+   [goldly.devtools.url-loader/url-loader  {:fmt :edn
+                                            :url "/r/build.edn"}
     build-info]
 
     ; "sci-cljs-autoload.edn"  "sci-cljs-bindings.edn" "build-config.edn"
 
-   [url-loader {:fmt :clj
-                :url :goldly/version}
+   [goldly.devtools.url-loader/url-loader  {:fmt :clj
+                                            :url :goldly/version}
     goldly-version]
 
    [:a {:href "/r/bundlesizereport.html"}
     [:p "show bundlesize stats"]]
 
-;[url-loader {:fmt :clj
+;[goldly.devtools.url-loader/url-loader  {:fmt :clj
    ;             :url :goldly/extension-summary}
    ; extension-summary]
 
-   [url-loader {:fmt :clj
-                :url :goldly/build-sci-config}
+   [goldly.devtools.url-loader/url-loader  {:fmt :clj
+                                            :url :goldly/build-sci-config}
     build-sci-config]
 
-   ;[url-loader {:fmt :clj
+   ;[goldly.devtools.url-loader/url-loader  {:fmt :clj
    ;             :url :goldly/extension-list}
    ; extension-details]
    ])
@@ -72,4 +72,4 @@
   [:div.bg-green-300
    [build]])
 
-(add-page-template build-page :build)
+(goldly.devtools.ui-helper/add-page-template build-page :build)

@@ -25,7 +25,7 @@
    [:p "sci cljs compile error in file: " filename]
    [sci-error error]])
 
-(defn show-sci-error [filename {:keys [error] :as result}]
-  (timbre/error "compilation failed: " filename result)
+(defn show-sci-error [filename error]
+  (timbre/error "compilation failed: " filename error)
   (add-notification :error (error-view filename error) 0))
 
