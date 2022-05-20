@@ -2,7 +2,7 @@
   (:require
    [rf]
    [page]
-   [user :refer [frisk]]
+   [frisk :refer [frisk]]
    [goldly.devtools.url-loader]
    [goldly.devtools.ui-helper]))
 
@@ -50,7 +50,7 @@
       [:div
        [:h2.text-2xl.text-blue-700.bg-blue-300 "config"]
         ;(pr-str @config)
-       [user/frisk @config]])))
+       [frisk @config]])))
 
 (defn run-sci-cljs-autoload [list]
   (let [data (:data list)]

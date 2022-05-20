@@ -3,7 +3,7 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}
-         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
+        org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
 
  :aliases
  {:outdated
@@ -32,20 +32,22 @@
   ; - lazy loading  (binaryclock dependency) 
   ; - services
 
-  ; BUILD BUNDLE (then exit)
-  :goldly-build
-  {;:extra-deps {}
-   :exec-fn goldly.app.build/goldly-build
-   :exec-args {:profile "compile2"
-               :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]}}
-
-   ; RUN SERVICES (keep running)
-  :goldly-run
+  ; RUN SERVICES (keep running)
+  :goldly
   {;:extra-deps {}
    :exec-fn modular.system/start!
    :exec-args {:profile "jetty"
                :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]
                :services "test-services.edn"}}
+
+
+  ; BUILD BUNDLE (then exit)
+  :build
+  {;:extra-deps {}
+   :exec-fn goldly.app.build/goldly-build
+   :exec-args {:profile "compile2"}}
+
+
 
 ;           
   }}

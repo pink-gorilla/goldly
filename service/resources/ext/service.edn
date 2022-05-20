@@ -2,7 +2,7 @@
  :lazy false
  ; build
  :cljs-namespace [goldly.service.core]
- :cljs-bindings {'run goldly.service.core/run
+ :cljs-bindings {'run goldly.service.core/run ; depreciated
                  'run-a goldly.service.core/run-a
                  'run-cb goldly.service.core/run-cb
                  'wait-chan-result goldly.service.core/wait-chan-result}

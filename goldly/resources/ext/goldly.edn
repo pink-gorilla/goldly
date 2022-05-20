@@ -4,11 +4,9 @@
  :cljs-namespace [; goldly
                   goldly.page.page
                   goldly.page.no-page
-                  goldly.sci.helper
                   goldly.sci.eventhandler]
  :cljs-bindings {'add-page goldly.page.page/add-page ; depreciated - use page/add
-                 'value-of goldly.sci.helper/value-of
-                 'obj->clj goldly.sci.helper/obj->clj}
+                 }
  :cljs-ns-bindings {'goldly {'compile-time compile-time
                              'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
