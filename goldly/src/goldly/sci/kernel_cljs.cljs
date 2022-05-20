@@ -102,7 +102,7 @@
 (defn ^:export compile-code-async [code]
   (try
     (sci/binding [sci/out *out*] ;; this enables println etc.
-     (scia/eval-string* ctx-repl code))
+      (scia/eval-string* ctx-repl code))
     (catch :default e
       (timbre/error "sci compile-code-async --]" code "[-- ex: " e)
       {:error  {:root-ex (.-data e)
