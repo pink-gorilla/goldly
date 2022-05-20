@@ -4,7 +4,6 @@
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}
         ; GoldlyDOCS deps        
-        ;lazy deps:
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
         org.pinkgorilla/ui-input {:mvn/version "0.0.21"}
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.3"}
@@ -13,7 +12,7 @@
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.14"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.7"}
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.12"}
-        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.8"} ; videos in devtools help
+        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.8"} ; videos, sparkline
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
