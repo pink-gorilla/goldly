@@ -3,15 +3,18 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}
-        org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}
-        ;org.pinkgorilla/ui-input {:mvn/version "0.0.21"} ; more modern ui-input
-        ;org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.8"} ; more modern ui-highlightjs
-        }
+        org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.12"}}
 
  :aliases
  {:outdated
   {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
    :main-opts ["-m" "antq.core"]}
+
+  ; https://github.com/weavejester/cljfmt
+  :cljfmt
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
+   :main-opts ["-m" "cljfmt.main"
+               "--indents" "cljfmt.edn"]}
 
   :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.9.0"}
                        cider/cider-nrepl {:mvn/version "0.28.3"}}
@@ -19,11 +22,11 @@
 
   :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
          :exec-fn clojure.tools.cli.api/tree}
-  
+
 
   ; goldy-test
   ; this is a complete deps.edn project used to test goldly.
-  
+
   ; tests:
   ; - loading of cljs source code files (+ hot reload of cljs files)
   ; - lazy loading  (binaryclock dependency) 

@@ -9,7 +9,7 @@
         p (compile-sci-async code)]
     (println "async promise: " p)
     (.then p (fn [result]
-                 (reset! async-result result)))
+               (reset! async-result result)))
     (fn [route-data]
       [:div.bg-red-200.w-screen.h-screen.p-5
        [:p.text-blue-500.text-xxl "sci compile test."]
