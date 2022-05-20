@@ -27,9 +27,7 @@
 
 (defn ^:export compile-code [code]
   (try
-    {:result (sci/eval-string* ctx-repl code)
-        ;(sci/eval-string code ctx-repl)
-     }
+    {:result (sci/eval-string* ctx-repl code)}
     (catch :default e
       (timbre/error "sci compile-code --]" code "[-- ex: " e)
       {:error  {:root-ex (.-data e)
@@ -103,7 +101,7 @@
 
 (defn ^:export compile-code-async [code]
   (try
-    {:result (scia/eval-string* ctx-repl code)}
+    (scia/eval-string* ctx-repl code)
     (catch :default e
       (timbre/error "sci compile-code-async --]" code "[-- ex: " e)
       {:error  {:root-ex (.-data e)

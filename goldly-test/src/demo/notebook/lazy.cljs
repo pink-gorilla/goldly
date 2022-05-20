@@ -17,9 +17,9 @@
 (defn async-eval [form]
   (let [d (r/atom "async compiling..")
         p (compile-sci-async (wrap-code form))]
-    (.then (:result p)
+    (.then p
            (fn [result]
-             (.log js/console "async result: " result)
+             (.log js/console "async eval result: " result)
              (reset! d result)))
     ^:R
     [show-atom d]))
