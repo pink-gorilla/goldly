@@ -27,8 +27,9 @@
                                    "../goldly-test")
          deps-tree (webly/clojure "goldly" "-X:deps" "tree")
          outdated (do (webly/clojure "goldly" "-M:outdated")
-                      ;(webly/clojure "devtools" "-M:outdated")
-                     ; (webly/clojure "goldly-docs" "-M:outdated" )
+                      (webly/clojure "devtools" "-M:outdated")
+                      (webly/clojure "goldly-docs" "-M:outdated" )
+                      (webly/clojure "service" "-M:outdated")
                       (webly/clojure "goldly-docs" "-Tantq" "outdated")
                     )
 
