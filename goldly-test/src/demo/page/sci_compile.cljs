@@ -7,7 +7,6 @@
 (defn sci-compile-page [route-data]
   (let [async-result (r/atom "no async result")
         p (compile-sci-async code)]
-    (println "async promise: " p)
     (.then p (fn [result]
                (reset! async-result result)))
     (fn [route-data]

@@ -1,0 +1,7 @@
+{:name "sciconfig"
+ ;build
+ :lazy false
+ :lazy-sci false
+ :cljs-namespace [sciconfig]
+ ;:cljs-ns-bindings {'bongo sciconfig/ns-bongo}
+ }

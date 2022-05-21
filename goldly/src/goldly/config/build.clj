@@ -14,13 +14,21 @@
 
 (comment
 
+  (let [goldly-config {:lazy true}]
+    (->> (discover goldly-config)
+      ;(create-cljs-namespaces-config)
+         (sci-bindings-config goldly-config)
+         :ns-bindings))
+
   (-> (build-config {:lazy true})
       ;keys
-      ;:cljs-namespaces
+      ;:cljs
+      ;keys
+     ; :cljs-namespaces
       ;:sci
       ;keys
      ; :cljs-require
-      :css-theme)
-
+      ;:css-theme
+      )
 ;  
   )

@@ -5,27 +5,6 @@
    [fipp.clojure]
    [modular.date :refer [now-str]]))
 
-; config management
-
-#_(defonce goldly-namespaces (atom []))
-#_(defonce goldly-bindings (atom {}))
-
-#_(defonce goldly-ns-bindings (atom {}))
-
-#_(defmacro add-cljs-namespace [n]
-    `(swap! goldly-namespaces conj '~n))
-
-#_(defmacro add-cljs-bindings [b]
-    `(swap! goldly-bindings merge '~b))
-
-#_(defmacro add-cljs-ns-bindings [n b]
-    `(swap! goldly-ns-bindings assoc '~n '~b))
-
-#_(defn sci-config-old []
-    {:requires @goldly-namespaces
-     :bindings @goldly-bindings
-     :ns-bindings @goldly-ns-bindings})
-
 ; generate forms
 
 (defmacro generate-require [namespaces]

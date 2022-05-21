@@ -61,10 +61,8 @@
 ; sci-bindings-info
 
 (defn- ext-ns [module-name binding-fns]
-  (let [v (fn [s] [s module-name])
-        el  (into []
-                  (map v binding-fns))]
-    el))
+  (->> (map (fn [s] [s module-name]) binding-fns)
+       (into [])))
 
 (defn- ext->fns [{:keys [name cljs-bindings cljs-ns-bindings] :as ext}]
   (let [ext-fns (->> (merge cljs-ns-bindings {'user cljs-bindings})
@@ -82,9 +80,8 @@
 
 ;; build
 
-(defn generate-goldly-build []
-  (let [goldly-config (get-in-config [:goldly])
-        bconfig (build-config goldly-config)
+(defn generate-goldly-build [goldly-config]
+  (let [bconfig (build-config goldly-config)
         sci-bindings-filename (-> goldly-config
                                   :src-dir
                                   (or "src")
@@ -118,6 +115,7 @@
     ;(generate-cljs-autoload)
     ;(export-sci-cljs)
     ))
+
 (defn goldly-build [{:keys [config profile]}]
   (warn "loading config: " config)
   (load-config! config)
@@ -126,16 +124,23 @@
   ; for css and clj ns. 
   (let [profile (setup-profile profile)]
     (when (:bundle profile)
-      (generate-goldly-build)
-      (webly/build profile))))
+      (let [goldly-config (get-in-config [:goldly])]
+        (generate-goldly-build goldly-config)
+        (webly/build profile)))))
 
 (comment
    ;(generate-goldly-build )
 
   (->> (build-config {:lazy true})
-       :exts
+       :sci
+       ;keys
+       :ns-bindings
+       keys
+       ;:exts
        ;(ext-fn-lookup)
-       (write-extensions-sci-bindings-info))
+       ;(write-extensions-sci-bindings-info)
+       )
+  (generate-goldly-build {:lazy true})
 
 ; 
   )

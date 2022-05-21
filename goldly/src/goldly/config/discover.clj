@@ -64,7 +64,9 @@
        vals
        (map (juxt :name :lazy)))
 
-  (-> (discover)
+  (-> (discover {:lazy true
+                  ;:lazy-exclude #{"ui-gorilla"}
+                 })
       (write-extensions))
 
 ;  
