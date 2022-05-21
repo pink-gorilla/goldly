@@ -5,7 +5,7 @@
    [re-frame.core :as rf]
    [goldly.service.core :refer [run]]
    [goldly.sci.kernel-cljs :refer [compile-code compile-code-async]]
-   [goldly.sci.error :refer [show-sci-error]]
+   [goldly.sci.error :refer [exception->error show-sci-error]]
    [goldly.cljs.reload :refer [reload-cljs]]
    [goldly.static :refer [cljs-explore get-code]]))
 
@@ -24,20 +24,9 @@
     (-> er-p
         (.catch (fn [e]
                   (error "eval failed: " e)
-                    ; #error {:message "Could not resolve symbol: call-bad-fn", 
-                    ;          :data {:type :sci/error, :line nil, :column nil, :file nil, :phase "analysis"}}
-                    ; not working:
-                    ; error-message (:error/message err)
-                    ; error-data (:error/data err)
-                  (let [data (ex-data e)]
-                    (when-let [message (or (:message data) (.-message e))]
-                      (let [data (or (:data data) (.-data e))
-                            r {:err message
-                               :root-ex data}]
-                        (error "error-message:" message)
-                        (error "error-data:" data)
-                        (show-sci-error filename r)
-                        r)))))
+                  (when-let [sci-err (exception->error e)]
+                    (show-sci-error filename sci-err)
+                    sci-err)))
         (.then (fn [er]
                  (infof "successfully compiled %s " filename)
                  (when [er]

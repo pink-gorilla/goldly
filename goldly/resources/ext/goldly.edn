@@ -4,13 +4,17 @@
  :cljs-namespace [; goldly
                   goldly.page.page
                   goldly.page.no-page
-                  goldly.sci.eventhandler]
+                  goldly.sci.error
+                  goldly.sci.eventhandler ; move to ui-repl or ui-gorilla
+                  ]
  :cljs-bindings {'add-page goldly.page.page/add-page ; depreciated - use page/add
                  }
  :cljs-ns-bindings {'goldly {'compile-time compile-time
                              'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
-                             'eventhandler  goldly.sci.eventhandler/eventhandler-fn}
+                             'eventhandler  goldly.sci.eventhandler/eventhandler-fn
+                             'error-view goldly.sci.error/error-view
+                             'exception->error goldly.sci.error/exception->error}
                     'page {'available goldly.page.page/available-pages
                            'show goldly.page.page/show-page
                            'add goldly.page.page/add-page}}}
