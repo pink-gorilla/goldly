@@ -2,7 +2,7 @@
   (:require
    [rf]
    [page]
-   [frisk :refer [frisk]]
+   ;[frisk :refer [frisk]]
    [goldly.devtools.url-loader]
    [goldly.devtools.ui-helper]))
 
@@ -50,7 +50,9 @@
       [:div
        [:h2.text-2xl.text-blue-700.bg-blue-300 "config"]
         ;(pr-str @config)
-       [frisk @config]])))
+       [:p "config is disabled until frisk lazy loading works"]
+       ;[frisk @config]
+       ])))
 
 (defn run-sci-cljs-autoload [list]
   (let [data (:data list)]
