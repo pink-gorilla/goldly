@@ -9,7 +9,7 @@
   funcool/promesa {:mvn/version "8.0.450"}
   org.babashka/sci ; {:mvn/version "0.3.5"}
                    {:git/url "https://github.com/babashka/sci.git"
-                    :sha "c2f45baf5464cb82ea7d5d323aac16285d06f8d9"}
+                    :sha "30b13377dc93923273deac5c401f987e3e715181"}
   org.pinkgorilla/webly {:mvn/version "0.4.604"} ; web app build tool
   org.pinkgorilla/goldly-service {:local/root "../service" :deps/manifest :deps}
   }

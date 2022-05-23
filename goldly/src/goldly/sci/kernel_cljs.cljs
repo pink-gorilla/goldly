@@ -1,6 +1,5 @@
 (ns goldly.sci.kernel-cljs
   (:require
-   ;[goog.object :as g]
    [taoensso.timbre :as timbre :refer-macros [debug debugf info error]]
    [promesa.core]
    ; sci
@@ -114,7 +113,12 @@
                     'compile-sci-async compile-code-async
                     'resolve-symbol-sci resolve-symbol)
    :preset {:termination-safe false} ; was: true
-   :namespaces ns-generated ; (add-lazy ns-generated) ; ns-static
+   :namespaces (merge
+                ns-generated   ; ns-static
+                {'clojure.core {'require scia/require}
+                 'goldly.sci {'compile-sci compile-code
+                              'compile-sci-async compile-code-async
+                              'resolve-symbol-sci resolve-symbol}})
 
    :classes  {'js js/window :allow :all}
    ;:classes  {'js goog/global :allow :all} ; In JS hosts, to allow interop with anything, use the following config:
