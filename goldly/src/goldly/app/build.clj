@@ -61,13 +61,44 @@
 ; sci-bindings-info
 
 (defn- ext-ns [module-name binding-fns]
+  ;(println "ext-ns" module-name)
+  ;(println "ext-ns" module-name binding-fns)
   (->> (map (fn [s] [s module-name]) binding-fns)
        (into [])))
 
-(defn- ext->fns [{:keys [name cljs-bindings cljs-ns-bindings] :as ext}]
+(defn fns-in-ns-map [ns-def-map]
+  ;(println "fns-in-ns-map " ns-def-map)
+  (->> ns-def-map
+       vals))
+
+(defn fns-in-ns [[ns-name ns-def-map-or-symbol]]
+  ; map:
+  ;  {'bar pinkgorilla.ui.viz.sparklines/sparkline-bar
+  ;    'spot pinkgorilla.ui.viz.sparklines/sparkline-spot
+  ;    'line pinkgorilla.ui.viz.sparklines/sparkline}
+  ; symbol: sci.configs.reagent/reagent-ns
+  ;(println "fns-in-ns: " ns-name ns-def-map-or-symbol)
+  (if (map? ns-def-map-or-symbol)
+    (fns-in-ns-map ns-def-map-or-symbol)
+    [] ; (str ns-name "/cljs-dynamic")
+    ))
+
+#_(defn ns-defs [cljs-ns-bindings]
+    (->> cljs-ns-bindings
+         vals
+         (map vals)))
+
+(defn fns-in-nss [cljs-ns-bindings]
+  ;(println "fns-in-nss input:  " cljs-ns-bindings)
+  (let [r (map fns-in-ns cljs-ns-bindings)]
+    ;(println "fns-in-nss result: " r)
+    r))
+
+(defn- ext->fns [{:keys [name cljs-bindings cljs-ns-bindings]
+                  :or {cljs-bindings {}}
+                  :as ext}]
   (let [ext-fns (->> (merge cljs-ns-bindings {'user cljs-bindings})
-                     vals
-                     (map vals)
+                     (fns-in-nss)
                      (apply concat))]
     (ext-ns name ext-fns)))
 

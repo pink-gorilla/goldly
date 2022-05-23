@@ -1,0 +1,7 @@
+{:name "bongo-lazy"
+ ;build
+ :lazy false
+ :lazy-sci false ; this is not yet working. becasue lazy-loadable cannot be done in clj
+ :cljs-namespace [sciconfig2]
+ :cljs-ns-bindings {'bongo2 sciconfig2/ns-bongo}
+ }

@@ -23,8 +23,10 @@
 (defn ns-bindings-view [ns bindings]
   [:div
    [:h1.text-blue-500.text-xl "sci ns: " (str ns)]
-   (into [:div.grid.grid-cols-1.md:grid-cols-2]
-         (map ns-binding-view bindings))])
+   (if (map? bindings)
+     (into [:div.grid.grid-cols-1.md:grid-cols-2]
+           (map ns-binding-view bindings))
+     [:div.text-red-500 "dynamic sci-config namespace (clj does not know bindings)"])])
 
 (defn ns-bindings-list [ns-bindings]
   (into [:div]
