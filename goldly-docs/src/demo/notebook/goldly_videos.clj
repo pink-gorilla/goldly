@@ -3,9 +3,9 @@
 ;; video
 
 (defn youtube [id]
-  ['user/video {:box :lg
-                :controls true
-                :url (format "https://www.youtube.com/watch?v=%s" id)}])
+  ['ui.video/video {:box :lg
+                    :controls true
+                    :url (format "https://www.youtube.com/watch?v=%s" id)}])
 
 (defn show-video [[name id]]
   [:div
@@ -13,7 +13,7 @@
    (youtube id)])
 
 (defn video-list [name list]
-  ^:R  ; this is needed, soartefacts function can be used in the repl
+  ^:R 
   [:div
    [:h1.text-3xl.text-blue-900 name]
    (into [:div]

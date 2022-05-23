@@ -2,7 +2,7 @@
   (:require
    [re-frame.core :as rf]
    [goldly :refer [eventhandler]]
-   [goldly.devtools.ui-helper]))
+   [goldly.devtools.ui-helper :refer [add-page-template]]))
 
 ;; css links
 (defn show-css-links [css-links]
