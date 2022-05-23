@@ -1,7 +1,7 @@
 (ns goldly.devtools.page.theme
   (:require
-   [rf]
-   [goldly]
+   [re-frame.core :as rf]
+   [goldly :refer [eventhandler]]
    [goldly.devtools.ui-helper]))
 
 ;; css links
@@ -19,7 +19,7 @@
                     (rf/dispatch [:css/set-theme-component k v]))]
     ;(error "avail: " o)
     (into [:select {:value  v
-                    :on-change (goldly/eventhandler on-change)}]
+                    :on-change (eventhandler on-change)}]
           (map (fn [o]
                  [:option {:value  o}
                   (str o)])
@@ -51,4 +51,4 @@
   [:div.container.mx-auto ; tailwind containers are not centered by default; mx-auto does this
    [theme-info]])
 
-(goldly.devtools.ui-helper/add-page-template theme-page :theme)
+(add-page-template theme-page :theme)

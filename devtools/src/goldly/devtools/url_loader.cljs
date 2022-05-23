@@ -1,12 +1,12 @@
 (ns goldly.devtools.url-loader
   (:require
+   [reagent.core :as r]
    [http]
-   [service]
-   ;[user :refer [ run-a error-boundary]]
-)) ; info
+   [goldly.service :as service]
+   [user :refer [error-boundary]]))
 
-(defn error-boundary [d]
-  [:div d])
+;(defn error-boundary [d]
+;  [:div d])
 
 (def show-loader-debug-ui false)
 

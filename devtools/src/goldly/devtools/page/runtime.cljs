@@ -1,10 +1,10 @@
 (ns goldly.devtools.page.runtime
   (:require
-   [rf]
-   [page]
+   [re-frame.core :as rf]
+   [goldly.page :as page]
    ;[frisk :refer [frisk]]
-   [goldly.devtools.url-loader]
-   [goldly.devtools.ui-helper]))
+   [goldly.devtools.url-loader :refer [url-loader]]
+   [goldly.devtools.ui-helper :refer [add-page-template]]))
 
 (defn kw-item [t]
   [:p.m-1 (pr-str t)])
@@ -74,19 +74,19 @@
    ;[keyword-list "hiccup-fh (functional hiccup list) " (pinkie/tags)]
    [keyword-list "pages" (page/available)]
 
-   [goldly.devtools.url-loader/url-loader {:fmt :clj
-                                           :url :goldly/services}
+   [url-loader {:fmt :clj
+                :url :goldly/services}
     (partial keyword-list "services")]
 
-   [goldly.devtools.url-loader/url-loader {:fmt :clj
-                                           :url :goldly/run-sci-cljs-autoload}
+   [url-loader {:fmt :clj
+                :url :goldly/run-sci-cljs-autoload}
     run-sci-cljs-autoload]])
 
 (defn runtime-page [{:keys [route-params query-params handler] :as route}]
   [:div.bg-green-300
    [runtime]])
 
-(goldly.devtools.ui-helper/add-page-template runtime-page :runtime)
+(add-page-template runtime-page :runtime)
 
 ;  sci-bindings
 ; :goldly/get-extension-info get-extension-info

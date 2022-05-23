@@ -1,11 +1,10 @@
 (ns goldly.devtools.ui-helper
   (:require
    [string]
-   [rf]
+   [re-frame.core :as rf]
    [site]
    [layout]
-   [page]
-   [user :refer [add-page]]))
+   [goldly.page :as page]))
 
 ;; comes from pinkie
 ;; but we need more customization!
