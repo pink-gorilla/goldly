@@ -13,7 +13,7 @@
    (youtube id)])
 
 (defn video-list [name list]
-  ^:R 
+  ^:R
   [:div
    [:h1.text-3xl.text-blue-900 name]
    (into [:div]
