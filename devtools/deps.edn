@@ -2,11 +2,11 @@
          "resources" ; extension , resources used in devtools ui
          ]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/reval {:mvn/version "0.5.108"} ; repl and notebook viewer, brings scratchpad
+        org.pinkgorilla/reval {:mvn/version "0.5.110"} ; repl and notebook viewer, brings scratchpad
         org.pinkgorilla/scratchpad {:mvn/version "0.0.10"} ; last pinkie ; todo: remove this.
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.50"} ; reagent, format, page-nav,...
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.52"} ; reagent, format, page-nav,...
         org.pinkgorilla/ui-site {:mvn/version "0.0.18"} ; menu in devtools
-        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.11"} ; videos, sparkline, frisk, pprint
+        org.pinkgorilla/ui-gorilla {:mvn/version "0.4.12"} ; videos, sparkline, frisk, pprint
         }
 
  :aliases

@@ -8,9 +8,9 @@
         org.pinkgorilla/ui-input {:mvn/version "0.0.21"}
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.3"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-vega  {:mvn/version "0.0.29"}
+        org.pinkgorilla/ui-vega  {:mvn/version "0.0.30"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.7"}
+        org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.8"}
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.12"}
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
