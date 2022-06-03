@@ -1,6 +1,6 @@
 (ns goldly.devtools.page.help
   (:require
-   [user :refer [format]]
+   [goog.string :refer [format]]
    [goldly.devtools.ui-helper :refer [add-page-template h1]]))
 
 ; artefacts

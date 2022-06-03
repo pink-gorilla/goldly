@@ -1,7 +1,15 @@
+(ns page.error
+  (:require
+   [cljs-libs.helper :refer [add-page-test]]))
 
+(defn exception-component
+  "a component that throws exceptions for testing."
+  []
+  (throw {:type :custom-error
+          :message "Something unpleasant occurred"}))
 
-(defn error-page [r]
+(defn error-page [_r]
   [:div
-   [throw-ex]])
+   [exception-component]])
 
-(add-page-test error-page :user-error)
+(add-page-test error-page :user/error)

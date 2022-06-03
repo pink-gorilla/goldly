@@ -1,4 +1,7 @@
-
+(ns page.lazy
+  (:require
+   [ui.highlightjs :refer [highlightjs]]
+   [cljs-libs.helper :refer [add-page-test]]))
 
 (defn lazy-page [r]
   [:div.bg-red-200.w-screen.h-screen.p-5

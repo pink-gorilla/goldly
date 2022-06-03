@@ -1,6 +1,6 @@
 (ns goldly.devtools.ui-helper
   (:require
-   [string]
+   [clojure.string :refer [split join]]
    [re-frame.core :as rf]
    [site]
    [layout]
@@ -21,7 +21,7 @@
   ([t]
    (text2 {} t))
   ([opts t]
-   (let [lines (string/split t #"\n")]
+   (let [lines (split t #"\n")]
      (into
       [:div (merge {:class "textbox text-lg"} opts)]
       (map line-with-br lines)))))
@@ -36,7 +36,7 @@
 
 (defn s-cols [nr]
   (->> (take nr (repeatedly (fn [] "1fr ")))
-       (string/join "")))
+       (join "")))
 
 (defn grid [{:keys [cols background-color]
              :or {cols 2

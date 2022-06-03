@@ -4,7 +4,7 @@
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}
         ; GoldlyDOCS deps        
-        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.12"}
+        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.13"}
         org.pinkgorilla/ui-input {:mvn/version "0.0.21"}
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.4"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.15"}

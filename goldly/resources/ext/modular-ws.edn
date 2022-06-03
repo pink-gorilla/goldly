@@ -1,8 +1,7 @@
-{:name "ws"
+{:name "modular.ws"
  ; build
  :lazy false
  :cljs-namespace [modular.ws.core]
- :cljs-bindings {'send! modular.ws.core/send!} ; depreciated
  :cljs-ns-bindings {'ws {'send! modular.ws.core/send!}
                     'modular.ws.core {'send! modular.ws.core/send!}}}
 

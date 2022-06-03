@@ -1,15 +1,14 @@
 (ns demo.notebook.lazy
   (:require
-   [r]
-   [string]
-   [user :refer [compile-sci-async println]]))
+   [reagent.core :as r]
+   [clojure.string :refer [join]]
+   [goldly.sci :refer [compile-sci-async]]))
 
 ; this is a sci-cljs notebook!
 
 (defn wrap-code [form]
-  (string/join
-   "\n"
-   (map pr-str form)))
+  (join "\n"
+        (map pr-str form)))
 
 (defn show-atom [a]
   [:p (pr-str @a)])

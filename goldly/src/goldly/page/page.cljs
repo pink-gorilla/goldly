@@ -1,8 +1,7 @@
 (ns goldly.page.page
   (:require
-   [reagent.core :as reagent]
-   [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof warn error]]
-   [re-frame.core :refer [dispatch subscribe]]
+   [reagent.core :as r]
+   [taoensso.timbre :as timbre :refer-macros [error]]
    [frontend.page :refer [reagent-page]]))
 
 ; shows how to impement error boundary:
@@ -16,24 +15,24 @@
        ; div
 
 (defn error-boundary [_ #_comp]
-  (let [error (reagent/atom nil)
-        info (reagent/atom nil)]
-    (reagent/create-class
+  (let [error-a (r/atom nil)
+        info-a (r/atom nil)]
+    (r/create-class
      {:component-did-catch (fn [_  _ i] #_this #_e  ; [this e i]
                              ; i is a js object with stacktrace
                              (error "page did catch: " i)
-                             (reset! info i))
+                             (reset! info-a i))
 
       :get-derived-state-from-error (fn [e]
                                       ; to saves the exception data; gets shows in the dom
                                       ;(println "pinkie component get-derived-state-from-error: " e)
-                                      (reset! error e)
+                                      (reset! error-a e)
                                       #js {})
       :reagent-render (fn [comp]
-                        (if @error
+                        (if @error-a
                           [:div.bg-red-300
                            "Error: "
-                           (when @error (pr-str @error))]
+                           (when @error-a (pr-str @error-a))]
                           comp))})))
 
 (defn show-page
@@ -57,7 +56,7 @@
    defines a new browser-based page 
    that can be used in the routing table to define new pages"
   [p kw]
-  (defmethod reagent-page kw [{:keys [route-params query-params handler] :as route}]
+  (defmethod reagent-page kw [{:keys [_route-params _query-params _handler] :as route}]
     [error-boundary
      [p route]]))
 

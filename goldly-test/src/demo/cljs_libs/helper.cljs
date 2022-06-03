@@ -1,3 +1,8 @@
+(ns cljs-libs.helper
+  (:require
+   [site]
+   [layout]
+   [goldly.page :as page]))
 
 ;; clj-libs is here, because 
 ;; it shows that we can add custom libraries inside sci source code files.
@@ -20,5 +25,5 @@
                        [layout/header-main  ; .w-screen.h-screen
                         [test-header]
                         [page route]])]
-    (add-page wrapped-page name)))
+    (page/add wrapped-page name)))
 

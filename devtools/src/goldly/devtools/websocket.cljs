@@ -1,11 +1,10 @@
 (ns goldly.devtools.websocket
   (:require
-    ;[user :refer [println]]
-   [rf]))
+   [re-frame.core :as rf]))
 
 ;; websocket helper
 
-(defn print-result [t]
+(defn print-result [_t]
   (fn [r]
     (println "ws-send callback result: " r)))
 

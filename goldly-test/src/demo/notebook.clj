@@ -18,5 +18,5 @@
               :y {:field "b" :type "quantitative"}}
    :data {:name "table"}})
 
-(show! ^:fh
- [:p/vegalite {:spec bar :data data}])
+(show! ^:R
+ ['ui.vega/vegalite {:spec bar :data data}])

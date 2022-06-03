@@ -1,3 +1,8 @@
+(ns page.service-test
+  (:require
+   [reagent.core :as r]
+   [goldly.service :refer [run-a]]
+   [cljs-libs.helper :refer [add-page-test]]))
 
 (defn service-page []
   (let [state (r/atom {:first true})]

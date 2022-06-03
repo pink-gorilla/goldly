@@ -1,5 +1,9 @@
-
-
+(ns page.main
+  (:require
+   [goldly.page :as page]
+   [layout]
+   [ui.clock :refer [clock]]
+   [cljs-libs.helper :refer [add-page-test test-header]]))
 
 (defn main-body []
   [:div
@@ -17,10 +21,10 @@
 ;   
    ])
 
-(defn main-page [{:keys [handler route-params query-params] :as route}]
+(defn main-page [{:keys [_handler _route-params _query-params] :as _route}]
   [layout/header-main
    ;[:div "header"]
    [test-header]
    [main-body]])
 
-(add-page main-page :user/main)
+(page/add main-page :user/main)
