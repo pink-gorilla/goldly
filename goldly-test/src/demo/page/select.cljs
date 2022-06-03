@@ -18,7 +18,7 @@
                   (str o)])
                list))))
 
-(defn select-page [r]
+(defn select-page [_r]
   [:div
    [select [:clojure :python :csharp :c] :python]])
 

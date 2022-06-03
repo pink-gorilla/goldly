@@ -3,7 +3,7 @@
    [ui.highlightjs :refer [highlightjs]]
    [cljs-libs.helper :refer [add-page-test]]))
 
-(defn lazy-page [r]
+(defn lazy-page [_r]
   [:div.bg-red-200.w-screen.h-screen.p-5
    [:p.text-blue-500.text-xxl "show code in highlightjs. highlightjs is lazy."]
    [:p "goto your browser devtools and check what it does"]

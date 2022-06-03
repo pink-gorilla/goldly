@@ -3,7 +3,7 @@
    [goldly.page :as page]
    [layout]
    [ui.clock :refer [clock]]
-   [cljs-libs.helper :refer [add-page-test test-header]]))
+   [cljs-libs.helper :refer [#_add-page-test test-header]]))
 
 (defn main-body []
   [:div
