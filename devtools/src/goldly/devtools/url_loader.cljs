@@ -3,7 +3,7 @@
    [reagent.core :as r]
    [http]
    [goldly.service :as service]
-   [user :refer [error-boundary]]))
+   [ui.pinkie :refer [error-boundary]]))
 
 ;(defn error-boundary [d]
 ;  [:div d])
