@@ -15,7 +15,6 @@
     [:a.m-2 {:href "/devtools/help"}  "devtools"]]
 
    [:p "when the binary time is appearing, it is a good start."]
-
    [:h1 "binary time"]
    [clock]
 ;   

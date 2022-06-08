@@ -4,7 +4,6 @@
    [reagent.core :as r]
    [goldly.sci :refer [compile-sci compile-sci-async]]
    [layout]
-   [clock]
    [cljs-libs.helper :refer [add-page-test]]))
 
 (def code (join
@@ -21,6 +20,9 @@
       [:div.bg-red-200.w-screen.h-screen.p-5
        [:p.text-blue-500.text-xxl "sci compile test."]
        [:p "test for compilation: " (pr-str (compile-sci "(+ 5 5)"))]
-       [:p "test for async compilation: " (pr-str @async-result)]])))
+       [:p "test for async compilation: " (pr-str @async-result)]
+       [:p.bg-red-500
+        [:a {:on-click #(compile-sci-async "(println \"hello from sci\")")}
+         "println test"]]])))
 
 (add-page-test sci-compile-page :user/scicompile)

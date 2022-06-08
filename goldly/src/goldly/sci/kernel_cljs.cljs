@@ -2,6 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug debugf info error]]
    [promesa.core]
+   [cljs.reader :refer [read-string]]
    ; sci
    [sci.core :as sci]
    [sci.async :as scia]
@@ -10,7 +11,8 @@
    ;[goldly.sci.bindings-static :refer [ns-static]]
    [goldly-bindings-generated :refer [bindings-generated ns-generated
                                       sci-lazy-ns-dict lazy-modules]]
-   [goldly.sci.load-shadow :refer [load-ext-shadow]]))
+   [goldly.sci.load-shadow :refer [load-ext-shadow]]
+   [goldly.sci.clojure-core :refer [cljns] :as clojure-core]))
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
 
@@ -74,7 +76,7 @@
         p-all (promesa.core/all promises) ; Given an array of promises, return a promise that is fulfilled when all the items in the array are fulfilled.
         ]
     (.then p-all
-           (fn [d]
+           (fn [_d]
              (info "all namespaces loaded for: " libname)
              ;(info "all data: " d)
              ;; empty map return value, SCI will still process `:as` and `:refer`
@@ -98,24 +100,37 @@
       sci-mod
       (load-module ctx libname opts ns sci-mod))))
 
+(def !last-ns (volatile! @sci/ns))
+
 (defn ^:export compile-code-async [code]
   (try
-    (sci/binding [sci/out *out*] ;; this enables println etc.
-      (scia/eval-string* ctx-repl code))
+    (sci/binding [;sci/out *out* ;; this enables println etc.
+                  sci/print-newline true
+                  sci/print-fn (fn [s] (.log js/console s))
+                  sci/ns @!last-ns]
+      (let [eval-p (scia/eval-string* ctx-repl code)]
+        (.then eval-p (fn [res]
+                        (vreset! !last-ns @sci/ns)
+                        res))))
     (catch :default e
       (timbre/error "sci compile-code-async --]" code "[-- ex: " e)
       {:error  {:root-ex (.-data e)
                 :err (.-message e)}})))
 
+(def rns (sci/create-ns 'cljs.reader nil))
+
 (def ctx-static
-  {:bindings (assoc bindings-generated
-                    'compile-sci compile-code
-                    'compile-sci-async compile-code-async
-                    'resolve-symbol-sci resolve-symbol)
+  {:bindings bindings-generated
    :preset {:termination-safe false} ; was: true
    :namespaces (merge
                 ns-generated   ; ns-static
-                {'clojure.core {'require scia/require}
+                {'clojure.core {'require scia/require
+                                'time (sci/copy-var clojure-core/time cljns)
+                                'system-time (sci/copy-var system-time cljns)
+                                'random-uuid random-uuid
+                                'read-string (sci/copy-var read-string rns)
+                                'println (sci/copy-var clojure.core/println cljns)
+                                '*print-fn* (sci/copy-var clojure.core/println cljns)}
                  'goldly.sci {'compile-sci compile-code
                               'compile-sci-async compile-code-async
                               'resolve-symbol-sci resolve-symbol}})
