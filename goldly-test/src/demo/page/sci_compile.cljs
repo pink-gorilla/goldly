@@ -23,6 +23,6 @@
        [:p "test for async compilation: " (pr-str @async-result)]
        [:p.bg-red-500
         [:a {:on-click #(compile-sci-async "(println \"hello from sci\")")}
-         "println test"]]])))
+         "click to 'println' to browser console"]]])))
 
 (add-page-test sci-compile-page :user/scicompile)

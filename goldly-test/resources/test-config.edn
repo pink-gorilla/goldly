@@ -14,6 +14,7 @@
                          "error" :user/error
                          "select" :user/select
                          "service" :user/service
+                         "tick" :user/tick
 
                          ;devtools
                          "devtools/help" :devtools
