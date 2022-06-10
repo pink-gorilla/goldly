@@ -59,7 +59,7 @@
       (when error
         (error "error loading cljs: " r))
       (when result
-        (compile-cljs result)))))
+        (<! (compile-cljs result))))))
 
 ; called from goldly.system.ws after ws connected:
 (defn load-cljs [static?]
@@ -71,10 +71,11 @@
         (if (empty? result)
           (warn "no autoload cljs files available!")
           (do
-            (info "cljs files: " (pr-str result))
+            (info "autoload sci-cljs files: " (pr-str result))
             (loop [f (first result)
                    files (rest result)]
-              (<! (load-cljs-file static? f))
+              (let [r (<! (load-cljs-file static? f))]
+                (info "compile result: " r))
               (when (seq files)
                 (recur (first files)
                        (rest files))))))))))
