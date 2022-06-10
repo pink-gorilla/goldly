@@ -12,6 +12,7 @@
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.16"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.8"}
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.13"}
+        org.pinkgorilla/ui-echarts {:mvn/version "0.0.2"}
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)

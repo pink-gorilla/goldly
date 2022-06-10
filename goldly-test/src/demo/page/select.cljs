@@ -7,8 +7,8 @@
    [clock]
    [cljs-libs.helper :refer [add-page-test]]))
 
-(defn select [list k v]
-  (let [on-change (fn [v e]
+(defn select [list _k v]
+  (let [on-change (fn [v _e]
                     (info (str "selected: " v))
                     (alert (str "selected: " v)))]
     (into [:select {:value (str v)

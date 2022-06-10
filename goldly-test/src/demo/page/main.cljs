@@ -1,14 +1,16 @@
 (ns page.main
   (:require
+   [clojure.string :as str]
    [goldly.page :as page]
    [layout]
+
    [ui.clock :refer [clock]]
    [cljs-libs.helper :refer [#_add-page-test test-header]]))
 
 (defn main-body []
   [:div
    [:h1.text-2xl.text-red-600.m-5 "goldly-test"]
-
+   [:p "blank? " (str (str/blank? "test"))]
    [:p "test if goldy extension system is working."]
 
    [:p.bg-green-300
