@@ -100,18 +100,47 @@
       sci-mod
       (load-module ctx libname opts ns sci-mod))))
 
-(def !last-ns (volatile! @sci/ns))
+(def !last-ns (atom @sci/ns))
+
+;; allow printing
+
+(enable-console-print!) ; this defines *print-fn*
+
+(def output (atom ""))
+
+(defn my-print-fn [& args]
+  ;(.apply js/console.log js/console (into-array args))
+  ; https://github.com/clojure/clojurescript/commit/da2fa520ae5cd55ade7e263ec3b9a2149eb12f82
+  (swap! output str args)
+  ;(apply *print-fn* args)
+  )
+
+;(sci/alter-var-root sci/print-fn (constantly *print-fn*))
+(sci/alter-var-root sci/print-fn (constantly my-print-fn))
+(sci/alter-var-root sci/print-err-fn (constantly *print-err-fn*))
 
 (defn ^:export compile-code-async [code]
   (try
     (sci/binding [;sci/out *out* ;; this enables println etc.
-                  sci/print-newline true
-                  sci/print-fn (fn [s] (.log js/console s))
+                   ; *print-fn*
+                   ; sci/print-newline true
+                   ; sci/print-fn (fn [s]
+                   ;                (.log js/console "*print-fn*")
+                   ;                (.log js/console s)
+                   ;               )
                   sci/ns @!last-ns]
-      (let [eval-p (scia/eval-string* ctx-repl code)]
+      (let [eval-p (scia/eval-string+ ctx-repl code)]
         (.then eval-p (fn [res]
-                        (vreset! !last-ns @sci/ns)
-                        res))))
+                        (let [{:keys [val ns]} res
+                              result  {:id nil
+                                       :code code
+                                       :value val
+                                       :out @output
+                                       :ns (str ns)}]
+                          (reset! !last-ns ns)
+                          (reset! output "")
+                          (info "sci-cljs response: " result)
+                          result)))))
     (catch :default e
       (timbre/error "sci compile-code-async --]" code "[-- ex: " e)
       {:error  {:root-ex (.-data e)
@@ -129,8 +158,9 @@
                                 'system-time (sci/copy-var system-time cljns)
                                 'random-uuid random-uuid
                                 'read-string (sci/copy-var read-string rns)
-                                'println (sci/copy-var clojure.core/println cljns)
-                                '*print-fn* (sci/copy-var clojure.core/println cljns)}
+                                ;'println (sci/copy-var clojure.core/println cljns)
+                               ; '*print-fn* (sci/copy-var clojure.core/println cljns)
+                                }
                  'goldly.sci {'compile-sci compile-code
                               'compile-sci-async compile-code-async
                               'resolve-symbol-sci resolve-symbol}})
@@ -149,3 +179,4 @@
    :async-load-fn async-load-fn})
 
 (def ctx-repl (sci/init ctx-static))
+

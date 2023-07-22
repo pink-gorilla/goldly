@@ -32,4 +32,14 @@
 (defn clojure [dir & args]
   (apply shell {:dir dir} "clojure" args))
 
+(defn clojure-no-err [dir & args]
+  (apply println "***" dir " clojure " args)
+  (try
+    (let [r (apply shell {:dir dir} "clojure" args)]
+      (println "result: " r))
+    (catch Exception ex
+      ; (println "Exception: " ex) ; we are not interested in any exception.
+      ))
+  0 )
+
 ; clojure -X:webly :profile '"npm-install"'

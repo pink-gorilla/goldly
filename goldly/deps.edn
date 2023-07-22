@@ -7,9 +7,7 @@
   org.clojure/data.json {:mvn/version "2.4.0"}
   com.rpl/specter {:mvn/version "1.1.4"}
   funcool/promesa {:mvn/version "8.0.450"}
-  org.babashka/sci ; {:mvn/version "0.3.5"}
-                   {:git/url "https://github.com/babashka/sci.git"
-                    :sha "75117e6139d0026d4dd035932862134a21c2c41a"}
+  org.babashka/sci {:mvn/version "0.8.40"}
   org.pinkgorilla/webly {:mvn/version "0.4.606"} ; web app build tool
   org.pinkgorilla/goldly-service {:local/root "../service" :deps/manifest :deps}
   }
@@ -31,7 +29,7 @@
                "--lint"]}
 
   :outdated ; name equals npm outdated
-  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
    :main-opts ["-m" "antq.core"]}
 
   :check

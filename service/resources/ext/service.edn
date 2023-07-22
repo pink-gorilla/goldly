@@ -6,12 +6,20 @@
                  'run-a goldly.service.core/run-a
                  'run-cb goldly.service.core/run-cb
                  'wait-chan-result goldly.service.core/wait-chan-result}
- :cljs-ns-bindings {'service {'run goldly.service.core/run  ; depreciated
+ :cljs-ns-bindings {'service {'run goldly.service.core/run  ; depreciated - use goldly.service.core
                               'run-a goldly.service.core/run-a
                               'run-cb goldly.service.core/run-cb
                               'wait-chan-result goldly.service.core/wait-chan-result}
-                    'goldly.service {'run goldly.service.core/run
+                    'goldly.service {'run goldly.service.core/run  ; depreciated - use goldly.service.core
                                      'run-a goldly.service.core/run-a
                                      'run-cb goldly.service.core/run-cb
-                                     'wait-chan-result goldly.service.core/wait-chan-result}}}
+                                     'wait-chan-result goldly.service.core/wait-chan-result}
+                    'goldly.service.core {'run goldly.service.core/run
+                                          'run-a goldly.service.core/run-a
+                                          'run-a-map goldly.service.core/run-a-map
+                                          'run-cb goldly.service.core/run-cb
+                                          'wait-chan-result goldly.service.core/wait-chan-result}
+
+
+                    }}
 

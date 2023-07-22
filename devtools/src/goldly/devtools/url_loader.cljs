@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [http]
-   [goldly.service :as service]
+   [goldly.service.core :as service]
    [ui.pinkie :refer [error-boundary]]))
 
 ;(defn error-boundary [d]
@@ -14,9 +14,9 @@
 
 ;http://localhost:8000/api/viewer/file/demo.playground.cljplot/1.txt
 
-(defn load-url [fmt url a arg-fetch args-fetch]
-  (let [comparator? (or url arg-fetch args-fetch)
-        comparator [url arg-fetch args-fetch]]
+(defn load-url [fmt url a args-fetch timeout]
+  (let [comparator? (or url args-fetch)
+        comparator [url args-fetch]]
     (if comparator?
       (when (not (= comparator (:comparator @a)))
         ;(info (str "loading:  " comparator))
@@ -24,11 +24,16 @@
         (case fmt
           :txt (http/get-str url a [:data])
           :edn (http/get-edn url a [:data])
-          :clj (if arg-fetch
-                 (service/run-a a [:data] url arg-fetch)
-                 (if args-fetch
-                   (apply service/run-a a [:data] url args-fetch)
-                   (service/run-a a [:data] url))))
+          :clj (if args-fetch
+                 (service/run-a-map {:a a
+                                     :path [:data]
+                                     :fun url
+                                     :args args-fetch
+                                     :timeout timeout})
+                 (service/run-a-map {:a a
+                                     :path [:data]
+                                     :fun url
+                                     :timeout timeout})))
 
         nil)
       (swap! a assoc :data nil))))
@@ -43,18 +48,18 @@
    [:p "args-render: " (pr-str args-render)]
    [:p "data: " data]])
 
-(defn url-loader [{:keys [url fmt arg-fetch args-fetch args-render]}
+(defn url-loader [{:keys [url fmt args-fetch args-render timeout]}
                   fun]
   (let [a (r/atom {:data nil
                    :url nil
                    :arg-fetch nil})]
-    (fn [{:keys [url fmt arg-fetch args-fetch args-render]
+    (fn [{:keys [url fmt args-fetch args-render timeout]
           :or {fmt :txt
-               arg-fetch nil
                args-fetch nil
-               args-render []}}
+               args-render []
+               timeout 60000}}
          fun]
-      (load-url fmt url a arg-fetch args-fetch)
+      (load-url fmt url a args-fetch timeout)
       (if-let [d (:data @a)]
         [:div
          [error-boundary
@@ -63,4 +68,6 @@
             (apply fun d args-render))]
          (when show-loader-debug-ui
            [debug-loader url d args-render])]
-        [:div "loading: " url]))))
+        (if (= :chsk/timeout @a)
+          [:div "timeout: " url]
+          [:div "loading: " url])))))

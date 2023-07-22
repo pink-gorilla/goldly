@@ -42,12 +42,13 @@
 
 
   ; BUILD BUNDLE (then exit)
-  :build
-  {;:extra-deps {}
+  :goldly-build 
+  {:extra-deps {}
+   :jvm-opts ["-Dmaven.wagon.rto=90000"]
    :exec-fn goldly.app.build/goldly-build
-   :exec-args {:profile "compile2"}}
-
-
+   :exec-args {:profile "compile2"
+               :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]}}
+  
 
 ;           
   }}

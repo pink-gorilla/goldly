@@ -11,9 +11,14 @@
 (defn fun-quote []
   "The early fish catches the worm.")
 
+(defn fun-quote-slow []
+  (Thread/sleep 90000)
+  "Born to be wild.")
+
 (defn fun-ex []
   (throw (Exception. "something bad happened")))
 
 (s/add {:demo/add fun-add
         :demo/quote fun-quote
+        :demo/quote-slow fun-quote-slow
         :demo/ex fun-ex})

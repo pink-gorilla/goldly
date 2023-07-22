@@ -31,7 +31,7 @@
 (warn "lazy themes :" themes)
 
 (defn load-css [ext-name]
-  (warn "layz-loading css for: " ext-name)
+  (info "layz-loading css for: " ext-name)
   (let [ext-theme (or (get themes ext-name)
                       {:available {}
                        :current {}})
@@ -40,7 +40,7 @@
     (rf/dispatch evt)))
 
 (defn goldly-on-load [symbol-fn]
-  (errorf "goldly lazy loading %s" symbol-fn)
+  (infof "goldly lazy loading %s" symbol-fn)
   (if-let [ext-name (lookup-module symbol-fn)]
     (when-not (contains? @lazy-loaded-atom ext-name)
       (swap! lazy-loaded-atom conj ext-name)

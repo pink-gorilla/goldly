@@ -1,7 +1,7 @@
 (ns page.service-test
   (:require
    [reagent.core :as r]
-   [goldly.service :refer [run-a]]
+   [goldly.service.core :refer [run-a run-a-map]]
    [cljs-libs.helper :refer [add-page-test]]))
 
 (defn service-page []
@@ -15,6 +15,10 @@
          (run-a state [:add-result] :demo/add 2 7)
          (run-a state [:saying] :demo/quote)
          (run-a state [:ex-result] :demo/ex)
+         (run-a-map {:a state
+                     :path [:saying2]
+                     :fun :demo/quote-slow
+                     :timeout 1000})
          nil)
 
        [:p.bg-blue-300.mg-3 "state: " (pr-str @state)]])))

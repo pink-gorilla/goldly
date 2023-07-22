@@ -26,12 +26,10 @@
                                    "../goldly-docs"
                                    "../goldly-test")
          deps-tree (webly/clojure "goldly" "-X:deps" "tree")
-         outdated (do (webly/clojure "goldly" "-M:outdated")
-                      (webly/clojure "devtools" "-M:outdated")
-                      (webly/clojure "goldly-docs" "-M:outdated" )
-                      (webly/clojure "service" "-M:outdated")
-                      (webly/clojure "goldly-docs" "-Tantq" "outdated")
-                    )
+         outdated (do (webly/clojure-no-err "goldly" "-M:outdated")
+                      (webly/clojure-no-err "devtools" "-M:outdated")
+                      (webly/clojure-no-err "goldly-docs" "-M:outdated" )
+                      (webly/clojure-no-err "service" "-M:outdated"))
 
          ; build
          clean (do (webly/clean-project ".")
@@ -134,9 +132,17 @@
         ; devtest-webserver-https (webly/clojure "webserver" "-X:webserver")
 
          ;; goldly-test
+         goldly-test-npm {:doc "goldly-test with shadow-cljs npm-install"
+                          :task (webly/clojure "goldly-test" "-X:goldly-build" ":profile" "npm-install")}
          goldly-test {:doc "goldly-test with shadow-cljs watch"
-                      :task (do  ;(run 'tailwind-girouette-webly)
-                              (webly/run "goldly-test" "goldly" "watch2"))}
+                      :task (do
+                              (println "*** npm install ***")
+                              (println "*** compile2 ***")
+                              (webly/clojure "goldly-test" "-X:goldly-build" ":profile" "compile2")
+                              (println "*** jetty run ***")
+                              (webly/run "goldly-test" "goldly" "jetty")
+
+                              )}
 
 
          ;; goldly-docs

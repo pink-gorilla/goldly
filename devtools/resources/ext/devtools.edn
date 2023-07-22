@@ -1,4 +1,8 @@
 {:name "devtools"
- ; run 
+ ; build
+ :lazy false
+ :lazy-sci false
+ :cljs-namespace [goldly.devtools.sci.type]
+ ; run
  :autoload-cljs-dir ["goldly/devtools"
                      "goldly/devtools/page"]}
