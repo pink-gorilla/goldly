@@ -75,7 +75,7 @@
       (start-goldly-services cljs-autoload-files))))
 
 (defn stop-goldly [{:keys [cljs-watch ws-watch]}]
-  (info "stopping webly..")
+  (info "stopping goldly..")
   (when cljs-watch
     (warn "stopping goldly cljs-watch (not implemented)"))
   (when ws-watch

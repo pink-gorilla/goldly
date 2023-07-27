@@ -1,6 +1,6 @@
 (ns goldly.sci.kernel-cljs
   (:require
-   [taoensso.timbre :as timbre :refer-macros [debug debugf info error]]
+   [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
    [promesa.core]
    [cljs.reader :refer [read-string]]
    ; sci
@@ -12,7 +12,10 @@
    [goldly-bindings-generated :refer [bindings-generated ns-generated
                                       sci-lazy-ns-dict lazy-modules]]
    [goldly.sci.load-shadow :refer [load-ext-shadow]]
-   [goldly.sci.clojure-core :refer [cljns] :as clojure-core]))
+   [goldly.sci.clojure-core :refer [cljns] :as clojure-core]
+   ; loading of cljs source-code
+   [goldly.service.core :refer [run-cb]]
+   [clojure.string]))
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
 
@@ -90,15 +93,55 @@
                (sci/add-import! ctx ns (:as opts) (:as opts))
                {:handled true}))))
 
+; discover clj/cljs files in resources (can be jar or file)
+
+(defn ns->filename [ns]
+  (-> ns
+      (clojure.string/replace #"\." "/")
+      (clojure.string/replace #"\-" "_")))
+
+(defn on-cljs-received [ctx libname ns opts resolve reject [event-type {:keys [result] :as data}]]
+  (warn "on-cljs-received: " event-type "data: " data)
+  (when-let [code (:code result)]
+    (when-not (clojure.string/blank? code)
+      (let [eval-p (scia/eval-string+ ctx code)]
+        (.then eval-p (fn [res]
+                        (let [{:keys [val ns]} res]
+                          (info "sci-cljs loader require - compile result: " res)
+                          (when-let [as (:as opts)]
+                             ;; import class in current namespace with reference to globally
+                             ;; registed class
+                            (warn "registering as: " as "in ns: " ns " to:" (symbol libname))
+                            (sci/add-import! ctx ns (symbol libname) (:as opts)))
+                          (resolve {:handled false}))))))))
+
+(defn load-module-sci [{:keys [ctx libname ns opts property-path] :as d}]
+  ; libname: bongo.trott ; the ns that gets compiled
+  ; ns:  demo.notebook.applied-science-jsinterop ; the namespace that is using it
+  ; opts: {:as bongo, :refer [saying]}
+  ; ctx is the sci-context
+  (warn "load-sci-src" "libname:" libname "ns: " ns "opts:" opts)
+  (let [filename (-> libname str ns->filename (str ".cljs"))]
+    (warn "loading filename: " filename)
+    (js/Promise.
+     (fn [resolve reject]
+       (run-cb {:fun :cljs/load
+                :args [filename]
+                :cb (partial on-cljs-received ctx libname ns opts resolve reject)
+                :timeout 8000})))))
+
 (defn async-load-fn
-  [{:keys [libname opts ctx ns]}]
+  [{:keys [libname opts ctx ns] :as d}]
   (let [sci-mod (sci-ns-lookup libname)]
     (cond
       (= libname "some_js_lib")
       (load-module-test ctx libname ns opts)
 
       sci-mod
-      (load-module ctx libname opts ns sci-mod))))
+      (load-module ctx libname opts ns sci-mod)
+
+      :else
+      (load-module-sci d))))
 
 (def !last-ns (atom @sci/ns))
 

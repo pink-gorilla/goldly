@@ -4,5 +4,5 @@
  :lazy-sci false
  :cljs-namespace [goldly.devtools.sci.type]
  ; run
- :autoload-cljs-dir ["goldly/devtools"
+ :autoload-cljs-dir [;"goldly/devtools" ; 2023 07 awb99: pages need to be auto-loaded, but libraries not.
                      "goldly/devtools/page"]}

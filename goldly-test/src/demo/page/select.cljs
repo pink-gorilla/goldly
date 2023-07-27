@@ -4,7 +4,6 @@
    [goldly.js :refer [alert]]
    [goldly :refer [eventhandler]]
    [layout]
-   [clock]
    [cljs-libs.helper :refer [add-page-test]]))
 
 (defn select [list _k v]
