@@ -2,15 +2,7 @@
  :lazy false
  ; build
  :cljs-namespace [goldly.service.core]
- :cljs-bindings {'run goldly.service.core/run ; depreciated
-                 'run-a goldly.service.core/run-a
-                 'run-cb goldly.service.core/run-cb
-                 'wait-chan-result goldly.service.core/wait-chan-result}
- :cljs-ns-bindings {'service {'run goldly.service.core/run  ; depreciated - use goldly.service.core
-                              'run-a goldly.service.core/run-a
-                              'run-cb goldly.service.core/run-cb
-                              'wait-chan-result goldly.service.core/wait-chan-result}
-                    'goldly.service {'run goldly.service.core/run  ; depreciated - use goldly.service.core
+ :cljs-ns-bindings {'goldly.service {'run goldly.service.core/run  ; depreciated - use goldly.service.core
                                      'run-a goldly.service.core/run-a
                                      'run-cb goldly.service.core/run-cb
                                      'wait-chan-result goldly.service.core/wait-chan-result}
@@ -19,7 +11,6 @@
                                           'run-a-map goldly.service.core/run-a-map
                                           'run-cb goldly.service.core/run-cb
                                           'wait-chan-result goldly.service.core/wait-chan-result}
-
 
                     }}
 
