@@ -25,10 +25,10 @@
 (defn run [params]
   (let [ch (chan)
         cb (fn [event]
-             (infof "service/run cb: %s" event)+
+             (infof "service/run cb: %s" event) +
              (if (= event :chsk/timeout)
                (put! ch {:error :timeout})
-               (let [[_ data] event] 
+               (let [[_ data] event]
                  (put! ch data))))]
     (run-cb (assoc params :cb cb))
     ch))
@@ -52,7 +52,6 @@
     (error "timeout in clj-service: " data-safe)
     (n/add-notification :error (str "timeout clj-fun: " (:fun data)))))
 
-
 ; run-a-map has identical syntax to run-cb, except it
 ; has a and path as well. this is needed so we can pass timeout.
 
@@ -63,9 +62,9 @@
                       (let [;_ (info "run-a-map-cb: " r) ; [:goldly/service {:fun :demo/add, :args (2 7), :result 9}]
                             [_ data] r ; [:goldly/service {:result :error}]
                             {:keys [result error]} data]
-                      (if error
-                        (process-error data)
-                        (update-atom-where a path result)))))]
+                        (if error
+                          (process-error data)
+                          (update-atom-where a path result)))))]
     (run-cb (merge
              (dissoc args :a :path)
              {:cb on-result}))))
@@ -77,4 +76,4 @@
               :path path
               :fun fun
               :args args}))
-             
+
