@@ -37,3 +37,7 @@ docs/
 rdocument/
 .clj-kondo
 scratchpad/target
+*~
+\#*\#
+.\#*
+.~*

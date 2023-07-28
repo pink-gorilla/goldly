@@ -11,8 +11,10 @@
                              'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
                              'eventhandler  goldly.sci.eventhandler/eventhandler-fn
-                             'error-view goldly.sci.error/error-view
-                             'exception->error goldly.sci.error/exception->error}
+                             'error-view goldly.sci.error/error-view ; depreciated
+                             'exception->error goldly.sci.error/exception->error} ; depreciated
+                    'goldly.sci.error {'error-view goldly.sci.error/error-view
+                                       'exception->error goldly.sci.error/exception->error}
                     'goldly.page {'available goldly.page.page/available-pages
                                   'show goldly.page.page/show-page
                                   'add goldly.page.page/add-page}}}

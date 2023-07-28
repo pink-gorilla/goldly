@@ -6,10 +6,14 @@
   org.clojure/core.async {:mvn/version "1.6.673"}
   org.clojure/data.json {:mvn/version "2.4.0"}
   com.rpl/specter {:mvn/version "1.1.4"}
-  funcool/promesa {:mvn/version "8.0.450"}
+  ; promesa is used in sci-cljs-kernel, version needs to match version in sci-config (see ui-repl)
+  ;"11.0.671" version 11 not yet supported
+  ; https://github.com/babashka/sci.configs/blob/main/deps.edn
+  funcool/promesa {:mvn/version "9.0.494"}
   org.babashka/sci {:mvn/version "0.8.40"}
   org.pinkgorilla/webly {:mvn/version "0.4.606"} ; web app build tool
   org.pinkgorilla/goldly-service {:local/root "../service" :deps/manifest :deps}
+  org.pinkgorilla/modular {:mvn/version "0.0.36"}
   }
  :aliases
  {;; developer tooling

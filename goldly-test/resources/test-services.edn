@@ -11,7 +11,7 @@
   
   ; goldly service returns {:ns-clj :webly           ; this are used to start clj-require and webly
   ;                         :ws-watch :cljs-watch}   ; this is used when stopping goldly
-  :goldly {:start (goldly.app.run/start-goldly
+  :goldly { :start (goldly.app.run/start-goldly
                     (deref (clip/ref :config))
                     (:profile #ref [:modular]))
             :stop (goldly.app.run/stop-goldly this)}
@@ -33,7 +33,8 @@
                   (:profile #ref [:modular]))
           :stop (webly.app.app/stop-webly this)}
 
-  :nrepl {:start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
+  :nrepl {:pre-start (spit ".nrepl-port" (str 9100)) 
+          :start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
           :stop (.close this)}
   
   

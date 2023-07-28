@@ -16,6 +16,9 @@
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
+        ; run by default in goldly-docs-services
+        nrepl/nrepl {:mvn/version "1.0.0"}
+        cider/cider-nrepl {:mvn/version "0.28.3"}
         }
 
  :aliases
