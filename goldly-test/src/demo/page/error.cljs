@@ -1,6 +1,6 @@
-(ns page.error
+(ns demo.page.error
   (:require
-   [cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [add-page-test]]))
 
 (defn exception-component
   "a component that throws exceptions for testing."

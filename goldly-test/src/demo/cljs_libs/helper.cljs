@@ -1,4 +1,4 @@
-(ns cljs-libs.helper
+(ns demo.cljs-libs.helper
   (:require
    [site]
    [layout]

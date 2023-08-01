@@ -1,10 +1,10 @@
-(ns page.sci-compile
+(ns demo.page.sci-compile
   (:require
    [clojure.string :refer [join]]
    [reagent.core :as r]
    [goldly.sci :refer [compile-sci compile-sci-async]]
    [layout]
-   [cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [add-page-test]]))
 
 (def code (join
            "\n"

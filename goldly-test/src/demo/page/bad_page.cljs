@@ -1,6 +1,6 @@
-(ns page.bad-page
+(ns demo.page.bad-page
   (:require
-   [cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [add-page-test]]))
 
 ; test if we get an error message
 

@@ -52,22 +52,22 @@
     ; "sci-cljs-autoload.edn"  "sci-cljs-bindings.edn" "build-config.edn"
 
    [url-loader  {:fmt :clj
-                 :url :goldly/version}
+                 :url 'goldly.run.services/goldly-version}
     goldly-version]
 
    [:a {:href "/r/bundlesizereport.html"}
     [:p "show bundlesize stats"]]
 
 ;[url-loader  {:fmt :clj
-   ;             :url :goldly/extension-summary}
-   ; extension-summary]
+;              :url 'goldly.config/info/extension-summary}
+;   extension-summary]
 
    [url-loader  {:fmt :clj
-                 :url :goldly/build-sci-config}
+                 :url 'goldly.run.services/build-sci-config}
     build-sci-config]
 
    ;[url-loader  {:fmt :clj
-   ;             :url :goldly/extension-list}
+   ;             :url  'goldly.run.services/extension-list }
    ; extension-details]
    ])
 

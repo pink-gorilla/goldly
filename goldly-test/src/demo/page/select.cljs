@@ -1,10 +1,10 @@
-(ns page.select
+(ns demo.page.select
   (:require
    [goldly.log :refer [info]]
    [goldly.js :refer [alert]]
    [goldly :refer [eventhandler]]
    [layout]
-   [cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [add-page-test]]))
 
 (defn select [list _k v]
   (let [on-change (fn [v _e]

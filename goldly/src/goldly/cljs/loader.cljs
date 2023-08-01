@@ -47,7 +47,7 @@
 (defn explore [static?]
   (if static?
     (cljs-explore)
-    (run {:fun :cljs/explore})))
+    (run {:fun 'goldly.app.run/cljs-explore})))
 
 (defn load-cljs-file [static? filename]
   (info "loading cljs file: " filename)
@@ -55,7 +55,8 @@
     (let [{:keys [error result] :as r}
           (<! (if static?
                 (get-code filename)
-                (run {:fun :cljs/load :args [filename]})))]
+                (run {:fun 'goldly.cljs.loader/load-file-or-res!
+                      :args [filename]})))]
       (when error
         (error "error loading cljs: " r))
       (when result

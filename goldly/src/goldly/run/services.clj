@@ -4,9 +4,7 @@
    [clojure.edn :as edn]
    [goldly.service.core :as s]
    [goldly.service.handler] ; side effects
-   [goldly.version :refer [load-version]]
-   ;[goldly.extension.core :refer [extension-summary extensions]]
-   ))
+   [goldly.version :refer [load-version]]))
 
 (defn edn-load [filename]
   (let [content (slurp filename)
@@ -37,24 +35,8 @@
 (defn sci-bindings []
   (edn-load-res "public/goldly-build-sci-config.edn"))
 
-(s/add {;:webly/lazy-list lazy/available this is cljs
-
-        ; edn-loader
-        :edn/load edn-load
-
-        ; used in devtools:
-        :goldly/version #(load-version "goldly")
-        ;
-        ;:goldly/extension-summary extension-summary
-        ;:goldly/extension-list extensions
-        :goldly/build-sci-config build-sci-config
-        :goldly/run-sci-cljs-autoload run-sci-cljs-autoload
-
-        ; this is used by the lazy-extension css loader
-        :goldly/get-extension-info get-extension-info
-
-        ;runtime
-        :goldly/services s/services-list})
+(defn goldly-version []
+  (load-version "goldly"))
 
 (comment
     ;compile time
@@ -65,8 +47,6 @@
 
   (get-extension-info "ui-code")
   ;(ext-theme "ui-code")
-
-  (s/services-list)
 
 ;  
   )

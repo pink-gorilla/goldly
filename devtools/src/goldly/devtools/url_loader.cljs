@@ -39,7 +39,7 @@
       (swap! a assoc :data nil))))
 
 ; run-a is not yet perfect. It is difficult to pass args as aparameter
-; (run-a state [:version] :goldly/version "goldly")
+; (run-a state [:version] 'goldly.run.services/goldly-version "goldly")
 
 (defn debug-loader [url data args-render]
   [:div.bg-gray-500.mt-5

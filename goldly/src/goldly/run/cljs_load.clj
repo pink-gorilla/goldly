@@ -49,11 +49,6 @@
 
 ;; SERVICES
 
-(defn add-cljs-file-services [ext-dirs goldly-autoload]
-  (let [cljs-explore-fn #(cljs-files ext-dirs goldly-autoload)]
-    (s/add {:cljs/load load-file-or-res!
-            :cljs/explore cljs-explore-fn})))
-
 ;; WATCH
 
 (defn watch-dir [dir]

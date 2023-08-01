@@ -3,7 +3,10 @@
    [clojure.string]
    [taoensso.timbre :as log :refer [debug info infof warn error errorf]]
    [modular.ws.core :refer [send! send-all! send-response]]
-   [modular.ws.msg-handler :refer [-event-msg-handler is-authorized? send-reject-response]]))
+   [modular.ws.msg-handler :refer [-event-msg-handler send-reject-response]]
+   [modular.permission.service :refer [add-permissioned-services]]
+   [modular.permission.app :refer [service-authorized?]]
+   ))
 
 ;; services registry
 
@@ -31,44 +34,36 @@
          (catch clojure.lang.ExceptionInfo e
            {:error (str "Exception: " (pr-str e))})
          (catch Exception e
-           {:error (str "Exception: " (pr-str e))}))
+           {:error (str "Exception: "
+                        "data:" (pr-str (ex-data e))  ;(pr-str e)
+                        "msg:" (pr-str (ex-message e))
+                        )}))
     {:error (str "service not found: " kw)}))
 
 (defn create-clj-run-response [{:keys [fun args] :as params}]
-  (infof "%s %s" fun (into [] args))
   (let [result (if args
                  (apply run fun args)
                  (run fun))]
     (merge params result)))
 
-(defn run-service [{:keys [fun args] :as params}]
-  (let [response (create-clj-run-response params)]
-    (if (:error response)
-      (errorf "service fn: %s error: %s" (:fun response) (:error response))
-      (debug "sending service response: " response))
-    response))
+(defn run-service [req {:keys [fun args] :as params}]
+  (try
+    (infof "%s %s" fun (into [] args))
+    (let [response (create-clj-run-response params)]
+      (if (:error response)
+        (errorf "service fn: %s error: %s" (:fun response) (:error response))
+        (debug "sending service response: " response))
+      (send-response req :goldly/service response))
+    (catch Exception e
+       (error "exception in run-service fun:" fun " ex: " e)
+      )
+    ))
 
 (defmethod -event-msg-handler :goldly/service
   [{:keys [event id ?data uid] :as req}]
   (let [[_ params] event ; _ is :goldly/service
         {:keys [fun args]} params]
-    (if (is-authorized? fun uid)
-      (send-response req :goldly/service (run-service params))
+    (if (service-authorized? fun uid)
+      (future
+        (run-service req params))
       (send-response req :goldly/service  {:error "Not Permissioned"}))))
-
-; future:
-
-; [:deny :all]
-; [:allow :all]
-; [:deny #{demo/s1 demo/s2 goldly/s3}]
-; [:allow #{demo/s1 demo/s2 goldly/s3}]
-
-; (defonce permissions (atom [:deny :all]))
-
-; (defn check-permision [s]
-;  (let [[mode symbols] @permissions]
-;    (if (boolean? symbols)
-;       (= mode :allow)
-;      (if (= mode :allow)
-;          (set/includes symbols s)
-;          (not (set/includes symbols s))))))

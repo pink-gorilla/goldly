@@ -1,10 +1,6 @@
 {:ns-clj []
  :webly {:title "Goldly"
          :ns-cljs []
-         :routes goldly.routes/routes
-         ;:routes {:app {"" :goldly/no-page
-         ;               "goldly/reload" :goldly/reload-cljs}
-         ;        :api {}}
          :start-user-app [:goldly/init]}
  :prefix "/r/"
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.

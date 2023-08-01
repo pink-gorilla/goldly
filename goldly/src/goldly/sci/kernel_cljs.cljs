@@ -101,7 +101,7 @@
       (clojure.string/replace #"\-" "_")))
 
 (defn on-cljs-received [ctx libname ns opts resolve reject [event-type {:keys [result] :as data}]]
-  (warn "on-cljs-received: " event-type "data: " data)
+  (info "on-cljs-received: " event-type "data: " data)
   (when-let [code (:code result)]
     (when-not (clojure.string/blank? code)
       (let [eval-p (scia/eval-string+ ctx code)]
@@ -120,12 +120,12 @@
   ; ns:  demo.notebook.applied-science-jsinterop ; the namespace that is using it
   ; opts: {:as bongo, :refer [saying]}
   ; ctx is the sci-context
-  (warn "load-sci-src" "libname:" libname "ns: " ns "opts:" opts)
+  (info "load-sci-src" "libname:" libname "ns: " ns "opts:" opts)
   (let [filename (-> libname str ns->filename (str ".cljs"))]
-    (warn "loading filename: " filename)
+    (info "loading filename: " filename)
     (js/Promise.
      (fn [resolve reject]
-       (run-cb {:fun :cljs/load
+       (run-cb {:fun 'goldly.cljs.loader/load-file-or-res!
                 :args [filename]
                 :cb (partial on-cljs-received ctx libname ns opts resolve reject)
                 :timeout 8000})))))

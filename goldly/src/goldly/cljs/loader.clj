@@ -17,5 +17,6 @@
 (comment
   (load-file-or-res! "goldly/lib/util.cljs")
   (load-file-or-res! "src/demo/page/info.cljs")
+  (load-file-or-res! "cljs_libs/helper.cljs")
 ;  
   )

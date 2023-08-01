@@ -49,7 +49,9 @@
    :exec-fn goldly.app.build/goldly-build
    :exec-args {:profile "compile2"
                :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]}}
-  
+
+  :npm-install
+  {:exec-args {:profile "npm-install"}}
 
 ;           
   }}

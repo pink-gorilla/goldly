@@ -1,9 +1,9 @@
-(ns page.main
+(ns demo.page.main
   (:require
    [goldly.page :as page]
    [layout]
    [ui.clock :refer [clock]]
-   [cljs-libs.helper :refer [#_add-page-test test-header]]))
+   [demo.cljs-libs.helper :refer [#_add-page-test test-header]]))
 
 (defn main-body []
   [:div

@@ -18,10 +18,6 @@
 ;[:h2.text-2xl.text-blue-700.bg-blue-300 "pinkie renderer - lazy"]
 ;(into [:p] (map p (sort (lazy/available))))
 
-;(run-a state [:extensions] :extension/summary)
-
-;(run-a state [:services] :goldly/services)
-
 (defn ext [{:keys [name lazy]}]
   [:span.mr-2 name])
 
@@ -68,18 +64,18 @@
    [config-info]
 
 ;[url-loader {:fmt :clj
-   ;             :url :goldly/extension-summary}
-   ; extension-summary]
+;          :url 'goldly.config/info/extension-summary}
+; extension-summary]
 
    ;[keyword-list "hiccup-fh (functional hiccup list) " (pinkie/tags)]
    [keyword-list "pages" (page/available)]
 
    [url-loader {:fmt :clj
-                :url :goldly/services}
+                :url 'goldly.service.core/services-list}
     (partial keyword-list "services")]
 
    [url-loader {:fmt :clj
-                :url :goldly/run-sci-cljs-autoload}
+                :url 'goldly.run.services/run-sci-cljs-autoload}
     run-sci-cljs-autoload]])
 
 (defn runtime-page [{:keys [route-params query-params handler] :as route}]
@@ -88,5 +84,4 @@
 
 (add-page-template runtime-page :runtime)
 
-;  sci-bindings
-; :goldly/get-extension-info get-extension-info
+

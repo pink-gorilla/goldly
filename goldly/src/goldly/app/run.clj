@@ -8,11 +8,12 @@
    [modular.require :refer [require-namespaces]]
    [webly.build.profile :refer [server? #_compile?]]
    [goldly.config.runtime :refer [runtime-config]]
-   [goldly.run.cljs-load :refer [add-cljs-file-services start-cljs-watch]]
+   [goldly.run.cljs-load :refer [start-cljs-watch]]
    [goldly.run.ws-connect :refer [start-ws-conn-watch]]
-   [goldly.run.services] ; side effects..
-   [goldly.routes] ; side effects
-   ))
+   [goldly.run.services]
+   [goldly.service.core]
+   [goldly.service.expose :refer [start-services]]
+   [goldly.cljs.loader]))
 
 (defn write-extensions-runtime [ext-map]
   (->> ext-map
@@ -24,55 +25,111 @@
        (sort-by :name)
        (write-target "goldly-run-ext")))
 
-(defn set-webly-routes []
-  (warn "resolving [:webly :routes]")
-  (resolve-config-key config-atom [:webly :routes])
-  (let [{:keys [routes] :or {routes {}}} (get-in-config [:goldly])
+(def goldly-routes-default
+  {:app {"" :goldly/no-page
+         "goldly/reload" :goldly/reload-cljs}
+   :api {}})
+
+(defn webly-routes [config]
+  (let [{:keys [routes] :or {routes {}}} (get-in config [:goldly])
         routes (if (empty? routes)
                  (do (warn "no [:goldly :routes ] defined - you will see a blank page.")
                      {:app {"" :goldly/no-page}
                       :api {}})
                  routes)
-        m (fn [r]
-            (let [{:keys [app api]
-                   :or {app {}
-                        api {}}} (or routes {})]
-              (debug "merging.." r)
-              {:app (merge (:app r) app)
-               :api (merge (:api r) api)}))]
-    (debug "setting goldly routes: " routes)
-    (reset! config-atom (transform [:webly :routes] m @config-atom))))
+        merged-routes
+        {:app (merge (:app goldly-routes-default) (:app routes))
+         :api (merge (:api goldly-routes-default) (:api routes))}]
+    (debug "goldly routes: " merged-routes)
+    merged-routes))
 
-(defn set-webly-css-theme [css-theme]
-  (let [{:keys [available current]} (get-in-config [:webly :theme])
-        merged-theme {:available (merge available (:available css-theme))
-                      :current  (merge current (:current css-theme))}]
-    (swap! config-atom assoc-in [:webly :theme] merged-theme)))
+(defn webly-css-theme [config goldly-css-theme]
+  (let [{:keys [available current]} (get-in config [:webly :theme])
+        merged-theme {:available (merge available (:available goldly-css-theme))
+                      :current  (merge current (:current goldly-css-theme))}]
+    (debug "goldly theme: " merged-theme)
+    merged-theme))
 
-(defn start-goldly-services [cljs-autoload-files]
-  (let [goldly-autoload (get-in-config [:goldly :autoload-cljs-dir])
-        w-cljs (start-cljs-watch (get-in-config [:goldly :watch-cljs-dir]))
-        w-conn (start-ws-conn-watch)]
+(defn webly-config [config goldly-css-theme]
+  (let [routes (webly-routes config)
+        theme (webly-css-theme config goldly-css-theme)
+        webly-config (-> (:webly config)
+                         (assoc :routes routes
+                                :theme theme))]
+  ; TODO: refactor - config atom should not be used anymore here.
+    (swap! config-atom assoc-in [:webly] webly-config)
+    webly-config))
+
+(defn add-cljs-file-services [ext-dirs goldly-autoload]
+  (let [cljs-explore-fn #(goldly.run.cljs-load/cljs-files ext-dirs goldly-autoload)]
+    (def cljs-explore cljs-explore-fn) ; needed so symbol can be exported in start-services
+    ;(goldly.service.core/add {:cljs/load goldly.cljs.loader/load-file-or-res!
+    ;                          :cljs/explore cljs-explore-fn})
+    (start-services
+     {:name "cljs-file-services"
+      :permission nil
+      :symbols ['goldly.cljs.loader/load-file-or-res!
+                'goldly.app.run/cljs-explore]})))
+
+(defn start-goldly-services [config goldly-css-theme cljs-autoload-files]
+  (let [goldly-autoload (get-in config [:goldly :autoload-cljs-dir])
+        w-cljs (start-cljs-watch (get-in config [:goldly :watch-cljs-dir]))
+        w-conn (start-ws-conn-watch)
+        webly-config (webly-config config goldly-css-theme)]
     (add-cljs-file-services cljs-autoload-files goldly-autoload)
     (write-target "goldly-run-sci-cljs-autoload" cljs-autoload-files)
-
+    ;(warn "dynamic webly-config: " webly-config)
     {:cljs-watch w-cljs
      :ws-watch w-conn
      :ns-clj (get-in-config [:ns-clj])
-     :webly (get-in-config [:webly])}))
+     :webly {:webly webly-config}}))
 
+(defn expose-default-goldly-services []
+  (start-services
+   {:name "goldly-core-services"
+    :permission nil
+    :symbols [;'goldly.run.services/edn-load ; not used
+              ; devtools:
+              'goldly.run.services/goldly-version
+              'goldly.run.services/extension-list ; not used
+              'goldly.run.services/build-sci-config
+              ; cljs loader
+              'goldly.run.services/run-sci-cljs-autoload
+              ; lazy-extension css loader
+              ;goldly.run.services/get-extension-info  ; not used at all
+              ; runtime
+              'goldly.service.core/services-list
+              ;'goldly.run.services/get-extension-info ; seems to be not used at all
+              ]})
+
+  ; TODO: remove this - only here until devtools are refactored 
+  #_(goldly.service.core/add
+     {; edn-loader
+      :edn/load goldly.run.services/edn-load
+
+        ; used in devtools:
+        ;:goldly/version goldly.run.services/goldly-version
+        ;:goldly/extension-summary extension-summary
+        ;:goldly/extension-list extensions
+        ;:goldly/build-sci-config goldly.run.services/build-sci-config
+        ;:goldly/run-sci-cljs-autoload goldly.run.services/run-sci-cljs-autoload
+
+        ; this is used by the lazy-extension css loader
+        ; this seems to NOT BE USED AT ALL:
+        ;:goldly/get-extension-info goldly.run.services/get-extension-info
+
+        ;runtime
+    ;:goldly/services goldly.service.core/services-list
+      }))
 (defn start-goldly [config profile]
   ; start-goldly assumes config has already been loaded (done in services.edn)
   (let [{:keys [exts clj-require css-theme cljs-autoload-files]} (runtime-config (:goldly @config-atom))]
-    (when (server? profile)
-      (info "starting goldly server ..")
-      (info "goldly clj requires: " clj-require)
-      (require-namespaces clj-require)
-      (info "setting goldly-routes ..")
-      (set-webly-routes)
-      (set-webly-css-theme css-theme)
-      (write-extensions-runtime exts)
-      (start-goldly-services cljs-autoload-files))))
+    (info "starting goldly server ..")
+    (info "goldly clj requires: " clj-require)
+    (require-namespaces clj-require)
+    (write-extensions-runtime exts)
+    (expose-default-goldly-services)
+    (start-goldly-services config css-theme cljs-autoload-files)))
 
 (defn stop-goldly [{:keys [cljs-watch ws-watch]}]
   (info "stopping goldly..")

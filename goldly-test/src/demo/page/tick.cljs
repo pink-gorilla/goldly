@@ -1,11 +1,11 @@
-(ns page.tick
+(ns demo.page.tick
   (:require
    [clojure.string :as str]
    [tick.core :as t]
    [tick.goldly :refer [dt-format]]
    [goldly.page :as page]
    [layout]
-   [cljs-libs.helper :refer [#_add-page-test test-header]]))
+   [demo.cljs-libs.helper :refer [#_add-page-test test-header]]))
 
 (defn tick-body []
   [:div
