@@ -13,7 +13,8 @@
    [goldly.run.services]
    [goldly.service.core]
    [goldly.service.expose :refer [start-services]]
-   [goldly.cljs.loader]))
+   [goldly.cljs.loader]
+   [modular.permission.service :refer [add-permissioned-services]]))
 
 (defn write-extensions-runtime [ext-map]
   (->> ext-map
@@ -85,6 +86,9 @@
      :webly {:webly webly-config}}))
 
 (defn expose-default-goldly-services []
+  ; since goldly-service checks for each sub-serivce if it is permissioned,
+  ; this means that goldly/service will be available to all users.
+  (add-permissioned-services {:goldly/service nil})
   (start-services
    {:name "goldly-core-services"
     :permission nil
