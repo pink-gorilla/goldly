@@ -6,10 +6,7 @@
                           "ui-math"
                           "ui-input"}
           ; run
-          :autoload-cljs-dir [;"goldly/lib" ; remove once sci-cljs loader works in goldly 
-                              ;"goldly/devtools"
-                              ;"demo/cljs_libs"
-                              "demo/page"]
+          :autoload-cljs-dir ["demo/page"]
           :routes {:app {"" :user/main
                          "scicompile" :user/scicompile
                          "lazy" :user/lazy
@@ -30,7 +27,11 @@
                          }
                    :api {"rdocument/ns" :rdocument/ns
                          "rdocument/files" :rdocument/files
-                         ["rdocument/file/" :ns "/" :name] :rdocument/file}}}
+                         ["rdocument/file/" :ns "/" :name] :rdocument/file}}
+
+           :watch-cljs-dir "src/demo"
+
+          }
 
 
  :clj-services {:name "demo-services"

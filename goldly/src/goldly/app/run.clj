@@ -104,27 +104,7 @@
               ; runtime
               'goldly.service.core/services-list
               ;'goldly.run.services/get-extension-info ; seems to be not used at all
-              ]})
-
-  ; TODO: remove this - only here until devtools are refactored 
-  #_(goldly.service.core/add
-     {; edn-loader
-      :edn/load goldly.run.services/edn-load
-
-        ; used in devtools:
-        ;:goldly/version goldly.run.services/goldly-version
-        ;:goldly/extension-summary extension-summary
-        ;:goldly/extension-list extensions
-        ;:goldly/build-sci-config goldly.run.services/build-sci-config
-        ;:goldly/run-sci-cljs-autoload goldly.run.services/run-sci-cljs-autoload
-
-        ; this is used by the lazy-extension css loader
-        ; this seems to NOT BE USED AT ALL:
-        ;:goldly/get-extension-info goldly.run.services/get-extension-info
-
-        ;runtime
-    ;:goldly/services goldly.service.core/services-list
-      }))
+              ]}))
 (defn start-goldly [config profile]
   ; start-goldly assumes config has already been loaded (done in services.edn)
   (let [{:keys [exts clj-require css-theme cljs-autoload-files]} (runtime-config (:goldly @config-atom))]
