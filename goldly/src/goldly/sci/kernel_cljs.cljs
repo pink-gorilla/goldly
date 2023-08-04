@@ -19,6 +19,9 @@
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
 
+(defn ^:export require-async [& libspec] ; symbol
+  (apply scia/require ctx-repl libspec))
+
 ; from scittle
 ;(defn ^:export eval-string [s]
 ;  (try (sci/eval-string* @ctx s)
@@ -204,7 +207,8 @@
                                 ;'println (sci/copy-var clojure.core/println cljns)
                                ; '*print-fn* (sci/copy-var clojure.core/println cljns)
                                 }
-                 'goldly.sci {'compile-sci compile-code
+                 'goldly.sci {'require-async require-async
+                              'compile-sci compile-code
                               'compile-sci-async compile-code-async
                               'resolve-symbol-sci resolve-symbol}})
 
