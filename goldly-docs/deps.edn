@@ -4,15 +4,15 @@
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}
         ; GoldlyDOCS deps        
-        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.13"}
+        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
         org.pinkgorilla/ui-input {:mvn/version "0.0.22"}
-        org.pinkgorilla/ui-reacttable {:mvn/version "0.0.4"}
-        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.16"}
-        org.pinkgorilla/ui-vega  {:mvn/version "0.0.30"}
-        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.16"}
-        org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.8"}
-        org.pinkgorilla/ui-leaflet {:mvn/version "0.0.13"}
-        org.pinkgorilla/ui-echarts {:mvn/version "0.0.2"}
+        org.pinkgorilla/ui-reacttable {:mvn/version "0.0.5"}
+        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.17"}
+        org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.17"}
+        org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.9"}
+        org.pinkgorilla/ui-leaflet {:mvn/version "0.0.14"}
+        org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
@@ -65,7 +65,7 @@
                      io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
                      ;rewrite-clj/rewrite-clj {:mvn/version "1.0.699-alpha"}
                      babashka/fs {:mvn/version "0.0.5"}
-                     org.pinkgorilla/modular {:mvn/version "0.0.31"} ; modular.date
+                     org.pinkgorilla/modular {:mvn/version "0.0.36"} ; modular.date
                      }
               :ns-default build
               :jvm-opts ["-Dmaven.wagon.rto=90000"]}
