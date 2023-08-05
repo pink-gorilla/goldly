@@ -103,20 +103,28 @@
       (clojure.string/replace #"\." "/")
       (clojure.string/replace #"\-" "_")))
 
+(defn valid-code? [{:keys [code] :as result}]
+  (and code
+       (not (clojure.string/blank? code))))
+
 (defn on-cljs-received [ctx libname ns opts resolve reject [event-type {:keys [result] :as data}]]
   (info "on-cljs-received: " event-type "data: " data)
-  (when-let [code (:code result)]
-    (when-not (clojure.string/blank? code)
-      (let [eval-p (scia/eval-string+ ctx code)]
-        (.then eval-p (fn [res]
-                        (let [{:keys [val ns]} res]
-                          (info "sci-cljs loader require - compile result: " res)
-                          (when-let [as (:as opts)]
+  (if (valid-code? result)
+    (let [code (:code result)
+          eval-p (scia/eval-string+ ctx code)]
+      (.then eval-p (fn [res]
+                      (let [{:keys [val ns]} res]
+                        (info "sci-cljs loader require - compile result: " res)
+                        (when-let [as (:as opts)]
                              ;; import class in current namespace with reference to globally
                              ;; registed class
-                            (warn "registering as: " as "in ns: " ns " to:" (symbol libname))
-                            (sci/add-import! ctx ns (symbol libname) (:as opts)))
-                          (resolve {:handled false}))))))))
+                          (warn "registering as: " as "in ns: " ns " to:" (symbol libname))
+                          (sci/add-import! ctx ns (symbol libname) (:as opts)))
+                        (resolve {:handled false}))))
+      (.catch eval-p (fn [e]
+                       (error "compile error for: " libname " error: " e)
+                       (reject "compile error for: " libname))))
+    (reject "no sci-code for: " libname)))
 
 (defn load-module-sci [{:keys [ctx libname ns opts property-path] :as d}]
   ; libname: bongo.trott ; the ns that gets compiled
@@ -155,11 +163,13 @@
 (def output (atom ""))
 
 (defn my-print-fn [& args]
-  ;(.apply js/console.log js/console (into-array args))
+  (.apply js/console.log js/console (into-array args))
   ; https://github.com/clojure/clojurescript/commit/da2fa520ae5cd55ade7e263ec3b9a2149eb12f82
-  (swap! output str args)
-  ;(apply *print-fn* args)
-  )
+  (let [args (apply str args)
+        args (str args "\n")]
+    (swap! output str args)
+    ;(apply *print-fn* args)
+    ))
 
 ;(sci/alter-var-root sci/print-fn (constantly *print-fn*))
 (sci/alter-var-root sci/print-fn (constantly my-print-fn))
