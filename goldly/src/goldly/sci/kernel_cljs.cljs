@@ -47,9 +47,11 @@
   ; (str libname)
   ;(debug "available lazy namespaces:" (pr-str sci-lazy-ns-dict))
   (debug "looking up module for sci-ns:" libname)
-  (when-let [module-name (get sci-lazy-ns-dict libname)]
-    (info "module for " libname ": " module-name)
-    (get lazy-modules module-name)))
+  (if-let [module-name (get sci-lazy-ns-dict libname)]
+    (do (info "module for " libname ": " module-name)
+        (get lazy-modules module-name))
+    (do (info "no lazy-module found for: " libname)
+        nil)))
 
 (defn add-sci-ns [ctx libname ns opts sci-ns sci-defs ns-vars]
   (info "creating sci ns: " sci-ns "ns-vars:" ns-vars "sci-defs" sci-defs)
