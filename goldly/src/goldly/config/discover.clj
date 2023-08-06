@@ -46,12 +46,12 @@
                               (assoc :url url))
                         url))
                  (into [])))]
-      deps))
+    deps))
 
 (comment
 
   (get-deps-from-classpath)
-  
+
   (require '[modular.resource.explore :as explore])
   (->> (explore/describe-files "")
        (clojure.pprint/print-table [:scheme :name]))
