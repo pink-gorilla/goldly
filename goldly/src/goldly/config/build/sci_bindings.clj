@@ -79,3 +79,24 @@
 
  ; 
   )
+
+(comment
+
+  (defn get-deps-from-classpath []
+    (let [deps
+          (-> (Thread/currentThread)
+              (.getContextClassLoader)
+              (.getResources "goldly_bindings_generated.cljs")
+              (enumeration-seq)
+              (->> (map (fn [url]
+                          #_(-> (slurp url)
+                                (edn/read-string)
+                                (select-keys [:npm-deps])
+                                (assoc :url url))
+                          url))
+                   (into [])))]
+      deps))
+
+  (get-deps-from-classpath)
+;
+  )

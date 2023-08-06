@@ -35,8 +35,15 @@
 
 (comment
 
+  (require '[modular.resource.explore :as explore])
+  (->> (explore/describe-files "")
+       (clojure.pprint/print-table [:scheme :name]))
+
   (rs/resources "demo.notebook.goldly")
-  (rs/resources "")
+
+  (-> (rs/resources "")
+
+      println)
 
   (-> (rs/resources "demo/notebook/apple.clj")
       first
@@ -51,8 +58,8 @@
   (-> (rs/resource-dir "demo/notebook")
       ;first
       last
-      rs/name
-      ;slurp
+      ;rs/name
+                                        ;slurp
       )
 
   ;(recursive-resource-paths "ext")

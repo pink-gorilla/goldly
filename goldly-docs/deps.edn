@@ -5,14 +5,15 @@
         org.pinkgorilla/devtools {:local/root "../devtools" :deps/manifest :deps}
         ; GoldlyDOCS deps        
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-input {:mvn/version "0.0.22"}
-        org.pinkgorilla/ui-reacttable {:mvn/version "0.0.5"}
+        ;org.pinkgorilla/ui-input {:mvn/version "0.0.23"} ; already in devtools (via reval)
+        org.pinkgorilla/ui-reacttable {:mvn/version "0.0.6"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.17"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.17"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.14"}
         org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}
+
         ;org.pinkgorilla/ui-math {:mvn/version "0.0.7"}
         ; non lazy deps
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
