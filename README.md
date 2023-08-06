@@ -44,8 +44,8 @@ namespace of the ui-renderer to goldly/extensions. This allows goldly to
 add the ui extensions to the javascript bundle.
 
 Have a look at [ui-binary-clock](https://github.com/pink-gorilla/ui-binary-clock) to
-see how you can build a custom javascript js bundle with goldly. ui-binary-clock compiles
-clojurescript to javascript.
+see how you can build a custom javascript js bundle with goldly. 
+
 
 ## for goldly developers 
 
