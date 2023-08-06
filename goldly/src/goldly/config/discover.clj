@@ -33,8 +33,25 @@
           (map (fn [ext]
                  [(:name ext) ext]) ext-list))))
 
+(defn get-deps-from-classpath []
+  (let [deps
+        (-> (Thread/currentThread)
+            (.getContextClassLoader)
+            (.getResources "goldly-extension.edn")
+            (enumeration-seq)
+            (->> (map (fn [url]
+                        #_(-> (slurp url)
+                              (edn/read-string)
+                              (select-keys [:npm-deps])
+                              (assoc :url url))
+                        url))
+                 (into [])))]
+      deps))
+
 (comment
 
+  (get-deps-from-classpath)
+  
   (require '[modular.resource.explore :as explore])
   (->> (explore/describe-files "")
        (clojure.pprint/print-table [:scheme :name]))
