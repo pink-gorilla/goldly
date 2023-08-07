@@ -14,7 +14,8 @@
   (case ext
     "cljs" (= fmt :cljs)
     "clj" (= fmt :clj)
-    "cljc" true))
+    "cljc" true
+    false))
 
 (defn get-file-list [fmt res-path]
   (->> (resources/describe-files res-path)
