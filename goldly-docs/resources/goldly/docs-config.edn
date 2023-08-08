@@ -26,6 +26,8 @@
                          ["rdocument/file/" :ns "/" :name] :rdocument/file ; http://localhost:8000/api/viewer/file/demo.playground.cljplot/vega-spec.edn
                          }}}
 
+ :scratchpad {:tap true}
+
  :reval {:rdocument  {:storage-root "rdocument/"
                       :url-root "/api/rdocument/file/"}
          :collections {:user [:clj "user/notebook/"]
