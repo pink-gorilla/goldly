@@ -7,9 +7,7 @@
    [webly.build.profile :refer [setup-profile server?]]
    [webly.build.core :as webly]
    [goldly.config.build :refer [build-config]]
-   [goldly.sci.bindings :refer [write-sci-binding-cljs-file]]
-   ;[goldly.static :refer [export-sci-cljs]]
-   ))
+   [goldly.sci.bindings :refer [write-sci-binding-cljs-file]]))
 
 ;; for lazy extension css loading (on lazy load)
 
@@ -46,6 +44,7 @@
 (defn set-webly-config [cljs-config]
   (let [goldly-main (-> (:goldly-main cljs-config)
                         (conj 'goldly.run.app)
+                        (conj 'goldly.static.app)
                         vec)
         modules (dissoc cljs-config :goldly-main)]
     (swap! config-atom assoc-in [:webly :ns-cljs] goldly-main)
@@ -165,7 +164,8 @@
   (->> (build-config {:lazy true})
        :sci
        ;keys
-       :ns-bindings
+                                        ;:ns-bindings
+
        keys
        ;:exts
        ;(ext-fn-lookup)

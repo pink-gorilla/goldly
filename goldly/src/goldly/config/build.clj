@@ -16,15 +16,15 @@
 
   (let [goldly-config {:lazy true}]
     (->> (discover goldly-config)
-      ;(create-cljs-namespaces-config)
-         (sci-bindings-config goldly-config)
-         :ns-bindings))
-
+         (create-cljs-namespaces-config)
+         ;(sci-bindings-config goldly-config)
+                                        ;:ns-bindings
+         ))
   (-> (build-config {:lazy true})
-      ;keys
-      ;:cljs
-      ;keys
-     ; :cljs-namespaces
+;     keys
+      :cljs
+      keys
+      ;:cljs-namespace
       ;:sci
       ;keys
      ; :cljs-require

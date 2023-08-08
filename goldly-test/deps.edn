@@ -56,5 +56,18 @@
   :npm-install
   {:exec-args {:profile "npm-install"}}
 
+  :release-adv
+  {:exec-args {:profile "release-adv"}}
+  
+  :goldly-static
+  {:extra-deps {}
+   :exec-fn goldly.app.static/goldly-static
+   :exec-args {:config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]
+               :page-symbol "demo.page.main/main-page"
+               }}
+
+
+  
+
 ;           
   }}
