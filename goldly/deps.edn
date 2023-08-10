@@ -11,7 +11,7 @@
   ; https://github.com/babashka/sci.configs/blob/main/deps.edn
   funcool/promesa {:mvn/version "9.0.494"}
   org.babashka/sci {:mvn/version "0.8.40"}
-  org.pinkgorilla/webly {:mvn/version "0.4.613"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.4.614"} ; web app build tool
   org.pinkgorilla/modular {:mvn/version "0.0.36"}
   org.pinkgorilla/goldly-service {:local/root "../service" :deps/manifest :deps}
   

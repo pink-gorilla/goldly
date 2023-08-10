@@ -14,8 +14,11 @@
    [goldly.sci.load-shadow :refer [load-ext-shadow]]
    [goldly.sci.clojure-core :refer [cljns] :as clojure-core]
    ; loading of cljs source-code
-   [goldly.service.core :refer [run-cb]]
-   [clojure.string]))
+   ;[goldly.service.core :refer [run-cb]]
+   [clojure.string]
+   [cljs.core.async :refer [<! >! chan close!] :refer-macros [go]]
+   [cljs-http.client :as http]
+   [cemerick.url :as curl]))
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
 
@@ -128,20 +131,43 @@
                        (reject "compile error for: " libname))))
     (reject "no sci-code for: " libname)))
 
+#_(defn load-module-sci [{:keys [ctx libname ns opts property-path] :as d}]
+  ; libname: bongo.trott ; the ns that gets compiled
+  ; ns:  demo.notebook.applied-science-jsinterop ; the namespace that is using it
+  ; opts: {:as bongo, :refer [saying]}
+  ; ctx is the sci-context
+    (info "load-sci-src" "libname:" libname "ns: " ns "opts:" opts)
+    (let [filename (-> libname str ns->filename (str ".cljs"))]
+      (info "loading filename: " filename)
+      (js/Promise.
+       (fn [resolve reject]
+         (run-cb {:fun 'goldly.cljs.loader/load-file-or-res!
+                  :args [filename]
+                  :cb (partial on-cljs-received ctx libname ns opts resolve reject)
+                  :timeout 8000})))))
+
+(defn application-url
+  "gets the current url, as a map"
+  []
+  (curl/url (-> js/window .-location .-href)))
+
 (defn load-module-sci [{:keys [ctx libname ns opts property-path] :as d}]
   ; libname: bongo.trott ; the ns that gets compiled
   ; ns:  demo.notebook.applied-science-jsinterop ; the namespace that is using it
   ; opts: {:as bongo, :refer [saying]}
   ; ctx is the sci-context
   (info "load-sci-src" "libname:" libname "ns: " ns "opts:" opts)
-  (let [filename (-> libname str ns->filename (str ".cljs"))]
+  (let [filename (-> libname str ns->filename (str ".cljs"))
+        url (str "/code/" filename)]
     (info "loading filename: " filename)
     (js/Promise.
      (fn [resolve reject]
-       (run-cb {:fun 'goldly.cljs.loader/load-file-or-res!
-                :args [filename]
-                :cb (partial on-cljs-received ctx libname ns opts resolve reject)
-                :timeout 8000})))))
+       (go (let [opts (or opts {:with-credentials? false})
+                 response (<! (http/get url opts))
+                 status (:status response)
+                 body (:body response)]
+             (info "load-module-sci-cljs url: " url "status: " status "body: " body)
+             (on-cljs-received ctx libname ns opts resolve reject [:http-load {:result {:code body}}])))))))
 
 (defn async-load-fn
   [{:keys [libname opts ctx ns] :as d}]

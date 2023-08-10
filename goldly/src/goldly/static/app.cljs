@@ -17,10 +17,11 @@
   (let [page-symbol (symbol symbol-page-as-string)
         libspec (-> page-symbol namespace symbol)
         require-p (require-async libspec)]
-    (.then require-p [res]
-           (let [page-fn (resolve-symbol page-symbol)]
-             (if page-fn
-               (mount-app page-fn)
-               (println "could not resolve page: " page-symbol))))
-    (.catch require-p [err]
-            (println "could not sci-require ns: " libspec))))
+    (.then require-p (fn [res]
+                       (let [page-fn (resolve-symbol page-symbol)]
+                         (if page-fn
+                           (mount-app page-fn)
+                           (println "could not resolve page: " page-symbol)))))
+    (.catch require-p (fn [err]
+                        (println "could not sci-require ns: " libspec)))))
+

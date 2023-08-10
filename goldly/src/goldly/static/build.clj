@@ -23,9 +23,9 @@
 
 (defn export-sci-cljs [sci-cljs-dirs]
   (info "exporting sci-cljs in dirs: " sci-cljs-dirs)
-  (ensure-static-directory "sci-cljs")
+  (ensure-static-directory "code")
   (doall
-   (map (partial export-path "sci-cljs")
+   (map (partial export-path "code")
         sci-cljs-dirs)))
 
 (defn app-page-static [init-ns]
@@ -54,7 +54,7 @@
     (info "writing static page: " filename)
     (spit filename html)))
 
-(defn goldly-build-static [goldly-config page-symbol]
+(defn goldly-build-static [goldly-config page-symbol sci-cljs-dirs]
   (let [rconfig (runtime-config goldly-config)
         {:keys [cljs-autoload-dirs]} rconfig]
     (ensure-directory "target")
@@ -68,7 +68,9 @@
              (str static-root "r")
              {:replace-existing true})
     ; export sci-cljs files
-    (export-sci-cljs cljs-autoload-dirs)
+    (export-sci-cljs (concat cljs-autoload-dirs ; extension autoload
+                             (or (:autoload-cljs-dir goldly-config) [])
+                             (or sci-cljs-dirs []))) ; goldly app autoload
     ; generate static page
     ; generate startup script
     (create-static-html page-symbol)))
