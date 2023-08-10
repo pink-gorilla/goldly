@@ -1,6 +1,5 @@
-(ns goldly.sci.load-shadow
+(ns goldly.sci.loader.load-shadow
   (:require
-   [cljs.core.async :refer [>! <! chan close! put! take!] :refer-macros [go]]
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
    [shadow.lazy :as lazy]))
 

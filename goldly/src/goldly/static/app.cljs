@@ -2,6 +2,7 @@
   (:require
    [reagent.dom]
    [taoensso.timbre :refer-macros [info warn]]
+   [goldly.sci.loader.cljs-source-http :refer [set-github-load-mode]]
    [goldly.sci.kernel-cljs :refer [require-async resolve-symbol]]))
 
 ; required in glodly.app.build
@@ -13,6 +14,7 @@
 
 (defn ^:export start [symbol-page-as-string]
   (enable-console-print!)
+  (set-github-load-mode)
   (println "starting goldly static app page symbol:" symbol-page-as-string)
   (let [page-symbol (symbol symbol-page-as-string)
         libspec (-> page-symbol namespace symbol)

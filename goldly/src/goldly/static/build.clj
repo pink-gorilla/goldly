@@ -50,7 +50,7 @@
 
 (defn create-static-html [init-ns]
   (let [html (app-page-static init-ns)
-        filename (str static-root "index.html")]
+        filename (str static-root "index.htm")]
     (info "writing static page: " filename)
     (spit filename html)))
 

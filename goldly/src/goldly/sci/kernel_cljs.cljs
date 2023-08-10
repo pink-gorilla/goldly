@@ -11,13 +11,12 @@
    ;[goldly.sci.bindings-static :refer [ns-static]]
    [goldly-bindings-generated :refer [bindings-generated ns-generated
                                       sci-lazy-ns-dict lazy-modules]]
-   [goldly.sci.load-shadow :refer [load-ext-shadow]]
+
    [goldly.sci.clojure-core :refer [cljns] :as clojure-core]
    ; loading of cljs source-code
-   ;[goldly.service.core :refer [run-cb]]
-   [clojure.string]
+
    [cljs.core.async :refer [<! >! chan close!] :refer-macros [go]]
-   [cljs-http.client :as http]
+   [goldly.sci.loader.async-load :refer [async-load-fn]]
    [cemerick.url :as curl]))
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
@@ -45,142 +44,6 @@
 
 (defn resolve-symbol [sym]
   (sci-resolve/resolve-symbol ctx-repl sym))
-
-(defn sci-ns-lookup [libname]
-  ; (str libname)
-  ;(debug "available lazy namespaces:" (pr-str sci-lazy-ns-dict))
-  (debug "looking up module for sci-ns:" libname)
-  (if-let [module-name (get sci-lazy-ns-dict libname)]
-    (do (info "module for " libname ": " module-name)
-        (get lazy-modules module-name))
-    (do (info "no lazy-module found for: " libname)
-        nil)))
-
-(defn add-sci-ns [ctx libname ns opts sci-ns sci-defs ns-vars]
-  (info "creating sci ns: " sci-ns "ns-vars:" ns-vars "sci-defs" sci-defs)
-  (let [mlns (sci/create-ns sci-ns)
-        sci-ns-def (->> (map (fn [sci-def ns-var]
-                               ;(info "ci-def:" sci-def "ns-var:" ns-var)
-                               ;(when-let [joke (:joke mod)]
-                               ;  (info "joke: " (joke)))
-                               (when (= sci-def :add)
-                                 (info "TEST: adding: " (ns-var 7 7)))
-
-                               [sci-def (sci/new-var sci-def ns-var {:ns mlns})])
-                             sci-defs ns-vars)
-                        (into {}))]
-    (info "sci/add-namespace! sci-ns: " libname " sci ns :" sci-ns "def: " sci-ns-def)
-    (sci/add-namespace! ctx libname sci-ns-def)))
-
-(defn load-module-ns [ctx libname ns opts sci-ns sci-def loadable]
-  (-> (load-ext-shadow loadable)
-      (.then
-       (fn [ns-vars]
-         (info "received ns-vars for sci-ns: " sci-ns "libname: " libname "ns: " ns)
-         (add-sci-ns ctx libname ns opts sci-ns sci-def ns-vars)))))
-
-(defn load-module [ctx libname ns opts sci-mod]
-  (info "load-module: " libname)
-  (let [promises (map (fn [[sci-ns {:keys [sci-def loadable]}]]
-                        (load-module-ns ctx libname ns opts sci-ns sci-def loadable))
-                      sci-mod)
-        p-all (promesa.core/all promises) ; Given an array of promises, return a promise that is fulfilled when all the items in the array are fulfilled.
-        ]
-    (.then p-all
-           (fn [_d]
-             (info "load-module: " libname " - finished loading all namespaces")
-             ;(info "all data: " d)
-             ;; empty map return value, SCI will still process `:as` and `:refer`
-             {}))))
-
-(defn load-module-test [ctx libname ns opts]
-  (-> (js/Promise.resolve #js {:libfn (fn [] "result!")})
-      (.then (fn [mod]
-               (info "demo lib : " libname "did load: " mod "mod-clj:" (js->clj mod))
-               (sci/add-class! ctx (:as opts) mod)
-               (sci/add-import! ctx ns (:as opts) (:as opts))
-               {:handled true}))))
-
-; discover clj/cljs files in resources (can be jar or file)
-
-(defn ns->filename [ns]
-  (-> ns
-      (clojure.string/replace #"\." "/")
-      (clojure.string/replace #"\-" "_")))
-
-(defn valid-code? [{:keys [code] :as result}]
-  (and code
-       (not (clojure.string/blank? code))))
-
-(defn on-cljs-received [ctx libname ns opts resolve reject [event-type {:keys [result] :as data}]]
-  (info "on-cljs-received: " event-type "data: " data)
-  (if (valid-code? result)
-    (let [code (:code result)
-          eval-p (scia/eval-string+ ctx code)]
-      (.then eval-p (fn [res]
-                      (let [{:keys [val ns]} res]
-                        (info "sci-cljs loader require - compile result: " res)
-                        (when-let [as (:as opts)]
-                             ;; import class in current namespace with reference to globally
-                             ;; registed class
-                          (warn "registering as: " as "in ns: " ns " to:" (symbol libname))
-                          (sci/add-import! ctx ns (symbol libname) (:as opts)))
-                        (resolve {:handled false}))))
-      (.catch eval-p (fn [e]
-                       (error "compile error for: " libname " error: " e)
-                       (reject "compile error for: " libname))))
-    (reject "no sci-code for: " libname)))
-
-#_(defn load-module-sci [{:keys [ctx libname ns opts property-path] :as d}]
-  ; libname: bongo.trott ; the ns that gets compiled
-  ; ns:  demo.notebook.applied-science-jsinterop ; the namespace that is using it
-  ; opts: {:as bongo, :refer [saying]}
-  ; ctx is the sci-context
-    (info "load-sci-src" "libname:" libname "ns: " ns "opts:" opts)
-    (let [filename (-> libname str ns->filename (str ".cljs"))]
-      (info "loading filename: " filename)
-      (js/Promise.
-       (fn [resolve reject]
-         (run-cb {:fun 'goldly.cljs.loader/load-file-or-res!
-                  :args [filename]
-                  :cb (partial on-cljs-received ctx libname ns opts resolve reject)
-                  :timeout 8000})))))
-
-(defn application-url
-  "gets the current url, as a map"
-  []
-  (curl/url (-> js/window .-location .-href)))
-
-(defn load-module-sci [{:keys [ctx libname ns opts property-path] :as d}]
-  ; libname: bongo.trott ; the ns that gets compiled
-  ; ns:  demo.notebook.applied-science-jsinterop ; the namespace that is using it
-  ; opts: {:as bongo, :refer [saying]}
-  ; ctx is the sci-context
-  (info "load-sci-src" "libname:" libname "ns: " ns "opts:" opts)
-  (let [filename (-> libname str ns->filename (str ".cljs"))
-        url (str "/code/" filename)]
-    (info "loading filename: " filename)
-    (js/Promise.
-     (fn [resolve reject]
-       (go (let [opts (or opts {:with-credentials? false})
-                 response (<! (http/get url opts))
-                 status (:status response)
-                 body (:body response)]
-             (info "load-module-sci-cljs url: " url "status: " status "body: " body)
-             (on-cljs-received ctx libname ns opts resolve reject [:http-load {:result {:code body}}])))))))
-
-(defn async-load-fn
-  [{:keys [libname opts ctx ns] :as d}]
-  (let [sci-mod (sci-ns-lookup libname)]
-    (cond
-      (= libname "some_js_lib")
-      (load-module-test ctx libname ns opts)
-
-      sci-mod
-      (load-module ctx libname opts ns sci-mod)
-
-      :else
-      (load-module-sci d))))
 
 (def !last-ns (atom @sci/ns))
 
@@ -223,7 +86,7 @@
                                        :ns (str ns)}]
                           (reset! !last-ns ns)
                           (reset! output "")
-                          (info "sci-cljs response: " result)
+                          (debug "sci-cljs compile result: " result)
                           result)))))
     (catch :default e
       (timbre/error "sci compile-code-async --]" code "[-- ex: " e)
