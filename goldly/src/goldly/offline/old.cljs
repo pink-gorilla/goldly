@@ -1,4 +1,4 @@
-(ns goldly.static
+(ns goldly.offline.old
   (:require
    [taoensso.timbre :refer-macros [debug info infof error]]
    [ajax.core :refer [GET]]

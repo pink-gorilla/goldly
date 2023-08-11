@@ -5,14 +5,18 @@
    [cljs.core.async :refer [>! <! chan close! put! timeout] :refer-macros [go]]
    [webly.build.prefs :refer-macros [pref]]
    [webly.build.lazy :as webly-lazy]
-   [goldly.static :refer [static?]]
+   [goldly.offline.old :refer [static?]]
    [goldly.sci.kernel-cljs]
    [goldly.run.lazy-ext-css :as lazy-ext-css]
    [goldly.cljs.loader :refer [load-cljs]]
-   [goldly.service.core]))
+   [goldly.service.core]
+   ; [goldly.offline.app] ; testing only!!!
+   [shadow.loader :as l]))
 
 (defn goldly-start [static?]
   (info "goldly starting .. static?: " static?)
+   ;(goldly.offline.app/patch-path) ; testing only
+  (l/init "") ; prefix to the path loader
   (reset! webly-lazy/on-load lazy-ext-css/goldly-on-load)
   (rf/dispatch [:ga/event {:category "goldly" :action "started" :label 77 :value 13}])
   (go (<! (load-cljs static?)) ; await for cljs auto-load to be finised before showing ui.

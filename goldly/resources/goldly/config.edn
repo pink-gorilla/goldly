@@ -1,7 +1,9 @@
 {:ns-clj []
  :webly {:title "Goldly"
          :ns-cljs []
-         :start-user-app [:goldly/init]}
+         :start-user-app [:goldly/init]
+         :module-loader-init false
+         }
  :prefix "/r/"
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
  :timbre/clj {:min-level  [[#{"org.eclipse.jetty.*"

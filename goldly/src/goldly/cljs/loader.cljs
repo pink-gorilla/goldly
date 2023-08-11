@@ -7,7 +7,7 @@
    [goldly.sci.kernel-cljs :refer [compile-code compile-code-async]]
    [goldly.sci.error :refer [exception->error show-sci-error]]
    [goldly.cljs.reload :refer [reload-cljs]]
-   [goldly.static :refer [cljs-explore get-code]]))
+   [goldly.offline.old :refer [cljs-explore get-code]]))
 
 ;; compile
 

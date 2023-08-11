@@ -1,8 +1,8 @@
-(ns goldly.app.static
+(ns goldly.app.offline
   (:require
    [taoensso.timbre :refer [debug info infof warn error]]
    [modular.config :refer [get-in-config load-config!]]
-   [goldly.static.build :refer [goldly-build-static]]))
+   [goldly.offline.build :refer [goldly-build-static]]))
 
 (defn goldly-static [{:keys [config page-symbol sci-cljs-dirs]}]
   (require '[modular.config])

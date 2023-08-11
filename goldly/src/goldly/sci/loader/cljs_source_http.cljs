@@ -3,21 +3,15 @@
    [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
    [cljs.core.async :refer [<! >! chan close!] :refer-macros [go]]
    [cljs-http.client :as http]
-   [clojure.string :refer [last-index-of]]
-   [cemerick.url :as curl]
-   [goldly.sci.loader.cljs-source :refer [ns->filename on-cljs-received]]))
+   [goldly.sci.loader.cljs-source :refer [ns->filename on-cljs-received]]
+   [goldly.sci.loader.static :refer [dynamic-base]]))
 
 (defn filename-to-url-goldly [filename]
   (str "/code/" filename))
 
-(defn application-url []
-  (-> js/window .-location .-href))
-
 (defn filename-to-url-github [filename]
-  (let [url (application-url)
-        url-base (subs url (last-index-of url "/"))]
-    (info "github url-base: " url-base)
-    (str url-base filename)))
+  (let [base (dynamic-base)]
+    (str base "/code/" filename)))
 
 (def filename-to-url
   (atom filename-to-url-goldly))

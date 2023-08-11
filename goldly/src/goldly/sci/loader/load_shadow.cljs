@@ -12,10 +12,15 @@
 ; (def x (lazy/loadable snippets.snip/add))
 
 (defn load-ext-shadow [loadable]
-  (js/Promise.
-   (fn [resolve reject]
-     (let [handle-load (fn [mod]
-                         (info "shadow module-ns did load: " mod)
-                         ;(let [mod-js (clj->js mod)])
-                         (resolve mod))]
-       (lazy/load loadable handle-load)))))
+  (let [all-mods (.-modules loadable)]
+    (info "shadow loadable mods: " all-mods) ; ["cljs-pprint-frisk"]
+    (js/Promise.
+     (fn [resolve reject]
+       (let [on-success (fn [mod]
+                          (info "shadow module-ns did load: " mod)
+                           ;(let [mod-js (clj->js mod)])
+                          (resolve mod))
+             on-err (fn [err]
+                      (error "shadow-module could not be loaded: " err)
+                      (reject err))]
+         (lazy/load loadable on-success on-err))))))

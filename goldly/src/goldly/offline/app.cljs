@@ -1,20 +1,30 @@
-(ns goldly.static.app
+(ns goldly.offline.app
   (:require
    [reagent.dom]
    [taoensso.timbre :refer-macros [info warn]]
-   [goldly.sci.loader.cljs-source-http :refer [set-github-load-mode]]
+   [shadow.loader :as l]
+   [goldly.sci.loader.static :refer [dynamic-base]]
+   [goldly.sci.loader.cljs-source-http :as cljs-source]
+   [goldly.sci.loader.shadow-module :as shadow-module]
    [goldly.sci.kernel-cljs :refer [require-async resolve-symbol]]))
 
-; required in glodly.app.build
+; required in goldly.app.build
 
 (defn mount-app [page-fn]
   (reagent.dom/render
    [page-fn]
    (.getElementById js/document "app")))
 
+(defn patch-path []
+  (cljs-source/set-github-load-mode)
+  (l/init (dynamic-base)) ; prefix to the path loader
+  ;(shadow-module/set-github-load-mode)
+  )
+
 (defn ^:export start [symbol-page-as-string]
   (enable-console-print!)
-  (set-github-load-mode)
+
+  (patch-path)
   (println "starting goldly static app page symbol:" symbol-page-as-string)
   (let [page-symbol (symbol symbol-page-as-string)
         libspec (-> page-symbol namespace symbol)

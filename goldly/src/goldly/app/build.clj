@@ -44,7 +44,7 @@
 (defn set-webly-config [cljs-config]
   (let [goldly-main (-> (:goldly-main cljs-config)
                         (conj 'goldly.run.app)
-                        (conj 'goldly.static.app)
+                        (conj 'goldly.offline.app)
                         vec)
         modules (dissoc cljs-config :goldly-main)]
     (swap! config-atom assoc-in [:webly :ns-cljs] goldly-main)

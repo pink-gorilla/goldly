@@ -5,7 +5,7 @@
    [taoensso.timbre :as timbre :refer-macros [trace debug debugf info infof warn error errorf]]
    [clojure.set]
    [re-frame.core :as rf]
-   [goldly.static :refer [static? get-ext-static]]))
+   [goldly.offline.old :refer [static? get-ext-static]]))
 
 (def mapping-table (compiled-ext-fns))
 

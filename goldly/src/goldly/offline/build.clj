@@ -1,4 +1,4 @@
-(ns goldly.static.build
+(ns goldly.offline.build
   (:require
    [taoensso.timbre :refer [debug info infof warn error]]
    [clojure.java.io :as io]
@@ -45,7 +45,7 @@
    [:body
     [:script {:src (str "r/" "webly.js")
               :type "text/javascript"
-              :onload (str "goldly.static$.app.start ('" init-ns "');")}]
+              :onload (str "goldly.offline.app.start ('" init-ns "');")}]
     [:div#app]]))
 
 (defn create-static-html [init-ns]
