@@ -28,7 +28,7 @@
    (map (partial export-path "code")
         sci-cljs-dirs)))
 
-(defn app-page-static [init-ns]
+(defn app-page-static [page init]
   (page/html5
    {:mode :html}
    [:head
@@ -45,16 +45,16 @@
    [:body
     [:script {:src (str "r/" "webly.js")
               :type "text/javascript"
-              :onload (str "goldly.offline.app.start ('" init-ns "');")}]
+              :onload (str "goldly.offline.app.start ('" page "' , '" init "');")}]
     [:div#app]]))
 
-(defn create-static-html [init-ns]
-  (let [html (app-page-static init-ns)
+(defn create-static-html [init page]
+  (let [html (app-page-static page init)
         filename (str static-root "index.htm")]
     (info "writing static page: " filename)
     (spit filename html)))
 
-(defn goldly-build-static [goldly-config page-symbol sci-cljs-dirs]
+(defn goldly-build-static [goldly-config page-symbol init-symbol sci-cljs-dirs]
   (let [rconfig (runtime-config goldly-config)
         {:keys [cljs-autoload-dirs]} rconfig]
     (ensure-directory "target")
@@ -73,7 +73,7 @@
                              (or sci-cljs-dirs []))) ; goldly app autoload
     ; generate static page
     ; generate startup script
-    (create-static-html page-symbol)))
+    (create-static-html page-symbol init-symbol)))
 
 (comment
   (require '[modular.config :refer [get-in-config]])

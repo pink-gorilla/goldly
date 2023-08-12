@@ -21,18 +21,17 @@
 (defn compile-cljs-p [{:keys [filename code]}]
   (info "compiling-async: " filename)
   (let [er-p (compile-code-async code)]
-    (-> er-p
-        (.catch (fn [e]
-                  (error "eval failed: " e)
-                  (when-let [sci-err (exception->error e)]
-                    (show-sci-error filename sci-err)
-                    sci-err)))
-        (.then (fn [er]
-                 (infof "successfully compiled %s " filename)
-                 (when [er]
-                   (info "cljs eval result:" er)
+    (.catch er-p (fn [e]
+                   (error "compile of " filename " failed: " e)
+                   (when-let [sci-err (exception->error e)]
+                     (show-sci-error filename sci-err)
+                     sci-err)))
+    (.then er-p (fn [er]
+                  (infof "successfully compiled %s " filename)
+                  (when [er]
+                    (info "cljs eval result:" er)
                    ;(reset! cur-ns (:ns er))
-                   er))))))
+                    er)))))
 
 (defn compile-cljs [opts]
   (let [p (compile-cljs-p opts)

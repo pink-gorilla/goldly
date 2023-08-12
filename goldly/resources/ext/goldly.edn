@@ -2,7 +2,6 @@
  ; build
  :lazy false
  :cljs-namespace [; goldly
-                  goldly.page.page
                   goldly.page.no-page
                   goldly.sci.error
                   goldly.sci.eventhandler ; move to ui-repl or ui-gorilla
@@ -16,7 +15,5 @@
                              'exception->error goldly.sci.error/exception->error} ; depreciated
                     'goldly.sci.error {'error-view goldly.sci.error/error-view
                                        'exception->error goldly.sci.error/exception->error}
-                    'goldly.page {'available goldly.page.page/available-pages
-                                  'show goldly.page.page/show-page
-                                  'add goldly.page.page/add-page}}}
+                    }}
 

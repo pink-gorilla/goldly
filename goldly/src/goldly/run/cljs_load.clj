@@ -33,6 +33,7 @@
   (info "explore sci-autoload-cljs dir: " dir)
   (->> (resources/describe-files dir)
        (map #(:name-full %)) ; str dir "/" %
+       (filter #(str/ends-with? % ".cljs"))
        vec))
 
 ;; CONFIG
