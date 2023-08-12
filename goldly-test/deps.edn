@@ -63,8 +63,13 @@
   {:extra-deps {}
    :exec-fn goldly.app.offline/goldly-static
    :exec-args {:config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]
-               :page-symbol "demo.page.main/main-page"
-               :sci-cljs-dirs ["demo/cljs_libs"]
+               :page-symbol "demo.page.static/router-page"
+                            ;"demo.page.main/main-page"
+               :sci-cljs-dirs ["demo/cljs_libs"
+                               "demo/page"
+                               "reval/goldly/page"
+                               "reval/goldly"
+                               ]
                }}
 
 
