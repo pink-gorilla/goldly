@@ -1,7 +1,7 @@
 (ns goldly.offline.app
   (:require
    [reagent.dom]
-   [taoensso.timbre :refer-macros [info warn]]
+   [taoensso.timbre :refer-macros [info warn error]]
    [shadow.loader :as l]
    [goldly.sci.loader.static :refer [dynamic-base]]
    [goldly.sci.loader.cljs-source-http :as cljs-source]

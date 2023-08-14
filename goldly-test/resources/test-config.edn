@@ -2,7 +2,7 @@
  :keybindings []
  :goldly {; build
           :lazy true
-          :lazy-exclude #{"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
+          :lazy-exclude #{;"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
                           "ui-math"
                           "ui-input"}
           ; run
