@@ -2,6 +2,7 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.3"}
         org.pinkgorilla/devtools {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.14"}
        ; org.pinkgorilla/ui-bidi {:mvn/version "0.0.14"}
