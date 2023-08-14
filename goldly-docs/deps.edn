@@ -2,7 +2,7 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/devtools {:mvn/version "0.0.4"}
+        org.pinkgorilla/devtools {:mvn/version "0.0.5"}
         ; GoldlyDOCS deps        
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
         ;org.pinkgorilla/ui-input {:mvn/version "0.0.23"} ; already in devtools (via reval)

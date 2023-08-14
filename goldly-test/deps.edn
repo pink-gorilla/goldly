@@ -2,11 +2,11 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/devtools {:mvn/version "0.0.4"}
+        org.pinkgorilla/devtools {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-bidi {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-sparklines {:mvn/version "0.0.3"}
-        org.pinkgorilla/ui-video {:mvn/version "0.0.3"}
+       ; org.pinkgorilla/ui-bidi {:mvn/version "0.0.14"}
+       ; org.pinkgorilla/ui-sparklines {:mvn/version "0.0.3"}
+       ; org.pinkgorilla/ui-video {:mvn/version "0.0.3"}
   ;      org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}
   ;       org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.9"}
         }
