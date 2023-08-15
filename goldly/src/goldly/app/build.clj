@@ -2,7 +2,7 @@
   (:require
    [clojure.string] ; side effects
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [modular.config :refer [get-in-config load-config! config-atom resolve-config-key]]
+   [modular.config :refer [load-config! config-atom resolve-config-key]]
    [modular.writer :refer [write-status write-target]]
    [webly.build.profile :refer [setup-profile server?]]
    [webly.build.core :as webly]
@@ -23,7 +23,12 @@
                       d))]
     (reset! ext-fns-atom d2)))
 
-(defonce theme-atom (atom {}))
+(defonce theme-atom
+  (atom {}))
+
+#_(defonce theme-atom
+    (atom {"ui-binaryclock" {:available {:clock {true ["binaryclock/clock.css"]}}
+                             :current {:clock true}}}))
 
 (defmacro theme-registry []
   @theme-atom)
@@ -133,12 +138,6 @@
     (write-target "goldly-build-ns-module-lazy" ns-module-lazy)
     (set-sci-lazy! ns-module-lazy)
     (set-webly-config cljs-config)
-    ;; 
-    ;(warn "requiring namespaces..") ; does this have to be AFTER discovering extensions? in run- for sure yes.
-    ;(require-namespaces (get-in-config [:ns-clj]))
-    ;(warn "resolving [:webly :routes]")
-    ;(resolve-config-key config [:webly :routes])
-    ;(warn "discovering extensions..")
 
     ; dump cljs autoload files. Useful for static version
     ;(discover-extensions)
@@ -154,7 +153,7 @@
   ; for css and clj ns. 
   (let [profile (setup-profile profile)]
     (when (:bundle profile)
-      (let [goldly-config (get-in-config [:goldly])]
+      (let [goldly-config (get-in config [:goldly])]
         (generate-goldly-build goldly-config)
         (webly/build profile)))))
 

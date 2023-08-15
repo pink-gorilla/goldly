@@ -14,9 +14,9 @@
      :current (merge current-g current-m)}))
 
 (defn- extension-css-theme [themes
-                            {:keys [lazy theme]
+                            {:keys [lazy lazy-sci theme]
                              :or {theme {:available {} :current {}}}}]
-  (if lazy
+  (if (or lazy lazy-sci)
     themes
     (merge-theme themes theme)))
 

@@ -28,7 +28,7 @@
 
 (def themes (theme-registry))
 
-(warn "lazy themes :" themes)
+(warn "compile-time lazy themes :" themes)
 
 (defn load-css [ext-name]
   (info "layz-loading css for: " ext-name)

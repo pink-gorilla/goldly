@@ -1,7 +1,8 @@
 (ns goldly.sci.loader.load-shadow
   (:require
    [taoensso.timbre :refer [trace debug debugf info infof warn warnf error errorf]]
-   [shadow.lazy :as lazy]))
+   [shadow.lazy :as lazy]
+   [goldly.run.lazy-ext-css :refer [load-css]]))
 
 ; https://code.thheller.com/blog/shadow-cljs/2019/03/03/code-splitting-clojurescript.html
 ; https://clojureverse.org/t/shadow-lazy-convenience-wrapper-for-shadow-loader-cljs-loader/3841
@@ -18,9 +19,11 @@
      (fn [resolve reject]
        (let [on-success (fn [mod]
                           (info "shadow module-ns did load: " mod)
+                          (doall
+                           (map load-css all-mods))
                            ;(let [mod-js (clj->js mod)])
                           (resolve mod))
              on-err (fn [err]
-                      (error "shadow-module could not be loaded: " err)
+                      (error "shadow-module could not be loaded: " all-mods)
                       (reject err))]
          (lazy/load loadable on-success on-err))))))

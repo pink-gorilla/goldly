@@ -78,7 +78,7 @@
          (add-sci-ns ctx libname ns opts sci-ns sci-def ns-vars)))))
 
 (defn load-module [ctx libname ns opts sci-mod]
-  (info "load-module: " libname)
+  (info "load-shadow-module: ns: " libname)
   (let [promises (map (fn [[sci-ns {:keys [sci-def loadable]}]]
                         (load-module-ns ctx libname ns opts sci-ns sci-def loadable))
                       sci-mod)
@@ -86,7 +86,7 @@
         ]
     (.then p-all
            (fn [_d]
-             (info "load-module: " libname " - finished loading all namespaces")
+             (info "load-shadow-module: ns: " libname " - finished!")
              ;(info "all data: " d)
              ;; empty map return value, SCI will still process `:as` and `:refer`
              {}))))

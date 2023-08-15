@@ -9,9 +9,9 @@
 ; which is run at run-time.
 
 (defn- extension-css-theme [themes
-                            {:keys [lazy name theme]
+                            {:keys [lazy lazy-sci name theme]
                              :or {theme {:available {} :current {}}}}]
-  (if lazy
+  (if (or lazy lazy-sci)
     (assoc themes name theme)
     themes))
 

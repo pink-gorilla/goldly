@@ -6,7 +6,7 @@
    [modular.config :refer [get-in-config config-atom load-config! add-config resolve-config-key]]
    [modular.writer :refer [write-status write-target]]
    [modular.require :refer [require-namespaces]]
-   [webly.build.profile :refer [server? #_compile?]]
+   [webly.build.profile :refer [server?]]
    [goldly.config.runtime :refer [runtime-config]]
    [goldly.run.cljs-load :refer [start-cljs-watch]]
    [goldly.run.ws-connect :refer [start-ws-conn-watch]]
@@ -19,9 +19,8 @@
 (defn write-extensions-runtime [ext-map]
   (->> ext-map
        vals
-       (map #(dissoc % :pinkie ; depreciated
+       (map #(dissoc %
                      :cljs-namespace  ; build-config
-                     :cljs-bindings
                      :cljs-ns-bindings))
        (sort-by :name)
        (write-target "goldly-run-ext")))
@@ -41,14 +40,13 @@
         merged-routes
         {:app (merge (:app goldly-routes-default) (:app routes))
          :api (merge (:api goldly-routes-default) (:api routes))}]
-    (debug "goldly routes: " merged-routes)
     merged-routes))
 
 (defn webly-css-theme [config goldly-css-theme]
   (let [{:keys [available current]} (get-in config [:webly :theme])
         merged-theme {:available (merge available (:available goldly-css-theme))
                       :current  (merge current (:current goldly-css-theme))}]
-    (debug "goldly theme: " merged-theme)
+    (write-target "goldly-run-theme-non-lazy" merged-theme)
     merged-theme))
 
 (defn webly-config [config goldly-css-theme]
@@ -64,8 +62,6 @@
 (defn add-cljs-file-services [ext-dirs goldly-autoload]
   (let [cljs-explore-fn #(goldly.run.cljs-load/cljs-files ext-dirs goldly-autoload)]
     (def cljs-explore cljs-explore-fn) ; needed so symbol can be exported in start-services
-    ;(goldly.service.core/add {:cljs/load goldly.cljs.loader/load-file-or-res!
-    ;                          :cljs/explore cljs-explore-fn})
     (start-services
      {:name "cljs-file-services"
       :permission nil
