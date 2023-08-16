@@ -2,7 +2,7 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.4"}
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         org.pinkgorilla/devtools {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.14"}
        ; org.pinkgorilla/ui-bidi {:mvn/version "0.0.14"}
@@ -67,14 +67,16 @@
   {:extra-deps {}
    :exec-fn goldly.offline.app/goldly-static
    :exec-args {:config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]
-               :init-symbol "demo.static.demo/init"
-               :page-symbol "demo.static.demo/router-page"
-                            ;"demo.page.main/main-page"
+               :app {:init "demo.static.demo/init"
+                     :page "demo.static.demo/router-page"
+                                        ;"demo.page.main/main-page"
+                     }
                :sci-cljs-dirs ["demo/cljs_libs"
                                "demo/page"
                                "demo/static"
                                "reval/goldly/page"
                                "reval/goldly"
+                               "goldly/devtools"
                                ]
                }}
 

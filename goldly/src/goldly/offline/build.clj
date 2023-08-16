@@ -4,6 +4,7 @@
    [clojure.java.io :as io]
    [babashka.fs :as fs]
    [modular.resource.load :refer [write-resources-to]]
+   [modular.writer :refer [write]]
    [goldly.config.runtime :refer [runtime-config]]
    [hiccup.page :as page]))
 
@@ -28,7 +29,7 @@
    (map (partial export-path "code")
         sci-cljs-dirs)))
 
-(defn app-page-static [page init]
+(defn app-page-static [{:keys [page init]}]
   (page/html5
    {:mode :html}
    [:head
@@ -45,35 +46,38 @@
    [:body
     [:script {:src (str "r/" "webly.js")
               :type "text/javascript"
-              :onload (str "goldly.offline.app.start ('" page "' , '" init "');")}]
+              :onload (str "goldly.offline.app.start (\"" page "\" , \"" init "\");")}]
     [:div#app]]))
 
-(defn create-static-html [init page]
-  (let [html (app-page-static page init)
+(defn create-static-html [app]
+  (let [html (app-page-static app)
         filename (str static-root "index.htm")]
     (info "writing static page: " filename)
     (spit filename html)))
 
-(defn goldly-build-static [goldly-config page-symbol init-symbol sci-cljs-dirs]
+(defn goldly-build-static [goldly-config app sci-cljs-dirs]
   (let [rconfig (runtime-config goldly-config)
-        {:keys [cljs-autoload-dirs]} rconfig]
+        {:keys [cljs-autoload-dirs css-theme]} rconfig]
     (ensure-directory "target")
     (fs/delete-tree (str static-root))
     (ensure-directory "target/static")
     ; export cljs-bundle
     ; export public resources (from any jar or file-path)
     (export-path "" "public")
-
     (fs/move (str static-root "public")
              (str static-root "r")
              {:replace-existing true})
+
+     ; write static css config
+    (write "target/static/css-theme-static.edn" css-theme)
+
     ; export sci-cljs files
     (export-sci-cljs (concat cljs-autoload-dirs ; extension autoload
                              (or (:autoload-cljs-dir goldly-config) [])
                              (or sci-cljs-dirs []))) ; goldly app autoload
     ; generate static page
     ; generate startup script
-    (create-static-html page-symbol init-symbol)))
+    (create-static-html app)))
 
 (comment
   (require '[modular.config :refer [get-in-config]])

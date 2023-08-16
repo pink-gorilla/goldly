@@ -5,7 +5,7 @@
         org.pinkgorilla/devtools {:mvn/version "0.0.5"}
         ; GoldlyDOCS deps        
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.4"}
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-fonts {:mvn/version "0.0.3"}
         ;org.pinkgorilla/ui-input {:mvn/version "0.0.23"} ; already in devtools (via reval)
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.6"}
