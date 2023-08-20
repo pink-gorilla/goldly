@@ -1,17 +1,17 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}      
+ :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/devtools {:mvn/version "0.0.5"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.65"} ; reagent, format, page-nav,...
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.67"} ; reagent, format, page-nav,...
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-fonts {:mvn/version "0.0.3"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.20"} ; menu
         org.pinkgorilla/ui-input {:mvn/version "0.0.24"} ; spaces
-        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-codemirror {:mvn/version "0.0.38"}
+        org.pinkgorilla/ui-binaryclock  {:mvn/version "0.70.14"}
+        org.pinkgorilla/ui-codemirror {:mvn/version "0.0.378"}
         org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.9"}
-        org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.4.15"} 
+        org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.4.15"}
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.6"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.17"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
@@ -108,7 +108,7 @@
   {:extra-deps {}
    :jvm-opts ["-Dmaven.wagon.rto=90000"]
    :exec-fn modular.system/start!
-   :exec-args {:profile "jetty" 
+   :exec-args {:profile "jetty"
                :config ["webly/config.edn" "goldly/config.edn" "goldly/docs-config.edn"]
                :services "goldly/docs-services.edn"}}
 
@@ -124,5 +124,5 @@
          :exec-fn clojure.tools.cli.api/tree}
   :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
          :exec-fn clojure.tools.cli.api/list}
-;           
+;
   }}

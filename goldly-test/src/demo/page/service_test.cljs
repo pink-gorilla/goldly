@@ -1,7 +1,8 @@
 (ns demo.page.service-test
   (:require
    [reagent.core :as r]
-   [goldly.service.core :refer [run-a run-a-map]]
+   [promesa.core :as p]
+   [goldly.service.core :refer [clj clj-atom run-a run-a-map]]
    [demo.cljs-libs.helper :refer [add-page-test]]))
 
 (defn make-requests [state]
@@ -15,16 +16,34 @@
               :timeout 1000})
   nil)
 
-(defn show-page [state]
-  [:div
-   [:p "this tests if clj services are working"]
-   [:p "you should see one error message (for a service that is not defined)"]
-   (when (:first @state)
-     (make-requests state))
-   [:p.bg-blue-300.mg-3 "state: " (pr-str @state)]])
+(defn promise-status [pr]
+  [:div "promise status:"
+   " resolved?: " (pr-str (p/resolved? pr))
+    ; " rejected?: " (pr-str (p/rejected? pr))
+   " pending?: " (pr-str (p/pending? pr))
+   " done?: " (pr-str (p/done? pr))
+   " promise?: " (pr-str (p/promise? pr))
+   " thenable?: " (pr-str (p/thenable? pr))])
 
-(defn service-page []
-  (let [state (r/atom {:first true})]
-    [show-page state]))
+(defn show-page [state saying saying2]
+  (fn [state saying saying2]
+    [:div
+     [:p "this tests if clj services are working"]
+     [:p "saying via promise: " (pr-str @saying)]
+     [promise-status saying]
+     [:p "saygin via promise-atom: " (pr-str @saying2)]
+     [:p "you should see one error message (for a service that is not defined)"]
+     (when (:first @state)
+       (make-requests state))
+     [:p.bg-blue-300.mg-3 "state: " (pr-str @state)]]))
+
+(defn service-page [& _]
+  (let [state (r/atom {:first true})
+        saying (clj 'demo.service/quote)
+        saying2 (clj-atom 'demo.service/quote)
+      ;  _ (p/then saying (fn [d] (swap! state assoc :clj d)))
+        _ (p/catch saying (fn [e] (swap! state assoc :clj-err e)))]
+    (fn [& _]
+      [show-page state saying saying2])))
 
 (add-page-test service-page :user/service)

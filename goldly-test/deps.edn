@@ -5,7 +5,7 @@
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         org.pinkgorilla/devtools {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.14"}
-       ; org.pinkgorilla/ui-bidi {:mvn/version "0.0.14"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.67"}
        ; org.pinkgorilla/ui-sparklines {:mvn/version "0.0.3"}
        ; org.pinkgorilla/ui-video {:mvn/version "0.0.3"}
   ;      org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}
@@ -36,7 +36,7 @@
 
   ; tests:
   ; - loading of cljs source code files (+ hot reload of cljs files)
-  ; - lazy loading  (binaryclock dependency) 
+  ; - lazy loading  (binaryclock dependency)
   ; - services
 
   ; RUN SERVICES (keep running)
@@ -50,7 +50,7 @@
 
 
   ; BUILD BUNDLE (then exit)
-  :goldly-build 
+  :goldly-build
   {:extra-deps {}
    :jvm-opts ["-Dmaven.wagon.rto=90000"]
    :exec-fn goldly.app.build/goldly-build
@@ -62,7 +62,7 @@
 
   :release-adv
   {:exec-args {:profile "release-adv"}}
-  
+
   :goldly-static
   {:extra-deps {}
    :exec-fn goldly.offline.app/goldly-static
@@ -81,7 +81,7 @@
                }}
 
 
-  
 
-;           
+
+;
   }}

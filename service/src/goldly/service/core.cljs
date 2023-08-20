@@ -2,6 +2,8 @@
   (:require
    [taoensso.timbre :refer-macros [trace debug debugf info infof warnf error errorf]]
    [cljs.core.async :refer [>! chan close! put!] :refer-macros [go]]
+   [promesa.core :as p]
+   [reagent.core :as r]
    [modular.ws.core :refer [send!]]
    [frontend.notifications.core :as n]
    [goldly.service.result :refer [update-atom-where]]))
@@ -19,6 +21,35 @@
     (infof "running service :%s args: %s" fun args)
     (send! [:goldly/service p-clean] cb timeout)
     nil))
+
+(defn clj
+  ([fun]
+    (clj {} fun))
+  ([fun & args]
+   (let [[opts fun args] (if (map? fun)
+                           [fun (first args) (rest args)]
+                           [{} fun args])
+         {:keys [timeout] :or {timeout 120000}} opts
+         r (p/deferred)
+         on-result (fn [msg]
+                     (if (= msg :chsk/timeout)
+                         (p/reject! r {:msg "timeout"})
+                         (let [[_ data] msg
+                               {:keys [result error]} data]
+                              (if error
+                                  (p/reject! r error)
+                                  (p/resolve! r result)))))]
+     (run-cb {:fun fun :args (into [] args) :timeout timeout :cb on-result})
+     r)))
+
+(defn clj-atom [& args]
+   (let [a (r/atom {:status :pending})
+         rp (apply clj args)]
+      (-> rp
+         (p/then (fn [data] (swap! a assoc :status :done :data data)))
+         (p/catch (fn [error] (swap! a assoc :status :error :error error))))
+      a))
+
 
 ; run with core-async channel
 
@@ -64,7 +95,7 @@
                             {:keys [result error]} data]
                         (if error
                           (process-error data)
-                          (update-atom-where a path result)))))]
+                          (update-atom-where a path result)))) )]
     (run-cb (merge
              (dissoc args :a :path)
              {:cb on-result}))))
@@ -76,4 +107,3 @@
               :path path
               :fun fun
               :args args}))
-
