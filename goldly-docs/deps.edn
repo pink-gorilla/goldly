@@ -9,7 +9,7 @@
         org.pinkgorilla/ui-site {:mvn/version "0.0.20"} ; menu
         org.pinkgorilla/ui-input {:mvn/version "0.0.24"} ; spaces
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-codemirror {:mvn/version "0.0.378"}
+        org.pinkgorilla/ui-codemirror {:mvn/version "0.0.38"}
         org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.4.15"}
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.6"}
