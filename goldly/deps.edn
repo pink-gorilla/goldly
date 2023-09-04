@@ -13,7 +13,7 @@
   cljs-http/cljs-http {:mvn/version "0.1.46"} ; cljs-sci source loader
   org.babashka/sci {:mvn/version "0.8.40"}
   org.pinkgorilla/webly {:mvn/version "0.4.623"} ; web app build tool
-  org.pinkgorilla/modular {:mvn/version "0.0.36"}
+  org.pinkgorilla/modular {:mvn/version "0.0.38"}
   org.pinkgorilla/goldly-service {:local/root "../service" :deps/manifest :deps}}
 
  :aliases
@@ -62,7 +62,7 @@
                  io.github.slipset/deps-deploy {:git/sha "d1fac08888ec8beda0579d3071bb9f804a1d446c"}
                  io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
                  babashka/fs {:mvn/version "0.0.5"}
-                 org.pinkgorilla/modular {:mvn/version "0.0.36"} ; modular.date
+                 org.pinkgorilla/modular {:mvn/version "0.0.38"} ; modular.date
                  }
           :ns-default build
           :jvm-opts ["-Dmaven.wagon.rto=90000"]}
