@@ -19,12 +19,7 @@
                          "devtools/pages" :pages
                          "devtools/help" :devtools
                          "goldly/reload" :goldly/reload-cljs}
-                   :api {"scratchpad" {:get :scratchpad/get
-                                       :post :scratchpad/set}
-                         "rdocument/ns" :rdocument/ns
-                         "rdocument/files" :rdocument/files
-                         ["rdocument/file/" :ns "/" :name] :rdocument/file ; http://localhost:8000/api/viewer/file/demo.playground.cljplot/vega-spec.edn
-                         }}}
+                   :api {}}}
 
  :scratchpad {:tap true}
 
