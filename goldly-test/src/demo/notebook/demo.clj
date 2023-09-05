@@ -18,21 +18,17 @@
 
 (resolve 'scratchpad.handler/wrapped-scratchpad-get-handler)
 
-(def get-handler 
-  (resolve 'scratchpad.handler/wrapped-scratchpad-get-handler)
-  )
+(def get-handler
+  (resolve 'scratchpad.handler/wrapped-scratchpad-get-handler))
 
 (get-handler {})
 
-(def get-ns-list 
-(resolve 'reval.document-handler/wrapped-get-ns-list)  
-  )
+(def get-ns-list
+  (resolve 'reval.document-handler/wrapped-get-ns-list))
 
 (-> (get-ns-list {})
     :body
-    slurp
- 
- )
+    slurp)
 
 
 
