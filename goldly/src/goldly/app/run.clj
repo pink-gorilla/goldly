@@ -30,7 +30,10 @@
          "goldly/reload" :goldly/reload-cljs}
    :api {}})
 
-(defn webly-routes [config]
+(defn write-api-routes-extensions [api-routes-extensions]
+  (write-target "goldly-run-api-routes" api-routes-extensions))
+
+(defn webly-routes [config api-routes-extensions]
   (let [{:keys [routes] :or {routes {}}} (get-in config [:goldly])
         routes (if (empty? routes)
                  (do (warn "no [:goldly :routes ] defined - you will see a blank page.")
@@ -39,7 +42,8 @@
                  routes)
         merged-routes
         {:app (merge (:app goldly-routes-default) (:app routes))
-         :api (merge (:api goldly-routes-default) (:api routes))}]
+         :api (merge (:api goldly-routes-default) api-routes-extensions (:api routes))}]
+    (write-api-routes-extensions merged-routes)
     merged-routes))
 
 (defn webly-css-theme [config goldly-css-theme]
@@ -49,8 +53,8 @@
     (write-target "goldly-run-theme-non-lazy" merged-theme)
     merged-theme))
 
-(defn webly-config [config goldly-css-theme]
-  (let [routes (webly-routes config)
+(defn webly-config [config goldly-css-theme api-routes]
+  (let [routes (webly-routes config api-routes)
         theme (webly-css-theme config goldly-css-theme)
         webly-config (-> (:webly config)
                          (assoc :routes routes
@@ -68,11 +72,11 @@
       :symbols ['goldly.cljs.loader/load-file-or-res!
                 'goldly.app.run/cljs-explore]})))
 
-(defn start-goldly-services [config goldly-css-theme cljs-autoload-files]
+(defn start-goldly-services [config goldly-css-theme cljs-autoload-files api-routes]
   (let [goldly-autoload (get-in config [:goldly :autoload-cljs-dir])
         w-cljs (start-cljs-watch (get-in config [:goldly :watch-cljs-dir]))
         w-conn (start-ws-conn-watch)
-        webly-config (webly-config config goldly-css-theme)]
+        webly-config (webly-config config goldly-css-theme api-routes)]
     (add-cljs-file-services cljs-autoload-files goldly-autoload)
     (write-target "goldly-run-sci-cljs-autoload" cljs-autoload-files)
     ;(warn "dynamic webly-config: " webly-config)
@@ -103,13 +107,13 @@
               ]}))
 (defn start-goldly [config profile]
   ; start-goldly assumes config has already been loaded (done in services.edn)
-  (let [{:keys [exts clj-require css-theme cljs-autoload-files]} (runtime-config (:goldly @config-atom))]
+  (let [{:keys [exts clj-require css-theme cljs-autoload-files api-routes]} (runtime-config (:goldly @config-atom))]
     (info "starting goldly server ..")
     (info "goldly clj requires: " clj-require)
     (require-namespaces clj-require)
     (write-extensions-runtime exts)
     (expose-default-goldly-services)
-    (start-goldly-services config css-theme cljs-autoload-files)))
+    (start-goldly-services config css-theme cljs-autoload-files api-routes)))
 
 (defn stop-goldly [{:keys [cljs-watch ws-watch]}]
   (info "stopping goldly..")
