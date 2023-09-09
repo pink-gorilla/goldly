@@ -1,0 +1,10 @@
+{:name "demo-services"
+ ;runtime
+ :clj-services {:name "demo-services"
+                :permission  #{}
+                :symbols [demo.service/add
+                          demo.service/quote
+                          demo.service/quote-slow
+                          demo.service/ex]}
+
+}

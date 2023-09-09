@@ -6,15 +6,16 @@
    [modular.config :refer [get-in-config config-atom load-config! add-config resolve-config-key]]
    [modular.writer :refer [write-status write-target]]
    [modular.require :refer [require-namespaces]]
-   [webly.build.profile :refer [server?]]
    [goldly.config.runtime :refer [runtime-config]]
-   [goldly.run.cljs-load :refer [start-cljs-watch]]
-   [goldly.run.ws-connect :refer [start-ws-conn-watch]]
-   [goldly.run.services]
    [goldly.service.core]
    [goldly.service.expose :refer [start-services]]
    [goldly.cljs.loader]
-   [modular.permission.service :refer [add-permissioned-services]]))
+   [modular.permission.service :refer [add-permissioned-services]]
+   ; extension formats:
+   [goldly.run.cljs-load :refer [start-cljs-watch]]
+   [goldly.run.ws-connect :refer [start-ws-conn-watch]]
+   [goldly.run.services]
+   [goldly.run.service :refer [expose-extension-clj-services]]))
 
 (defn write-extensions-runtime [ext-map]
   (->> ext-map
@@ -31,7 +32,7 @@
    :api {}})
 
 (defn write-api-routes-extensions [api-routes-extensions]
-  (write-target "goldly-run-api-routes" api-routes-extensions))
+  (write-target "goldly-run-routes" api-routes-extensions))
 
 (defn webly-routes [config api-routes-extensions]
   (let [{:keys [routes] :or {routes {}}} (get-in config [:goldly])
@@ -107,12 +108,15 @@
               ]}))
 (defn start-goldly [config profile]
   ; start-goldly assumes config has already been loaded (done in services.edn)
-  (let [{:keys [exts clj-require css-theme cljs-autoload-files api-routes]} (runtime-config (:goldly @config-atom))]
+  (let [{:keys [exts clj-require css-theme cljs-autoload-files api-routes clj-services]} (runtime-config (:goldly @config-atom))]
     (info "starting goldly server ..")
+    (write-extensions-runtime exts)
+    (write-target "goldly-run-clj-services" clj-services)
     (info "goldly clj requires: " clj-require)
     (require-namespaces clj-require)
-    (write-extensions-runtime exts)
+
     (expose-default-goldly-services)
+    (expose-extension-clj-services clj-services)
     (start-goldly-services config css-theme cljs-autoload-files api-routes)))
 
 (defn stop-goldly [{:keys [cljs-watch ws-watch]}]

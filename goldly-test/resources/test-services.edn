@@ -20,9 +20,6 @@
   ;:print-goldly-webly-config {:start (println "webly (dynamic config): " (:webly (clip/ref :goldly)))}
   ;:print-goldly-ns-clj-config {:start (println "ns-clj (dynamic config): " (:ns-clj(clip/ref :goldly)))}
 
-   :clj-services {:start (goldly.service.expose/start-services
-                         (:clj-services (deref (clip/ref :config))))
-                  :stop (goldly.service.expose/stop-services this)}
 
   ; load the :ns-clj defined by the user [demo.service]
   ; this is no longer needed, as we load services via :clj-services
