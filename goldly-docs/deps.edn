@@ -13,7 +13,7 @@
         org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.4.15"}
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.6"}
-        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.17"}
+        org.pinkgorilla/ui-aggrid {:mvn/version "0.0.18"}
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.18"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.9"}

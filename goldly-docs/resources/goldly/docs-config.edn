@@ -10,14 +10,6 @@
           :autoload-cljs-dir  []
           :watch-cljs-dir []
           :routes {:app {"" :goldly/no-page
-                         "devtools/scratchpad" :scratchpad
-                         "devtools/viewer" :viewer
-                         "devtools/repl" :repl
-                         "devtools/theme" :theme
-                         "devtools/build" :build
-                         "devtools/runtime" :runtime
-                         "devtools/pages" :pages
-                         "devtools/help" :devtools
                          "goldly/reload" :goldly/reload-cljs}
                    :api {}}}
 
