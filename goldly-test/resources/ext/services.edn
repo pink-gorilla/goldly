@@ -7,15 +7,6 @@
                           demo.service/quote-slow
                           demo.service/ex]}
  
-:cljs-routes {;devtools
-              "devtools/help" :devtools
-              "devtools/repl" :repl
-              "devtools/pages" :pages
-              "devtools/viewer" :viewer
-              "devtools/build" :build
-              "devtools/runtime" :runtime
-              "devtools/theme" :theme
-              ; scratchpad
-              "devtools/scratchpad" :scratchpad}
+:cljs-routes {"bongistan-repl" reval.goldly.page.repl/repl}
 
 }

@@ -3,9 +3,9 @@
    [goldly.page :as page]
    [layout]
    [ui.clock :refer [clock]]
-   [demo.cljs-libs.helper :refer [#_add-page-test test-header]]))
+   [demo.cljs-libs.helper :refer [wrap-layout]]))
 
-(defn main-body []
+(defn main-page [_route]
   [:div
    [:h1.text-2xl.text-red-600.m-5 "goldly-test"]
    [:p.m-2 "test if goldy extension system is working."]
@@ -20,11 +20,7 @@
    [clock]
 ;   
    ])
+(def main-page
+  (wrap-layout main-page))
 
-(defn main-page [{:keys [_handler _route-params _query-params] :as _route}]
-  [layout/header-main
-   ;[:div "header"]
-   [test-header]
-   [main-body]])
 
-(page/add main-page :user/main)

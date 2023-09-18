@@ -1,7 +1,7 @@
 (ns demo.page.lazy
   (:require
    [ui.highlightjs :refer [highlightjs]]
-   [demo.cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [wrap-layout]]))
 
 (defn lazy-page [_r]
   [:div.bg-red-200.w-screen.h-screen.p-5
@@ -11,5 +11,7 @@
         when you go to this page."]
    [highlightjs "(+ 4 5)\r\n (def a 34) \n{:a 1 :b 2} (defn add [x y] \n (+ x y))"]])
 
-(add-page-test lazy-page :user/lazy)
+(def lazy-page
+  (wrap-layout lazy-page))
+
 

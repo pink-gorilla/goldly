@@ -3,7 +3,7 @@
    [reagent.core :as r]
    [promesa.core :as p]
    [goldly.service.core :refer [clj clj-atom run-a run-a-map]]
-   [demo.cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [wrap-layout]]))
 
 (defn make-requests [state]
   (swap! state assoc :first false)
@@ -37,7 +37,7 @@
        (make-requests state))
      [:p.bg-blue-300.mg-3 "state: " (pr-str @state)]]))
 
-(defn service-page [& _]
+(defn service-page [_route]
   (let [state (r/atom {:first true})
         saying (clj 'demo.service/quote)
         saying2 (clj-atom 'demo.service/quote)
@@ -46,4 +46,5 @@
     (fn [& _]
       [show-page state saying saying2])))
 
-(add-page-test service-page :user/service)
+(def service-page
+  (wrap-layout service-page))

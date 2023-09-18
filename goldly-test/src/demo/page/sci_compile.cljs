@@ -4,7 +4,7 @@
    [reagent.core :as r]
    [goldly.sci :refer [require-async compile-sci compile-sci-async]]
    [layout]
-   [demo.cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [wrap-layout]]))
 
 (def code (join
            "\n"
@@ -45,4 +45,6 @@
         [:a {:on-click #(compile-sci-async "(println \"hello from sci\")")}
          "click to 'println' to browser console"]]])))
 
-(add-page-test sci-compile-page :user/scicompile)
+(def sci-compile-page
+  (wrap-layout sci-compile-page))
+

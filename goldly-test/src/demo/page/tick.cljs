@@ -3,11 +3,10 @@
    [clojure.string :as str]
    [tick.core :as t]
    [tick.goldly :refer [dt-format]]
-   [goldly.page :as page]
    [layout]
-   [demo.cljs-libs.helper :refer [#_add-page-test test-header]]))
+   [demo.cljs-libs.helper :refer [wrap-layout]]))
 
-(defn tick-body []
+(defn tick-page [_route]
   [:div
    [:h1.text-2xl.text-red-600.m-5 "goldly-test"]
    [:p "blank? " (str (str/blank? "test"))]
@@ -16,10 +15,5 @@
 ;   
    ])
 
-(defn tick-page [{:keys [_handler _route-params _query-params] :as _route}]
-  [layout/header-main
-   ;[:div "header"]
-   [test-header]
-   [tick-body]])
-
-(page/add tick-page :user/tick)
+(def tick-page
+  (wrap-layout tick-page))

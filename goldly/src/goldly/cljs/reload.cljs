@@ -3,16 +3,14 @@
    [re-frame.core :as rf]
    [taoensso.timbre :refer-macros [trace debug debugf info infof warn warnf error errorf]]
    ;[reagent.impl.batching :refer [flush]] ; flushing does not help.
-   [bidi.bidi :as bidi]
    [frontend.routes :refer [current]]
-   [frontend.page :refer [reagent-page]]
-   [webly.app.views :refer [refresh-page]]))
+   [frontend.page :refer [add-page]]
+   [frontend.page.viewer :refer [refresh-page]]))
 
-(defn reloading-cljs-ui []
+(defn reloading-cljs-ui [_route]
   [:div "reloading cljs (sci) code"])
 
-(defmethod reagent-page :goldly/reload-cljs [{:keys [route-params query-params handler] :as route}]
-  [reloading-cljs-ui])
+(add-page :goldly/reload-cljs reloading-cljs-ui)
 
 (defn reload-cljs []
   (let [c @current]

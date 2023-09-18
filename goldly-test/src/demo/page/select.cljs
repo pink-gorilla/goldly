@@ -4,7 +4,7 @@
    [goldly.js :refer [alert]]
    [goldly :refer [eventhandler]]
    [layout]
-   [demo.cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [wrap-layout]]))
 
 (defn select [list _k v]
   (let [on-change (fn [v _e]
@@ -21,4 +21,6 @@
   [:div
    [select [:clojure :python :csharp :c] :python]])
 
-(add-page-test select-page :user/select)
+(def select-page
+  (wrap-layout select-page))
+

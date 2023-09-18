@@ -1,9 +1,9 @@
 (ns goldly.page.no-page
   (:require
-   [frontend.page :refer [reagent-page]]
+   [frontend.page :refer [add-page]]
    [re-frame.core :as rf]))
 
-(defn no-page []
+(defn no-page [_route]
   [:div.m-10.p-10.bg-blue-300.border.border-round.border-red-600
    [:p.text-2xl.text-red-800.mb-10 "Here could be your app!"]
    [:p "Your config needs to include [:goldly :routes] {:app {\"/\" :your-page } :api {} }"]
@@ -11,5 +11,4 @@
     [:a {:on-click #(rf/dispatch [:bidi/goto :devtools])}
      "Goto Devtools"]]])
 
-(defmethod reagent-page :goldly/no-page [{:keys [route-params query-params handler] :as route}]
-  [no-page])
+(add-page :goldly/no-page no-page)

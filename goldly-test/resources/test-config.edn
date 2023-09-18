@@ -1,21 +1,21 @@
-{:keybindings []
+{;:keybindings []
  :goldly {; build
           :lazy true
           :lazy-exclude #{;"ui-binaryclock"  ; test for excluding lazy extensions from lazy build
                           "ui-math"
                           "ui-input"}
           ; run
-          :autoload-cljs-dir ["demo/page"]
-          :routes {:app {"" :user/main
-                         "scicompile" :user/scicompile
-                         "lazy" :user/lazy
-                         "error" :user/error
-                         "select" :user/select
-                         "service" :user/service
-                         "tick" :user/tick}
+          :autoload-cljs-dir [] ; ["demo/page"]
+          :routes {:app {"" demo.page.main/main-page
+                         "scicompile" demo.page.sci-compile/sci-compile-page
+                         "lazy" demo.page.lazy/lazy-page
+                         "error" demo.page.error/error-page
+                         "select" demo.page.select/select-page
+                         "service" demo.page.service-test/service-page
+                         "tick" demo.page.tick/tick-page}
                    :api {}}
 
-           :watch-cljs-dir "src/demo"
+          ; :watch-cljs-dir "src/demo"
 
           }
  

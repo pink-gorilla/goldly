@@ -11,13 +11,16 @@
    [goldly.cljs.loader :refer [load-cljs]]
    [goldly.service.core]
    ; [goldly.offline.app] ; testing only!!!
-   [shadow.loader :as l]))
+   [shadow.loader :as l]
+   [goldly.run.page :refer [get-page-fn]]
+   [frontend.page :refer [set-resolver!]]))
 
 (defn goldly-start [static?]
   (info "goldly starting .. static?: " static?)
    ;(goldly.offline.app/patch-path) ; testing only
   (l/init "") ; prefix to the path loader
   (reset! webly-lazy/on-load lazy-ext-css/goldly-on-load)
+  (set-resolver! get-page-fn)
   (rf/dispatch [:ga/event {:category "goldly" :action "started" :label 77 :value 13}])
   (go (<! (load-cljs static?)) ; await for cljs auto-load to be finised before showing ui.
       (rf/dispatch [:webly/status :running])))

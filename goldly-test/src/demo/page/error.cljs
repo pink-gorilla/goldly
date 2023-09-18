@@ -1,6 +1,6 @@
 (ns demo.page.error
   (:require
-   [demo.cljs-libs.helper :refer [add-page-test]]))
+   [demo.cljs-libs.helper :refer [wrap-layout]]))
 
 (defn exception-component
   "a component that throws exceptions for testing."
@@ -12,4 +12,6 @@
   [:div
    [exception-component]])
 
-(add-page-test error-page :user/error)
+(def error-page
+  (wrap-layout error-page))
+

@@ -1,8 +1,7 @@
 (ns demo.cljs-libs.helper
   (:require
    [site]
-   [layout]
-   [goldly.page :as page]))
+   [layout]))
 
 ;; clj-libs is here, because 
 ;; it shows that we can add custom libraries inside sci source code files.
@@ -14,17 +13,15 @@
   [site/header-menu
    {:brand "goldly-test"
     :brand-link "/"
-    :items [{:text "service-test" :dispatch [:bidi/goto :user/service]}
-            {:text "sci-compile"  :dispatch [:bidi/goto :user/scicompile]}
-            {:text "lazyload-test"  :dispatch  [:bidi/goto  :user/lazy]}
-            {:text "select"  :dispatch  [:bidi/goto  :user/select]}
-            {:text "error-test"  :dispatch [:bidi/goto :user/error]}
-            {:text "tick"  :dispatch [:bidi/goto :user/tick]}]}])
+    :items [{:text "service-test" :dispatch [:bidi/goto 'demo.page.service-test/service-page]}
+            {:text "sci-compile"  :dispatch [:bidi/goto 'demo.page.sci-compile/sci-compile-page]}
+            {:text "lazyload-test"  :dispatch  [:bidi/goto 'demo.page.lazy/lazy-page]}
+            {:text "select"  :dispatch  [:bidi/goto 'demo.page.select/select-page]}
+            {:text "error-test"  :dispatch [:bidi/goto 'demo.page.error/error-page]}
+            {:text "tick"  :dispatch [:bidi/goto 'demo.page.tick/tick-page]}]}])
 
-(defn add-page-test [page name]
-  (let [wrapped-page (fn [route]
-                       [layout/header-main  ; .w-screen.h-screen
-                        [test-header]
-                        [page route]])]
-    (page/add wrapped-page name)))
-
+(defn wrap-layout [page]
+  (fn [route]
+    [layout/header-main  ; .w-screen.h-screen
+     [test-header]
+     [page route]]))
