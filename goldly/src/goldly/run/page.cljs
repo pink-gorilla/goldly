@@ -14,13 +14,13 @@
   (if-let [fun (resolve-if-possible s)]
     fun
     (let [libspec [(-> s namespace symbol)]
-          _ (info "get-page-fn requiring libspec: " libspec)
+          ;_ (info "get-page-fn requiring libspec: " libspec)
           require-p (require-async libspec)
           resolve-p (p/then require-p (fn [_require-result]
-                                        (info "get-page-fn: lib loaded. resolving " s " .. ")
+                                        ;(info "get-page-fn: lib loaded. resolving " s " .. ")
                                         (let [f (resolve-symbol s)]
-                                          (info "get-page-fn resolved symbol: " s)
-                                          (info "get-page-fn resolved fun: " f)
+                                          ;(info "get-page-fn resolved symbol: " s)
+                                          ;(info "get-page-fn resolved fun: " f)
                                           f)))]
       (p/catch require-p (fn [require-error]
                            (error "get-page-fn: require result failure!")
