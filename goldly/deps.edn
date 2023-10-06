@@ -12,7 +12,7 @@
   funcool/promesa {:mvn/version "11.0.674"}
   cljs-http/cljs-http {:mvn/version "0.1.46"} ; cljs-sci source loader
   org.babashka/sci {:mvn/version "0.8.40"}
-  org.pinkgorilla/webly {:mvn/version "0.4.636"} ; web app build tool
+  org.pinkgorilla/webly {:mvn/version "0.4.637"} ; web app build tool
   org.pinkgorilla/modular {:mvn/version "0.0.38"}
   org.pinkgorilla/goldly-service {:local/root "../service" :deps/manifest :deps}}
 
