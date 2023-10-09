@@ -56,4 +56,10 @@ For regular use, the long compile-times are not really sensible.
 
 Please see `bb tasks` for all available options. 
 
+```
+cd goldly-test
+clj -X:goldly-build:npm-install
+clj -X:goldly-build:compile
+clj -X:goldly
+```
 

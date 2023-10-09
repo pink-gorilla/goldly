@@ -32,7 +32,6 @@
   :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
          :exec-fn clojure.tools.cli.api/tree}
 
-
   ; goldy-test
   ; this is a complete deps.edn project used to test goldly.
 
