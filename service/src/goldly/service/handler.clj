@@ -3,7 +3,6 @@
    [taoensso.timbre :refer [trace debug info error]]
    [ring.util.response :as res]
    [modular.webserver.middleware.api :refer [wrap-api-handler]]
-   [modular.webserver.handler.registry :refer [add-ring-handler]]
    [goldly.service.core :refer [run-service]]))
 
 (defn service-handler
@@ -17,4 +16,4 @@
       (res/bad-request response)
       (res/response response))))
 
-(add-ring-handler :goldly/service (wrap-api-handler service-handler))
+(def service-handler-wrapped (wrap-api-handler service-handler))

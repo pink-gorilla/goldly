@@ -8,6 +8,9 @@
                                           'run-a goldly.service.core/run-a
                                           'run-a-map goldly.service.core/run-a-map
                                           'run-cb goldly.service.core/run-cb
-                                          'wait-chan-result goldly.service.core/wait-chan-result}
-
-                    }}
+                                          'wait-chan-result goldly.service.core/wait-chan-result}}
+ ; run
+ ; clj-service allows requests via http post
+ :api-routes {"clj-service"  {:post goldly.service.handler/service-handler-wrapped}}
+; 
+}
