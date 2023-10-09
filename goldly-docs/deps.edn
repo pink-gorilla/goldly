@@ -2,13 +2,13 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
-        org.pinkgorilla/oauth2 {:mvn/version "0.0.3"}
+        org.pinkgorilla/oauth2 {:mvn/version "0.0.14"}
         org.pinkgorilla/devtools {:mvn/version "0.0.17"}
         org.pinkgorilla/ui-repl {:mvn/version "0.0.72"} ; reagent, format, page-nav,...
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-fonts {:mvn/version "0.0.3"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.20"} ; menu
-        org.pinkgorilla/ui-input {:mvn/version "0.0.24"} ; spaces
+        org.pinkgorilla/ui-input {:mvn/version "0.0.25"} ; spaces
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
         org.pinkgorilla/ui-codemirror {:mvn/version "0.0.38"}
         org.pinkgorilla/ui-highlightjs {:mvn/version "0.0.9"}
@@ -75,7 +75,7 @@
                      io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
                      ;rewrite-clj/rewrite-clj {:mvn/version "1.0.699-alpha"}
                      babashka/fs {:mvn/version "0.0.5"}
-                     org.pinkgorilla/modular {:mvn/version "0.0.38"} ; modular.date
+                     org.pinkgorilla/modular {:mvn/version "0.0.39"} ; modular.date
                      }
               :ns-default build
               :jvm-opts ["-Dmaven.wagon.rto=90000"]}
