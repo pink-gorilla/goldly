@@ -8,7 +8,7 @@
    [:p.text-2xl.text-red-800.mb-10 "Here could be your app!"]
    [:p "Your config needs to include [:goldly :routes] {:app {\"/\" :your-page } :api {} }"]
    [:p.m-2.border.bg-blue-500.w-32
-    [:a {:on-click #(rf/dispatch [:bidi/goto :devtools])}
+    [:a {:on-click #(rf/dispatch [:bidi/goto 'goldly.devtools.page.help/devtools-page])}
      "Goto Devtools"]]])
 
 (add-page :goldly/no-page no-page)

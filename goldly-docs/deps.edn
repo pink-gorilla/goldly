@@ -3,7 +3,7 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/oauth2 {:mvn/version "0.0.16"} ; oauth2 needs to be in docs, because of login-dialogs. rest can be loaded dynamically.
-        org.pinkgorilla/devtools {:mvn/version "0.0.17"}
+        org.pinkgorilla/devtools {:mvn/version "0.0.18"}
         org.pinkgorilla/ui-repl {:mvn/version "0.0.72"} ; reagent, format, page-nav,...
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-fonts {:mvn/version "0.0.3"}
