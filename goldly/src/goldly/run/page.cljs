@@ -4,6 +4,10 @@
    [promesa.core :as p]
    [goldly.sci.kernel-cljs :refer [require-async resolve-symbol]]))
 
+;; 2023-10-18 awb99: this code has been copied to sci/kernel-cljs
+;; as it really is a requiring-resolve. Change the ui-bidi code
+;; to rely on requiring-resolve in the future. 
+
 (defn resolve-if-possible [s]
   (try
     (resolve-symbol s)

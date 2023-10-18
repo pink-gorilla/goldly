@@ -5,7 +5,6 @@
                           "ui-math"
                           "ui-input"}
           ; run
-          :autoload-cljs-dir [] ; ["demo/page"]
           :routes {:app {"" demo.page.main/main-page
                          "scicompile" demo.page.sci-compile/sci-compile-page
                          "lazy" demo.page.lazy/lazy-page

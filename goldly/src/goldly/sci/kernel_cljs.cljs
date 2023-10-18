@@ -1,7 +1,7 @@
 (ns goldly.sci.kernel-cljs
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
-   [promesa.core]
+   [promesa.core :as p]
    [cljs.reader :refer [read-string]]
    ; sci
    [sci.core :as sci]
@@ -44,6 +44,32 @@
 
 (defn resolve-symbol [sym]
   (sci-resolve/resolve-symbol ctx-repl sym))
+
+;; requiring resolve
+
+(defn resolve-if-possible [s]
+  (try
+    (resolve-symbol s)
+    (catch :default _ex
+      nil)))
+
+(defn requiring-resolve [s]
+  (if-let [fun (resolve-if-possible s)]
+    fun
+    (let [libspec [(-> s namespace symbol)]
+          ;_ (info "requiring-resolve requiring libspec: " libspec)
+          require-p (require-async libspec)
+          resolve-p (p/then require-p (fn [_require-result]
+                                        ;(info "get-page-fn: lib loaded. resolving " s " .. ")
+                                        (let [f (resolve-symbol s)]
+                                          ;(info "get-page-fn resolved symbol: " s)
+                                          ;(info "get-page-fn resolved fun: " f)
+                                          f)))]
+      (p/catch require-p (fn [require-error]
+                           (error "requiring-resolve: failed to load ns: " libspec)
+                           (error "requiring-resolve error: " require-error)
+                           nil))
+      resolve-p)))
 
 (def !last-ns (atom @sci/ns))
 
@@ -111,7 +137,8 @@
                  'goldly.sci {'require-async require-async
                               'compile-sci compile-code
                               'compile-sci-async compile-code-async
-                              'resolve-symbol-sci resolve-symbol}})
+                              'resolve-symbol-sci resolve-symbol
+                              'requiring-resolve requiring-resolve}})
 
    :classes  {'js js/window :allow :all}
    ;:classes  {'js goog/global :allow :all} ; In JS hosts, to allow interop with anything, use the following config:
@@ -127,4 +154,5 @@
    :async-load-fn async-load-fn})
 
 (def ctx-repl (sci/init ctx-static))
+
 
