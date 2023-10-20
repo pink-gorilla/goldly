@@ -7,7 +7,7 @@
         org.pinkgorilla/devtools {:mvn/version "0.0.18"}
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
         ;; "ui design in general"
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.72"} ; reagent, format, page-nav,...
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.73"} ; reagent, format, page-nav,...
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-fonts {:mvn/version "0.0.3"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.29"} ; menu
@@ -20,6 +20,7 @@
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.6"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.18"}
         org.pinkgorilla/reagent-table {:mvn/version "0.0.12"}
+        org.pinkgorilla/options {:mvn/version "0.0.3"}
         ; ""charts"
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.18"}
