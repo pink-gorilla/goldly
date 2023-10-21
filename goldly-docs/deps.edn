@@ -20,7 +20,7 @@
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.6"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.18"}
         org.pinkgorilla/reagent-table {:mvn/version "0.0.12"}
-        org.pinkgorilla/options {:mvn/version "0.0.3"}
+        org.pinkgorilla/options {:mvn/version "0.0.4"}
         ; ""charts"
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.18"}
