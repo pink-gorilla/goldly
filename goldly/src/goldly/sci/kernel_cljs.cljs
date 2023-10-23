@@ -55,7 +55,7 @@
 
 (defn requiring-resolve [s]
   (if-let [fun (resolve-if-possible s)]
-    fun
+    (p/resolved fun)
     (let [libspec [(-> s namespace symbol)]
           ;_ (info "requiring-resolve requiring libspec: " libspec)
           require-p (require-async libspec)
