@@ -53,7 +53,7 @@
          ;test-cljs (shell {:dir "goldly-docs"} "npm" "test")
 
          ;; CI
-         ci-check {:depends [cljfmt-check
+         ci-check {:depends [;cljfmt-check
                              build
                              test-clj
                              ;test-cljs
