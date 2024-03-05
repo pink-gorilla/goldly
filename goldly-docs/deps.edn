@@ -54,20 +54,12 @@
                "clj-kondo.main"
                "--lint"
                "src"]}
+
   :cljfmt
-  {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-   :main-opts ["-m"
-               "cljfmt.main"
-               "check"
-               "--indents"
-               "cljfmt.edn"]}
-  :cljfmt-fix
-  {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-   :main-opts ["-m"
-               "cljfmt.main"
-               "fix"
-               "--indents"
-               "cljfmt.edn"]}
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
+   :main-opts ["-m" "cljfmt.main"
+               "--indents" "cljfmt.edn"]}
+
   :test
   {:extra-paths ["test"]
    :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
