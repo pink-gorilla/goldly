@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>jar</packaging>
+  <groupId>org.pinkgorilla</groupId>
+  <artifactId>goldly-docs</artifactId>
+  <name>goldly-docs</name>
+  <licenses>
+    <license>
+      <name>Eclipse Public License</name>
+      <url>https://www.eclipse.org/legal/epl-v10.html</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>pink-gorilla</name>
+    </developer>
+  </developers>
+  <scm>
+    <url>https://github.com/pink-gorilla/goldly/</url>
+    <connection>scm:git:git://github.com/pink-gorilla/goldly.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/pink-gorilla/goldly.git</developerConnection>
+  </scm>
+</project>

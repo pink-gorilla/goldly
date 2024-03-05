@@ -2,17 +2,35 @@
   (:require
    [babashka.fs :as fs]
    [clojure.tools.build.api :as b]
-   [deps-deploy.deps-deploy :as dd]
+   [org.corfield.build :as bb] ; https://github.com/seancorfield/build-clj
    [modular.date :refer [now-str]]))
 
 (def lib 'org.pinkgorilla/goldly)
 (def version (format "0.4.%s" (b/git-count-revs nil)))
-(def class-dir "target/classes")
-(def basis (b/create-basis {:project "deps.edn"}))
-(def jar-file (format "target/%s-%s.jar" (name lib) version))
 
+(defn jar "build the JAR" [opts]
+  (println "Building the JAR")
+  (spit (doto (fs/file "resources/META-INF/pink-gorilla/goldly/meta.edn")
+          (-> fs/parent fs/create-dirs)) {:module-name "goldly"
+                                          :version version
+                                          :generated (now-str)})
+  (-> opts
+      (assoc :lib lib
+             :version version
+             :src-pom "template-pom.xml"
+             :transitive true)
+      ;(bb/run-tests)
+      ;(bb/clean)
+      (bb/jar)))
 
-(def pom-template
+(defn deploy "Deploy the JAR to Clojars." [opts]
+  (println "Deploying to Clojars.")
+  (-> opts
+      (assoc :lib lib
+             :version version)
+      (bb/deploy)))
+
+#_(def pom-template
   [[:licenses
     [:license
      [:name "Eclipse Public License"]
@@ -25,35 +43,16 @@
     [:connection "scm:git:git://github.com/pink-gorilla/goldly.git"]
     [:developerConnection "scm:git:ssh://git@github.com/pink-gorilla/goldly.git"]]])
 
-(defn- spit-version []
-  (spit (doto (fs/file "target/classes/META-INF/pink-gorilla/goldly/meta.edn")
-          (-> fs/parent fs/create-dirs)) {:module-name "goldly"
-                                          :version version
-                                          :generated (now-str)}))
+;If you are working in a monorepo, such as the [Polylith architecture](https://polylith.gitbook.io/), and need
+;to build library JAR files from projects that rely on `:local/root` dependencies to specify other source
+;components, you will generally want to pass `:transitive true` to the `jar` task.
 
+;Without `:transitive true`, i.e., by default, the `jar` task generates a `pom.xml` from just the dependencies
+;specified directly in the project `deps.edn` and does not consider dependencies from local source subprojects.
+;In addition, by default `jar` only copies `src` and `resources` from the current project folder.
 
-(def opts {:class-dir class-dir
-           :lib lib
-           :version version
-           :basis basis
-           :pom-data pom-template
-           :transitive true
-           :src-dirs ["src"]})
-
-(defn jar [_]
-  (b/write-pom opts)
-  (b/copy-dir {:src-dirs ["src" "resources"]
-               :target-dir class-dir})
-  (spit-version)
-  (b/jar {:class-dir class-dir
-          :jar-file jar-file}))
-
-(defn deploy "Deploy the JAR to Clojars." [_]
-  (println "Deploying to Clojars..")
-  (dd/deploy {:installer :remote
-              ;:sign-releases? true
-              :pom-file (b/pom-path (select-keys opts [:lib :class-dir]))
-              ;:artifact "target/tech.ml.dataset.jar"
-              :artifact (b/resolve-path jar-file)}))
+;With `:transitive true`, the `jar` task includes direct dependencies from local source subprojects when
+;generating the `pom.xml` and will also copy all folders found on the classpath -- which is generally all
+;of the `src` and `resources` folders from those local source subprojects.
 
 
