@@ -69,7 +69,7 @@
    :exec-fn cognitect.test-runner.api/test}
 
   :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}
-                 io.github.slipset/deps-deploy {:mvn/version "0.2.1"}
+                 slipset/deps-deploy {:mvn/version "0.2.1"}
                  babashka/fs {:mvn/version "0.0.5"}
                  org.pinkgorilla/modular {:mvn/version "0.0.39"} ; modular.date
                  }
