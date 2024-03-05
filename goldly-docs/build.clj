@@ -40,6 +40,7 @@
            :version version
            :basis basis
            :pom-data pom-template
+           :transitive true
            :src-dirs ["src"]})
 
 (defn jar [_]
