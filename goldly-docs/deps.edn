@@ -23,7 +23,7 @@
         org.pinkgorilla/options {:mvn/version "0.0.5"}
         ; ""charts"
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
-        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.18"}
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.22"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.14"}
         org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}
@@ -35,8 +35,7 @@
         ;org.pinkgorilla/ui-quil  {:mvn/version "0.1.7"} ; not bundeled (too big)
         ; run by default in goldly-docs-services
         nrepl/nrepl {:mvn/version "1.0.0"}
-        cider/cider-nrepl {:mvn/version "0.28.3"}
-        }
+        cider/cider-nrepl {:mvn/version "0.28.3"}}
 
  :aliases
  {:outdated
@@ -77,23 +76,13 @@
                "cognitect.test-runner"]
    :exec-fn cognitect.test-runner.api/test}
 
-  :build-jar {:deps {io.github.clojure/tools.build {:git/tag "v0.6.1" :git/sha "515b334"}
-                     io.github.slipset/deps-deploy {:git/sha "d1fac08888ec8beda0579d3071bb9f804a1d446c"}
-                     io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
-                     ;rewrite-clj/rewrite-clj {:mvn/version "1.0.699-alpha"}
-                     babashka/fs {:mvn/version "0.0.5"}
-                     org.pinkgorilla/modular {:mvn/version "0.0.39"} ; modular.date
-                     }
-              :ns-default build
-              :jvm-opts ["-Dmaven.wagon.rto=90000"]}
-
-
-  :deploy-jar
-  {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.0"}}
-   :exec-fn deps-deploy.deps-deploy/deploy
-   :exec-args {:installer :remote
-               :artifact "target/webly.jar"}
-   :jvm-opts ["-Dmaven.wagon.rto=90000"]}
+  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}
+                 io.github.slipset/deps-deploy {:mvn/version "0.2.1"}
+                 babashka/fs {:mvn/version "0.0.5"}
+                 org.pinkgorilla/modular {:mvn/version "0.0.39"} ; modular.date
+                 }
+          :ns-default build
+          :jvm-opts ["-Dmaven.wagon.rto=90000"]}
 
 
    ; BUILD BUNDLE (then exit)

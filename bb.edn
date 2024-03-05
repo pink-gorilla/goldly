@@ -78,7 +78,7 @@
                                 )}
 
          jar {:doc "Builds the jar"
-              :task (webly/clojure "goldly-docs" "-T:build-jar" "jar")}
+              :task (webly/clojure "goldly-docs" "-T:build" "jar")}
 
          goldly-docs-build {:doc "Build goldly-docs, but don't deploy"
                             :depends [clean
@@ -92,7 +92,7 @@
 
 
          clojars {:doc "Deploys the jar to clojars"
-                  :task (webly/clojure "goldly-docs" "-T:build-jar" "deploy")}
+                  :task (webly/clojure "goldly-docs" "-T:build" "deploy")}
 
          tag {:doc "Tags release and pushes tag to Github."
               :task (let [version (-> (slurp "goldly-docs/resources/META-INF/pink-gorilla/goldly-docs/meta.edn")

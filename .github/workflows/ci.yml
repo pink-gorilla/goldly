@@ -24,11 +24,13 @@ jobs:
         java-version: '14'
         java-package: jdk # optional (jdk or jre) - defaults to jdk
     - name: Install clojure tools
-      uses: DeLaGuardo/setup-clojure@3.5
+      uses: DeLaGuardo/setup-clojure@12.5
       with:
-        cli: 1.10.3.1029 # Clojure CLI based on tools.deps
-    - name: Install Babashka
-      run: bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
+        cli: 1.11.1.1165             # Clojure CLI based on tools.deps
+        bb: 0.7.8                    # Babashka
+        clj-kondo: 2022.05.31        # Clj-kondo
+        cljfmt: 0.10.2               # cljfmt
+        cljstyle: 0.15.0             # cljstyle
     - name: bb ci-check
       run: bb ci-check
     - name: bb ci-goldly-deploy
