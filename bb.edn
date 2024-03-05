@@ -107,7 +107,8 @@
                  ;; by build.clj
                                 :task (do (run 'goldly-docs-build)
                                           (run 'clojars)
-                                          (run 'tag))}
+                                          ;(run 'tag)
+                                          )}
 
          goldly-jar {:doc "Builds the jar"
                      :task (webly/clojure "goldly" "-T:build" "jar")}
