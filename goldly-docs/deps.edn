@@ -7,7 +7,7 @@
         org.pinkgorilla/devtools {:mvn/version "0.0.18"}
         org.pinkgorilla/ui-binaryclock  {:mvn/version "0.0.14"}
         ;; "ui design in general"
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.73"} ; reagent, format, page-nav,...
+        org.pinkgorilla/ui-repl {:mvn/version "0.0.74"} ; reagent, format, page-nav,...
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         org.pinkgorilla/ui-fonts {:mvn/version "0.0.3"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.29"} ; menu
@@ -19,8 +19,8 @@
         org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.4.15"}
         org.pinkgorilla/ui-reacttable {:mvn/version "0.0.6"}
         org.pinkgorilla/ui-aggrid {:mvn/version "0.0.18"}
-        org.pinkgorilla/reagent-table {:mvn/version "0.0.12"}
-        org.pinkgorilla/options {:mvn/version "0.0.8"}
+        org.pinkgorilla/reagent-table {:mvn/version "0.0.13"}
+        org.pinkgorilla/options {:mvn/version "0.0.9"}
         ; ""charts"
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.22"}
@@ -72,7 +72,7 @@
                  slipset/deps-deploy {:mvn/version "0.2.1"}
                  io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
                  babashka/fs {:mvn/version "0.0.5"}
-                 org.pinkgorilla/modular {:mvn/version "0.0.39"} ; modular.date
+                 org.pinkgorilla/modular {:mvn/version "0.0.40"} ; modular.date
                  }
           :ns-default build
           :jvm-opts ["-Dmaven.wagon.rto=90000"]}
