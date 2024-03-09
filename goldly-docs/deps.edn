@@ -23,7 +23,7 @@
         org.pinkgorilla/options {:mvn/version "0.0.9"}
         ; ""charts"
         org.pinkgorilla/ui-vega  {:mvn/version "0.0.31"}
-        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.22"}
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.23"}
         org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.9"}
         org.pinkgorilla/ui-leaflet {:mvn/version "0.0.14"}
         org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}
