@@ -8,7 +8,7 @@
                   ;goldly.static.app ; not possible, creates cyclic dependency.
                   ]
  :cljs-ns-bindings {'goldly {'compile-time compile-time
-                             'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
+                             ;'bindings bindings-generated ; no ns here, as this are added to goldly-bindings-genreated
                              ;'bindings-ns goldly-bindings-generated/ns-generated ; cannot do this, as this publishes itself
                              'eventhandler  goldly.sci.eventhandler/eventhandler-fn
                              'error-view goldly.sci.error/error-view ; depreciated

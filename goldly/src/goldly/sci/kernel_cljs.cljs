@@ -9,7 +9,7 @@
    [sci.impl.resolve :as sci-resolve]
    ; bindings
    ;[goldly.sci.bindings-static :refer [ns-static]]
-   [goldly-bindings-generated :refer [bindings-generated ns-generated
+   [goldly-bindings-generated :refer [ns-generated
                                       sci-lazy-ns-dict lazy-modules]]
 
    [goldly.sci.clojure-core :refer [cljns] :as clojure-core]
@@ -122,8 +122,7 @@
 (def rns (sci/create-ns 'cljs.reader nil))
 
 (def ctx-static
-  {:bindings bindings-generated
-   :preset {:termination-safe false} ; was: true
+  {:preset {:termination-safe false} ; was: true
    :namespaces (merge
                 ns-generated   ; ns-static
                 {'clojure.core {'require scia/require

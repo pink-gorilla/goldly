@@ -47,7 +47,7 @@
   (->> (map convert-module lazy-modules)
        (into {})))
 
-(defn make-forms [{:keys [requires bindings ns-bindings
+(defn make-forms [{:keys [requires ns-bindings
                           lazy-modules sci-lazy-ns-dict]}]
   (let [nsl '(ns goldly-bindings-generated)
         r (generate-require requires)
@@ -56,7 +56,6 @@
         lazy-lookup (make-sci-lazy-ns-bindings lazy-modules)]
     [nslr
      (list 'def 'compile-time (now-str))
-     (list 'def 'bindings-generated bindings)
      (list 'def 'ns-generated ns-bindings)
      (list 'def 'lazy-modules lazy-lookup)
      (list 'def 'sci-lazy-ns-dict sci-lazy-ns-dict)]))

@@ -98,10 +98,9 @@
     ;(println "fns-in-nss result: " r)
     r))
 
-(defn- ext->fns [{:keys [name cljs-bindings cljs-ns-bindings]
-                  :or {cljs-bindings {}}
+(defn- ext->fns [{:keys [name cljs-ns-bindings]
                   :as ext}]
-  (let [ext-fns (->> (merge cljs-ns-bindings {'user cljs-bindings})
+  (let [ext-fns (->> cljs-ns-bindings
                      (fns-in-nss)
                      (apply concat))]
     (ext-ns name ext-fns)))

@@ -31,10 +31,8 @@
 (defn extension-sci-bindings [s
                               {:keys [lazy lazy-sci
                                       cljs-namespace
-                                      cljs-bindings
                                       cljs-ns-bindings]
                                :or {cljs-namespace []
-                                    cljs-bindings {}
                                     cljs-ns-bindings {}}
                                :as ext}]
 
@@ -44,10 +42,6 @@
      (concat (:requires s) (if (or lazy lazy-sci)
                              [] ; in lazy mode namespaces cannot be required directly
                              (nss->requires cljs-namespace)))
-     :bindings
-     (merge (:bindings s)  (if lazy
-                             (make-lazy cljs-bindings) ; instead in lazy-mode we add the make-lazy wrapper
-                             (if lazy-sci {} cljs-bindings)))
      :ns-bindings
      (merge (:ns-bindings s)  (if lazy
                                 (make-lazy-ns cljs-ns-bindings)
@@ -66,7 +60,6 @@
    {:requires (if (:lazy goldly-config)
                 '[[webly.build.lazy :refer-macros [wrap-lazy]]]
                 [])
-    :bindings {}
     :ns-bindings {}
     :lazy-modules {}
     :sci-lazy-ns-dict {}}
