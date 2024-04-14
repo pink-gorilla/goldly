@@ -1,25 +1,21 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
+ :deps {org.pinkgorilla/webly {:mvn/version "0.5.662"}
+        org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
-        org.pinkgorilla/devtools {:mvn/version "0.0.17"}
+        ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.72"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.96"}
        ; org.pinkgorilla/ui-sparklines {:mvn/version "0.0.3"}
        ; org.pinkgorilla/ui-video {:mvn/version "0.0.3"}
   ;      org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}
   ;       org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.9"}
         ;org.pinkgorilla/ui-bidi {:mvn/version "0.0.24"} ; in webly, enforce higher version
-        
         }
 
  :aliases
- {:outdated
-  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
-   :main-opts ["-m" "antq.core"]}
-
-  ; https://github.com/weavejester/cljfmt
+ {; https://github.com/weavejester/cljfmt
   :cljfmt
   {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
    :main-opts ["-m" "cljfmt.main"
@@ -40,46 +36,23 @@
   ; - lazy loading  (binaryclock dependency)
   ; - services
 
-  ; RUN SERVICES (keep running)
-  :goldly
-  {:extra-deps {nrepl/nrepl {:mvn/version "1.0.0"}
-                cider/cider-nrepl {:mvn/version "0.28.3"}}
-   :exec-fn modular.system/start!
-   :exec-args {:profile "jetty"
-               :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]
-               :services "test-services.edn"}}
+; demo ui
+  :webly {:exec-fn webly.app.app/webly-build
+          :exec-args {:config ["docs/docs-config.edn"]
+                      :profile "npm-install"}}
 
+  :npm-install {:exec-args {:profile "npm-install"}}
+  :compile {:exec-args {:profile "compile2"}}
+  :release {:exec-args {:profile "release"}}
+  :release-adv {:exec-args {:profile "release-adv"}}
+  :static {:exec-args {:profile "static"}}
+  :ci {:exec-args {:profile "ci"}}
 
-  ; BUILD BUNDLE (then exit)
-  :goldly-build
-  {:extra-deps {}
-   :jvm-opts ["-Dmaven.wagon.rto=90000"]
-   :exec-fn goldly.app.build/goldly-build
-   :exec-args {:profile "compile2"
-               :config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]}}
+  :run {:exec-fn modular.system/start!
+        :exec-args {:profile "jetty"
+                    :config  ["docs/docs-config.edn"]
+                    :services "docs/docs-services.edn"}}
 
-  :npm-install
-  {:exec-args {:profile "npm-install"}}
-
-  :release-adv
-  {:exec-args {:profile "release-adv"}}
-
-  :goldly-static
-  {:extra-deps {}
-   :exec-fn goldly.offline.app/goldly-static
-   :exec-args {:config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]
-               :app {:init "demo.static.demo/init"
-                     :page "demo.static.demo/router-page"
-                                        ;"demo.page.main/main-page"
-                     }
-               :sci-cljs-dirs ["demo/cljs_libs"
-                               "demo/page"
-                               "demo/static"
-                               "reval/goldly/page"
-                               "reval/goldly"
-                               "goldly/devtools"
-                               ]
-               }}
 
 
 

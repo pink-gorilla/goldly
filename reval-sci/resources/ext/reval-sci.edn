@@ -1,0 +1,27 @@
+{:name "reval-sci"
+ ; build 
+ :lazy false
+ :cljs-namespace [reval.type.sci ; side-effects; load protocols for cljs and sci
+                  ]
+
+ :sci-cljs-ns [; kernel
+               reval.goldly.display
+               reval.goldly.ui-helper
+               reval.goldly.url-loader
+               ; notebook-ui
+               reval.goldly.notebook-ui.clj-result
+               reval.goldly.notebook-ui.collection
+               reval.goldly.notebook-ui.editor
+              
+               reval.goldly.notebook-ui.rdocument
+               ; viz
+               reval.goldly.viz.data
+               reval.goldly.viz.render-fn
+               reval.goldly.viz.render
+               reval.goldly.viz.show
+               ; page
+               reval.goldly.page.eval-remote
+               reval.goldly.page.notebook-viewer
+               reval.goldly.page.repl]
+ 
+ }

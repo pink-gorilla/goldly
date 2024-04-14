@@ -1,0 +1,7 @@
+{:name "javelin"
+ ; build
+ :lazy true
+ :cljs-namespace [sci.configs.hoplon.javelin]
+ :cljs-ns-bindings {'javelin.core  sci.configs.hoplon.javelin/javelin-core-ns
+                    }}
+

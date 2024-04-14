@@ -1,4 +1,4 @@
-(ns goldly.sci.kernel-cljs
+(ns goldly.sci
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
    [promesa.core :as p]
@@ -8,16 +8,10 @@
    [sci.async :as scia]
    [sci.impl.resolve :as sci-resolve]
    ; bindings
-   ;[goldly.sci.bindings-static :refer [ns-static]]
-   [goldly-bindings-generated :refer [ns-generated
-                                      sci-lazy-ns-dict lazy-modules]]
-
    [goldly.sci.clojure-core :refer [cljns] :as clojure-core]
    ; loading of cljs source-code
-
-   [cljs.core.async :refer [<! >! chan close!] :refer-macros [go]]
    [goldly.sci.loader.async-load :refer [async-load-fn]]
-   [cemerick.url :as curl]))
+))
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
 
@@ -124,7 +118,6 @@
 (def ctx-static
   {:preset {:termination-safe false} ; was: true
    :namespaces (merge
-                ns-generated   ; ns-static
                 {'clojure.core {'require scia/require
                                 'time (sci/copy-var clojure-core/time cljns)
                                 'system-time (sci/copy-var system-time cljns)

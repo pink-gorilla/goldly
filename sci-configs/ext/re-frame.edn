@@ -1,0 +1,8 @@
+{:name "re-frame"
+ ; build
+ :lazy false
+ :cljs-namespace [re-frame.core
+                  re-frame.db
+                  sci.configs.re-frame.re-frame]
+ :cljs-ns-bindings {'re-frame.core  sci.configs.re-frame.re-frame/re-frame-namespace
+                    're-frame.db sci.configs.re-frame.re-frame/re-frame-db-namespace}}

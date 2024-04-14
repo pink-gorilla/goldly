@@ -3,18 +3,16 @@
          "target/webly"] ; webly bundel
  :deps
  {org.clojure/clojure    {:mvn/version "1.11.1"}
-  org.clojure/core.async {:mvn/version "1.6.673"}
-  org.clojure/data.json {:mvn/version "2.4.0"}
-  com.rpl/specter {:mvn/version "1.1.4"}
   ; promesa is used in sci-cljs-kernel, version needs to match version in sci-config (see ui-repl)
   ;"11.0.671" version 11 not yet supported
   ; https://github.com/babashka/sci.configs/blob/main/deps.edn
   funcool/promesa {:mvn/version "11.0.674"}
   cljs-http/cljs-http {:mvn/version "0.1.46"} ; cljs-sci source loader
   org.babashka/sci {:mvn/version "0.8.40"}
-  org.pinkgorilla/webly {:mvn/version "0.4.640"} ; web app build tool
-  org.pinkgorilla/modular {:mvn/version "0.0.40"}
-  org.pinkgorilla/goldly-service {:local/root "../service" :deps/manifest :deps}}
+  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.6"}
+  org.pinkgorilla/sci-configs {:local/root "../sci-configs" :deps/manifest :deps}
+  
+  }
 
  :aliases
  {;; developer tooling
@@ -33,10 +31,6 @@
                "--config" "cljkondo.edn"
                "--lint"]}
 
-  :outdated ; name equals npm outdated
-  {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
-   :main-opts ["-m" "antq.core"]}
-
   :check
   {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
                                  :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
@@ -51,19 +45,10 @@
 
   ;; goldly
 
-  ; https://github.com/jgrodziski/metav#spit-or-render-current-version-in-a-file
-  :spit {:extra-deps {metav/metav {:mvn/version "1.6.7"}}
-         :main-opts ["-m" "metav.spit"
-                     "--output-dir" "resources"
-                     "--namespace" "goldly-version"
-                     "--formats" "edn"]}
-
   :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}
                  slipset/deps-deploy {:mvn/version "0.2.1"}
                  io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
-                 babashka/fs {:mvn/version "0.0.5"}
-                 org.pinkgorilla/modular {:mvn/version "0.0.40"} ; modular.date
-                 }
+                 babashka/fs {:mvn/version "0.0.5"}}
           :ns-default build
           :jvm-opts ["-Dmaven.wagon.rto=90000"]}
 

@@ -3,10 +3,10 @@
    [babashka.fs :as fs]
    [clojure.tools.build.api :as b]
    [org.corfield.build :as bb] ; https://github.com/seancorfield/build-clj
-   [modular.date :refer [now-str]]))
+))
 
 (def lib 'org.pinkgorilla/goldly)
-(def version (format "0.4.%s" (b/git-count-revs nil)))
+(def version (format "0.5.%s" (b/git-count-revs nil)))
 
 (defn jar "build the JAR" [opts]
   (println "Building the JAR")
@@ -27,19 +27,6 @@
       (assoc :lib lib
              :version version)
       (bb/deploy)))
-
-#_(def pom-template
-  [[:licenses
-    [:license
-     [:name "Eclipse Public License"]
-     [:url "https://www.eclipse.org/legal/epl-v10.html"]]]
-   [:developers
-    [:developer
-     [:name "pink-gorilla"]]]
-   [:scm
-    [:url "https://github.com/pink-gorilla/goldly"]
-    [:connection "scm:git:git://github.com/pink-gorilla/goldly.git"]
-    [:developerConnection "scm:git:ssh://git@github.com/pink-gorilla/goldly.git"]]])
 
 ;If you are working in a monorepo, such as the [Polylith architecture](https://polylith.gitbook.io/), and need
 ;to build library JAR files from projects that rely on `:local/root` dependencies to specify other source

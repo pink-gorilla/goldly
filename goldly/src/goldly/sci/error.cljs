@@ -1,7 +1,7 @@
 (ns goldly.sci.error
   (:require
    [taoensso.timbre :as timbre :refer-macros [debugf info error]]
-   [frontend.notifications.core :refer [add-notification]]))
+   [frontend.notification :refer [show-notification]]))
 
 ; {:error {:root-ex {:type :sci/error
 ;                   :line 4
@@ -27,7 +27,7 @@
 
 (defn show-sci-error [filename error]
   (timbre/error "compilation failed: " filename error)
-  (add-notification :error (error-view filename error) 0))
+  (show-notification :error (error-view filename error) 0))
 
 (defn exception->error [e]
   ; #error {:message "Could not resolve symbol: call-bad-fn", 
