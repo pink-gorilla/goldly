@@ -1,6 +1,6 @@
 {:name "goldly-sci"
  ; build
- :lazy false
+ :lazy true
  :cljs-namespace [goldly.sci
                   goldly.sci.error
                   goldly.sci.eventhandler ; move to ui-repl or ui-gorilla
@@ -16,5 +16,3 @@
                     'goldly.sci.error {'error-view goldly.sci.error/error-view
                                        'exception->error goldly.sci.error/exception->error}}}
 
-
-require-async compile-sci compile-sci-async requiring-resolve

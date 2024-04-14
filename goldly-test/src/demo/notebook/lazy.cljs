@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [clojure.string :refer [join]]
-   [goldly.sci :refer [compile-sci-async]]))
+   [goldly.sci :refer [compile-code-async]]))
 
 ; this is a sci-cljs notebook!
 
@@ -15,7 +15,7 @@
 
 (defn async-eval [form]
   (let [d (r/atom "async compiling..")
-        p (compile-sci-async (wrap-code form))]
+        p (compile-code-async (wrap-code form))]
     (.then p
            (fn [result]
              (.log js/console "async eval result: " result)
