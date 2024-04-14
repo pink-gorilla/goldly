@@ -1,6 +1,0 @@
-{:name "bongo-lazy"
- ;build
- :lazy false
- :cljs-namespace [sciconfig2]
- :cljs-ns-bindings {'bongo2 sciconfig2/ns-bongo}
- }

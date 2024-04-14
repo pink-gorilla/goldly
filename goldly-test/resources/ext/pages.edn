@@ -1,0 +1,19 @@
+{:name "demo-pages"
+ :lazy true
+ :depends-on #{:ui-binaryclock :ui-site}
+
+ :cljs-namespace [demo.page.main
+                  demo.page.sci-compile
+                  demo.page.lazy
+                  demo.page.error]
+ :cljs-ns-bindings {'demo.page.main {'value->data demo.page.main/main-page}
+                    'demo.page.sci-compile {'sci-compile-page demo.page.sci-compile/sci-compile-page}
+                    'demo.page.lazy {'lazy-page demo.page.lazy/lazy-page}
+                    'demo.page.error {'error-page demo.page.error/error-page}}
+
+ :cljs-routes {""  reval.page.viewer/viewer-page
+                ; "devtools/repl" :repl
+               "main" demo.page.main/main-page
+               "scicompile" demo.page.sci-compile/sci-compile-page
+               "lazy" demo.page.lazy/lazy-page
+               "error" demo.page.error/error-page}}

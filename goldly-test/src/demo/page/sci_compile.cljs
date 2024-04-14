@@ -3,8 +3,7 @@
    [clojure.string :refer [join]]
    [reagent.core :as r]
    [promesa.core :as p]
-   [goldly.sci :refer [require-async compile-sci compile-sci-async requiring-resolve]]
-   [layout]
+   [goldly.sci :refer [require-async compile-code compile-code-async requiring-resolve resolve-symbol]]
    [demo.cljs-libs.helper :refer [wrap-layout]]))
 
 (def code (join
@@ -18,11 +17,11 @@
      [:p "require pending"]
      [:p "require result: " (pr-str @a)])
    (when (not (nil? @a))
-     (let [f (resolve 'demo.funny/joke)]
+     (let [f (resolve-symbol 'demo.funny/joke)]
        (when f
          [:p "joke: " (f)])))])
 
-(defn sci-compile-page [_route-data]
+(defn sci-compile-page1 [_route-data]
   (let [; sci-require
         r-a (r/atom nil)
         r-p (-> (require-async '[demo.funny :refer [joke]])
@@ -34,7 +33,7 @@
                           (reset! r-a {:err d}))))
         ; async-sci-compile
         ca-a (r/atom "no async result")
-        ca-p (compile-sci-async code)
+        ca-p (compile-code-async code)
         ; sci-requiring-resolve
         rr-a (r/atom "no-favorite-animal")
         rr-p (requiring-resolve 'demo.dynamic.animal/favorite-animal)]
@@ -53,12 +52,12 @@
        [:div "test for require: (require result should show up): " [show-result r-a]]
        ; (sync) sci-compile
        [:p.text-blue-500.text-xxl "sci compile test."]
-       [:p "test for compilation: (+ 5 5)" (pr-str (compile-sci "(+ 5 5)"))]
+       [:p "test for compilation: (+ 5 5)" (pr-str (compile-code "(+ 5 5)"))]
        ; async-sci-compile
        [:p.text-blue-500.text-xxl "sci async-compile test."]
        [:p "test for async compilation: " (pr-str @ca-a)]
        [:p.bg-red-500
-        [:a {:on-click #(compile-sci-async "(println \"hello from sci\")")}
+        [:a {:on-click #(compile-code-async "(println \"hello from sci\")")}
          "click to 'println' to browser console - should say [hello from sci]"]]
        ; sci-requiring-resolve
        [:p.text-blue-500.text-xxl "sci requiring-resolve test"]
@@ -66,5 +65,5 @@
         "favorite animal (no-favorite-animal is an error): " @rr-a]])))
 
 (def sci-compile-page
-  (wrap-layout sci-compile-page))
+  (wrap-layout sci-compile-page1))
 

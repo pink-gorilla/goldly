@@ -3,7 +3,7 @@
    [ui.highlightjs :refer [highlightjs]]
    [demo.cljs-libs.helper :refer [wrap-layout]]))
 
-(defn lazy-page [_r]
+(defn lazy-page1 [_r]
   [:div.bg-red-200.w-screen.h-screen.p-5
    [:p.text-blue-500.text-xxl "show code in highlightjs. highlightjs is lazy."]
    [:p "goto your browser devtools and check what it does"]
@@ -12,6 +12,6 @@
    [highlightjs "(+ 4 5)\r\n (def a 34) \n{:a 1 :b 2} (defn add [x y] \n (+ x y))"]])
 
 (def lazy-page
-  (wrap-layout lazy-page))
+  (wrap-layout lazy-page1))
 
 

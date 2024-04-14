@@ -8,12 +8,13 @@
                   ;goldly.static.app ; not possible, creates cyclic dependency.
                   ]
  :cljs-ns-bindings {'goldly.sci {'require-async goldly.sci/require-async
-                                 'compile-sci goldly.sci/compile-code
-                                 'compile-sci-async goldly.sci/compile-code-async
-                                 'resolve-symbol-sci goldly.sci/resolve-symbol
-                                 'requiring-resolve goldly.sci/requiring-resolve}
-
+                                 'resolve-symbol goldly.sci/resolve-symbol
+                                 'requiring-resolve goldly.sci/requiring-resolve
+                                 'compile-code goldly.sci/compile-code
+                                 'compile-code-async goldly.sci/compile-code-async}
                     'goldly.sci.eventhandler {'eventhandler-fn  goldly.sci.eventhandler/eventhandler-fn}
                     'goldly.sci.error {'error-view goldly.sci.error/error-view
                                        'exception->error goldly.sci.error/exception->error}}}
 
+
+require-async compile-sci compile-sci-async requiring-resolve

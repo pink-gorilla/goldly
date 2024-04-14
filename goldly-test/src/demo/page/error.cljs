@@ -8,10 +8,10 @@
   (throw {:type :custom-error
           :message "Something unpleasant occurred"}))
 
-(defn error-page [_r]
+(defn error-page1 [_r]
   [:div
    [exception-component]])
 
 (def error-page
-  (wrap-layout error-page))
+  (wrap-layout error-page1))
 

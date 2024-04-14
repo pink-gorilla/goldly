@@ -4,10 +4,11 @@
  :deps {org.pinkgorilla/webly {:mvn/version "0.5.662"}
         org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
         org.pinkgorilla/ui-repl {:mvn/version "0.1.96"} ;
+        org.pinkgorilla/ui-site {:mvn/version "0.0.30"}
+        org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.19"}
         ;org.pinkgorilla/ui-input {:mvn/version "0.2.44"} ; spaces
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
-        org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.14"}
         
        ; org.pinkgorilla/ui-sparklines {:mvn/version "0.0.3"}
        ; org.pinkgorilla/ui-video {:mvn/version "0.0.3"}
@@ -40,7 +41,7 @@
 
 ; demo ui
   :webly {:exec-fn webly.app.app/webly-build
-          :exec-args {:config ["docs/docs-config.edn"]
+          :exec-args {:config ["test-config.edn"]
                       :profile "npm-install"}}
 
   :npm-install {:exec-args {:profile "npm-install"}}
@@ -52,8 +53,8 @@
 
   :run {:exec-fn modular.system/start!
         :exec-args {:profile "jetty"
-                    :config  ["docs/docs-config.edn"]
-                    :services "docs/docs-services.edn"}}
+                    :config  ["test-config.edn"]
+                    :services "test-services.edn"}}
 
 
 

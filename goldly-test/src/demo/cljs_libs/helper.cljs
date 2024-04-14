@@ -1,13 +1,7 @@
 (ns demo.cljs-libs.helper
   (:require
-   [site]
-   [layout]))
-
-;; clj-libs is here, because 
-;; it shows that we can add custom libraries inside sci source code files.
-
-(defn add-3 [a]
-  (+ a 3))
+   [ui.site.template :as site]
+   [ui.site.layout :as layout]))
 
 (defn test-header []
   [site/header-menu
@@ -22,6 +16,6 @@
 
 (defn wrap-layout [page]
   (fn [route]
-    [layout/header-main  ; .w-screen.h-screen
-     [test-header]
-     [page route]]))
+    [layout/header-main
+      [test-header]
+      [page route]]))

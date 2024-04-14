@@ -1,0 +1,6 @@
+{:name "demo-goldly"
+ :lazy true
+ :depends-on #{:ui-codemirror :ui-repl}
+
+;
+ }
