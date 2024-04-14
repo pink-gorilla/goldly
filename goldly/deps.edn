@@ -11,7 +11,7 @@
   org.babashka/sci {:mvn/version "0.8.40"}
   org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.6"}
   org.pinkgorilla/sci-configs {:local/root "../sci-configs" :deps/manifest :deps}
-  
+  org.pinkgorilla/reval-sci {:local/root "../reval-sci" :deps/manifest :deps}
   }
 
  :aliases

@@ -3,10 +3,12 @@
          "target/webly"]
  :deps {org.pinkgorilla/webly {:mvn/version "0.5.662"}
         org.pinkgorilla/goldly {:local/root "../goldly" :deps/manifest :deps}
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.96"} ;
+        ;org.pinkgorilla/ui-input {:mvn/version "0.2.44"} ; spaces
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.0.14"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.1.96"}
+        
        ; org.pinkgorilla/ui-sparklines {:mvn/version "0.0.3"}
        ; org.pinkgorilla/ui-video {:mvn/version "0.0.3"}
   ;      org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}

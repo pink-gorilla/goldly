@@ -1,7 +1,9 @@
 {:name "reval-sci"
  ; build 
- :lazy false
+ :lazy true
+ :depends-on #{:ui-codemirror :reval-ui :ui-repl}
  :cljs-namespace [reval.type.sci ; side-effects; load protocols for cljs and sci
+                  reval.kernel.cljs-sci ; side-effects multi-method
                   ]
 
  :sci-cljs-ns [; kernel
@@ -21,7 +23,6 @@
                reval.goldly.viz.show
                ; page
                reval.goldly.page.eval-remote
-               reval.goldly.page.notebook-viewer
-               reval.goldly.page.repl]
+             ]
  
  }

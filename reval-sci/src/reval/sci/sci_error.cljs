@@ -1,7 +1,8 @@
-(ns reval.sci-error
+(ns reval.sci.sci-error
   (:refer-clojure :exclude [println])
-  (:require [clojure.string :as str]
-            [sci.core :as sci]))
+  (:require
+   [clojure.string :as str]
+   [sci.core :as sci]))
 
 (defn println [& strs]
   (.error js/console (str/join " " strs)))

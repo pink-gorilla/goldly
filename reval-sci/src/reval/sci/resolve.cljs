@@ -2,7 +2,7 @@
   (:require
    [goldly.sci :refer [require-async resolve-symbol-sci]]))
 
- [goldly.sci :refer [require-async resolve-symbol-sci]]
+
 
 (defn require-s-sci [s]
   (let [libspec [(-> s namespace symbol)]
