@@ -6,9 +6,6 @@
 - goldly uses the sci clojurescript interpreter to create a clojurescript kernel.
 - goldly uses webly lazy shadow-cljs lazy modules.
 
-
-
-
 ## goldly - in your  project **with custom ui-renderers**
 
 You need to add the **goldly** artefact to build javascript bundle from scratch. 
@@ -32,8 +29,6 @@ Run inside cloned goldly git repo.
 
 This option is mainly there for development of goldly. 
 For regular use, the long compile-times are not really sensible.
-
-Please see `bb tasks` for all available options. 
 
 ```
 cd goldly-test
