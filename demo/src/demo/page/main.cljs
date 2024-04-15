@@ -5,11 +5,12 @@
 
 (defn main-page1 [_route]
   [:div
-   [:h1.text-2xl.text-red-600.m-5 "goldly-test"]
+   [:h1.text-2xl.text-red-600.m-5 "goldly-demo"]
    [:p.m-2 "test if goldy extension system is working."]
 
    [:p.bg-green-300
-    [:a.m-2 {:href "/devtools/help"}  "devtools"]]
+    [:a.m-2 {:href "/viewer"}  "viewer"]
+    [:a.m-2 {:href "/repl"}  "repl"]]
 
    [:p "when the "
     [:span.text-red-500 "binary time "]

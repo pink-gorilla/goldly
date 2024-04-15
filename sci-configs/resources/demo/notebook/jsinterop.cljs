@@ -37,3 +37,15 @@ js/Error  ; could not resolve symbol
 (def err js/Error) (js/parseInt (.-message (err. \"42 \")))
 
 (String/fromCharCode 67)
+
+def o #js {"a" 44 "b" "B"})
+
+;; Read
+(j/get o :x)
+(j/get o "a")
+
+(j/get-in o [:a])
+(j/select-keys o [:a :b :c])
+
+; this does not work:
+;(j/get o .-x "fallback-value")

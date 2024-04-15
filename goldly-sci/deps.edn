@@ -3,13 +3,14 @@
          "target/webly"] ; webly bundel
  :deps
  {org.clojure/clojure    {:mvn/version "1.11.1"}
-  ; promesa is used in sci-cljs-kernel, version needs to match version in sci-config (see ui-repl)
+  ; promesa is used in sci-cljs-kernel, version needs to match version in sci-config
   ;"11.0.671" version 11 not yet supported
   ; https://github.com/babashka/sci.configs/blob/main/deps.edn
   funcool/promesa {:mvn/version "11.0.674"}
   cljs-http/cljs-http {:mvn/version "0.1.46"} ; cljs-sci source loader
   org.babashka/sci {:mvn/version "0.8.40"}
-  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.6"}}
+  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.6"}
+  org.pinkgorilla/timbre {:mvn/version "0.0.3"}}
 
  :aliases
  {;; developer tooling

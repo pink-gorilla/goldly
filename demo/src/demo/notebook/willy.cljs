@@ -5,3 +5,5 @@
 
 (defn monster []
   "I am a monster!")
+
+(println (monster))

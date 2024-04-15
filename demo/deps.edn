@@ -3,18 +3,13 @@
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
         org.pinkgorilla/webly {:mvn/version "0.5.662"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.1.96"} ;
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.100"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.30"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.19"}
         ;org.pinkgorilla/ui-input {:mvn/version "0.2.44"} ; spaces
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
+        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.7"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
-        
-       ; org.pinkgorilla/ui-sparklines {:mvn/version "0.0.3"}
-       ; org.pinkgorilla/ui-video {:mvn/version "0.0.3"}
-  ;      org.pinkgorilla/ui-echarts {:mvn/version "0.0.3"}
-  ;       org.pinkgorilla/ui-cytoscape {:mvn/version "0.0.9"}
-        ;org.pinkgorilla/ui-bidi {:mvn/version "0.0.24"} ; in webly, enforce higher version
         }
 
  :aliases
@@ -57,6 +52,10 @@
                     :services "test-services.edn"}}
 
 
+   :nbeval {:exec-fn modular.system/start!
+           :exec-args {:run reval.task/eval-all-collections
+                       :config  ["test-config.edn"]
+                       :services "task-services.edn"}}
 
 
 

@@ -10,7 +10,7 @@
     :items [{:text "service-test" :dispatch [:bidi/goto 'demo.page.service-test/service-page]}
             {:text "sci-compile"  :dispatch [:bidi/goto 'demo.page.sci-compile/sci-compile-page]}
             {:text "lazyload-test"  :dispatch  [:bidi/goto 'demo.page.lazy/lazy-page]}
-            {:text "select"  :dispatch  [:bidi/goto 'demo.page.select/select-page]}
+            {:text "kernel"  :dispatch  [:bidi/goto 'demo.page.kernel/kernel-page]}
             {:text "error-test"  :dispatch [:bidi/goto 'demo.page.error/error-page]}
             {:text "tick"  :dispatch [:bidi/goto 'demo.page.tick/tick-page]}]}])
 

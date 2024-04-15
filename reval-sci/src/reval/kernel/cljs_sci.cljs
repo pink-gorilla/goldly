@@ -19,14 +19,15 @@
 
 (defn err-adjust [e]
  (when-let [sci-err (exception->error e)]
-   {:err-sci sci-err}))
+   {:sci-compilation-error true
+    :err-sci sci-err}))
 
 (defonce cur-ns (r/atom "user"))
 
 (defn eval-cljs [{:keys [code] :as segment}]
   (let [r-p (p/deferred)
         segment (merge segment {:ns @cur-ns})
-        _ (info "eval clj: " segment)
+        _ (info "eval cljs: " segment)
         compile-p (compile-code-async code)]
     (-> compile-p
         (p/then  (fn [r]

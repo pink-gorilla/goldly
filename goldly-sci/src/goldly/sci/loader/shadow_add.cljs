@@ -9,10 +9,13 @@
 (defn add-shadow-module [{:keys [ctx libname ns opts sci-mod]}]
   (info "load-shadow-module: ns: " libname)
   (let [r-p (p/deferred)
-        shadow-p (load-shadow-ns libname)]
+        shadow-p (load-shadow-ns libname)
+        shadow-p (if (p/promise? shadow-p)
+                     shadow-p
+                   (p/resolved shadow-p))]
     (-> shadow-p
         (p/then (fn [res]
-                   (info "received shadow-module ns-vars for libname: " libname "ns: " ns)
+                   (info "received shadow-module for libname: " libname "ns: " ns)
                    (sci/add-namespace! ctx libname res)
                     ;; empty map return value, SCI will still process `:as` and `:refer`
                    (p/resolve! r-p {})))

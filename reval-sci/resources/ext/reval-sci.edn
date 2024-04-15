@@ -5,6 +5,9 @@
  :cljs-namespace [reval.type.sci ; side-effects; load protocols for cljs and sci
                   reval.kernel.cljs-sci ; side-effects multi-method
                   ]
+ :cljs-ns-bindings {'reval.kernel.cljs-sci {'eval-cljs  reval.kernel.cljs-sci/eval-cljs}}
+
+ 
 
  :sci-cljs-ns [; kernel
                reval.goldly.display

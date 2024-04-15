@@ -38,7 +38,6 @@
   (let [data (ex-data e)]
     (when-let [message (or (:message data) (.-message e))]
       (let [data (or (:data data) (.-data e))]
-        (error "error-message:" message)
-        (error "error-data:" data)
+        (error "sci error-message:" message " error-data:" data)
         {:err message
          :root-ex data}))))
