@@ -1,0 +1,19 @@
+
+
+ :goldly-static
+  {:extra-deps {}
+   :exec-fn goldly.offline.app/goldly-static
+   :exec-args {:config ["webly/config.edn" "goldly/config.edn" "test-config.edn"]
+               :app {:init "demo.static.demo/init"
+                     :page "demo.static.demo/router-page"
+                                        ;"demo.page.main/main-page"
+                     }
+               :sci-cljs-dirs ["demo/cljs_libs"
+                               "demo/page"
+                               "demo/static"
+                               "reval/goldly/page"
+                               "reval/goldly"
+                               "goldly/devtools"
+                               ]
+               }}
+

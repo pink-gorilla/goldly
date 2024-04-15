@@ -1,0 +1,49 @@
+{:paths ["src"
+         "resources" ; snippets
+         "target/webly"] ; webly bundel
+ :deps
+ {org.clojure/clojure    {:mvn/version "1.11.1"}
+  ; promesa is used in sci-cljs-kernel, version needs to match version in sci-config
+  ;"11.0.671" version 11 not yet supported
+  ; https://github.com/babashka/sci.configs/blob/main/deps.edn
+  funcool/promesa {:mvn/version "11.0.674"}
+  cljs-http/cljs-http {:mvn/version "0.1.46"} ; cljs-sci source loader
+  org.babashka/sci {:mvn/version "0.8.40"}
+  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.6"}
+  org.pinkgorilla/timbre {:mvn/version "0.0.3"}}
+
+ :aliases
+ {;; developer tooling
+
+  ; https://github.com/weavejester/cljfmt
+  :cljfmt
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
+   :main-opts ["-m" "cljfmt.main"
+               "--indents" "cljfmt.edn"]}
+
+ ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
+  :lint
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "clj-kondo.main"
+               "--fail-level" "error"
+               "--config" "cljkondo.edn"
+               "--lint"]}
+
+  :check
+  {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
+                                 :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
+   :main-opts ["-m" "clj-check.check"]}
+
+  :test-clj
+  {:extra-paths ["test"]
+   :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                                                      :sha "cc75980b43011773162b485f46f939dc5fba91e4"}}
+   :main-opts ["-m" "cognitect.test-runner"]
+   :exec-fn cognitect.test-runner.api/test}
+
+  ;; goldly
+
+
+
+;
+  }}

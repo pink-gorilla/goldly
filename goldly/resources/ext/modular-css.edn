@@ -1,9 +1,0 @@
-{:name "modular.css"
- ; build
- :lazy false
- :cljs-namespace [frontend.css.view]
- :cljs-ns-bindings {'ui.css {'load-css frontend.css.view/load-css}
-                    
-
-                    }}
-

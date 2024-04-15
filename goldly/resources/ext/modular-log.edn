@@ -1,7 +1,0 @@
-{:name "modular.log"
- ; build
- :lazy false
- :cljs-namespace [modular.log]
- :cljs-ns-bindings {'modular.log {'timbre-config! modular.log/timbre-config!}}}
-
-

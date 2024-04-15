@@ -1,0 +1,18 @@
+{:name "goldly-sci"
+ ; build
+ :lazy true
+ :cljs-namespace [goldly.sci
+                  goldly.sci.error
+                  goldly.sci.eventhandler ; move to ui-repl or ui-gorilla
+                  ;goldly.page.no-page
+                  ;goldly.static.app ; not possible, creates cyclic dependency.
+                  ]
+ :cljs-ns-bindings {'goldly.sci {'require-async goldly.sci/require-async
+                                 'resolve-symbol goldly.sci/resolve-symbol
+                                 'requiring-resolve goldly.sci/requiring-resolve
+                                 'compile-code goldly.sci/compile-code
+                                 'compile-code-async goldly.sci/compile-code-async}
+                    'goldly.sci.eventhandler {'eventhandler-fn  goldly.sci.eventhandler/eventhandler-fn}
+                    'goldly.sci.error {'error-view goldly.sci.error/error-view
+                                       'exception->error goldly.sci.error/exception->error}}}
+

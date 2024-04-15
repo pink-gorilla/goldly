@@ -31,8 +31,6 @@ jobs:
         clj-kondo: 2022.05.31        # Clj-kondo
         cljfmt: 0.10.2               # cljfmt
         cljstyle: 0.15.0             # cljstyle
-    - name: bb ci-check
-      run: bb ci-check
     - name: bb ci-goldly-deploy
       env:
         CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
@@ -41,22 +39,5 @@ jobs:
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        bb ci-goldly-deploy
-    - name: bb ci-goldly-docs-deploy
-      if: success()
-      # if: github.event_name == 'push'
-      env:
-        CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
-        CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
-        CODECOV_TOKEN: ${{ secrets.CodecovToken }}
-      run: |
-        git config --global user.email "ci@pinkgorilla.org"
-        git config --global user.name "CI/CD"
-        bb ci-goldly-docs-deploy
-      # bash <(curl -s https://codecov.io/bash)
-      # lein with-profile +relay-jetty cloverage
-      #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
-      #
-      # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
-      # Default 10000 not enough for us
-      # export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"     
+        clojure -T:build jar
+        clojure -T:build deploy

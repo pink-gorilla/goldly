@@ -1,0 +1,8 @@
+{:name "reagent"
+ ; build
+ :lazy false
+ :cljs-namespace [reagent.core
+                  sci.configs.reagent.reagent]
+ :cljs-ns-bindings {'reagent.core sci.configs.reagent.reagent/reagent-namespace
+                    'reagent.ratom sci.configs.reagent.reagent/reagent-ratom-namespace
+                    'reagent.debug sci.configs.reagent.reagent/reagent-debug-namespace}}

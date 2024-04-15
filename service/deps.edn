@@ -1,9 +1,0 @@
-{:paths ["src"
-         "resources"]
- :deps
- {org.clojure/clojure    {:mvn/version "1.11.1"}
-  org.clojure/core.async {:mvn/version "1.6.673"}
-  org.clojure/data.json {:mvn/version "2.4.0"}
-  com.rpl/specter {:mvn/version "1.1.4"}
-  org.pinkgorilla/websocket {:mvn/version "0.0.7"}
-  }}

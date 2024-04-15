@@ -1,0 +1,11 @@
+{:modular (modular.system/modular-env)  ; {:profile "jetty"  :config ["demo.edn" "secrets.edn"]}
+ ;:secrets #include "secrets.edn" ;; externalised and usually "mounted" as a docker/kubernetes secret
+ :components
+ {:config {:start (modular.config/load-config! (:config #ref [:modular]))}
+  :exts {:start (extension/discover)}
+
+  :reval {:start (reval.config/set-config!
+                  (:reval (deref (clip/ref :config))))}
+
+;  
+  }}

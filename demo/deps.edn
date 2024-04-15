@@ -1,0 +1,63 @@
+{:paths ["src"
+         "resources"
+         "target/webly"]
+ :deps {org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
+        org.pinkgorilla/webly {:mvn/version "0.5.662"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.100"}
+        org.pinkgorilla/ui-site {:mvn/version "0.0.30"}
+        org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.19"}
+        ;org.pinkgorilla/ui-input {:mvn/version "0.2.44"} ; spaces
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
+        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.7"}
+        ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
+        }
+
+ :aliases
+ {; https://github.com/weavejester/cljfmt
+  :cljfmt
+  {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
+   :main-opts ["-m" "cljfmt.main"
+               "--indents" "cljfmt.edn"]}
+
+  :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "1.0.0"}
+                       cider/cider-nrepl {:mvn/version "0.28.3"}}
+          :main-opts  ["-m" "nrepl.cmdline"]}
+
+  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+         :exec-fn clojure.tools.cli.api/tree}
+
+  ; goldy-test
+  ; this is a complete deps.edn project used to test goldly.
+
+  ; tests:
+  ; - loading of cljs source code files (+ hot reload of cljs files)
+  ; - lazy loading  (binaryclock dependency)
+  ; - services
+
+; demo ui
+  :webly {:exec-fn webly.app.app/webly-build
+          :exec-args {:config ["test-config.edn"]
+                      :profile "npm-install"}}
+
+  :npm-install {:exec-args {:profile "npm-install"}}
+  :compile {:exec-args {:profile "compile2"}}
+  :release {:exec-args {:profile "release"}}
+  :release-adv {:exec-args {:profile "release-adv"}}
+  :static {:exec-args {:profile "static"}}
+  :ci {:exec-args {:profile "ci"}}
+
+  :run {:exec-fn modular.system/start!
+        :exec-args {:profile "jetty"
+                    :config  ["test-config.edn"]
+                    :services "test-services.edn"}}
+
+
+   :nbeval {:exec-fn modular.system/start!
+           :exec-args {:run reval.task/eval-all-collections
+                       :config  ["test-config.edn"]
+                       :services "task-services.edn"}}
+
+
+
+;
+  }}

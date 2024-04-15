@@ -1,0 +1,22 @@
+{:name "demo-goldly-pages"
+ :lazy true
+ :depends-on #{:ui-binaryclock :ui-site :goldly-sci :reval-sci}
+ :cljs-namespace [demo.page.main
+                  demo.page.sci-compile
+                  demo.page.lazy
+                  demo.page.error
+                  demo.page.kernel]
+ :cljs-ns-bindings {'demo.page.main {'main-page demo.page.main/main-page}
+                    'demo.page.sci-compile {'sci-compile-page demo.page.sci-compile/sci-compile-page}
+                    'demo.page.lazy {'lazy-page demo.page.lazy/lazy-page}
+                    'demo.page.error {'error-page demo.page.error/error-page}
+                    'demo.page.kernel {'kernel-page demo.page.kernel/kernel-page}
+                    }
+
+ :cljs-routes {"viewer"  reval.page.viewer/viewer-page
+               "repl"  reval.page.repl/repl-page
+               "" demo.page.main/main-page
+               "scicompile" demo.page.sci-compile/sci-compile-page
+               "lazy" demo.page.lazy/lazy-page
+               "kernel" demo.page.kernel/kernel-page
+               "error" demo.page.error/error-page}}

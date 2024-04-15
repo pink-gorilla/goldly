@@ -1,0 +1,10 @@
+{:name "js-interop"
+ ; build
+ :lazy true
+ :cljs-namespace [applied-science.js-interop
+                  applied-science.js-interop.goldly
+                  sci.configs.applied-science.js-interop]
+ :cljs-ns-bindings {'applied-science.js-interop sci.configs.applied-science.js-interop/js-interop-namespace
+                    'applied-science.js-interop.goldly {'obj->clj applied-science.js-interop.goldly/obj->clj
+                                                        'value-of applied-science.js-interop.goldly/value-of}
+                    }}
