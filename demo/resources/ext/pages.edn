@@ -19,4 +19,9 @@
                "scicompile" demo.page.sci-compile/sci-compile-page
                "lazy" demo.page.lazy/lazy-page
                "kernel" demo.page.kernel/kernel-page
-               "error" demo.page.error/error-page}}
+               "error" demo.page.error/error-page}
+ 
+  :sci-cljs-ns [demo.cljs-libs.helper
+                ]
+ 
+ }

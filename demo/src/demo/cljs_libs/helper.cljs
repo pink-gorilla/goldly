@@ -17,5 +17,5 @@
 (defn wrap-layout [page]
   (fn [route]
     [layout/header-main
-      [test-header]
-      [page route]]))
+     [test-header]
+     [page route]]))

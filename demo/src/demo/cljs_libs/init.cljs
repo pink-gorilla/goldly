@@ -1,8 +1,8 @@
 (ns demo.cljs-libs.init
-  (:require 
-    [taoensso.timbre :as timbre :refer [info warn]]
-    [re-frame.core :as rf]
-    [webly.module.build :refer [load-namespace]]))
+  (:require
+   [taoensso.timbre :as timbre :refer [info warn]]
+   [re-frame.core :as rf]
+   [webly.module.build :refer [load-namespace]]))
 
 (rf/reg-event-db
  :goldly/init

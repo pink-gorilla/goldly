@@ -9,8 +9,8 @@
   funcool/promesa {:mvn/version "11.0.674"}
   cljs-http/cljs-http {:mvn/version "0.1.46"} ; cljs-sci source loader
   org.babashka/sci {:mvn/version "0.8.40"}
-  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.6"}
-  org.pinkgorilla/timbre {:mvn/version "0.0.3"}}
+  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.8"}
+  org.pinkgorilla/timbre {:mvn/version "0.0.4"}}
 
  :aliases
  {;; developer tooling

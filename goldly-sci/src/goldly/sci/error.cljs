@@ -29,15 +29,25 @@
   (timbre/error "compilation failed: " filename error)
   (show-notification :error (error-view filename error) 0))
 
+(defn load-error? [e]
+  (:load-error e))
+
+(defn load-error->error [e]
+  {:err {:class "load-error"
+         :message (:load-error e)}})
+
 (defn exception->error [e]
   ; #error {:message "Could not resolve symbol: call-bad-fn", 
-  ;          :data {:type :sci/error, :line nil, :column nil, :file nil, :phase "analysis"}}
+  ;         :data {:type :sci/error, :line nil, :column nil, :file nil, :phase "analysis"}}
   ; not working:
   ; error-message (:error/message err)
   ; error-data (:error/data err)
-  (let [data (ex-data e)]
-    (when-let [message (or (:message data) (.-message e))]
-      (let [data (or (:data data) (.-data e))]
-        (error "sci error-message:" message " error-data:" data)
-        {:err message
-         :root-ex data}))))
+  (if (load-error? e)
+    (load-error->error e)
+    (let [data (ex-data e)]
+      (when-let [message (or (:message data) (.-message e))]
+        (let [data (or (:data data) (.-data e))]
+          (error "sci error-message:" message " error-data:" data)
+          {:err {:message message
+                 :class ""
+                 :root-ex data}})))))

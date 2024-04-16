@@ -18,9 +18,9 @@
       er-h)))
 
 (defn err-adjust [e]
- (when-let [sci-err (exception->error e)]
-   {:sci-compilation-error true
-    :err-sci sci-err}))
+  (when-let [sci-err (exception->error e)]
+    {:sci-compilation-error true
+     :err-sci sci-err}))
 
 (defonce cur-ns (r/atom "user"))
 

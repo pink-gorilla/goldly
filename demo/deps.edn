@@ -2,14 +2,15 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
-        org.pinkgorilla/webly {:mvn/version "0.5.662"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.1.100"}
+        org.pinkgorilla/webly {:mvn/version "0.5.666"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.102"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.30"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.19"}
         ;org.pinkgorilla/ui-input {:mvn/version "0.2.44"} ; spaces
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
-        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.7"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
+         org.pinkgorilla/pinkie {:mvn/version "0.5.232"} ; higher version
+        org.pinkgorilla/ui-bidi {:mvn/version "0.0.30"} ; higher version
         }
 
  :aliases
@@ -19,14 +20,8 @@
    :main-opts ["-m" "cljfmt.main"
                "--indents" "cljfmt.edn"]}
 
-  :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "1.0.0"}
-                       cider/cider-nrepl {:mvn/version "0.28.3"}}
-          :main-opts  ["-m" "nrepl.cmdline"]}
 
-  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/tree}
-
-  ; goldy-test
+  ; goldy-demo
   ; this is a complete deps.edn project used to test goldly.
 
   ; tests:

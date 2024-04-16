@@ -27,9 +27,8 @@
     (info "loading sci-cljs source file from url: " url)
     url))
 
-
 (defn load-sci-cljs-code [libname]
   ; libname: bongo.trott ; the ns that gets compiled
-  (info "load-sci-cljs-code" "libname:" libname )
+  (info "load-sci-cljs-code" "libname:" libname)
   (let [url (-> libname str ns->url)]
     (GET url)))

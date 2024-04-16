@@ -11,7 +11,7 @@
    [goldly.sci.clojure-core :refer [cljns] :as clojure-core]
    ; loading of cljs source-code
    [goldly.sci.loader.async-load :refer [async-load-fn]]
-))
+   [goldly.sci.error :refer [exception->error]]))
 
 (declare ctx-repl) ; since we want to add compile-sci to the bindings, we have to declare the ctx later
 
@@ -97,19 +97,23 @@
                    ;               )
                   sci/ns @!last-ns]
       (let [eval-p (scia/eval-string+ ctx-repl code)]
-        (.then eval-p (fn [res]
-                        (let [{:keys [val ns]} res
-                              result  {:id nil
-                                       :code code
-                                       :value val
-                                       :out @output
-                                       :ns (str ns)}]
-                          (reset! !last-ns ns)
-                          (reset! output "")
-                          (debug "sci-cljs compile result: " result)
-                          result)))))
+        (-> eval-p
+            (p/then (fn [res]
+                      (let [{:keys [val ns]} res
+                            result  {:id nil
+                                     :code code
+                                     :value val
+                                     :out @output
+                                     :ns (str ns)}]
+                        (reset! !last-ns ns)
+                        (reset! output "")
+                        (debug "sci-cljs compile result: " result)
+                        result)))
+            (p/catch (fn [e]
+                       (timbre/error "sci compile-code-async error:" e)
+                       (exception->error e))))))
     (catch :default e
-      (timbre/error "sci compile-code-async --]" code "[-- ex: " e)
+      (timbre/error "sci compile-code-async2 --]" code "[-- ex: " e)
       {:error  {:root-ex (.-data e)
                 :err (.-message e)}})))
 

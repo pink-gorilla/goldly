@@ -19,7 +19,7 @@
                         (p/then (fn [code]
                                   (scia/eval-string+ ctx code)))
                         (p/catch (fn [err]
-                                   (p/reject! r {:error (str "no code received err: " err)}))))]
+                                   (p/reject! r {:load-error (str "no sci-code for ns: " libname " err: " err)}))))]
     (-> eval-p
         (p/then  (fn [res]
                    (if (valid-code? res)
@@ -31,10 +31,10 @@
                          (warn "registering as: " as "in ns: " ns " to:" (symbol libname))
                          (sci/add-import! ctx ns (symbol libname) (:as opts)))
                        (p/resolve! r {:handled false}))
-                     (do (error "no sci-code received for " libname)
-                         (p/reject! r {:error "no sci-code received!"})))))
+                     (do (error "no sci-code received for ns: " libname)
+                         (p/reject! r {:load-error (str "no sci-code for ns: " libname)})))))
         (p/catch (fn [e]
                    (error "compile error for: " libname " error: " e)
                    (p/reject! r (str "compile error for: " libname)))))
     r))
-    
+
