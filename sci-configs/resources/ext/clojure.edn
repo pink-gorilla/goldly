@@ -1,0 +1,9 @@
+{:name "clojure"
+  ; build
+ :lazy false
+ :cljs-namespace [goldly.clojure-ns]
+ :cljs-ns-bindings {'clojure.string goldly.clojure-ns/clojure-string-namespace
+                    ;'clojure.edn goldly.clojure-ns/clojure-edn-namespace
+                    'clojure.walk goldly.clojure-ns/clojure-walk-namespace
+                    'goog.object goldly.clojure-ns/goog-object-namespace
+                    'goog.string goldly.clojure-ns/goog-string-namespace}}

@@ -1,7 +1,4 @@
-{:build {:disabled-extensions #{"goog.string"
-                                "clojure.walk"
-                                "clojure.string"
-                                "goog.object"}}
+{:build {:disabled-extensions #{"goog.string" "clojure.walk" "clojure.string"  "goog.object"}}
 
  :spa {:title "Goldly Demo"
        :start-user-app [:goldly/init]}

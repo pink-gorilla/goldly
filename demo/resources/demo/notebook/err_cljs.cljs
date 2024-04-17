@@ -1,7 +1,6 @@
 (ns demo.notebook.err-cljs
   (:require [bongistan]))
-; bongistan ns does not exist
-
+; no sci-code for ns: bongistan
 
 (blubb 13 27)
-;; blubb does not exist.
+;; Could not resolve symbol: blubb

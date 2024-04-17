@@ -5,10 +5,9 @@
 
 (defn test-header []
   [site/header-menu
-   {:brand "goldly-test"
+   {:brand "goldly-demo"
     :brand-link "/"
-    :items [{:text "service-test" :dispatch [:bidi/goto 'demo.page.service-test/service-page]}
-            {:text "sci-compile"  :dispatch [:bidi/goto 'demo.page.sci-compile/sci-compile-page]}
+    :items [{:text "sci-compile"  :dispatch [:bidi/goto 'demo.page.sci-compile/sci-compile-page]}
             {:text "lazyload-test"  :dispatch  [:bidi/goto 'demo.page.lazy/lazy-page]}
             {:text "kernel"  :dispatch  [:bidi/goto 'demo.page.kernel/kernel-page]}
             {:text "error-test"  :dispatch [:bidi/goto 'demo.page.error/error-page]}

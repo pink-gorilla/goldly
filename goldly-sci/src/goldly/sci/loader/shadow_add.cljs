@@ -9,7 +9,6 @@
   (info "webly-shadow-ns load: " libname " type: " (type libname))
   (load-namespace-raw libname))
 
-
 (defn add-shadow-module [{:keys [ctx libname ns opts sci-mod]}]
   (info "load-shadow-module: ns: " libname)
   (let [r-p (p/deferred)
@@ -25,7 +24,7 @@
                       (info "ns " libname " is a simple namespace; adding ns..")
                       (sci/add-namespace! ctx libname x))
                     (do 
-                       (error "ns " libname " is a sci-configs-namespace ; adding ns ..")
+                       (info "ns " libname " is a sci-configs-namespace ; adding ns ..")
                        (sci/add-namespace! ctx libname res)))
                     ;; empty map return value, SCI will still process `:as` and `:refer`
                   (p/resolve! r-p {})))

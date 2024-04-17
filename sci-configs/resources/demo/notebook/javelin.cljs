@@ -1,6 +1,6 @@
 (ns demo.notebook.javelin
   (:require 
-    [javelin.core :refer [cell] :refer-macros [cell=]]))
+    [javelin.core :refer [cell cell=]]))
 
 (defn start []
   (let [a (cell 0)              ;; input cell with initial value of 0.
