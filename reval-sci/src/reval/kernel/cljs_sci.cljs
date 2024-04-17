@@ -31,7 +31,7 @@
         compile-p (compile-code-async code)]
     (-> compile-p
         (p/then  (fn [r]
-                   (info "eval clj result: " r)
+                   (info "eval result: " r)
                    (reset! cur-ns (:ns r))
                    (p/resolve! r-p (viz-adjust r))))
         (p/catch (fn [err]

@@ -3,7 +3,12 @@
    [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
    [promesa.core :as p]
    [sci.core :as sci]
-   [goldly.sci.loader.shadow-load :refer [load-shadow-ns]]))
+   [webly.module.build :refer [load-namespace-raw simple-namespace? assemble-simple-ns]]))
+
+(defn load-shadow-ns [libname]
+  (info "webly-shadow-ns load: " libname " type: " (type libname))
+  (load-namespace-raw libname))
+
 
 (defn add-shadow-module [{:keys [ctx libname ns opts sci-mod]}]
   (info "load-shadow-module: ns: " libname)
@@ -15,7 +20,13 @@
     (-> shadow-p
         (p/then (fn [res]
                   (info "received shadow-module for libname: " libname "ns: " ns)
-                  (sci/add-namespace! ctx libname res)
+                  (if (simple-namespace? libname)
+                    (let [x (assemble-simple-ns libname res)]
+                      (info "ns " libname " is a simple namespace; adding ns..")
+                      (sci/add-namespace! ctx libname x))
+                    (do 
+                       (error "ns " libname " is a sci-configs-namespace ; adding ns ..")
+                       (sci/add-namespace! ctx libname res)))
                     ;; empty map return value, SCI will still process `:as` and `:refer`
                   (p/resolve! r-p {})))
         (p/catch (fn [err]

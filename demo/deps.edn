@@ -2,14 +2,14 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
-        org.pinkgorilla/webly {:mvn/version "0.5.666"}
+        org.pinkgorilla/webly {:mvn/version "0.5.669"}
         org.pinkgorilla/ui-repl {:mvn/version "0.1.102"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.30"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.19"}
         ;org.pinkgorilla/ui-input {:mvn/version "0.2.44"} ; spaces
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
-         org.pinkgorilla/pinkie {:mvn/version "0.5.232"} ; higher version
+        org.pinkgorilla/pinkie {:mvn/version "0.5.232"} ; higher version
         org.pinkgorilla/ui-bidi {:mvn/version "0.0.30"} ; higher version
         }
 
@@ -20,8 +20,7 @@
    :main-opts ["-m" "cljfmt.main"
                "--indents" "cljfmt.edn"]}
 
-
-  ; goldy-demo
+; goldy-demo
   ; this is a complete deps.edn project used to test goldly.
 
   ; tests:
@@ -46,13 +45,10 @@
                     :config  ["test-config.edn"]
                     :services "test-services.edn"}}
 
-
-   :nbeval {:exec-fn modular.system/start!
+  :nbeval {:exec-fn modular.system/start!
            :exec-args {:run reval.task/eval-all-collections
                        :config  ["test-config.edn"]
                        :services "task-services.edn"}}
-
-
 
 ;
   }}

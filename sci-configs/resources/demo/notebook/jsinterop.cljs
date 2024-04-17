@@ -38,7 +38,7 @@ js/Error  ; could not resolve symbol
 
 (String/fromCharCode 67)
 
-def o #js {"a" 44 "b" "B"})
+(def o #js {"a" 44 "b" "B"})
 
 ;; Read
 (j/get o :x)
