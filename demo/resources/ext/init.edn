@@ -1,5 +1,0 @@
-{:name "goldly-init"
- :cljs-namespace [demo.cljs-libs.init]
- 
- 
- }

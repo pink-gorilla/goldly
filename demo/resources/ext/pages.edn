@@ -10,9 +10,8 @@
                     'demo.page.sci-compile {'sci-compile-page demo.page.sci-compile/sci-compile-page}
                     'demo.page.lazy {'lazy-page demo.page.lazy/lazy-page}
                     'demo.page.error {'error-page demo.page.error/error-page}
-                    'demo.page.kernel {'kernel-page demo.page.kernel/kernel-page}
-                    }
-
+                    'demo.page.kernel {'kernel-page demo.page.kernel/kernel-page}}
+ ; runtime
  :cljs-routes {"viewer"  reval.page.viewer/viewer-page
                "repl"  reval.page.repl/repl-page
                "" demo.page.main/main-page
@@ -21,7 +20,4 @@
                "kernel" demo.page.kernel/kernel-page
                "error" demo.page.error/error-page}
  
-  :sci-cljs-ns [demo.cljs-libs.helper
-                ]
- 
- }
+  :sci-cljs-ns [demo.cljs-libs.helper]}

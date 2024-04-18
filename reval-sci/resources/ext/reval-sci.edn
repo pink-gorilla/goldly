@@ -4,7 +4,9 @@
  :depends-on #{:ui-codemirror :reval-ui :ui-repl :goldly-sci}
  :cljs-namespace [reval.type.sci ; side-effects; load protocols for cljs and sci
                   reval.kernel.cljs-sci ; side-effects multi-method
-                  ]
- :cljs-ns-bindings {'reval.kernel.cljs-sci {'eval-cljs  reval.kernel.cljs-sci/eval-cljs}}
+                  reval.init]
+ :cljs-ns-bindings {'reval.kernel.cljs-sci {'eval-cljs  reval.kernel.cljs-sci/eval-cljs}
+                    'reval.init {'reval-cljs-kernel-init reval.init/reval-cljs-kernel-init}}
+ :cljs-service {:start-fn reval.init/reval-cljs-kernel-init}
 ; 
  }

@@ -1,7 +1,6 @@
 {:build {:disabled-extensions #{"goog.string" "clojure.walk" "clojure.string"  "goog.object"}}
 
- :spa {:title "Goldly Demo"
-       :start-user-app [:goldly/init]}
+ :spa {:title "Goldly Demo"}
 
  :reval {:rdocument  {:storage-root "target/webly/public/rdocument/"
                       :url-root "/api/rdocument/file/"}
