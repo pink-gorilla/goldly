@@ -1,0 +1,6 @@
+{:name "cljs-pprint"
+ ; build
+ :lazy true 
+ :cljs-namespace [goldly.pprint]
+ :cljs-ns-bindings {cljs.pprint goldly.pprint/pprint-namespace}}
+
