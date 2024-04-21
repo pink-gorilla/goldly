@@ -2,15 +2,13 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
-        org.pinkgorilla/webly {:mvn/version "0.5.676"}
+        org.pinkgorilla/webly {:mvn/version "0.5.683"}
         org.pinkgorilla/ui-repl {:mvn/version "0.1.104"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.30"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.19"}
         ;org.pinkgorilla/ui-input {:mvn/version "0.2.44"} ; spaces
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
-        org.pinkgorilla/pinkie {:mvn/version "0.5.232"} ; higher version
-        org.pinkgorilla/ui-bidi {:mvn/version "0.0.30"} ; higher version
         }
 
  :aliases
