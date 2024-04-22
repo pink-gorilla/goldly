@@ -7,8 +7,8 @@
   ;"11.0.671" version 11 not yet supported
   ; https://github.com/babashka/sci.configs/blob/main/deps.edn
   funcool/promesa {:mvn/version "11.0.674"}
-  cljs-http/cljs-http {:mvn/version "0.1.46"} ; cljs-sci source loader
   org.babashka/sci {:mvn/version "0.8.40"}
+  cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; sci code loading
   org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.10"}
   org.pinkgorilla/timbre {:mvn/version "0.0.6"}}
 

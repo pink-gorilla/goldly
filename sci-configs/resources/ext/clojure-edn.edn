@@ -1,0 +1,6 @@
+{:name "clojure.edn"
+ ; build
+ :lazy false
+ :cljs-namespace [clojure.edn]
+ :cljs-ns-bindings {'clojure.edn {'read-string clojure.edn/read-string
+                                  'read clojure.edn/read}}}

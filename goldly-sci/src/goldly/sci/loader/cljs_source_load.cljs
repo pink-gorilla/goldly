@@ -2,8 +2,27 @@
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
    [clojure.string]
+   [promesa.core :as p]
    [ajax.core :refer [GET]]
    [webly.spa.mode :refer [get-mode get-resource-path]]))
+
+(defn wrap-promise
+  ; see in sci-configs ajax.promise
+  [AJAX-TYPE url params]
+  (p/create
+   (fn [resolve reject]
+     (AJAX-TYPE url
+                (merge params
+                       {:handler (fn [response]
+                                    (info "sci source received successfully for url: " url)
+                                   (resolve response))
+                        :error-handler (fn [error]
+                                         (error "sci source load error url: " url " error: " error)
+                                         (reject error))})))))
+
+(defn GET-p [url] 
+  (wrap-promise GET url {}))
+
 
 (defn ns->filename [ns]
   (-> ns
@@ -29,6 +48,6 @@
 
 (defn load-sci-cljs-code [libname]
   ; libname: bongo.trott ; the ns that gets compiled
-  (info "load-sci-cljs-code" "libname:" libname)
   (let [url (-> libname str ns->url)]
-    (GET url)))
+    (info "load-sci-cljs-code" "libname:" libname " url: " url)  
+    (GET-p url)))

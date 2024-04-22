@@ -1,0 +1,26 @@
+{:name "cljs-ajax"
+ ; build
+ :lazy false
+ :cljs-namespace [ajax.core
+                  ajax.promise]
+ :cljs-ns-bindings {'ajax.core {'GET ajax.core/GET
+                                'POST ajax.core/POST
+                                'PUT ajax.core/PUT
+                                'DELETE ajax.core/DELETE
+                                ; request/response formats
+                                'json-request-format ajax.core/json-request-format
+                                'json-response-format ajax.core/json-response-format
+                                'transit-request-format ajax.core/transit-request-format
+                                'transit-response-format ajax.core/transit-response-format
+                                'ring-response-format ajax.core/ring-response-format
+                                'url-request-format ajax.core/url-request-format
+                                'text-request-format ajax.core/text-request-format
+                                'text-response-format ajax.core/text-response-format
+                                ; There's no raw-request-format because it's handled by the DirectSubmission code
+                                'raw-response-format ajax.core/raw-response-format}
+                    'ajax.promise {'GET ajax.promise/GET
+                                   'POST ajax.promise/POST
+                                   'PUT ajax.promise/PUT
+                                   'DELETE ajax.promise/DELETE}
+                    
+                    }}

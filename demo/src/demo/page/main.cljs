@@ -1,6 +1,6 @@
 (ns demo.page.main
   (:require
-   [ui.binaryclock.clock :refer [binary-clock]]
+   [ui.binaryclock :refer [binary-clock]]
    [demo.cljs-libs.helper :refer [wrap-layout]]))
 
 (defn main-page1 [_route]
