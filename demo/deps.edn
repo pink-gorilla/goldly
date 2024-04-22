@@ -47,5 +47,11 @@
                        :config  ["test-config.edn"]
                        :services "task-services.edn"}}
 
+  :static-sci {:exec-fn goldly.build/static-build-copy-sci-code
+           
+               
+
+  }
+
 ;
   }}

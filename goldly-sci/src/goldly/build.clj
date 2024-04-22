@@ -41,17 +41,20 @@
 (defn write-files [dir sci-files]
   (doall (map #(export-ns dir %) sci-files)))
 
-(defn export-sci-code [exts]
+(defn export-sci-code [exts out-dir]
   (let [sci-files (->> (get-extensions-for exts :sci-cljs-ns  concat [] [])
-                       (into []))
-        dir "target/webly/public/code"]
+                       (into []))]
     (write-service exts :sci-cljs-ns sci-files)
-    (ensure-directory dir)
-    (write-files dir sci-files)))
+    (ensure-directory out-dir)
+    (write-files out-dir sci-files)))
+
+(defn static-build-copy-sci-code [& _]
+  (let [exts (extension/discover)]
+    (export-sci-code exts "target/static/r/code")))
 
 (comment
   (def exts (extension/discover))
-  (export-sci-code exts)
+  (export-sci-code exts "target/static/r/code")
 
 ;
   )
