@@ -29,7 +29,7 @@
                     ;; empty map return value, SCI will still process `:as` and `:refer`
                   (p/resolve! r-p {})))
         (p/catch (fn [err]
-                   (error "no shadow-module received for ns: " libname)
+                   (warn "no shadow-module received for ns: " libname)
                    (p/reject! r-p err))))
 
     r-p))
