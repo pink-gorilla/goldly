@@ -33,7 +33,7 @@
   (str "/code/" filename))
 
 (defn filename-static [filename]
-  (str (get-resource-path) "/code/" filename))
+  (str (get-resource-path) "code/" filename))
 
 (defn ns->url [ns]
   (let [file (ns->filename ns)
