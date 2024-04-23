@@ -2,7 +2,7 @@
          "resources"
          "target/webly"]
  :deps {org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
-        org.pinkgorilla/webly {:mvn/version "0.5.683"}
+        org.pinkgorilla/webly {:mvn/version "0.5.688"}
         org.pinkgorilla/ui-repl {:mvn/version "0.1.105"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.30"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.20"}
