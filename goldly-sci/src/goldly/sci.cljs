@@ -60,8 +60,7 @@
                                           ;(info "get-page-fn resolved fun: " f)
                                           f)))]
       (p/catch require-p (fn [require-error]
-                           (error "requiring-resolve: failed to load ns: " libspec)
-                           (error "requiring-resolve error: " require-error)
+                           (error "requiring-resolve: failed to load ns: " libspec " error: " require-error)
                            nil))
       resolve-p)))
 
