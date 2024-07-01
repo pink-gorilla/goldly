@@ -6,7 +6,7 @@
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.20"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
-        org.pinkgorilla/clj-service {:mvn/version "0.3.18"}
+        org.pinkgorilla/clj-service {:mvn/version "0.3.19"}
         org.pinkgorilla/webly {:mvn/version "0.7.693"}
         org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
         }
