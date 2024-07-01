@@ -32,13 +32,13 @@
   '[(ns example2 (:require [adder]))
     (adder/add 7 13)])
  (async-eval
-  '[(ns example3 (:require [funny]))
-    (funny/joke)])
+  '[(ns example3 (:require [demo.dynamic.funny]))
+    (demo.dynamic.funny/joke)])
  (async-eval
-  '[(ns example4 (:require [funny :refer [joke]]))
+  '[(ns example4 (:require [demo.dynamic.funny :refer [joke]]))
     (joke)])
  (async-eval
-  '[(ns example5 (:require [funny :as f]))
+  '[(ns example5 (:require [demo.dynamic.funny :as f]))
     (f/joke)])]
 
 

@@ -1,4 +1,4 @@
-(ns demo.page.scipage
+(ns demo.page.sci-page-interpreted
   (:require
    [demo.cljs-libs.helper :refer [wrap-layout]]))
 
@@ -7,6 +7,7 @@
   [:div
    [:p "I am interpreted by sci"]
    [:p "1 + 2 = " (+ 1 2)]
+   [:p "please check if the addition result is correct!"]
    ])
 
 (def sci-page

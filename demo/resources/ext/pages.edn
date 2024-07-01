@@ -19,7 +19,7 @@
                "lazy" demo.page.lazy/lazy-page
                "kernel" demo.page.kernel/kernel-page
                "error" demo.page.error/error-page
-               "sci-interpreted" demo.page.scipage/sci-page
+               "sci-interpreted" demo.page.sci-page-interpreted/sci-page
                }
  
   :sci-cljs-ns [demo.cljs-libs.helper]}

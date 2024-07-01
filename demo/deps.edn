@@ -1,13 +1,14 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
-        org.pinkgorilla/webly {:mvn/version "0.5.688"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.1.105"}
-        org.pinkgorilla/ui-site {:mvn/version "0.0.30"}
+ :deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.105"}
+        org.pinkgorilla/ui-site {:mvn/version "0.0.31"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.20"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
+        org.pinkgorilla/clj-service {:mvn/version "0.3.18"}
+        org.pinkgorilla/webly {:mvn/version "0.7.693"}
+        org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
         }
 
  :aliases

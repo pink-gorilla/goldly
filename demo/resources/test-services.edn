@@ -4,17 +4,25 @@
  {:config {:start (modular.config/load-config! (:config #ref [:modular]))}
   :exts {:start (extension/discover)}
 
+  :permission {:start (modular.permission.core/start-permissions
+                       {} ; empty users map. users only are needed if oauth2 module gets loaded, 
+                          ; because without identity-token users cannot be "logged in"
+                       )}
+
+  :clj-service {:start (clj-service.core/start-clj-services
+                        (clip/ref :permission)
+                        (clip/ref :exts))}
+  
+  :reval {:start (reval.core/start-reval
+                  {:config (:reval (deref (clip/ref :config)))
+                   :clj  (clip/ref :clj-service)
+                   :reval-role nil})}
+
   :webly {:start (webly.app.app/start-webly
+                  (clip/ref :exts)
                   (deref (clip/ref :config))
                   (:profile #ref [:modular]))
           :stop (webly.app.app/stop-webly this)}
-
-  :clj-service {:start (goldly.service/start-clj-services
-                        (clip/ref :exts))}
-
-  :reval {:start (reval.config/set-config!
-                  (:reval (deref (clip/ref :config))))}
-
 
 ;  
   }}
