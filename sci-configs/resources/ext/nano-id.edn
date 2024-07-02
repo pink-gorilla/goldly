@@ -1,0 +1,5 @@
+{:name "nano-id"
+  ; build
+ :lazy true
+ :cljs-namespace [nano-id.core]
+ :cljs-ns-bindings {'nano-id.core {'nano-id nano-id.core/nano-id}}}
