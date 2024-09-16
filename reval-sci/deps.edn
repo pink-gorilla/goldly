@@ -1,6 +1,6 @@
 {:paths ["src"
          "resources" ; extension
          ]
- :deps {org.pinkgorilla/reval {:mvn/version "0.7.162"}}
+ :deps {org.pinkgorilla/reval {:mvn/version "0.7.163"}}
 ;
  }
