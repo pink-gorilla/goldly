@@ -4,10 +4,7 @@
  {:config {:start (modular.config/load-config! (:config #ref [:modular]))}
   :exts {:start (extension/discover)}
   
-  :reval {:start (reval.core/start-reval
-                  {:config (:reval (deref (clip/ref :config)))
-                   :clj  nil
-                   :reval-role nil})}
+
 
 ;  
   }}

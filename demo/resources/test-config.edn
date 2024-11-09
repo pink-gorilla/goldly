@@ -2,12 +2,6 @@
 
  :spa {:title "Goldly Demo"}
 
- :reval {:rdocument  {:storage-root "target/webly/public/rdocument/"
-                      :url-root "/api/rdocument/file/"}
-         :collections {:demo [:clj "demo/notebook/"] ; embedded notebooks in jars.
-                       :demo-cljs [:cljs "demo/notebook/"] ; embedded notebooks in jars.
-                       }}
-
  :keybindings [{:kb "alt-g k",
                 :handler [:palette/show],
                 :desc "Keybindings dialog"}

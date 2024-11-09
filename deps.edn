@@ -1,5 +1,4 @@
 {:deps {org.pinkgorilla/goldly-sci {:local/root "./goldly-sci" :deps/manifest :deps}
-        org.pinkgorilla/reval-sci {:local/root "./reval-sci" :deps/manifest :deps}
         org.pinkgorilla/sci-configs {:local/root "./sci-configs" :deps/manifest :deps}}
 
  :aliases {:build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}
