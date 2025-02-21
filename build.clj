@@ -5,7 +5,7 @@
 ))
 
 (def lib 'org.pinkgorilla/goldly)
-(def version (format "0.7.%s" (b/git-count-revs nil)))
+(def version (format "0.9.%s" (b/git-count-revs nil)))
 
 (defn jar "build the JAR" [opts]
   (println "Building the JAR")

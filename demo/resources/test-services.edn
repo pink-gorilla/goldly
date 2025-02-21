@@ -13,11 +13,11 @@
                         (clip/ref :permission)
                         (clip/ref :exts))}
   
-  :webly {:start (webly.app.app/start-webly
-                  (clip/ref :exts)
+  :webly {:start (webly.spa/start-webly
+                  {:exts (clip/ref :exts)}
                   (deref (clip/ref :config))
                   (:profile #ref [:modular]))
-          :stop (webly.app.app/stop-webly this)}
+          :stop (webly.spa/stop-webly this)}
 
 ;  
   }}

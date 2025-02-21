@@ -9,12 +9,12 @@
   funcool/promesa {:mvn/version "11.0.674"}
   org.babashka/sci {:mvn/version "0.8.40"}
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; sci code loading
-  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.10"}
-  org.pinkgorilla/timbre {:mvn/version "0.0.7"}}
+  org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}
+  org.pinkgorilla/timbre {:mvn/version "0.0.8"}}
 
  :aliases
  {;; developer tooling
-
+  
   ; https://github.com/weavejester/cljfmt
   :cljfmt
   {:extra-deps {cljfmt/cljfmt {:mvn/version "0.8.0"}}
@@ -42,7 +42,7 @@
    :exec-fn cognitect.test-runner.api/test}
 
   ;; goldly
-
+  
 
 
 ;

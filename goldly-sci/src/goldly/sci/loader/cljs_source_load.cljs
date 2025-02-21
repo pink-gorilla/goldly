@@ -9,6 +9,7 @@
 (defn wrap-promise
   ; see in sci-configs ajax.promise
   [AJAX-TYPE url params]
+  (info "getting url: " url)
   (p/create
    (fn [resolve reject]
      (AJAX-TYPE url
@@ -21,8 +22,17 @@
                                          (reject error))})))))
 
 (defn GET-p [url] 
-  (wrap-promise GET url {}))
+  (wrap-promise GET url {:format :text
+                         :response-format  (ajax.core/text-response-format) ;; IMPORTANT!: You must provide this.
+                         }))
 
+(defn get-code [url]
+  ;; Using native JS fetch API
+  (-> (js/fetch url)
+      (.then (fn [res]
+               (if (.-ok res)
+                 (.text res)
+                 (js/Promise.reject (str "HTTP error " (.-status res))))))))
 
 (defn ns->filename [ns]
   (-> ns
@@ -50,4 +60,6 @@
   ; libname: bongo.trott ; the ns that gets compiled
   (let [url (-> libname str ns->url)]
     (info "load-sci-cljs-code" "libname:" libname " url: " url)  
-    (GET-p url)))
+    ;(GET-p url)
+    (get-code url)
+    ))

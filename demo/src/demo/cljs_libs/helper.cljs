@@ -9,7 +9,6 @@
     :brand-link "/"
     :items [{:text "sci-compile"  :dispatch [:bidi/goto 'demo.page.sci-compile/sci-compile-page]}
             {:text "lazyload-test"  :dispatch  [:bidi/goto 'demo.page.lazy/lazy-page]}
-            {:text "kernel"  :dispatch  [:bidi/goto 'demo.page.kernel/kernel-page]}
             {:text "error-test"  :dispatch [:bidi/goto 'demo.page.error/error-page]}
             {:text "sci-interpreted"  :dispatch [:bidi/goto 'demo.page.sci-page-interpreted/sci-page]}]}])
 

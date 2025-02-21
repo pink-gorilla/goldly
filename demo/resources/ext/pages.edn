@@ -1,6 +1,6 @@
 {:name "demo-goldly-pages"
  :lazy true
- :depends-on #{:ui-binaryclock :ui-site :goldly-sci :reval-sci}
+ :depends-on #{:ui-binaryclock :ui-site :goldly-sci}
  :cljs-namespace [demo.page.main
                   demo.page.sci-compile
                   demo.page.lazy

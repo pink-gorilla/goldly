@@ -4,9 +4,8 @@
 
 - goldly uses the sci clojure(script) interpreter to create a clojurescript kernel.
 - goldly uses webly to create lazy-loadable-js-modules via shadow-cljs.
-- goldly has 3 sub-projects:
+- goldly has 2 sub-projects:
   - goldly-sci:  creates a sci-interpreter setup that works with shadow-cljs lazy modules.
-  - reval-sci: implements a reval kernel (for cljs)
   - sci-configs: creates modules based on sci-configs namespace mappings.
 
 ## demo

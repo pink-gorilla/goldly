@@ -1,13 +1,14 @@
 {:paths ["src"
          "resources"
          "target/webly"]
- :deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.105"}
+ :deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.112"}
         org.pinkgorilla/ui-site {:mvn/version "0.0.31"}
         org.pinkgorilla/ui-binaryclock {:mvn/version "0.2.20"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         ;org.pinkgorilla/devtools {:mvn/version "0.0.17"}
-        org.pinkgorilla/clj-service {:mvn/version "0.3.19"}
-        org.pinkgorilla/webly {:mvn/version "0.7.693"}
+        org.pinkgorilla/ui-highlightjs {:mvn/version "0.1.19"}
+        org.pinkgorilla/clj-service {:mvn/version "0.4.22"}
+        org.pinkgorilla/webly {:mvn/version "0.9.716"} ; build tool
         org.pinkgorilla/goldly {:local/root ".." :deps/manifest :deps}
         }
 
@@ -20,19 +21,19 @@
 
 ; goldy-demo
   ; this is a complete deps.edn project used to test goldly.
-
+  
   ; tests:
   ; - loading of cljs source code files (+ hot reload of cljs files)
   ; - lazy loading  (binaryclock dependency)
   ; - services
-
+  
 ; demo ui
-  :webly {:exec-fn webly.app.app/webly-build
+  :webly {:exec-fn webly.spa/webly-build
           :exec-args {:config ["test-config.edn"]
                       :profile "npm-install"}}
 
   :npm-install {:exec-args {:profile "npm-install"}}
-  :compile {:exec-args {:profile "compile2"}}
+  :compile {:exec-args {:profile "compile"}}
   :release {:exec-args {:profile "release"}}
   :release-adv {:exec-args {:profile "release-adv"}}
   :static {:exec-args {:profile "static"}}
@@ -43,16 +44,11 @@
                     :config  ["test-config.edn"]
                     :services "test-services.edn"}}
 
-  :nbeval {:exec-fn modular.system/start!
-           :exec-args {:run reval.task/eval-all-collections
-                       :config  ["test-config.edn"]
-                       :services "task-services.edn"}}
-
   :static-sci {:exec-fn goldly.build/static-build-copy-sci-code
-           
+               
                
 
-  }
+               }
 
 ;
   }}

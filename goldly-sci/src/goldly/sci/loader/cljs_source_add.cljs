@@ -14,8 +14,10 @@
         code-p (load-sci-cljs-code libname)
         eval-p (-> code-p
                    (p/then (fn [code]
+                             (info "sci-code for ns: " libname " received.. now compiling..")
                              (scia/eval-string+ ctx code)))
                    (p/catch (fn [err]
+                              (warn "no sci-code loaded for ns: " libname "error: " err)
                              (p/reject! r {:load-error (str "no sci-code for ns: " libname " err: " err)}))))]
     (-> eval-p
         (p/then  (fn [res]

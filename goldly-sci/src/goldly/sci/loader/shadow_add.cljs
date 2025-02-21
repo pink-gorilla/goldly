@@ -3,7 +3,7 @@
    [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
    [promesa.core :as p]
    [sci.core :as sci]
-   [webly.module.build :refer [load-namespace-raw simple-namespace? assemble-simple-ns]]))
+   [shadowx.module.build :refer [load-namespace-raw simple-namespace? assemble-simple-ns]]))
 
 (defn load-shadow-ns [libname]
   (info "webly-shadow-ns load: " libname " type: " (type libname))

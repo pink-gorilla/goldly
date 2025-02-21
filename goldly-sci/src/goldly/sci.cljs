@@ -7,6 +7,7 @@
    [sci.core :as sci]
    [sci.async :as scia]
    [sci.impl.resolve :as sci-resolve]
+   [sci.impl.vars :as vars]
    ; bindings
    [goldly.sci.clojure-core :refer [cljns] :as clojure-core]
    ; loading of cljs source-code
@@ -37,15 +38,21 @@
                 :err (.-message e)}})))
 
 (defn resolve-symbol [sym]
-  (sci-resolve/resolve-symbol ctx-repl sym))
+  (-> (sci-resolve/resolve-symbol ctx-repl sym)
+      ;(vars/var-get) ; otherwise we would return a var; this was an issue in dali.util.
+      ))
+
+(defn get-var [v]
+  (vars/var-get v) 
+  )
 
 ;; requiring resolve
 
 (defn resolve-if-possible [s]
   (try
     (resolve-symbol s)
-    (catch :default _ex
-      nil)))
+  (catch :default _ex
+    nil)))
 
 (defn requiring-resolve [s]
   (if-let [fun (resolve-if-possible s)]

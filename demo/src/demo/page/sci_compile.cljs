@@ -55,7 +55,8 @@
                 (p/then (fn [d]
                          (println "async require success! data: " d)
                          (if-let [f (resolve-symbol 'demo.dynamic.funny/joke)]
-                           (reset! a (str "joke: " (f)))
+                           (do (println "joke is resolved: " (pr-str f))
+                               (reset! a (str "joke: " (f))))
                            (reset! a "error: cound not resolve 'demo.funny/joke)"))))
                 (p/catch (fn [error]
                          (println "require result failure! error: " error)
@@ -66,16 +67,28 @@
 
 (defn requiring-resolve-test []
   (let [rr-a (r/atom "no-favorite-animal")
-        rr-p (requiring-resolve 'demo.dynamic.animal/favorite-animal)]
+        rr2-a (r/atom "no-favorite-animal")
+        rr-p (requiring-resolve 'demo.dynamic.animal/favorite-animal)
+        ]
     (->  rr-p
          (p/then  (fn [fun]
-                        (let [animal (fun)]
-                          (reset! rr-a animal))))
+                        (println "animal1: " (pr-str fun))
+                        (let [animal (fun)
+                              rr2-p (requiring-resolve 'demo.dynamic.animal/favorite-animal)]
+                          (reset! rr-a animal)
+                          (->  rr2-p
+                               (p/then  (fn [fun]
+                                          (println "animal2: " (pr-str fun))
+                                          (let [animal (fun)]
+                                            (reset! rr2-a animal))))))))
          (p/catch (fn [err]
                     (println "animal-test error: " err)
                     (reset! rr-a "error"))))
     (fn []
-      [:div "result: " @rr-a])))
+      [:div 
+       "result: " @rr-a
+       "result2: " @rr2-a
+       ])))
 
 
 
