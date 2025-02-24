@@ -51,8 +51,12 @@
 (defn resolve-if-possible [s]
   (try
     (resolve-symbol s)
-  (catch :default _ex
-    nil)))
+    (when-let [v (resolve-symbol s)]
+      (if (var? v) ; resolve normally returns var, but shadow-modules will return values, and sci namespaces return vars
+        @v
+        v))
+    (catch :default _ex
+      nil)))
 
 (defn requiring-resolve [s]
   (if-let [fun (resolve-if-possible s)]
